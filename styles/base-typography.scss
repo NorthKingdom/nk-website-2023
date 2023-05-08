@@ -1,4 +1,4 @@
-@import 'src/styles/mixins/typography';
+@import 'styles/mixins/typography';
 
 h1 {
   @include Headline1(false);

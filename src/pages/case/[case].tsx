@@ -1,0 +1,116 @@
+import React from 'react'
+import Head from 'next/head'
+import Link from 'next/link'
+import { Case as CaseType } from '@types/cms'
+
+interface CasePageProps extends CaseType {
+  pushTo404?: boolean
+  preview: boolean
+}
+
+const Case = (props: CasePageProps) => {
+  return (
+    <>
+      <Head>
+        <title>{`North Kingdom | ${props.title}`}</title>
+        <meta property="og:title" content={`North Kingdom | ${props.title}`} key="ogtitle" />
+        <meta name="twitter:title" content={`North Kingdom | ${props.title}`} key="twittertitle" />
+
+        <meta
+          name="description"
+          content={props.slides && props.slides.length > 1 ? props.slides[1].solution || props.slides[1].copy : null}
+          key="description"
+        />
+
+        <meta
+          property="og:description"
+          content={props.slides && props.slides.length > 1 ? props.slides[1].solution || props.slides[1].copy : null}
+          key="ogdescription"
+        />
+        <meta
+          name="twitter:description"
+          content={props.slides && props.slides.length > 1 ? props.slides[1].solution || props.slides[1].copy : null}
+          key="twitterdescription"
+        />
+
+        <meta
+          property="og:image"
+          content={`${
+            props.slides
+              ? props.slides[0].image.includes(`image`)
+                ? props.slides[0].image
+                : props.slides[0].imageMobile
+              : null
+          }`}
+          key="ogimage"
+        />
+        <meta
+          name="twitter:image"
+          content={`${
+            props.slides
+              ? props.slides[0].image.includes(`image`)
+                ? props.slides[0].image
+                : props.slides[0].imageMobile
+              : null
+          }`}
+          key="twitterimage"
+        />
+
+        <meta
+          content={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`}
+          property="og:url"
+          key="ogurl"
+        />
+        <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
+        <link href={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`} rel="canonical" />
+      </Head>
+      <main>
+        <h1>Case page</h1>
+        <Link href="/">Home</Link>
+      </main>
+    </>
+  )
+}
+
+export async function getStaticProps({ params, preview = false }: { params: { case: string }; preview: boolean }) {
+  return {
+    props: {},
+  }
+  // return getCaseData(params.case, preview)
+  //   .then((data) => {
+  //     return {
+  //       props: {
+  //         preview,
+  //         ...data,
+  //       },
+  //     }
+  //   })
+  //   .catch(() => {
+  //     return {
+  //       props: { pushTo404: true },
+  //     }
+  //   })
+}
+
+type paramsType = {
+  params: {
+    case: string
+  }
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
+  }
+  // const casePaths: paramsType[] = []
+  // return getAllCases(false).then((cases) => {
+  //   cases.forEach((c: CaseType) => casePaths.push({ params: { case: c.slug } }))
+  //   return {
+  //     paths: casePaths,
+  //     fallback: true,
+  //   }
+  // })
+}
+
+export default Case
