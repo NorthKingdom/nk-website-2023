@@ -48,7 +48,7 @@ export default function App({ Component, pageProps }: AppProps) {
       {/* Google Analytics */}
       <Script
         id="google-analtics"
-        lazyOnload
+        async
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
       />
       <Script
