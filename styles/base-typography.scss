@@ -1,0 +1,41 @@
+@import 'styles/mixins/typography';
+
+h1 {
+  @include Headline1(false);
+}
+
+h2 {
+  @include Headline2(false);
+}
+
+h3 {
+  @include Headline3;
+}
+
+h4 {
+  @include Headline4(false);
+}
+
+h5 {
+  @include Headline5;
+}
+
+p {
+  @include Paragraph;
+}
+
+.paragraphLarge {
+  @include ParagraphLarge;
+}
+
+.paragraphSmall {
+  @include ParagraphSmall;
+}
+
+.footerLink {
+  @include FooterLink;
+}
+
+.stat {
+  @include Stat;
+}
