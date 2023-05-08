@@ -1,0 +1,33 @@
+@import './fonts.scss';
+
+//fonts
+$font-raster: 'FKRasterGrotesk-Blended';
+$font-regular: 'FKGroteskNeue-Regular';
+$font-bold: 'FKGroteskNeue-Bold';
+
+/* Color Palette */
+
+// White
+$white: #ffffff;
+$white-80: #ffffff80;
+$white-60: #ffffff60;
+$white-50: #ffffff50;
+$white-30: #ffffff30;
+
+// Black
+$black: #050311;
+$black-80: #05031180;
+$black-50: #05031150;
+$black-25: #05031125;
+
+// Gray
+$dark-gray-70: #2c2b3470;
+$gray-60: #868495;
+$gray-40: #86849540;
+$gray-20: #86849520;
+
+// z-index
+$z-nav-shield: 100;
+$z-nav-hamburger: 100;
+$z-nav-secondary-item: 5;
+$z-nav-menu: 10;
