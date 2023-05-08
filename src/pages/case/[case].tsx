@@ -1,14 +1,12 @@
 import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Case as CaseType } from '@types/cms'
-
-interface CasePageProps extends CaseType {
-  pushTo404?: boolean
-  preview: boolean
-}
+import { Case as CasePageProps } from '@customTypes/cms'
+import { queryContentful } from '@utils/contentful'
+import { CASE_PAGE_QUERY } from '@utils/graphql-queries'
 
 const Case = (props: CasePageProps) => {
+  console.log(props)
   return (
     <>
       <Head>
@@ -73,23 +71,11 @@ const Case = (props: CasePageProps) => {
 }
 
 export async function getStaticProps({ params, preview = false }: { params: { case: string }; preview: boolean }) {
-  return {
-    props: {},
-  }
-  // return getCaseData(params.case, preview)
-  //   .then((data) => {
-  //     return {
-  //       props: {
-  //         preview,
-  //         ...data,
-  //       },
-  //     }
-  //   })
-  //   .catch(() => {
-  //     return {
-  //       props: { pushTo404: true },
-  //     }
-  //   })
+  return queryContentful(CASE_PAGE_QUERY(params.case)).then((data) => {
+    return {
+      props: data.caseCollection.items[0],
+    }
+  })
 }
 
 type paramsType = {

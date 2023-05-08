@@ -2,8 +2,11 @@ import React from 'react'
 import Head from 'next/head'
 import style from './About.module.scss'
 import Link from 'next/link'
+import { queryContentful } from '@utils/contentful'
+import { ABOUT_PAGE_QUERY } from '@utils/graphql-queries'
+import { About as AboutPageProps } from '@customTypes/cms'
 
-const About = () => {
+const About = (props: AboutPageProps) => {
   return (
     <main className={style.aboutContainer}>
       <Head>
@@ -24,9 +27,11 @@ const About = () => {
 }
 
 export async function getStaticProps({ preview = false }) {
-  return {
-    props: {},
-  }
+  return queryContentful(ABOUT_PAGE_QUERY).then((data) => {
+    return {
+      props: data.about,
+    }
+  })
 }
 
 export default About

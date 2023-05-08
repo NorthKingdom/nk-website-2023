@@ -25,6 +25,14 @@ function Contact() {
 }
 
 export async function getStaticProps({ preview = false }) {
+  // TODO :: Create Contact Page in Contentful
+  // return queryContentful(HOME_PAGE_QUERY).then((data) => {
+  //   console.log(data)
+
+  //   return {
+  //     props: data.home,
+  //   }
+  // })
   return {
     props: {},
   }
