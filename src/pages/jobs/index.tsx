@@ -2,7 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import style from './Jobs.module.scss'
-import { JobPage, TeamTailorJob } from '@types/cms'
+import { JobPage, TeamTailorJob } from '@customTypes/cms'
 
 interface JobsPageProp extends JobPage {
   jobs: TeamTailorJob[]

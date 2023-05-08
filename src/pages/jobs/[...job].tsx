@@ -1,6 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
-import { TeamTailorJob, FooterData } from '@types/cms'
+import { TeamTailorJob, FooterData } from '@customTypes/cms'
 import Link from 'next/link'
 
 interface JobDescriptionProps extends TeamTailorJob {
