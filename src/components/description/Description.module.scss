@@ -1,9 +1,82 @@
 .description {
+  @include flex-center($direction: row);
+  //   height: 250px;
+  width: calc(100% - 40px);
+  align-items: flex-start;
+
+  margin: 0;
+  padding: 20px;
+  background-color: pink;
+
+  @include mq($until: tablet) {
+    @include flex-center($direction: column);
+  }
+
   &__left {
-    background-color: red;
+    width: 50%;
+    height: 100%;
+    // background-color: red;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    h2 {
+      padding: 0;
+      margin: 0;
+      font-family: 'FK Display Trial';
+      font-style: normal;
+      font-weight: 400;
+      @include fluid-type(375px, 1440px, 64px, 124px);
+      line-height: 116px;
+      /* identical to box height, or 94% */
+
+      letter-spacing: -0.05em;
+
+      /* Black / 100% */
+
+      color: #000000;
+    }
   }
 
   &__right {
-    background-color: pink;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+
+    @include mq($until: tablet) {
+      margin-top: 24px;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+      font-family: 'FK Grotesk Neue';
+      font-style: normal;
+      font-weight: 400;
+      @include fluid-type(375px, 1440px, 18px, 28px);
+      line-height: 32px;
+      letter-spacing: -0.01em;
+      color: #000000;
+    }
+
+    a {
+      text-decoration: none;
+      margin-top: 40px;
+      font-family: 'FK Grotesk Neue';
+      font-style: normal;
+      font-weight: 400;
+      @include fluid-type(375px, 1440px, 18px, 28px);
+      line-height: 32px;
+      /* identical to box height, or 114% */
+
+      letter-spacing: -0.01em;
+
+      /* Black / 100% */
+
+      color: #000000;
+    }
   }
 }
