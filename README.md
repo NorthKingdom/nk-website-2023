@@ -98,7 +98,8 @@ yarn storybook
 
 ## Contributing
 
-### Branching with LisoFlow
+<details>
+<summary>Branching with LisoFlow</summary>
 
 > Common git workflow based on feature branches with a rebase/merge no fast forward technique.
 
@@ -140,7 +141,10 @@ $ git push
 
 > If for some reason a push has been made to origin develop while we were rebasing/merging we will know when we pull before merge. So before merging, we go back to our feature branch and repeat the process of rebasing. Then back to develop and continue the flow.
 
-### Document changes in the changelog
+</details>
+
+<details>
+<summary>Document changes in the changelog</summary>
 
 Big changes should be documented in the [changelog](/docs/changelog.md). In addition, you can create a pull requests for bigger changes and link the PR in the changelog entry
 
@@ -149,6 +153,7 @@ _Example flow_:
 - create a feature branch following [LisoFlow](#branching-with-lisoflow)
 - once you're done, create a pull request and merge it to `dev` branch
 - add a log item to the [changelog](/docs/changelog.md) and link the PR in the description
+</details>
 
 ## Roadmap
 
