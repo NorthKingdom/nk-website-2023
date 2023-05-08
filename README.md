@@ -159,6 +159,5 @@ _Example flow_:
 
 - [ ] Add Lighthouse CI
 - [ ] Add changeset
-- [ ] Add/document storybook deploy
-- [ ] Add Lenis scroll
-- [ ] Add page transition
+- [ ] Add/document Storybook deploy
+- [ ] Add bundle analyzer
