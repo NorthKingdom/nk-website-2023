@@ -3,24 +3,31 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "storybook": "storybook dev -p 6006 -s public",
+    "build-storybook": "storybook build -s public",
     "new-component": "node scripts/new-component.mjs"
   },
   "dependencies": {
+    "@studio-freight/lenis": "^1.0.12",
     "@types/node": "20.0.0",
     "@types/react": "18.2.5",
     "@types/react-dom": "18.2.3",
+    "bem-css-modules": "^1.4.3",
     "eslint": "8.39.0",
     "eslint-config-next": "13.4.1",
+    "framer-motion": "^10.12.8",
     "next": "13.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "5.0.4"
+    "resize-observer-polyfill": "^1.5.1",
+    "sass-mq": "^6.0.0",
+    "typescript": "5.0.4",
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.9",
@@ -32,6 +39,7 @@
     "@storybook/testing-library": "^0.0.14-next.2",
     "chalk": "^5.2.0",
     "eslint-plugin-storybook": "^0.6.12",
+    "husky": "^8.0.3",
     "lodash": "^4.17.21",
     "sass": "^1.62.1",
     "storybook": "^7.0.9"

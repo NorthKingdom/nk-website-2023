@@ -30,7 +30,8 @@ const Case = (props: CasePageProps) => {
           content={props.slides && props.slides.length > 1 ? props.slides[1].solution || props.slides[1].copy : null}
           key="twitterdescription"
         />
-
+        {/* TODO :: Add back in an OG image for the Case */}
+        {/* 
         <meta
           property="og:image"
           content={`${
@@ -52,7 +53,7 @@ const Case = (props: CasePageProps) => {
               : null
           }`}
           key="twitterimage"
-        />
+        /> */}
 
         <meta
           content={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`}

@@ -57,6 +57,8 @@ export * from './${componentName.pascalCase}'
 const componentFileTS = /*ts*/ `
 import React from 'react'
 import styles from './${componentName.pascalCase}.module.scss'
+import { bemify } from '@utils/bemify'
+const bem = bemify(styles, '${componentName.camelCase}')
 
 interface ${componentName.pascalCase}Props {
 
