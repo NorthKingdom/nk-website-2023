@@ -14,6 +14,14 @@ Latest version of North Kingdom's website (2023)
 
 **Documentation:** Storybook
 
+## Quick links
+
+- [Vercel dashboard](https://vercel.com/northkingdom/nk-website-2023)
+- [Dev link](nk-dev.vercel.app)
+- [Staging link](nk-staging.vercel.app)
+- [Prod link (TBC)](nk-site.vercel.app)
+- [Storybook](nk-storybook.vercel.app)
+
 ## Environment Variables
 
 Make sure you have the following environment variables in your .env file.
@@ -52,9 +60,10 @@ Build static export
 
 Automatic deployment is setup with Vercel.
 
-- Dev → `dev` branch deploys to: [TBD]
-- Staging → `staging` branch deploys to: [TBD]
-- Main → `main` branch deploys to: [TBD]
+- Dev → `dev` branch deploys to: [nk-dev.vercel.app](nk-dev.vercel.app)
+- Staging → `staging` branch deploys to: [nk-staging.vercel.app](nk-staging.vercel.app)
+- Main → `main` branch deploys to: [nk-site.vercel.app](nk-site.vercel.app)
+- Commits to `dev` branch trigger a Storybook deploy to [nk-storybook.vercel.app](nk-storybook.vercel.app)
 
 ## Dev Features
 
@@ -88,7 +97,7 @@ Use the script below to create a new component folder which follows the file nam
 yarn new-component <component-name>
 ```
 
-### UI Documentation
+### UI Documentation with Storybook
 
 This project uses [Storybook](https://storybook.js.org/) for UI documentation. Run the following script to preview Storybook locally.
 
