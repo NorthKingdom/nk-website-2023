@@ -27,7 +27,7 @@ export function useLenis({
   smooth?: boolean
 }) {
   const rafId = useRef<number | null>(null)
-  const [lenis, setLenis] = useLenisStore((state) => [state.lenis, state.set])
+  const [lenis, setLenis] = useLenisStore((state) => [state.lenis, state.setLenis])
 
   useIsomorphicLayoutEffect(() => {
     if (!wrapperRef.current || !contentRef.current) return
