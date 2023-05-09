@@ -17,10 +17,10 @@ Latest version of North Kingdom's website (2023)
 ## Quick links
 
 - [Vercel dashboard](https://vercel.com/northkingdom/nk-website-2023)
-- [Dev link](nk-dev.vercel.app)
-- [Staging link](nk-staging.vercel.app)
-- [Prod link (TBC)](nk-site.vercel.app)
-- [Storybook](nk-storybook.vercel.app)
+- [Dev link](https://nk-dev.vercel.app)
+- [Staging link](https://nk-staging.vercel.app)
+- [Prod link (TBC)](https://nk-site.vercel.app)
+- [Storybook](https://nk-storybook.vercel.app)
 
 ## Environment Variables
 
@@ -60,10 +60,10 @@ Build static export
 
 Automatic deployment is setup with Vercel.
 
-- Dev → `dev` branch deploys to: [nk-dev.vercel.app](nk-dev.vercel.app)
-- Staging → `staging` branch deploys to: [nk-staging.vercel.app](nk-staging.vercel.app)
-- Main → `main` branch deploys to: [nk-site.vercel.app](nk-site.vercel.app)
-- Commits to `dev` branch trigger a Storybook deploy to [nk-storybook.vercel.app](nk-storybook.vercel.app)
+- Dev → `dev` branch deploys to: [nk-dev.vercel.app](https://nk-dev.vercel.app)
+- Staging → `staging` branch deploys to: [nk-staging.vercel.app](https://nk-staging.vercel.app)
+- Main → `main` branch deploys to: [nk-site.vercel.app](https://nk-site.vercel.app)
+- Commits to `dev` branch trigger a Storybook deploy to [nk-storybook.vercel.app](https://nk-storybook.vercel.app)
 
 ## Dev Features
 
