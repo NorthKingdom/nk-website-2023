@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# make sure the build works before committing on dev, staging, or main
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [[ $branch == "dev" || $branch == "staging" || $branch == "main" ]]; then
+    yarn build
+fi
+
