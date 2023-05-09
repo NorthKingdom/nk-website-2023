@@ -1,41 +1,31 @@
-@import 'styles/mixins/typography';
+@import './mixins/fluid-typography.scss';
+
+$min_width: 320px;
+$max_width: 2560px;
+$min_font: 12px;
+$max_font: 150px;
 
 h1 {
-  @include Headline1(false);
+  // @include Headline1(false);
+  @include fluid-type($min_width, $max_width, $min_font, $max_font);
 }
 
 h2 {
-  @include Headline2(false);
+  // @include Headline2(false);
 }
 
 h3 {
-  @include Headline3;
+  // @include Headline3;
 }
 
 h4 {
-  @include Headline4(false);
+  // @include Headline4(false);
 }
 
 h5 {
-  @include Headline5;
+  // @include Headline5;
 }
 
 p {
-  @include Paragraph;
-}
-
-.paragraphLarge {
-  @include ParagraphLarge;
-}
-
-.paragraphSmall {
-  @include ParagraphSmall;
-}
-
-.footerLink {
-  @include FooterLink;
-}
-
-.stat {
-  @include Stat;
+  // @include Paragraph;
 }
