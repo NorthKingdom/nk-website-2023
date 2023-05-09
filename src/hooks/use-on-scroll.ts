@@ -30,7 +30,7 @@ type LenisOptions = {
  * @param options  {LenisOptions}  - options
  */
 export function useOnScroll(callback: LenisCallback, options: LenisOptions = {}) {
-  const lenis = useLenisStore((state) => state.lenis)
+  const lenis = useLenisStore((state) => state.lenis) as Lenis
   const { enabled } = { enabled: true, ...options }
   const savedCallback = useRef(callback)
 
@@ -56,9 +56,9 @@ export function useOnScroll(callback: LenisCallback, options: LenisOptions = {})
         y: { targetOffset: 0 },
       }
 
-      if (options.target?.current !== lenis?.content) {
+      if (options.target?.current !== lenis?.options.content) {
         let node = target as HTMLElement
-        while (node && node !== lenis?.content) {
+        while (node && node !== lenis?.options.content) {
           info.x.targetOffset += node.offsetLeft
           info.y.targetOffset += node.offsetTop
           node = node.offsetParent as HTMLElement
@@ -77,14 +77,14 @@ export function useOnScroll(callback: LenisCallback, options: LenisOptions = {})
     resizeHandler()
 
     window.addEventListener('resize', resizeHandler, { passive: true })
-    lenis.content.addEventListener('resize', resizeHandler, { passive: true })
+    lenis.options.content.addEventListener('resize', resizeHandler, { passive: true })
     const lenisContainerResizeObserver = new ResizeObserver(resizeHandler)
-    lenisContainerResizeObserver.observe(lenis.content)
+    lenisContainerResizeObserver.observe(lenis.options.content)
 
     return () => {
       window.removeEventListener('resize', resizeHandler)
-      lenis.content.removeEventListener('resize', resizeHandler)
-      lenisContainerResizeObserver.unobserve(lenis.content)
+      lenis.options.content.removeEventListener('resize', resizeHandler)
+      lenisContainerResizeObserver.unobserve(lenis.options.content)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lenis])
@@ -114,12 +114,9 @@ export function useOnScroll(callback: LenisCallback, options: LenisOptions = {})
         }
       : (event: LenisScrollEvent) => savedCallback.current(event)
 
-    // @ts-ignore
     lenis.on('scroll', scrollHandler)
-    lenis.notify()
 
     return () => {
-      // @ts-ignore
       lenis.off('scroll', scrollHandler)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

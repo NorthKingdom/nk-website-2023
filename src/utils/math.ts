@@ -20,7 +20,6 @@ const _lerp = (a: number, b: number, n: number) => (1 - n) * a + n * b
 function lerp(source: number, target: number, rate: number, frameDelta?: number, targetFps = 60) {
   // return normal lerp if no delta was passed
   if (typeof frameDelta === 'undefined') {
-    u
     return _lerp(source, target, rate)
   }
 
