@@ -10,6 +10,7 @@ export const Description = (props: DescriptionProps) => {
     <section className={styles['description']}>
       <div className={bem('left')}>left</div>
       <div className={bem('right')}>right</div>
+      <div>test</div>
     </section>
   )
 }
