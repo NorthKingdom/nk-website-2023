@@ -40,6 +40,16 @@ html[data-theme='light'] {
   --color-fg-inverted: var(--color-white);
 }
 
+/*
+* Foter
+*/
+:root {
+  --footer-height: 375px;
+  @include mq($from: tablet) {
+    --footer-height: 300px;
+  }
+}
+
 html,
 body,
 #__next {
@@ -77,6 +87,7 @@ body {
   // &::-webkit-scrollbar {
   //   width: 10px;
   //   background: $black;
+  //   z-index: 1;
   // }
 
   // &::-webkit-scrollbar-track {

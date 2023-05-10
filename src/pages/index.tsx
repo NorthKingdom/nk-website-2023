@@ -14,16 +14,14 @@ const Home = (props: HomePage) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <HomeHero />
-        <div
-          style={{
-            height: '300vh',
-            width: '100%',
-            border: '1px solid red',
-          }}
-        ></div>
-      </main>
+      <HomeHero />
+      <div
+        style={{
+          height: '150vh',
+          width: '100%',
+          backgroundColor: 'white',
+        }}
+      ></div>
     </>
   )
 }

@@ -11,7 +11,7 @@
   box-sizing: border-box;
   border-radius: 40px;
   background-clip: padding-box;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   overflow: hidden;
   background-color: var(--color-bg-inverted);
 

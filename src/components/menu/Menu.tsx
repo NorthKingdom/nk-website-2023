@@ -55,7 +55,7 @@ export const Menu = ({
             ))}
           </div>
           <div className={bem('footer')}>
-            <div className={bem('socialsMenu')}>
+            <div>
               {socialLinkItems.map((item) => (
                 <a key={item.href} href={item.href} target="_blank" rel="noopener">
                   {item.label}
@@ -64,7 +64,7 @@ export const Menu = ({
             </div>
             <div className={bem('contactMenu')}>
               {contactItems.map((item) => (
-                <MenuContactItem key={item.href} {...item}>
+                <MenuContactItem key={item.label} {...item}>
                   {item.label}
                 </MenuContactItem>
               ))}

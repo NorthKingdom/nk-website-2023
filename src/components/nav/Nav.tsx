@@ -12,6 +12,7 @@ import { isRouteActive } from '@utils/is-route-active'
 import { useRouter } from 'next/router'
 import type { NavItemData } from './Nav.types'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
+import { useBreakpointFrom } from '@hooks/use-breakpoint'
 
 const bem = bemify(styles, 'nav')
 
@@ -28,10 +29,11 @@ export const Nav = ({ className = '', style = {}, navItems = NAV_ITEMS }: NavPro
   const setIsMenuOpen = useGlobalStateStore((state) => state.setIsMenuOpen)
   const isScrollingDown = useIsScrollingDown()
   const isTouchDevice = useIsTouchDevice()
+  const bpDesktop = useBreakpointFrom('desktopSmall')
 
   return (
     <nav className={cx(bem(), className)} style={style}>
-      {!isTouchDevice ? (
+      {bpDesktop || !isTouchDevice ? (
         navItems.map((item) => (
           <AnimatePresence key={item.href}>
             {!isScrollingDown && !isMenuOpen && (

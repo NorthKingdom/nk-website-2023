@@ -16,8 +16,8 @@ interface HeaderLogoProps {
 export const HeaderLogo = ({ className, style, onClick = noop }: HeaderLogoProps) => {
   return (
     <div className={cx(bem(''), className)} style={style}>
-      <Link href={`/`} legacyBehavior onClick={onClick}>
-        <a>
+      <Link href={`/`} legacyBehavior>
+        <a onClick={onClick}>
           <svg viewBox="0 0 66 86" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect
               x="10"
