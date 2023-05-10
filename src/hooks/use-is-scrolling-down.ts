@@ -30,6 +30,7 @@ export const useIsScrollingDown = () => {
     return () => {
       root.removeEventListener('scroll', scrollHandler)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return isScrollingDown
