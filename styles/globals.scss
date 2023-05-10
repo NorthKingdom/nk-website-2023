@@ -65,21 +65,16 @@ body,
   transition: background-color 0.3s, color 0.3s;
 }
 
-html {
-  overflow: hidden;
-  height: 100%;
-}
-
+html,
 body {
-  height: 100%;
-  overflow: auto;
+  overscroll-behavior: none;
 }
 
 #__next {
   overflow-x: hidden;
   overflow-y: auto;
 
-  html[data-menu-state='open'] & {
+  html[data-is-menu-open='true'] & {
     overflow: hidden;
   }
 

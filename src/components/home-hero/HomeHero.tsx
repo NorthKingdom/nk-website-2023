@@ -14,7 +14,6 @@ export const HomeHero = (props: HomeHeroProps) => {
       className={bem()}
       style={{
         height: height100vh,
-        border: '1px solid red',
         paddingTop: '80px',
         backgroundColor: 'var(--color-black)',
       }}
