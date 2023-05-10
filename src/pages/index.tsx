@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import { queryContentful } from '@utils/contentful'
 import { HOME_PAGE_QUERY } from '@utils/graphql-queries'
 import { HomePage } from '@customTypes/cms'
@@ -23,6 +22,7 @@ const Home = (props: HomePage) => {
 
 export async function getStaticProps({ preview = false }) {
   return queryContentful(HOME_PAGE_QUERY).then((data) => {
+    console.log(data)
     return {
       props: data.home,
     }

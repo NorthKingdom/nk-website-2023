@@ -8,12 +8,6 @@ export const HOME_PAGE_QUERY = `
                 client
                 vertical
                 slug
-                thumbnail {
-                    url
-                }
-                thumbnailMobile {
-                    url
-                }
             }
         }
         journalSectionText
