@@ -1,0 +1,24 @@
+import React from 'react'
+import styles from './HomeHero.module.scss'
+import { bemify } from '@utils/bemify'
+import { use100vh } from 'react-div-100vh'
+const bem = bemify(styles, 'homeHero')
+
+interface HomeHeroProps {}
+
+export const HomeHero = (props: HomeHeroProps) => {
+  const height100vh = use100vh() as number
+
+  return (
+    <div
+      className={bem()}
+      style={{
+        height: height100vh,
+        border: '1px solid red',
+        paddingTop: '80px',
+      }}
+    >
+      <h1>Home hero</h1>
+    </div>
+  )
+}

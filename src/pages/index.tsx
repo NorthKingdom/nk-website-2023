@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { queryContentful } from '@utils/contentful'
 import { HOME_PAGE_QUERY } from '@utils/graphql-queries'
 import { HomePage } from '@customTypes/cms'
+import { HomeHero } from '@components/home-hero'
 
 const Home = (props: HomePage) => {
   console.log(props)
@@ -13,8 +14,15 @@ const Home = (props: HomePage) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main style={{ paddingTop: '80px' }}>
-        <h1>Home page</h1>
+      <main>
+        <HomeHero />
+        <div
+          style={{
+            height: '300vh',
+            width: '100%',
+            border: '1px solid red',
+          }}
+        ></div>
       </main>
     </>
   )
