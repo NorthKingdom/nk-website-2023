@@ -6,6 +6,7 @@ import { HomePage } from '@customTypes/cms'
 
 const Home = (props: HomePage) => {
   console.log(props)
+
   return (
     <>
       <Head>
@@ -13,19 +14,8 @@ const Home = (props: HomePage) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main style={{ paddingTop: '80px' }}>
         <h1>Home page</h1>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <Link href="/about">About</Link>
-          <Link href="/work">Work</Link>
-          <Link href="/jobs">Careers</Link>
-          <Link href="/contact">Contact</Link>
-        </div>
       </main>
     </>
   )

@@ -1,0 +1,212 @@
+@import 'styles/variables';
+@import 'styles/mixins/hover.scss';
+
+.menu {
+  $block: &;
+  pointer-events: none;
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+
+  $navScrollSafeAreaHeight: 70px;
+
+  &__navScrollSafeArea {
+    position: sticky;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    width: 100%;
+    height: $navScrollSafeAreaHeight;
+    background: white;
+    z-index: 10;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: linear-gradient(0, rgba(255, 255, 255, 0) 30%, white 100%);
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(5, 3, 17, 0.5);
+    transition: opacity 0.3s ease;
+
+    #{$block}[data-is-menu-open='false'] & {
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    #{$block}[data-is-menu-open='true'] & {
+      pointer-events: auto;
+      opacity: 1;
+    }
+  }
+
+  &__closeCaseBtnContainer {
+    position: absolute;
+    right: 58px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: $z-nav-secondary-item;
+  }
+
+  &__content {
+    position: absolute;
+    z-index: $z-nav-menu;
+    pointer-events: auto;
+    height: 100%;
+    width: 660px;
+    right: -660px;
+    background: $white;
+    transition: transform 0.3s ease;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    #{$block}[data-is-menu-open='false'] & {
+      transition: transform 0.5s cubic-bezier(0.64, 0, 0.19, 1);
+      transform: translateX(0);
+    }
+
+    #{$block}[data-is-menu-open='true'] & {
+      transition: transform 0.7s cubic-bezier(0.64, 0, 0.19, 1);
+      transform: translateX(-660px);
+    }
+
+    @include mq($until: tablet) {
+      width: 100%;
+      right: -100%;
+
+      #{$block}[data-is-menu-open='true'] & {
+        transition: transform 0.6s cubic-bezier(0.5, 0, 0.19, 1);
+        transform: translateX(-100%);
+      }
+    }
+
+    @include mq($until: desktop-small) {
+      p,
+      a {
+        // @include ParagraphLarge();
+      }
+    }
+
+    a {
+      width: 100%;
+    }
+  }
+
+  &__main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+    transition: transform 0.7s cubic-bezier(0.64, 0, 0.19, 1);
+    transform: translateX(90px);
+    margin: 80px 0;
+
+    #{$block}[data-is-menu-open='true'] & {
+      transform: translateX(0);
+    }
+
+    @include mq($until: tablet) {
+      margin: 100px 0 40px 0;
+    }
+  }
+
+  &__scrollContainer {
+    margin-top: -$navScrollSafeAreaHeight;
+    min-height: 100%;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 72px 72px 72px;
+
+    @include mq($until: desktop-small) {
+      padding: 0 50px 72px 50px;
+    }
+
+    @include mq($until: tablet) {
+      width: 100%;
+      padding: 0 16px 72px 16px;
+    }
+  }
+
+  &__footer {
+    display: flex;
+
+    @include mq($until: tablet) {
+      flex-direction: column;
+    }
+
+    & > div {
+      width: 50%;
+    }
+
+    // only for desktop
+    transform: translateX(80px);
+    transition: transform 0.7s cubic-bezier(0.64, 0, 0.19, 1), opacity 0.8s ease;
+
+    #{$block}[data-is-menu-open='true'] & {
+      opacity: 1;
+      transform: translate(0);
+    }
+
+    @media (hover: hover) {
+      opacity: 0;
+      #{$block}[data-is-menu-open='true'] & {
+        opacity: 1;
+      }
+    }
+
+    p,
+    a {
+      display: block;
+      // @include Paragraph();
+      color: var(--color-black);
+      margin: 8px 0 0 0;
+      padding: 0;
+      @include hover {
+        opacity: 0.4;
+      }
+    }
+  }
+
+  &__contactMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    @include mq($until: tablet) {
+      margin-top: 48px;
+    }
+
+    a {
+      display: block;
+      margin: 8px 0 0 0;
+    }
+  }
+}

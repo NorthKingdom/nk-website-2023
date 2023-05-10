@@ -23,7 +23,7 @@ const Jobs = (props: JobsPageProp) => {
         <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
         <link rel="canonical" href="https://www.northkingdom.com/jobs" />
       </Head>
-      <main>
+      <main style={{ paddingTop: '80px' }}>
         <h1>Jobs page</h1>
         <Link href="/">Back</Link>
       </main>

@@ -11,3 +11,50 @@ import Image from 'next/image'
 # NK Website (2023)
 
 This is the UI documentation portal for North Kingdom's website.
+
+## Notes for developers
+
+Use your best judgment when choosing which components to documentation and how to structure the documentation.
+To get up and running with a template story file for your component, use the following script.
+
+```bash
+yarn new-component <component-name>
+```
+
+This will generate a component folder with an entry file, code, styles, and a demo story that will immediately show in this interface.
+
+```bash
+├── src/components
+│ ├── component-name
+│ │ ├── index.ts # entrypoint
+│ │ ├── ComponentName.tsx # code
+│ │ ├── ComponentName.module.scss # styles
+│ │ └── ComponentName.stories.tsx # documentation
+```
+
+### Testing light/dark mode
+
+The project includes support for testing light/dark mode, which mimics the way theming is done on the live site.
+If you want to test theming with your component, you can pass a theme parameter (`'light' | 'dark'`) to the story config.
+
+```ts
+type Story = StoryObj<typeof YourComponent>
+
+export const LightMode: Story = {} // default
+
+export const DarkMode: Story = {
+  parameters: { theme: 'dark' },
+}
+```
+
+### Adding automatic documentation
+
+If you deem your component would benefit from documentation text, feel free to use `tags: ['autodocs']` in your story config.
+
+```ts
+const meta: Meta<typeof YourComponent> = {
+  title: 'UI/YourComponent',
+  component: YourComponent,
+  tags: ['autodocs'], // this will auto-generate a Docs file alongside your component's story
+}
+```

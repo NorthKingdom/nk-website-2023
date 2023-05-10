@@ -5,9 +5,27 @@ import Head from 'next/head'
 import getConfig from 'next/config'
 import type { AppProps } from 'next/app'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useGlobalStateStore } from '@store'
+import { useEffect } from 'react'
+import { Nav } from '@components/nav'
+import { Header } from '@components/header'
 
 export default function App({ Component, pageProps, router }: AppProps) {
   const { publicRuntimeConfig } = getConfig()
+
+  const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
+  const theme = useGlobalStateStore((state) => state.theme)
+  const setTheme = useGlobalStateStore((state) => state.setTheme)
+
+  // theming
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [theme])
+
+  // menu state
+  useEffect(() => {
+    document.documentElement.setAttribute('data-is-menu-open', String(isMenuOpen))
+  }, [isMenuOpen])
 
   return (
     <>
@@ -65,6 +83,8 @@ export default function App({ Component, pageProps, router }: AppProps) {
           `,
         }}
       />
+      <Header />
+
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={router.asPath}

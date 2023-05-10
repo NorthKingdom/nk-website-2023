@@ -1,6 +1,45 @@
 @import './base-typography.scss';
 @import './variables.scss';
 
+:root {
+  --color-white: #ffffff;
+  --color-white-80: #ffffff80;
+  --color-white-60: #ffffff60;
+  --color-white-50: #ffffff50;
+  --color-white-30: #ffffff30;
+
+  // Black
+  --color-black: #050311;
+  --color-black-80: #05031180;
+  --color-black-50: #05031150;
+  --color-black-25: #05031125;
+
+  // Gray
+  --color-dark-gray-70: #2c2b3470;
+  --color-gray-60: #868495;
+  --color-gray-40: #86849540;
+  --color-gray-20: #86849520;
+
+  --color-bg: var(--color-white);
+  --color-fg: var(--color-black);
+  --color-bg-inverted: var(--color-black);
+  --color-fg-inverted: var(--color-white);
+}
+
+html[data-theme='dark'] {
+  --color-bg: var(--color-black);
+  --color-fg: var(--color-white);
+  --color-bg-inverted: var(--color-white);
+  --color-fg-inverted: var(--color-black);
+}
+
+html[data-theme='light'] {
+  --color-bg: var(--color-white);
+  --color-fg: var(--color-black);
+  --color-bg-inverted: var(--color-black);
+  --color-fg-inverted: var(--color-white);
+}
+
 html,
 body,
 #__next {
@@ -11,7 +50,9 @@ body,
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
     Helvetica Neue, sans-serif;
-  background: $black;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 html {
@@ -24,12 +65,13 @@ body {
   overflow: auto;
 }
 
-* {
-  color: white;
-}
-
 #__next {
   overflow-x: hidden;
+  overflow-y: auto;
+
+  html[data-menu-state='open'] & {
+    overflow: hidden;
+  }
 
   // If we want to customize the scrollbar (when mouse plugged in..)
   // &::-webkit-scrollbar {

@@ -8,6 +8,9 @@ const nextConfig = {
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
+    additionalData: `
+      @import '~sass-mq';
+    `,
   },
   images: {
     unoptimized: true,

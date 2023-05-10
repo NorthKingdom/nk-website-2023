@@ -1,0 +1,15 @@
+@import 'styles/mixins/hover.scss';
+@import 'styles/mixins/fluid-typography.scss';
+
+.navItem {
+  opacity: 1;
+  transition: opacity 0.1s cubic-bezier(0, 0, 0.6, 1);
+
+  &[data-active='true'] {
+    opacity: 0.4;
+  }
+
+  @include hover {
+    opacity: 0.4;
+  }
+}

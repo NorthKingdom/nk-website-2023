@@ -20,8 +20,10 @@ const About = (props: AboutPageProps) => {
         <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
         <link rel="canonical" href="https://www.northkingdom.com/about" />
       </Head>
-      <h1>About</h1>
-      <Link href="/">Back</Link>
+      <main style={{ paddingTop: '80px' }}>
+        <h1>About</h1>
+        <Link href="/">Back</Link>
+      </main>
     </main>
   )
 }

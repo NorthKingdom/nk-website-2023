@@ -16,7 +16,7 @@ function Contact() {
         <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
         <link rel="canonical" href="https://www.northkingdom.com/contact" />
       </Head>
-      <main className={style.main}>
+      <main style={{ paddingTop: '80px' }}>
         <h1>Contact</h1>
         <Link href="/">Back</Link>
       </main>
