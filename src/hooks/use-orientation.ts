@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export function useOrientation() {
   const [isLandscape, setIsLandscape] = useState(false)
