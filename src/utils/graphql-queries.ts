@@ -1,4 +1,24 @@
 export const HOME_PAGE_QUERY = `
+
+
+fragment video on Video {
+    srcCollection {
+      items {
+        url
+      }
+    }
+  }
+
+fragment responsiveImage on ResponsiveImage {
+    desktopImage {
+      url
+    }
+    mobileImage {
+      url
+    }
+    altText
+  }
+
 {
     home(id: "3uX3aK4XeCQySQQohsAsyN") {
         aboutNk
@@ -8,6 +28,11 @@ export const HOME_PAGE_QUERY = `
                 client
                 vertical
                 slug
+                description
+                thumbnail {
+                    ...responsiveImage
+                    ...video
+                }
             }
         }
         journalSectionText

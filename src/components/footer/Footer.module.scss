@@ -4,6 +4,7 @@
   position: fixed;
   bottom: 0;
   left: 0;
+  right: 0;
   width: 100%;
   background-color: var(--color-bg);
   color: var(--color-fg);
@@ -49,7 +50,7 @@
     }
 
     html[data-theme='light'] & {
-      color: var(--color-black-60);
+      color: var(--color-black-50);
     }
   }
 
