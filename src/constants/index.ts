@@ -28,7 +28,7 @@ const LOCATION_ID = {
 const NAV_ITEMS = [
   { href: 'work', label: 'Work' },
   { href: 'about', label: 'About' },
-  { href: 'jobs', label: 'Careers' },
+  { href: 'careers', label: 'Careers' },
   { href: 'contact', label: 'Contact' },
 ]
 
