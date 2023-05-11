@@ -11,7 +11,7 @@ export const Scene = (props: any) => {
       <Suspense fallback={null}>
         {/* Shield blur background */}
         <Shield lod="low" scale={1.1} />
-        <Html center>
+        {/* <Html center>
           <h1
             style={{
               fontSize: '8vw',
@@ -30,7 +30,7 @@ export const Scene = (props: any) => {
           >
             Kingdom
           </h1>
-        </Html>
+        </Html> */}
         {/* Shield video */}
         <Shield scale={0.75} position-z={0.1} />
       </Suspense>
