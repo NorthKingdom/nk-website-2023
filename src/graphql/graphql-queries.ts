@@ -6,9 +6,61 @@ import { DESCRIPTION } from './fragments/DescriptionComponent.fragment'
 import { TWO_IMAGE_COMPONENT } from './fragments/TwoImageComponent.fragment'
 
 export const HOME_PAGE_QUERY = gql`
+  ${RESPONSIVE_IMAGE}
+  ${VIDEO}
+
   query {
     home(id: "3uX3aK4XeCQySQQohsAsyN") {
       aboutNk
+      heroCasesCollection {
+        items {
+          title
+          client
+          vertical
+          slug
+          description
+          thumbnail {
+            ...responsiveImage
+            ...video
+          }
+        }
+      }
+      journalSectionText
+      journalSectionHeading
+      infoBlock {
+        footerHeroText
+        changingFooterWords
+        skeOfficeName
+        skeOfficeAddrLine1
+        skeOfficeAddrLine2
+        skeOfficeImgGallery
+        sthlmOfficeName
+        sthlmOfficeAddrLine1
+        sthlmOfficeAddrLine2
+        sthlmOfficeImgGallery
+        bcnOfficeName
+        bcnOfficeAddrLine1
+        bcnOfficeAddrLine2
+        bcnOfficeImgGallery
+        careersMail
+        internMail
+        pressMail
+        infoPhoneNumber
+        infoMail
+        linkedinLink
+        twitterLink
+        instagramLink
+        facebookLink
+        noaText
+      }
+      linkText
+      linkImages {
+        imageCollection {
+          items {
+            url
+          }
+        }
+      }
     }
   }
 `

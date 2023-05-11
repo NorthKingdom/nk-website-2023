@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import { HOME_PAGE_QUERY } from '@graphql/graphql-queries'
 import client from '@graphql/client'
 import { HomePage } from '@customTypes/cms'
