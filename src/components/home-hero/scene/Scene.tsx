@@ -1,42 +1,39 @@
-import { Canvas, useFrame } from '@react-three/fiber'
-import { useMemo, useRef } from 'react'
-import vertexShader from './shaders/vs.glsl'
-import fragmentShader from './shaders/fs.glsl'
-import { Mesh } from 'three'
+import { Canvas } from '@react-three/fiber'
+import { Suspense } from 'react'
+import { Html } from '@react-three/drei'
+import dynamic from 'next/dynamic'
 
-const MovingPlane = () => {
-  // This reference will give us direct access to the mesh
-  const mesh = useRef<Mesh>(null)
-
-  const uniforms = useMemo(
-    () => ({
-      u_time: {
-        value: 0.0,
-      },
-    }),
-    []
-  )
-
-  useFrame((state) => {
-    const { clock } = state
-    if (mesh.current) {
-      // @ts-ignore
-      mesh.current.material.uniforms.u_time.value = clock.getElapsedTime()
-    }
-  })
-
-  return (
-    <mesh ref={mesh} position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={1.5}>
-      <planeGeometry args={[1, 1, 32, 32]} />
-      <shaderMaterial fragmentShader={fragmentShader} vertexShader={vertexShader} uniforms={uniforms} wireframe />
-    </mesh>
-  )
-}
+const Shield = dynamic(() => import('./Shield').then((Mod) => Mod.Shield), { ssr: false })
 
 export const Scene = (props: any) => {
   return (
-    <Canvas camera={{ position: [1.0, 1.5, 1.0] }} {...props}>
-      <MovingPlane />
+    <Canvas camera={{ position: [0, 0, 5] }} {...props}>
+      <Suspense fallback={null}>
+        {/* Shield blur background */}
+        <Shield lod="low" scale={1.1} />
+        <Html center>
+          <h1
+            style={{
+              fontSize: '8vw',
+              marginRight: '45vw',
+            }}
+          >
+            North
+          </h1>
+        </Html>
+        <Html center>
+          <h1
+            style={{
+              fontSize: '8vw',
+              marginLeft: '55vw',
+            }}
+          >
+            Kingdom
+          </h1>
+        </Html>
+        {/* Shield video */}
+        <Shield scale={0.75} position-z={0.1} />
+      </Suspense>
     </Canvas>
   )
 }
