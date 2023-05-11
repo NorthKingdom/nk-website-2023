@@ -11,9 +11,13 @@ const nextConfig = {
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
-    additionalData: `
-      @import '~sass-mq';
-    `,
+    prependData: `
+          @import "@styles/fonts.scss";
+          @import "@styles/variables.scss";
+          @import "@styles/mixins/_base.scss";
+          @import "@styles/mixins/fluid-typography.scss";
+          @import '~sass-mq';
+        `,
   },
   images: {
     unoptimized: true,

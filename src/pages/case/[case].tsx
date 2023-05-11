@@ -1,12 +1,14 @@
 import React from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
+import client from '@graphql/client'
 import { Case as CasePageProps } from '@customTypes/cms'
-import { queryContentful } from '@utils/contentful'
-import { CASE_PAGE_QUERY } from '@utils/graphql-queries'
+import { CASE_PAGE_QUERY } from '../../graphql/graphql-queries'
+import { CaseHero } from '@components/case-hero'
+import { GutterWrapper } from '@components/gutter-wrapper'
+import { ComponentResolver } from '@components/component-resolver'
+import styles from './Case.module.scss'
 
 const Case = (props: CasePageProps) => {
-  console.log(props)
   return (
     <>
       <Head>
@@ -63,20 +65,30 @@ const Case = (props: CasePageProps) => {
         <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
         <link href={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`} rel="canonical" />
       </Head>
-      <main>
-        <h1>Case page</h1>
-        <Link href="/">Home</Link>
+      <main className={styles['case']}>
+        <CaseHero
+          client={props.client}
+          caseName={props.title}
+          src={props.componentsCollection?.items[0].heroMedia}
+          isVideoAsset={props.componentsCollection?.items[0].heroMedia.__typename === 'Video'}
+        />
+        <GutterWrapper size="small">
+          <ComponentResolver components={props.componentsCollection?.items || []} />
+        </GutterWrapper>
       </main>
     </>
   )
 }
 
 export async function getStaticProps({ params, preview = false }: { params: { case: string }; preview: boolean }) {
-  return queryContentful(CASE_PAGE_QUERY(params.case)).then((data) => {
-    return {
-      props: data.caseCollection.items[0],
-    }
-  })
+  return client
+    .query({
+      query: CASE_PAGE_QUERY(params.case),
+    })
+    .then((res) => res.data)
+    .then((data) => {
+      return { props: data.caseCollection.items[0] }
+    })
 }
 
 type paramsType = {
