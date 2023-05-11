@@ -4,6 +4,7 @@ import { HOME_PAGE_QUERY } from '@utils/graphql-queries'
 import { HomePage } from '@customTypes/cms'
 import { HomeHero } from '@components/home-hero'
 import { CaseList } from '@components/case-list'
+import { About } from '@components/about'
 
 const Home = (props: HomePage) => {
   console.log(props)
@@ -17,6 +18,7 @@ const Home = (props: HomePage) => {
       </Head>
       <HomeHero />
       <CaseList cases={props.heroCasesCollection.items} />
+      <About />
     </>
   )
 }
