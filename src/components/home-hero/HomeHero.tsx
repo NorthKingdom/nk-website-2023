@@ -16,6 +16,7 @@ export const HomeHero = (props: HomeHeroProps) => {
         height: height100vh,
         paddingTop: '80px',
         backgroundColor: 'var(--color-black)',
+        border: '1px solid red',
       }}
     >
       <h1>Home hero</h1>

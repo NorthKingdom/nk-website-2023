@@ -3,6 +3,7 @@ import { queryContentful } from '@utils/contentful'
 import { HOME_PAGE_QUERY } from '@utils/graphql-queries'
 import { HomePage } from '@customTypes/cms'
 import { HomeHero } from '@components/home-hero'
+import { CaseList } from '@components/case-list'
 
 const Home = (props: HomePage) => {
   console.log(props)
@@ -15,13 +16,7 @@ const Home = (props: HomePage) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeHero />
-      <div
-        style={{
-          height: '150vh',
-          width: '100%',
-          backgroundColor: 'white',
-        }}
-      ></div>
+      <CaseList cases={props.heroCasesCollection.items} />
     </>
   )
 }

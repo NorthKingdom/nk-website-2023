@@ -1,0 +1,34 @@
+.caseListItem {
+  &__imageContainer {
+    background: var(--color-white);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__content {
+    margin-top: 16px;
+    margin-bottom: 48px;
+
+    & > *:first-child {
+      margin-bottom: 8px;
+    }
+  }
+
+  &__client {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-white);
+  }
+
+  &__projectTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-white-60);
+  }
+}

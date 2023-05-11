@@ -7264,6 +7264,11 @@ react-element-to-jsx-string@^15.0.0:
     is-plain-object "5.0.0"
     react-is "18.1.0"
 
+react-hook-inview@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/react-hook-inview/-/react-hook-inview-4.5.0.tgz#f4ac4117a46f1368599538c36dba96429db934ca"
+  integrity sha512-Hm61BK32/K2Cc3bjBe2bQkndHbQP6NhHvWVX7zYitaitB6T28uUV+wlgxbXU9twxUt7+17HyHq6aezpMUCijQQ==
+
 react-inspector@^6.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/react-inspector/-/react-inspector-6.0.1.tgz#1a37f0165d9df81ee804d63259eaaeabe841287d"
