@@ -11,6 +11,7 @@
   transition: background-color 0.3s, color 0.3s;
   z-index: $z-footer;
   padding: 92px 20px 56px 20px;
+  pointer-events: none;
 
   @include mq($from: tablet) {
     padding: 52px 20px 24px 20px;
@@ -43,6 +44,7 @@
     color: var(--color-white-60);
     display: grid;
     grid-gap: 20px;
+    pointer-events: auto;
     grid-template-columns: repeat(4, 1fr);
 
     @include mq($from: desktop-small) {
