@@ -24,7 +24,6 @@ export const VideoPlayer = ({
   loop = false,
   autoPlay = false,
 }: VideoPlayerProps) => {
-  console.log(src)
   return (
     <video
       className={styles['videoPlayer']}

@@ -8,8 +8,6 @@ import { CaseList } from '@components/case-list'
 import { About } from '@components/about'
 
 const Home = (props: HomePage) => {
-  console.log(props)
-
   return (
     <>
       <Head>
@@ -31,7 +29,6 @@ export async function getStaticProps({ preview = false }) {
     })
     .then((res: any) => res.data)
     .then((data: any) => {
-      console.log(data)
       return { props: data.home }
     })
 }
