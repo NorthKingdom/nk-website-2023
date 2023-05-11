@@ -32,7 +32,7 @@ export const CaseListItem = ({
   const $container = useInViewAnimation('animate-image-fade-up')
   const bpMobile = useBreakpointUntil('tablet')
   const thumbnailSrc = bpMobile ? thumbnailMobile : thumbnail ?? thumbnail
-  const imageSrc = getContentfulImageSrc(thumbnailSrc) ?? 'images/case-thumb-fallback.webp'
+  const imageSrc = getContentfulImageSrc(thumbnailSrc) ?? 'dummy/case-thumb-fallback.webp'
 
   return (
     <div ref={$container} className={cx(bem(), className)} style={style}>

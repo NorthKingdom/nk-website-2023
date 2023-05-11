@@ -13,10 +13,13 @@
     "new-component": "node scripts/new-component.mjs"
   },
   "dependencies": {
+    "@react-three/drei": "^9.67.1",
+    "@react-three/fiber": "^8.13.0",
     "@studio-freight/lenis": "^1.0.12",
     "@types/node": "20.0.0",
     "@types/react": "18.2.5",
     "@types/react-dom": "18.2.3",
+    "@types/three": "^0.152.0",
     "bem-css-modules": "^1.4.3",
     "clsx": "^1.2.1",
     "eslint": "8.39.0",
@@ -29,6 +32,7 @@
     "react-hook-inview": "^4.5.0",
     "resize-observer-polyfill": "^1.5.1",
     "sass-mq": "^6.0.0",
+    "three": "^0.152.2",
     "typescript": "5.0.4",
     "zustand": "^4.3.8"
   },
