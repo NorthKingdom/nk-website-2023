@@ -31,3 +31,14 @@ $z-nav-shield: 100;
 $z-nav-hamburger: 100;
 $z-nav-secondary-item: 5;
 $z-nav-menu: 10;
+$z-footer: 0;
+$z-main: 1;
+
+// Added to support mq mixin
+$mq-breakpoints: (
+  mobile-small: 380px,
+  mobile: 450px,
+  tablet: 768px,
+  desktop-small: 1024px,
+  desktop: 1440px,
+);

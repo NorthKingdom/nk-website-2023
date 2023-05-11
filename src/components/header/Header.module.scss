@@ -1,0 +1,27 @@
+// TODO #1 put z-index into a variable
+
+.header {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  padding: 24px;
+
+  @include mq($until: tablet) {
+    padding: 16px;
+  }
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  pointer-events: none;
+
+  & > * {
+    pointer-events: auto;
+  }
+}

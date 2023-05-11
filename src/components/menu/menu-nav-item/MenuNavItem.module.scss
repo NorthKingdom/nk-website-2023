@@ -1,0 +1,63 @@
+@import 'styles/variables';
+
+.menuNavItem {
+  $block: &;
+  width: 100%;
+  position: relative;
+
+  h2 {
+    text-transform: capitalize;
+    color: var(--color-black);
+    margin: 8px 0;
+    padding: 0;
+    transition: opacity 0.4s;
+  }
+
+  @include mq($until: desktop-small) {
+    h2 {
+      font-size: 72px;
+      line-height: 76px;
+      letter-spacing: -2%;
+      margin: 4px 0;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    opacity: 1;
+    transform: translateX(-50px);
+    transition: all 0.3s ease;
+
+    #{$block}[data-active='true'] & {
+      opacity: 0.3;
+    }
+
+    @media (hover: hover) {
+      #{$block}:hover & {
+        transform: translateX(0);
+        opacity: 0.3;
+      }
+    }
+  }
+
+  &__arrowContainer {
+    // hide on touch devices
+    @media not all and (hover: hover) {
+      opacity: 0;
+    }
+
+    margin-right: 20px;
+    pointer-events: none;
+    transform: rotate(-20deg);
+    transition: transform 0.3s ease;
+
+    #{$block}:hover & {
+      transition-delay: 0.1s;
+      transform: rotate(0);
+    }
+  }
+}

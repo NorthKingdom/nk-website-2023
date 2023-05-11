@@ -1,0 +1,11 @@
+@import 'styles/mixins/hover.scss';
+
+.menuContactItem {
+  @include hover {
+    opacity: 0.4;
+  }
+
+  &[data-show-confirmation-label='true'] {
+    opacity: 0.4;
+  }
+}

@@ -45,7 +45,9 @@ export interface CollectionsPage {
 
 export interface HomePage {
   aboutNk: string
-  heroCases: Case[]
+  heroCasesCollection: {
+    items: Case[]
+  }
   journalSectionHeading: string
   journalSectionText: string
   infoBlock: FooterData
