@@ -33,6 +33,7 @@ const ShieldForeground = forwardRef((props: any, ref: React.Ref<THREE.Mesh>) => 
 
   useFrame(({ clock }) => {
     if (!$mesh.current) return
+    // @ts-ignore
     $mesh.current.material.uniforms.uTime.value = clock.getElapsedTime()
   })
 
@@ -74,6 +75,7 @@ const ShieldBackground = forwardRef((props: any, ref: React.Ref<THREE.Mesh>) => 
 
   useFrame(({ clock }) => {
     if (!$mesh.current) return
+    // @ts-ignore
     $mesh.current.material.uniforms.uTime.value = clock.getElapsedTime()
   })
 
