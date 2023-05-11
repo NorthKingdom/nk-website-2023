@@ -35,8 +35,8 @@ export const VideoPlayer = ({
       autoPlay={autoPlay}
       loop={loop}
     >
-      {src.map((s) => {
-        return <source src={s.url} type="video/mp4" />
+      {src.map((s, i: number) => {
+        return <source key={`video-src-${i}`} src={s.url} type="video/mp4" />
       })}
 
       {controls && <div>controls</div>}
