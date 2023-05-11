@@ -18,4 +18,21 @@ const queryContentful = async (_query: string) => {
     })
 }
 
-export { queryContentful }
+const getContentfulImageSrc = (
+  src = '',
+  {
+    breakpoint,
+    width,
+    height,
+    quality,
+  }: {
+    breakpoint?: string
+    width?: number
+    height?: number
+    quality?: number
+  } = {}
+) => {
+  return src
+}
+
+export { queryContentful, getContentfulImageSrc }

@@ -1,0 +1,15 @@
+.contentWrapper {
+  width: 100%;
+  padding: 0 var(--page-margin);
+  max-width: var(--page-content-max-width, auto);
+  margin: 0 auto;
+
+  &--fullscreen {
+    padding: 0;
+    max-width: none;
+  }
+
+  &[data-debug='true'] {
+    border: 2px solid white;
+  }
+}

@@ -46,7 +46,8 @@ const JobDescription = (props: JobDescriptionProps) => {
           )}`}
         />
       </Head>
-      <main>
+      <main style={{ paddingTop: '80px' }}>
+        {' '}
         <h1>Job description page</h1>
         <Link href="/">Back</Link>
       </main>

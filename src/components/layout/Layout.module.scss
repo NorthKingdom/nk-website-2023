@@ -1,0 +1,11 @@
+@import 'styles/variables.scss';
+
+.main {
+  position: relative;
+  margin-bottom: var(--footer-height);
+  z-index: $z-main;
+  border-radius: 0px 0px 12px 12px;
+  overflow: hidden;
+  min-height: 100vh;
+  width: 100%;
+}

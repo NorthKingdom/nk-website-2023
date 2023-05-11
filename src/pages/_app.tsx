@@ -5,9 +5,25 @@ import Head from 'next/head'
 import getConfig from 'next/config'
 import type { AppProps } from 'next/app'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useGlobalStateStore } from '@store'
+import { useEffect } from 'react'
+import { Layout } from '@components/layout'
 
 export default function App({ Component, pageProps, router }: AppProps) {
   const { publicRuntimeConfig } = getConfig()
+
+  const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
+  const theme = useGlobalStateStore((state) => state.theme)
+
+  // theming
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [theme])
+
+  // menu state
+  useEffect(() => {
+    document.documentElement.setAttribute('data-is-menu-open', String(isMenuOpen))
+  }, [isMenuOpen])
 
   return (
     <>
@@ -65,17 +81,19 @@ export default function App({ Component, pageProps, router }: AppProps) {
           `,
         }}
       />
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={router.asPath}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { ease: 'circOut' } }}
-          exit={{ opacity: 0, transition: { ease: 'circIn' } }}
-          transition={{ duration: 0.1 }}
-        >
-          <Component {...pageProps} />
-        </motion.div>
-      </AnimatePresence>
+      <Layout>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={router.asPath}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { ease: 'circOut' } }}
+            exit={{ opacity: 0, transition: { ease: 'circIn' } }}
+            transition={{ duration: 0.1 }}
+          >
+            <Component {...pageProps} />
+          </motion.div>
+        </AnimatePresence>
+      </Layout>
     </>
   )
 }
