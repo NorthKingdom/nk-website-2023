@@ -1,6 +1,7 @@
 import Head from 'next/head'
-import { queryContentful } from '@utils/contentful'
-import { HOME_PAGE_QUERY } from '@utils/graphql-queries'
+import Link from 'next/link'
+import { HOME_PAGE_QUERY } from '@graphql/graphql-queries'
+import client from '@graphql/client'
 import { HomePage } from '@customTypes/cms'
 import { HomeHero } from '@components/home-hero'
 import { CaseList } from '@components/case-list'
@@ -24,12 +25,15 @@ const Home = (props: HomePage) => {
 }
 
 export async function getStaticProps({ preview = false }) {
-  return queryContentful(HOME_PAGE_QUERY).then((data) => {
-    console.log(data)
-    return {
-      props: data.home,
-    }
-  })
+  return client
+    .query({
+      query: HOME_PAGE_QUERY,
+    })
+    .then((res: any) => res.data)
+    .then((data: any) => {
+      console.log(data)
+      return { props: data.home }
+    })
 }
 
 export default Home

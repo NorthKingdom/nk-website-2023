@@ -28,6 +28,8 @@ export interface Case {
   readMoreLink: string
   public: boolean
   image?: string
+  // TODO :: Fix this any type!
+  componentsCollection: any
 }
 
 export interface Collection {

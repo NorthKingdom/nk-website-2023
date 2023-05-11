@@ -1,0 +1,11 @@
+.gutterWrapper {
+  &[data-size='small'] {
+    padding: 0 20px;
+  }
+
+  &[data-size='medium'] {
+  }
+
+  &[data-size='large'] {
+  }
+}
