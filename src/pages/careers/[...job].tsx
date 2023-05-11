@@ -13,15 +13,15 @@ const JobDescription = (props: JobDescriptionProps) => {
   return (
     <>
       <Head>
-        <title>{`North Kingdom | Jobs ${props.title ? `- ${props.title}` : ''}`}</title>
+        <title>{`North Kingdom | Careers ${props.title ? `- ${props.title}` : ''}`}</title>
         <meta
           property="og:title"
-          content={`North Kingdom | Jobs ${props.title ? `- ${props.title}` : ''}`}
+          content={`North Kingdom | Careers ${props.title ? `- ${props.title}` : ''}`}
           key="ogtitle"
         />
         <meta
           name="twitter:title"
-          content={`North Kingdom | Jobs ${props.title ? `- ${props.title}` : ''}`}
+          content={`North Kingdom | Careers ${props.title ? `- ${props.title}` : ''}`}
           key="twittertitle"
         />
 
@@ -29,7 +29,7 @@ const JobDescription = (props: JobDescriptionProps) => {
         <meta name="twitter:image" content="/images/shield.png" key="twitterimage" />
         <meta
           property="og:url"
-          content={`https://www.northkingdom.com/jobs/${encodeURIComponent(
+          content={`https://www.northkingdom.com/careers/${encodeURIComponent(
             props.location ? props.location.replace(/\//g, ` `).trim().toLowerCase().replace(/ +/g, '-') : ''
           )}-${encodeURIComponent(
             props.title ? props.title.replace(/-/g, ` `).trim().toLowerCase().replace(/ +/g, '-') : ''
@@ -39,7 +39,7 @@ const JobDescription = (props: JobDescriptionProps) => {
         <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
         <link
           rel="canonical"
-          href={`https://www.northkingdom.com/jobs/${encodeURIComponent(
+          href={`https://www.northkingdom.com/careers/${encodeURIComponent(
             props.location ? props.location.replace(/\//g, ` `).trim().toLowerCase().replace(/ +/g, '-') : ''
           )}-${encodeURIComponent(
             props.title ? props.title.replace(/-/g, ` `).trim().toLowerCase().replace(/ +/g, '-') : ''

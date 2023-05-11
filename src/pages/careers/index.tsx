@@ -1,7 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import style from './Jobs.module.scss'
 import { JobPage, TeamTailorJob } from '@customTypes/cms'
 
 interface JobsPageProp extends JobPage {
@@ -24,7 +23,7 @@ const Jobs = (props: JobsPageProp) => {
         <link rel="canonical" href="https://www.northkingdom.com/jobs" />
       </Head>
       <main style={{ paddingTop: '80px' }}>
-        <h1>Jobs page</h1>
+        <h1>Careers page</h1>
         <Link href="/">Back</Link>
       </main>
     </>
