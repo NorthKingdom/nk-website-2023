@@ -3,15 +3,23 @@ import { Suspense } from 'react'
 import { Html } from '@react-three/drei'
 import dynamic from 'next/dynamic'
 
+const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
 const Shield = dynamic(() => import('./Shield').then((Mod) => Mod.Shield), { ssr: false })
 
 export const Scene = (props: any) => {
   return (
     <Canvas camera={{ position: [0, 0, 5] }} {...props}>
       <Suspense fallback={null}>
-        {/* Shield blur background */}
+        <Effects />
         <Shield lod="low" scale={1.1} />
-        {/* <Html center>
+        <Shield scale={0.75} position-z={0.1} />
+      </Suspense>
+    </Canvas>
+  )
+}
+
+{
+  /* <Html center>
           <h1
             style={{
               fontSize: '8vw',
@@ -30,10 +38,8 @@ export const Scene = (props: any) => {
           >
             Kingdom
           </h1>
-        </Html> */}
-        {/* Shield video */}
-        <Shield scale={0.75} position-z={0.1} />
-      </Suspense>
-    </Canvas>
-  )
+        </Html> */
+}
+{
+  /* Shield video */
 }
