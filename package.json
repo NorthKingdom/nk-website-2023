@@ -10,7 +10,8 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006 -s public",
     "build-storybook": "storybook build -s public",
-    "new-component": "node scripts/new-component.mjs"
+    "new-component": "node scripts/new-component.mjs",
+    "analyze-bundle": "ANALYZE=true yarn build"
   },
   "dependencies": {
     "@react-three/drei": "^9.67.1",
@@ -37,6 +38,7 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^13.4.1",
     "@storybook/addon-essentials": "^7.0.9",
     "@storybook/addon-interactions": "^7.0.9",
     "@storybook/addon-links": "^7.0.9",
