@@ -10,6 +10,9 @@ interface ImageProps {
 }
 
 export const Image = ({ srcSet, alt, caption }: ImageProps) => {
+  {
+    /* TODO :: Can change to next/image component */
+  }
   return (
     <>
       <picture className={styles['image']}>
