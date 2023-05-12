@@ -4,7 +4,6 @@ import Script from 'next/script'
 import Head from 'next/head'
 import getConfig from 'next/config'
 import type { AppProps } from 'next/app'
-import { motion, AnimatePresence } from 'framer-motion'
 import { useGlobalStateStore } from '@store'
 import { useEffect } from 'react'
 import { Layout } from '@components/layout'
@@ -82,17 +81,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
         }}
       />
       <Layout>
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={router.asPath}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { ease: 'circOut' } }}
-            exit={{ opacity: 0, transition: { ease: 'circIn' } }}
-            transition={{ duration: 0.1 }}
-          >
-            <Component key={`component-key-${router.pathname}`} {...pageProps} />
-          </motion.div>
-        </AnimatePresence>
+        <Component {...pageProps} />
       </Layout>
     </>
   )

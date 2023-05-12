@@ -2,7 +2,7 @@ import Lenis from '@studio-freight/lenis'
 import ResizeObserver from 'resize-observer-polyfill'
 import { useEffect, useRef, MutableRefObject } from 'react'
 import { map, clamp } from '@/utils/math'
-import { useLenisStore } from './use-lenis'
+import { useGlobalStateStore } from '@/store/global-state-store'
 import { debounce } from '@/utils/debounce'
 
 export type LenisScrollEvent = {
@@ -30,7 +30,7 @@ type LenisOptions = {
  * @param options  {LenisOptions}  - options
  */
 export function useOnScroll(callback: LenisCallback, options: LenisOptions = {}) {
-  const lenis = useLenisStore((state) => state.lenis) as Lenis
+  const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
   const { enabled } = { enabled: true, ...options }
   const savedCallback = useRef(callback)
 

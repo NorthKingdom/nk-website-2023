@@ -20,4 +20,8 @@
   &__year {
     width: 80px;
   }
+
+  &__title {
+    width: calc(50% - 80px);
+  }
 }
