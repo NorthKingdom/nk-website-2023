@@ -94,9 +94,6 @@ body {
 }
 
 #__next {
-  overflow-x: hidden;
-  overflow-y: auto;
-
   html[data-is-menu-open='true'] & {
     overflow: hidden;
   }
@@ -120,6 +117,27 @@ body {
   // &::-webkit-scrollbar-thumb:hover {
   //   background: rgba($color: $white, $alpha: 0.7);
   // }
+}
+
+// Lenis
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 a {

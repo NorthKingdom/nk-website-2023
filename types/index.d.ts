@@ -9,6 +9,7 @@ declare module 'react' {
 declare global {
   interface Window {
     gtag?: any
+    lenis?: any
   }
 }
 

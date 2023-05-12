@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-
+import Lenis from '@studio-freight/lenis'
 interface GlobalState {
   theme: 'dark' | 'light'
   setTheme: (theme: 'dark' | 'light') => void
@@ -9,6 +9,8 @@ interface GlobalState {
   isMenuOpen: boolean
   setIsMenuOpen: (isMenuOpen: boolean) => void
   toggleMenu: () => void
+  lenis: Lenis | null
+  setLenis: (lenis: Lenis | null) => void
 }
 
 export const useGlobalStateStore = create<GlobalState>()((set) => ({
@@ -28,4 +30,6 @@ export const useGlobalStateStore = create<GlobalState>()((set) => ({
     set((state) => ({
       isMenuOpen: !state.isMenuOpen,
     })),
+  lenis: null,
+  setLenis: (lenis) => set({ lenis }),
 }))
