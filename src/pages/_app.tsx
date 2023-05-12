@@ -82,17 +82,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
         }}
       />
       <Layout>
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={router.asPath}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { ease: 'circOut' } }}
-            exit={{ opacity: 0, transition: { ease: 'circIn' } }}
-            transition={{ duration: 0.1 }}
-          >
-            <Component {...pageProps} />
-          </motion.div>
-        </AnimatePresence>
+        <Component {...pageProps} />
       </Layout>
     </>
   )

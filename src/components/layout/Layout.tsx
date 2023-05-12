@@ -5,12 +5,15 @@ import { Footer } from '@components/footer'
 import styles from './Layout.module.scss'
 import { useGlobalStateStore } from '@store/global-state-store'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
+import { useRouter } from 'next/router'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
 export function Layout({ children }: LayoutProps) {
+  const router = useRouter()
   const rafId = useRef<number>()
   const wrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -48,13 +51,23 @@ export function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header />
-      <main ref={wrapperRef} className={styles.main}>
-        <div ref={contentRef} className={styles.content}>
-          {children}
-        </div>
-        <div className={styles['footer-spacer']}></div>
-      </main>
-      <Footer />
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.main
+          ref={wrapperRef}
+          className={styles.main}
+          key={router.asPath}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { ease: 'circOut' } }}
+          exit={{ opacity: 0, transition: { ease: 'circIn' } }}
+          transition={{ duration: 0.1 }}
+        >
+          <div ref={contentRef} className={styles.content} key={router.route}>
+            {children}
+          </div>
+          <div className={styles['footer-spacer']}></div>
+          <Footer />
+        </motion.main>
+      </AnimatePresence>
     </>
   )
 }
