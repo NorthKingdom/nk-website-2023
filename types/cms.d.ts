@@ -32,6 +32,14 @@ export interface Case {
   componentsCollection: any
 }
 
+export type CaseArchiveItem = Pick<Case, 'title' | 'date' | 'client' | 'projectLink'>
+
+export interface CaseArchive {
+  casesCollection: {
+    items: CaseArchiveItem[]
+  }
+}
+
 export interface Collection {
   cases: Case[]
   name: string
