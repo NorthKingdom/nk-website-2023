@@ -1,0 +1,71 @@
+.stickyList {
+  height: auto;
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    border-top: 2px solid black;
+    padding: 14px 0 64px 0;
+
+    @include mq($until: tablet) {
+      flex-direction: column;
+    }
+  }
+
+  &__leftContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+
+    @include mq($until: tablet) {
+      width: 100%;
+    }
+
+    h3 {
+      font-family: 'FKGroteskNeue-Regular';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 28px;
+      line-height: 32px;
+      letter-spacing: -0.01em;
+      color: #000000;
+      margin-bottom: 12px;
+
+      @include mq($until: tablet) {
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  &__stickyMediaContainer {
+    position: sticky;
+    height: auto;
+    width: 333px;
+    top: 14px;
+
+    @include mq($until: tablet) {
+      margin-bottom: 16px;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__rightContainer {
+    width: 50%;
+    height: auto;
+
+    @include mq($until: tablet) {
+      width: 100%;
+    }
+
+    p {
+      font-family: 'FKGroteskNeue-Regular';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 28px;
+      line-height: 32px;
+      letter-spacing: -0.01em;
+      color: #000000;
+    }
+  }
+}

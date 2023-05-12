@@ -90,7 +90,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
             exit={{ opacity: 0, transition: { ease: 'circIn' } }}
             transition={{ duration: 0.1 }}
           >
-            <Component {...pageProps} />
+            <Component key={`component-key-${router.pathname}`} {...pageProps} />
           </motion.div>
         </AnimatePresence>
       </Layout>
