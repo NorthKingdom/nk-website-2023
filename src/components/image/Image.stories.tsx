@@ -19,3 +19,11 @@ export const Default: Story = {
     alt: 'temp alt',
   },
 }
+
+export const WithCaption: Story = {
+  args: {
+    srcSet: ['/dummy/showreelposter.jpg'],
+    alt: 'temp alt',
+    caption: 'Example caption for the fullscreen image',
+  },
+}

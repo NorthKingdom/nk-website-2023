@@ -15,7 +15,7 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
       {components.map((c: any) => {
         switch (c.__typename) {
           case 'DescriptionComponent':
-            return <Description copy={c.copy} header={c.header} />
+            return <Description copy={c.copy} header={c.header} link={c.link} />
           case 'Video':
             return (
               <VideoPlayer
