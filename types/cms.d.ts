@@ -30,6 +30,7 @@ export interface Case {
   image?: string
   // TODO :: Fix this any type!
   componentsCollection: any
+  backgroundColor?: string
 }
 
 export type CaseArchiveItem = Pick<Case, 'title' | 'date' | 'client' | 'projectLink'>

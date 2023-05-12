@@ -7,6 +7,7 @@ interface VideoPlayerProps {
   src: {
     url: string
   }[]
+  className?: string
   poster: string
   playsinline?: boolean
   controls?: boolean
@@ -16,6 +17,7 @@ interface VideoPlayerProps {
 }
 
 export const VideoPlayer = ({
+  className,
   src,
   poster,
   playsinline = false,
@@ -26,7 +28,7 @@ export const VideoPlayer = ({
 }: VideoPlayerProps) => {
   return (
     <video
-      className={styles['videoPlayer']}
+      className={`${styles['videoPlayer']} ${className}`}
       poster={poster}
       playsInline={playsinline}
       // TODO :: Create custom controls and switch this to false
@@ -36,6 +38,7 @@ export const VideoPlayer = ({
       loop={loop}
     >
       {src.map((s, i: number) => {
+        // TODO :: fix 'type'
         return <source key={`video-src-${i}`} src={s.url} type="video/mp4" />
       })}
 
