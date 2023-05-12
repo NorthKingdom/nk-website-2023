@@ -26,7 +26,7 @@
     }
 
     h2 {
-      color: #000000;
+      // color: #000000;
       &[data-size='large'] {
         font-family: 'FKGroteskNeue-Regular';
         font-style: normal;
@@ -69,7 +69,7 @@
       @include fluid-type(375px, 1440px, 18px, 28px);
       line-height: 32px;
       letter-spacing: -0.01em;
-      color: #000000;
+      // color: #000000;
     }
 
     a {
@@ -86,7 +86,7 @@
 
       /* Black / 100% */
 
-      color: #000000;
+      // color: #000000;
     }
   }
 }

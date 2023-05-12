@@ -12,10 +12,12 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
   return (
     <>
       {/* TODO :: // Fix any type here */}
-      {components.map((c: any) => {
+      {components.map((c: any, i: number) => {
         switch (c.__typename) {
+          case 'CaseHero':
+            return
           case 'DescriptionComponent':
-            return <Description copy={c.copy} header={c.header} link={c.link} />
+            return <Description key={`case-description-${i}`} copy={c.copy} header={c.header} link={c.link} />
           case 'Video':
             return (
               <VideoPlayer
@@ -24,13 +26,15 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
                 loop={c.loop}
                 muted={c.muted}
                 autoPlay={c.autoPlay}
+                key={`case-video-${i}`}
               />
             )
           case 'ResponsiveImage':
-            return <Image srcSet={[c.desktopImage.url, c.mobileImage.url]} alt={c.altText} />
+            return <Image key={`case-image-${i}`} srcSet={[c.desktopImage.url, c.mobileImage.url]} alt={c.altText} />
           case 'TwoImageComponent':
             return (
               <TwoImageLayout
+                key={`case-twoimage-${i}`}
                 leftSrcSet={[c.imageOne.desktopImage.url, c.imageOne.mobileImage.url]}
                 leftCaption={c.imageOneCaption}
                 rightSrcSet={[c.imageOne.desktopImage.url, c.imageOne.mobileImage.url]}
@@ -40,7 +44,7 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
               />
             )
           default:
-            console.error(`dont have this component implemented in ComponentResolver.tsx`)
+            console.error(`dont have this component implemented in ComponentResolver.tsx`, c)
             return null
         }
       })}
