@@ -1,15 +1,23 @@
 import React from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
-import style from './Work.module.scss'
+import client from '@graphql/client'
+import { WORK_PAGE_QUERY } from '@graphql/queries'
+import { HomePage, CaseArchive as CaseArchiveType } from '@customTypes/cms'
+import { CaseList } from '@components/case-list'
+import { CaseArchive } from '@components/case-archive'
 
-function Work() {
+interface WorkPageProps {
+  home: Pick<HomePage, 'heroCasesCollection'>
+  caseArchive: CaseArchiveType
+}
+
+function Work(props: WorkPageProps) {
   return (
     <>
       <Head>
-        <title>North Kingdom | Collections</title>
-        <meta property="og:title" content="North Kingdom | Collections" key="ogtitle" />
-        <meta name="twitter:title" content="North Kingdom | Collections" key="twittertitle" />
+        <title>North Kingdom | Work</title>
+        <meta property="og:title" content="North Kingdom | Work" key="ogtitle" />
+        <meta name="twitter:title" content="North Kingdom | Work" key="twittertitle" />
         <meta property="og:image" content="/images/shield.png" key="ogimage" />
         <meta name="twitter:image" content="/images/shield.png" key="twitterimage" />
         <meta property="og:url" content={`https://www.northkingdom.com/work/`} key="ogurl" />
@@ -17,25 +25,21 @@ function Work() {
         <link rel="canonical" href="https://www.northkingdom.com/work" />
       </Head>
       <main style={{ paddingTop: '80px' }}>
-        <h1>Work</h1>
-        <Link href="/">Back</Link>
+        <CaseList cases={props.home.heroCasesCollection.items} />
+        <CaseArchive cases={props.caseArchive.casesCollection.items} />
       </main>
     </>
   )
 }
 
 export async function getStaticProps({ preview = false }) {
-  return {
-    props: {},
-  }
-  //   return getCollectionsPage(preview).then((data) => {
-  //     data.collections.map((coll) => (coll.cases = coll.cases.sort(() => Math.random() - Math.random()).slice(0, 10)))
-  //     return {
-  //       props: {
-  //         collections: data.collections,
-  //       },
-  //     }
-  //   })
-}
+  const res = await client.query({
+    query: WORK_PAGE_QUERY,
+  })
+  const data = res.data
 
+  return {
+    props: { ...data },
+  }
+}
 export default Work

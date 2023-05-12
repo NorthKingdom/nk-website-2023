@@ -1,0 +1,23 @@
+@import 'styles/mixins/notch.scss';
+
+.caseArchive {
+  padding-top: 84px;
+  padding-bottom: 84px;
+  background-color: var(--color-white);
+  color: var(--color-black);
+
+  @include notch(var(--color-white));
+
+  &__title {
+    margin-bottom: 40px;
+  }
+}
+
+.caseArchiveItem {
+  display: flex;
+  width: 100%;
+
+  &__year {
+    width: 80px;
+  }
+}
