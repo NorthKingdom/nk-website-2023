@@ -8,8 +8,8 @@ interface DescriptionProps {
   headerSize?: 'large' | 'small'
   copy: string
   link?: {
-    text: string
-    href: string
+    copy: string
+    url: string
   }
 }
 
@@ -19,7 +19,7 @@ export const Description = ({ header, headerSize, copy, link }: DescriptionProps
       <div className={bem('left')}>{header && <h2 data-size={headerSize}>{header}</h2>}</div>
       <div className={bem('right')}>
         <p>{copy}</p>
-        {link && <a href={link.href}>{link.text}</a>}
+        {link && <a href={link.url}>{link.copy}</a>}
       </div>
     </section>
   )

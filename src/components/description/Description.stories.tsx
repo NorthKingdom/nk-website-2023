@@ -39,8 +39,8 @@ export const WithLink: Story = {
   args: {
     copy: 'From concept to execution, we design experiences, products and services that help our international clients create emotional and meaningful connections between their brand and people.',
     link: {
-      text: 'Learn More',
-      href: '',
+      copy: 'Learn More',
+      url: '',
     },
   },
 }
@@ -51,8 +51,8 @@ export const WithLargeHeaderAndLink: Story = {
     headerSize: 'large',
     copy: 'From concept to execution, we design experiences, products and services that help our international clients create emotional and meaningful connections between their brand and people.',
     link: {
-      text: 'Learn More',
-      href: '',
+      copy: 'Learn More',
+      url: '',
     },
   },
 }
@@ -63,8 +63,8 @@ export const WithSmallHeaderAndLink: Story = {
     headerSize: 'small',
     copy: 'From concept to execution, we design experiences, products and services that help our international clients create emotional and meaningful connections between their brand and people.',
     link: {
-      text: 'Learn More',
-      href: '',
+      copy: 'Learn More',
+      url: '',
     },
   },
 }
