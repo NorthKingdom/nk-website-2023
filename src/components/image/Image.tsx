@@ -6,7 +6,7 @@ const bem = bemify(styles, 'image')
 interface ImageProps {
   srcSet: string[]
   alt: string
-  caption: string
+  caption?: string
 }
 
 export const Image = ({ srcSet, alt, caption }: ImageProps) => {
