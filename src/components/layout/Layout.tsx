@@ -15,14 +15,13 @@ export function Layout({ children }: LayoutProps) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const isTouchDevice = useIsTouchDevice()
-  const [lenis, setLenis] = useGlobalStateStore((state) => [state.lenis, state.setLenis])
+  const setLenis = useGlobalStateStore((state) => state.setLenis)
 
   useEffect(() => {
     if (!wrapperRef.current || !contentRef.current) return
 
     window.scrollTo(0, 0)
 
-    // TODO: disable smooth scroll mobile
     const lenis = new Lenis({
       wrapper: wrapperRef.current,
       content: contentRef.current,
