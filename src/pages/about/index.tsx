@@ -3,7 +3,7 @@ import Head from 'next/head'
 import style from './About.module.scss'
 import Link from 'next/link'
 import client from '@graphql/client'
-import { ABOUT_PAGE_QUERY } from '@graphql/graphql-queries'
+import { ABOUT_PAGE_QUERY } from '@graphql/queries'
 import { About as AboutPageProps } from '@customTypes/cms'
 
 const About = (props: AboutPageProps) => {
