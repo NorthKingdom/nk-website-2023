@@ -3,7 +3,7 @@ import Lenis from '@studio-freight/lenis'
 import { Header } from '@components/header'
 import { Footer } from '@components/footer'
 import styles from './Layout.module.scss'
-import { useLenisStore } from '@hooks/use-lenis'
+import { useGlobalStateStore } from '@store/global-state-store'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 
 interface LayoutProps {
@@ -15,7 +15,7 @@ export function Layout({ children }: LayoutProps) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const isTouchDevice = useIsTouchDevice()
-  const [lenis, setLenis] = useLenisStore((state) => [state.lenis, state.setLenis])
+  const [lenis, setLenis] = useGlobalStateStore((state) => [state.lenis, state.setLenis])
 
   useEffect(() => {
     if (!wrapperRef.current || !contentRef.current) return
