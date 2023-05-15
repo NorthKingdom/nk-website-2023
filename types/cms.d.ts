@@ -1,3 +1,5 @@
+import { idText } from 'typescript'
+
 export interface About {
   sectionOneImages: images[]
   sectionOneSubheader: string
@@ -35,7 +37,11 @@ export interface Case {
   }
 }
 
-export type CaseArchiveItem = Pick<Case, 'title' | 'date' | 'client' | 'projectLink'>
+export interface CaseArchiveItem extends Pick<Case, 'title' | 'date' | 'client' | 'projectLink'> {
+  sys: {
+    id: string
+  }
+}
 
 export interface CaseArchive {
   casesCollection: {

@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
-import { WORK_PAGE_QUERY } from '@graphql/queries'
+import { CASE_ARCHIVE_QUERY, WORK_PAGE_QUERY } from '@graphql/queries'
 import { HomePage, CaseArchive as CaseArchiveType } from '@customTypes/cms'
 import { CaseList } from '@components/case-list'
 import { CaseArchive } from '@components/case-archive'
@@ -26,7 +26,7 @@ function Work(props: WorkPageProps) {
       </Head>
       <main style={{ paddingTop: '80px' }}>
         <CaseList cases={props.home.heroCasesCollection.items} />
-        <CaseArchive cases={props.caseArchive.casesCollection.items} />
+        <CaseArchive />
       </main>
     </>
   )
@@ -37,6 +37,10 @@ export async function getStaticProps({ preview = false }) {
     query: WORK_PAGE_QUERY,
   })
   const data = res.data
+
+  // const caseArchive = await client.query({
+  //   query: CASE_ARCHIVE_QUERY,
+  // })
 
   return {
     props: { ...data },
