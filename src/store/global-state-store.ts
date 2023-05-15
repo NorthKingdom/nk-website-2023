@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import Lenis from '@studio-freight/lenis'
 interface GlobalState {
+  get: () => GlobalState
   theme: 'dark' | 'light'
   setTheme: (theme: 'dark' | 'light') => void
   toggleTheme: () => void
@@ -13,7 +14,8 @@ interface GlobalState {
   setLenis: (lenis: Lenis | null) => void
 }
 
-export const useGlobalStateStore = create<GlobalState>()((set) => ({
+export const useGlobalStateStore = create<GlobalState>()((set, get) => ({
+  get,
   theme: 'dark',
   setTheme: (theme) => set({ theme }),
   toggleTheme: () =>

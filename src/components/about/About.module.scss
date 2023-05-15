@@ -6,6 +6,11 @@
   background-color: var(--color-white);
   color: var(--color-black);
   padding-top: 40px;
+  position: relative;
 
   @include notch(var(--color-white));
+
+  &__themeChangeTrigger {
+    top: -50px;
+  }
 }

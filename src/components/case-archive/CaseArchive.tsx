@@ -90,7 +90,6 @@ export const CaseArchive = (props: CaseArchiveProps) => {
       <h1 className={bem('title')}>Archive</h1>
       <List items={data?.caseArchive?.items ?? []} id={(item) => item.sys.id} renderItem={CaseArchiveItem} />
       {loading ? <p>Loading...</p> : <FetchMoreTrigger fetchMore={_fetchMore} />}
-      {}
     </ContentWrapper>
   )
 }
