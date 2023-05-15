@@ -22,7 +22,7 @@ const Home = (props: HomePage) => {
 }
 
 export async function getStaticProps({ preview = false }) {
-  return client
+  return client(false)
     .query({
       query: HOME_PAGE_QUERY,
     })
