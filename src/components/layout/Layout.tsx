@@ -12,12 +12,27 @@ interface LayoutProps {
   children: React.ReactNode
 }
 
+const variants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: { ease: 'circOut' },
+  },
+  exit: {
+    opacity: 0,
+    transition: { ease: 'circOut' },
+  },
+}
+
 export function Layout({ children }: LayoutProps) {
   const router = useRouter()
   const rafId = useRef<number>()
   const wrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const isTouchDevice = useIsTouchDevice()
+  const lenis = useGlobalStateStore((state) => state.lenis)
   const setLenis = useGlobalStateStore((state) => state.setLenis)
 
   useEffect(() => {
@@ -28,7 +43,7 @@ export function Layout({ children }: LayoutProps) {
     const lenis = new Lenis({
       wrapper: wrapperRef.current,
       content: contentRef.current,
-      smooth: isTouchDevice,
+      smooth: !isTouchDevice,
     })
 
     setLenis(lenis)
@@ -48,26 +63,33 @@ export function Layout({ children }: LayoutProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTouchDevice])
 
+  const onPageTransitionStart = (variant: 'animate' | 'exit') => {
+    if (lenis && variant === 'animate') {
+      lenis.scrollTo(0, { immediate: true })
+    }
+  }
+
   return (
     <>
       <Header />
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.main
-          ref={wrapperRef}
-          className={styles.main}
-          key={router.asPath}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { ease: 'circOut' } }}
-          exit={{ opacity: 0, transition: { ease: 'circIn' } }}
-          transition={{ duration: 0.1 }}
-        >
-          <div ref={contentRef} className={styles.content} key={router.route}>
-            {children}
-          </div>
-          <div className={styles['footer-spacer']}></div>
-          <Footer />
-        </motion.main>
-      </AnimatePresence>
+      <main ref={wrapperRef} className={styles.main}>
+        <div ref={contentRef}>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.main
+              key={router.asPath}
+              variants={variants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              onAnimationStart={onPageTransitionStart}
+              transition={{ duration: 0.1 }}
+            >
+              <div className={styles.content}>{children}</div>
+              <Footer />
+            </motion.main>
+          </AnimatePresence>
+        </div>
+      </main>
     </>
   )
 }

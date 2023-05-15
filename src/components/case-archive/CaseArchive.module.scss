@@ -5,6 +5,7 @@
   padding-bottom: 84px;
   background-color: var(--color-white);
   color: var(--color-black);
+  min-height: 100vh;
 
   @include notch(var(--color-white));
 
