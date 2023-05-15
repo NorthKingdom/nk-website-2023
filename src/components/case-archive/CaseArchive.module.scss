@@ -11,6 +11,12 @@
   &__title {
     margin-bottom: 40px;
   }
+
+  &__fetchMoreTrigger {
+    height: 1px;
+    width: 100%;
+    opacity: 0;
+  }
 }
 
 .caseArchiveItem {
@@ -18,10 +24,14 @@
   width: 100%;
 
   &__year {
-    width: 80px;
+    width: 120px;
   }
 
-  &__title {
-    width: calc(50% - 80px);
+  &__projectTitle {
+    width: calc(50% - 120px);
+  }
+
+  &__link {
+    margin-left: auto;
   }
 }

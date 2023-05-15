@@ -33,7 +33,6 @@ export const Footer = (props: FooterProps) => {
     () => {
       if (!$footer.current) return
       const footerBB = $footer.current.getBoundingClientRect()
-      console.log(footerBB.height)
       document.documentElement.style.setProperty('--footer-height', `${footerBB.height - 12}px`)
     },
     { wait: 100 }

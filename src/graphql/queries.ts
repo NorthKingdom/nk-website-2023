@@ -65,6 +65,25 @@ export const HOME_PAGE_QUERY = gql`
   }
 `
 
+export const CASE_ARCHIVE_QUERY = gql`
+  query CaseArchiveQuery($limit: Int = 20, $skip: Int = 0) {
+    caseArchive: caseCollection(limit: $limit, skip: $skip, order: date_DESC) {
+      total
+      items {
+        __typename
+        sys {
+          id
+        }
+        slug
+        title
+        client
+        date
+        projectLink
+      }
+    }
+  }
+`
+
 export const WORK_PAGE_QUERY = gql`
   ${RESPONSIVE_IMAGE}
   ${VIDEO}
@@ -82,23 +101,6 @@ export const WORK_PAGE_QUERY = gql`
             ...responsiveImage
             ...video
           }
-        }
-      }
-    }
-
-    caseArchive(id: "4TcNyppL5dHqHallDCoJtK") {
-      __typename
-      sys {
-        id
-      }
-      casesCollection {
-        items {
-          __typename
-          sys {
-            id
-          }
-          title
-          date
         }
       }
     }

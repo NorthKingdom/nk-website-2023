@@ -4,7 +4,6 @@ import { bemify } from '@utils/bemify'
 import type { Case } from '@customTypes/cms'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 import { useInViewAnimation } from '@hooks/use-inview-animation'
-import cx from 'clsx'
 import { getContentfulImageSrc } from '@utils/contentful'
 import { useBreakpointUntil } from '@hooks/use-breakpoint'
 const bem = bemify(styles, 'caseListItem')
@@ -35,7 +34,7 @@ export const CaseListItem = ({
   const imageSrc = getContentfulImageSrc(thumbnailSrc) ?? 'dummy/case-thumb-fallback.webp'
 
   return (
-    <div ref={$container} className={cx(bem(), className)} style={style}>
+    <div ref={$container} className={className} style={style}>
       <AspectRatio ratio={16 / 10} className={bem('imageContainer')}>
         <img
           className={bem('image')}

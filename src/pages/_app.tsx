@@ -7,6 +7,8 @@ import type { AppProps } from 'next/app'
 import { useGlobalStateStore } from '@store'
 import { useEffect } from 'react'
 import { Layout } from '@components/layout'
+import { ApolloProvider } from '@apollo/client'
+import client from '@graphql/client'
 
 export default function App({ Component, pageProps, router }: AppProps) {
   const { publicRuntimeConfig } = getConfig()
@@ -80,9 +82,11 @@ export default function App({ Component, pageProps, router }: AppProps) {
           `,
         }}
       />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <ApolloProvider client={client}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ApolloProvider>
     </>
   )
 }
