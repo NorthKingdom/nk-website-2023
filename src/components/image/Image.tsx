@@ -15,7 +15,6 @@ export const Image = ({ className, srcSet, caption }: ImageProps) => {
     /* TODO :: Can change to next/image component */
     /* TODO :: Change from Desktop to Mobile Image on diff sizes */
   }
-  console.log(srcSet)
   return (
     <>
       <picture className={`${className} ${styles['image']}`}>

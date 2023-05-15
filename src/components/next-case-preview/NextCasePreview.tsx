@@ -2,12 +2,9 @@ import React, { useEffect, useRef } from 'react'
 import styles from './NextCasePreview.module.scss'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { bemify } from '@utils/bemify'
-import Link from 'next/link'
 const bem = bemify(styles, 'nextCasePreview')
-import { useInView } from 'react-hook-inview'
 import { useRouter } from 'next/router'
 import { useOnScroll } from '@hooks/use-on-scroll'
-import { mergeRefs } from 'react-merge-refs'
 
 interface NextCasePreviewProps {
   caseTitle: string
@@ -17,35 +14,27 @@ interface NextCasePreviewProps {
 
 export const NextCasePreview = ({ src, caseTitle, client }: NextCasePreviewProps) => {
   const router = useRouter()
-  const _ref = useRef()
-
-  const [ref, isVisible] = useInView({
-    threshold: 0.9,
-    defaultInView: false,
-  })
+  const ref = useRef(null)
 
   useOnScroll(
     ({ progress: _progress }) => {
+      console.log(_progress)
       progress.set(_progress)
-      // console.log('progress', progress)
+      if (_progress >= 0.48) {
+        console.log(`push new route`, router.asPath)
+        router.push(router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case')
+      }
     },
     {
-      target: _ref,
+      target: ref,
     }
   )
 
   const progress = useMotionValue(0)
-  const scale = useTransform(progress, [0, 0.5], [0.3, 1])
-
-  useEffect(() => {
-    if (isVisible) {
-      console.log(`go to new route`)
-      // router.push(router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case')
-    }
-  }, [isVisible])
+  const scale = useTransform(progress, [0.4, 0.5], [1, 1.5])
 
   return (
-    <div ref={mergeRefs([ref, _ref])} className={styles['nextCasePreview']}>
+    <div ref={ref} className={styles['nextCasePreview']}>
       <motion.img
         src="/images/shield-mask-local.png"
         style={{
@@ -68,9 +57,6 @@ export const NextCasePreview = ({ src, caseTitle, client }: NextCasePreviewProps
       <div className={bem('inner')}>
         <p>{client}</p>
         <h2>{caseTitle}</h2>
-        {/* <Link href="" scroll={true}>
-          To Riot
-        </Link> */}
       </div>
     </div>
   )
