@@ -32,9 +32,9 @@ function Work(props: WorkPageProps) {
   )
 }
 
-export async function getStaticProps({ preview = false }) {
-  const res = await client.query({
-    query: WORK_PAGE_QUERY,
+export async function getStaticProps({ draftMode = false }) {
+  const res = await client(draftMode).query({
+    query: WORK_PAGE_QUERY(draftMode),
   })
   const data = res.data
 

@@ -21,10 +21,10 @@ const Home = (props: HomePage) => {
   )
 }
 
-export async function getStaticProps({ preview = false }) {
-  return client
+export async function getStaticProps({ draftMode = false }) {
+  return client(draftMode)
     .query({
-      query: HOME_PAGE_QUERY,
+      query: HOME_PAGE_QUERY(draftMode),
     })
     .then((res: any) => res.data)
     .then((data: any) => {

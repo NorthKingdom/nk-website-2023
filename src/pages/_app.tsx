@@ -82,7 +82,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
           `,
         }}
       />
-      <ApolloProvider client={client}>
+      <ApolloProvider client={client(false)}>
         <Layout>
           <Component {...pageProps} />
         </Layout>
