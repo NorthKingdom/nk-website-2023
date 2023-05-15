@@ -5,12 +5,12 @@ import { CASE_HERO } from './fragments/CaseHero.fragment'
 import { DESCRIPTION } from './fragments/DescriptionComponent.fragment'
 import { TWO_IMAGE_COMPONENT } from './fragments/TwoImageComponent.fragment'
 
-export const HOME_PAGE_QUERY = gql`
+export const HOME_PAGE_QUERY = (draftMode: boolean) => gql`
   ${RESPONSIVE_IMAGE}
   ${VIDEO}
 
   query {
-    home(id: "3uX3aK4XeCQySQQohsAsyN") {
+    home(preview: ${draftMode}, id: "3uX3aK4XeCQySQQohsAsyN") {
       aboutNk
       heroCasesCollection {
         items {
@@ -84,12 +84,12 @@ export const CASE_ARCHIVE_QUERY = gql`
   }
 `
 
-export const WORK_PAGE_QUERY = gql`
+export const WORK_PAGE_QUERY = (draftMode: boolean) => gql`
   ${RESPONSIVE_IMAGE}
   ${VIDEO}
 
   query WorkPageQuery {
-    home(id: "3uX3aK4XeCQySQQohsAsyN") {
+    home(preview: ${draftMode}, id: "3uX3aK4XeCQySQQohsAsyN") {
       heroCasesCollection {
         items {
           title
@@ -107,9 +107,9 @@ export const WORK_PAGE_QUERY = gql`
   }
 `
 
-export const ABOUT_PAGE_QUERY = gql`
+export const ABOUT_PAGE_QUERY = (draftMode: boolean) => gql`
   query {
-    about(id: "51Nfb7PPc4BlNbxemmxCJS") {
+    about(preview: ${draftMode}, id: "51Nfb7PPc4BlNbxemmxCJS") {
       sectionOneCopy
       sectionOneHeader
       sectionOneSubheader
@@ -138,7 +138,7 @@ export const ABOUT_PAGE_QUERY = gql`
   }
 `
 
-export const CASE_PAGE_QUERY = (caseSlug: string) => gql`
+export const CASE_PAGE_QUERY = (caseSlug: string, draftMode: boolean) => gql`
   ${VIDEO}
   ${RESPONSIVE_IMAGE}
   ${CASE_HERO}
@@ -146,7 +146,7 @@ export const CASE_PAGE_QUERY = (caseSlug: string) => gql`
   ${TWO_IMAGE_COMPONENT}
 
   query {
-    caseCollection(limit: 1, where: { slug: "${caseSlug}" }) {
+    caseCollection(preview: ${draftMode}, limit: 1, where: { slug: "${caseSlug}" }) {
       items {
         title
         client
