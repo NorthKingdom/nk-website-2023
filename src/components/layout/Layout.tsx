@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 interface LayoutProps {
   children: React.ReactNode
+  hideFooter: boolean
 }
 
 const variants = {
@@ -26,7 +27,8 @@ const variants = {
   },
 }
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children, hideFooter, ...props }: LayoutProps) {
+  console.log(props)
   const router = useRouter()
   const rafId = useRef<number>()
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -63,7 +65,7 @@ export function Layout({ children }: LayoutProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTouchDevice])
 
-  const onPageTransitionStart = (variant) => {
+  const onPageTransitionStart = (variant: 'animate' | 'exit') => {
     if (lenis && variant === 'animate') {
       lenis.scrollTo(0, { immediate: true })
     }
@@ -85,7 +87,11 @@ export function Layout({ children }: LayoutProps) {
               transition={{ duration: 0.1 }}
             >
               <div className={styles.content}>{children}</div>
-              <Footer />
+              {!hideFooter && (
+                <>
+                  <Footer />
+                </>
+              )}
             </motion.main>
           </AnimatePresence>
         </div>

@@ -24,12 +24,22 @@ export const NextCasePreview = ({ src, caseTitle, client }: NextCasePreviewProps
   useEffect(() => {
     if (isVisible) {
       console.log(`go to new route`)
-      router.push(router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case')
+      // router.push(router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case')
     }
   }, [isVisible])
 
   return (
     <div ref={ref} className={styles['nextCasePreview']}>
+      <img
+        src="/images/shield-mask-local.png"
+        style={{
+          position: `absolute`,
+          top: 0,
+          left: 0,
+          width: `100%`,
+          height: `100%`,
+        }}
+      />
       <motion.img
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

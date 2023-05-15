@@ -44,7 +44,7 @@ const Case = (props: CasePageProps) => {
   }, [props])
   return (
     <>
-      {!showPage && <Loading />}
+      {/* {!showPage && <Loading />} */}
 
       <>
         <Head>
@@ -121,7 +121,7 @@ const Case = (props: CasePageProps) => {
           <GutterWrapper size="small">
             <ComponentResolver components={props.componentsCollection?.items || []} />
           </GutterWrapper>
-          {showPage && <NextCasePreview caseTitle={'Masterclash'} client={'Riot'} src={'/dummy/temp-riot-1.jpg'} />}
+          <NextCasePreview caseTitle={'Masterclash'} client={'Riot'} src={'/dummy/temp-riot-1.jpg'} />
         </motion.main>
       </>
     </>
@@ -135,7 +135,7 @@ export async function getStaticProps({ params, draftMode = false }: { params: { 
     })
     .then((res) => res.data)
     .then((data) => {
-      return { props: data.caseCollection.items[0] }
+      return { props: { hideFooter: true, ...data.caseCollection.items[0] } }
     })
 }
 
