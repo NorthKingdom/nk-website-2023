@@ -2,16 +2,17 @@
   position: relative;
   overflow: hidden;
   width: 333px;
-  height: 188px;
+  height: 212px;
 
   &__imageContainer {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 90%;
+    height: 188px;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-grow: 1;
   }
 
   &__left {
@@ -64,13 +65,38 @@
     }
   }
 
-  &__indicatorsContainer {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+  /* Set 4/Desktop/Label */
+
+  font-family: 'FK Grotesk Mono Trial';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  /* or 120% */
+
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  /* Black/100% */
+
+  color: #000000;
+
+  &__informationContainer {
+    height: 10%;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    height: 10%;
+    justify-content: flex-end;
+    align-items: center;
+
+    &[data-hasCaption='true'] {
+      justify-content: space-between;
+    }
+  }
+
+  &__indicatorsContainer {
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
   }
