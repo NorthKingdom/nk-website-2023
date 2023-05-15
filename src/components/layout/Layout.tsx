@@ -10,9 +10,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 interface LayoutProps {
   children: React.ReactNode
+  hideFooter: boolean
 }
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children, hideFooter, ...props }: LayoutProps) {
+  console.log(props)
   const router = useRouter()
   const rafId = useRef<number>()
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -64,8 +66,12 @@ export function Layout({ children }: LayoutProps) {
           <div ref={contentRef} className={styles.content} key={router.route}>
             {children}
           </div>
-          <div className={styles['footer-spacer']}></div>
-          <Footer />
+          {!hideFooter && (
+            <>
+              <div className={styles['footer-spacer']}></div>
+              <Footer />
+            </>
+          )}
         </motion.main>
       </AnimatePresence>
     </>
