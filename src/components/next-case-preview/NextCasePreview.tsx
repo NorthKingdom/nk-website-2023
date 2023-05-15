@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styles from './NextCasePreview.module.scss'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { bemify } from '@utils/bemify'
 import Link from 'next/link'
 const bem = bemify(styles, 'nextCasePreview')
 import { useInView } from 'react-hook-inview'
 import { useRouter } from 'next/router'
+import { useOnScroll } from '@hooks/use-on-scroll'
+import { mergeRefs } from 'react-merge-refs'
 
 interface NextCasePreviewProps {
   caseTitle: string
@@ -15,11 +17,25 @@ interface NextCasePreviewProps {
 
 export const NextCasePreview = ({ src, caseTitle, client }: NextCasePreviewProps) => {
   const router = useRouter()
+  const _ref = useRef()
 
   const [ref, isVisible] = useInView({
     threshold: 0.9,
     defaultInView: false,
   })
+
+  useOnScroll(
+    ({ progress: _progress }) => {
+      progress.set(_progress)
+      // console.log('progress', progress)
+    },
+    {
+      target: _ref,
+    }
+  )
+
+  const progress = useMotionValue(0)
+  const scale = useTransform(progress, [0, 0.5], [0.3, 1])
 
   useEffect(() => {
     if (isVisible) {
@@ -29,10 +45,11 @@ export const NextCasePreview = ({ src, caseTitle, client }: NextCasePreviewProps
   }, [isVisible])
 
   return (
-    <div ref={ref} className={styles['nextCasePreview']}>
-      <img
+    <div ref={mergeRefs([ref, _ref])} className={styles['nextCasePreview']}>
+      <motion.img
         src="/images/shield-mask-local.png"
         style={{
+          scale,
           position: `absolute`,
           top: 0,
           left: 0,

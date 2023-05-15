@@ -95,6 +95,8 @@ export function useOnScroll(callback: LenisCallback, options: LenisOptions = {})
   useEffect(() => {
     if (!lenis || !enabled) return
 
+    // console.log('useOnScroll', lenis, options.target?.current)
+
     // If a target element is passed, calculate scroll progress based on scroll position of target element
     const scrollHandler = options.target?.current
       ? (event: LenisScrollEvent) => {
