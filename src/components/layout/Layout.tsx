@@ -14,7 +14,6 @@ interface LayoutProps {
 }
 
 export function Layout({ children, hideFooter, ...props }: LayoutProps) {
-  console.log(props)
   const router = useRouter()
   const rafId = useRef<number>()
   const wrapperRef = useRef<HTMLDivElement>(null)
