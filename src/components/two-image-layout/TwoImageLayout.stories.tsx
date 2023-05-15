@@ -13,9 +13,26 @@ type Story = StoryObj<typeof TwoImageLayout>
 
 export const Default: Story = {
   args: {
-    leftSrcSet: ['/dummy/temp-left-riot-img.jpg'],
+    leftSrcSet: {
+      desktopImage: {
+        url: '/dummy/showreelposter.jpg',
+      },
+      mobileImage: {
+        url: '/dummy/showreelposter.jpg',
+      },
+      altText: 'temp alt',
+    },
     leftCaption: 'RiotX Arcane Map',
-    rightSrcSet: ['/dummy/temp-right-riot-img.jpg'],
+    rightSrcSet: {
+      desktopImage: {
+        url: '/dummy/temp-right-riot-img.jpg',
+      },
+      mobileImage: {
+        url: '/dummy/temp-right-riot-img.jpg',
+      },
+      altText: 'temp alt',
+    },
+
     rightCaption: 'Gameplay Screens',
     leftAlt: 'Map from RiotX Arcane',
     rightAlt: 'Temp Alt',

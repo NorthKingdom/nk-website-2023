@@ -17,7 +17,21 @@ export const Default: Story = {
   args: {
     client: 'Riot',
     caseName: 'RiotX Arcane',
-    src: '/dummy/showreel23.mp4',
+    src: {
+      muted: true,
+      autoPlay: true,
+      loop: true,
+      posterImage: {
+        url: '/dummy/showreelposter.jpg',
+      },
+      srcCollection: {
+        items: [
+          {
+            url: '/dummy/showreel23.mp4',
+          },
+        ],
+      },
+    },
     isVideoAsset: true,
   },
 }

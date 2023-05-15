@@ -15,8 +15,18 @@ type Story = StoryObj<typeof VideoPlayer>
 
 export const Default: Story = {
   args: {
-    src: [{ url: '/dummy/showreel23.mp4' }],
-    poster: '/dummy/showreel-poster.jpg',
-    autoPlay: true,
+    src: {
+      muted: true,
+      loop: true,
+      autoPlay: true,
+      srcCollection: {
+        items: [
+          {
+            url: '/dummy/showreel23.mp4',
+          },
+        ],
+      },
+      posterImage: { url: '/dummy/showreel-poster.jpg' },
+    },
   },
 }

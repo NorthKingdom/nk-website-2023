@@ -15,15 +15,29 @@ type Story = StoryObj<typeof Image>
 
 export const Default: Story = {
   args: {
-    srcSet: ['/dummy/showreelposter.jpg'],
-    alt: 'temp alt',
+    srcSet: {
+      desktopImage: {
+        url: '/dummy/showreelposter.jpg',
+      },
+      mobileImage: {
+        url: '/dummy/showreelposter.jpg',
+      },
+      altText: 'temp alt',
+    },
   },
 }
 
 export const WithCaption: Story = {
   args: {
-    srcSet: ['/dummy/showreelposter.jpg'],
-    alt: 'temp alt',
+    srcSet: {
+      desktopImage: {
+        url: '/dummy/showreelposter.jpg',
+      },
+      mobileImage: {
+        url: '/dummy/showreelposter.jpg',
+      },
+      altText: 'temp alt',
+    },
     caption: 'Example caption for the fullscreen image',
   },
 }

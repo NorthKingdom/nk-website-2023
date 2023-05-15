@@ -30,14 +30,14 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
               />
             )
           case 'ResponsiveImage':
-            return <Image key={`case-image-${i}`} srcSet={[c.desktopImage.url, c.mobileImage.url]} alt={c.altText} />
+            return <Image key={`case-image-${i}`} srcSet={c} />
           case 'TwoImageComponent':
             return (
               <TwoImageLayout
                 key={`case-twoimage-${i}`}
-                leftSrcSet={[c.imageOne.desktopImage.url, c.imageOne.mobileImage.url]}
+                leftSrcSet={c}
                 leftCaption={c.imageOneCaption}
-                rightSrcSet={[c.imageOne.desktopImage.url, c.imageOne.mobileImage.url]}
+                rightSrcSet={c}
                 rightCaption={c.imageTwoCaption}
                 leftAlt={c.imageOne.altText}
                 rightAlt={c.imageTwo.altText}

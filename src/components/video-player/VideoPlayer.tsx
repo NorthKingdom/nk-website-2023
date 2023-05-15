@@ -1,12 +1,11 @@
 import React from 'react'
 import styles from './VideoPlayer.module.scss'
 import { bemify } from '@utils/bemify'
+import { Video } from '@customTypes/cms'
 const bem = bemify(styles, 'videoPlayer')
 
 interface VideoPlayerProps {
-  src: {
-    url: string
-  }[]
+  src: Video
   className?: string
   poster: string
   playsinline?: boolean
@@ -37,7 +36,7 @@ export const VideoPlayer = ({
       autoPlay={autoPlay}
       loop={loop}
     >
-      {src.map((s, i: number) => {
+      {src.srcCollection.items.map((s, i: number) => {
         // TODO :: fix 'type'
         return <source key={`video-src-${i}`} src={s.url} type="video/mp4" />
       })}
