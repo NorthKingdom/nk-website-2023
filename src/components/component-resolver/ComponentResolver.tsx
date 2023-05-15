@@ -4,15 +4,15 @@ import { VideoPlayer } from '@components/video-player'
 import { Image } from '@components/image'
 import { TwoImageLayout } from '@components/two-image-layout'
 
+// TODO :: Fix any type here
 interface ComponentResolverProps {
-  components: any
+  components: any[]
 }
 
 export const ComponentResolver = ({ components }: ComponentResolverProps) => {
   return (
     <>
-      {/* TODO :: // Fix any type here */}
-      {components.map((c: any, i: number) => {
+      {components.map((c, i: number) => {
         switch (c.__typename) {
           case 'CaseHero':
             return
