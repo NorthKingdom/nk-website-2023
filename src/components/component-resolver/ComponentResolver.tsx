@@ -21,7 +21,7 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
           case 'Video':
             return (
               <VideoPlayer
-                src={c.srcCollection.items || []}
+                src={c}
                 poster={c.posterImage.url}
                 loop={c.loop}
                 muted={c.muted}
@@ -35,9 +35,9 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
             return (
               <TwoImageLayout
                 key={`case-twoimage-${i}`}
-                leftSrcSet={c}
+                leftSrcSet={c.imageOne}
                 leftCaption={c.imageOneCaption}
-                rightSrcSet={c}
+                rightSrcSet={c.imageTwo}
                 rightCaption={c.imageTwoCaption}
                 leftAlt={c.imageOne.altText}
                 rightAlt={c.imageTwo.altText}

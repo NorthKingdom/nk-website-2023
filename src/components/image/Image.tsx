@@ -15,13 +15,14 @@ export const Image = ({ className, srcSet, caption }: ImageProps) => {
     /* TODO :: Can change to next/image component */
     /* TODO :: Change from Desktop to Mobile Image on diff sizes */
   }
+  console.log(srcSet)
   return (
     <>
       <picture className={`${className} ${styles['image']}`}>
-        <source srcSet={srcSet.desktopImage.url} />
-        <source srcSet={srcSet.mobileImage.url} />
+        <source srcSet={srcSet?.desktopImage.url} />
+        <source srcSet={srcSet?.mobileImage.url} />
 
-        <img srcSet={srcSet.desktopImage.url} alt={srcSet.altText} />
+        <img srcSet={srcSet?.desktopImage.url} alt={srcSet?.altText} />
       </picture>
       {caption && <p>{caption}</p>}
     </>
