@@ -5,6 +5,7 @@ import { VideoPlayer } from '@components/video-player'
 import { Image } from '@components/image'
 import { Slideshow } from '@components/slideshow'
 import { Video, ResponsiveImage } from '@customTypes/cms'
+import { List } from '@components/list'
 const bem = bemify(styles, 'stickyListItem')
 
 interface StickyListItemProps {
@@ -12,9 +13,20 @@ interface StickyListItemProps {
   header: string
   copy: string
   srcSet: Video | ResponsiveImage[] | ResponsiveImage
+  containsList?: boolean
+  items?: any[]
+  renderItem?: (item: any) => JSX.Element
 }
 
-export const StickyListItem = ({ isVideoAsset, header, copy, srcSet }: StickyListItemProps) => {
+export const StickyListItem = ({
+  isVideoAsset,
+  header,
+  copy,
+  srcSet,
+  containsList = false,
+  items = [],
+  renderItem = () => <div />,
+}: StickyListItemProps) => {
   console.log(srcSet)
   return (
     <div className={styles['stickyListItem']}>
@@ -38,6 +50,11 @@ export const StickyListItem = ({ isVideoAsset, header, copy, srcSet }: StickyLis
       </div>
       <div className={bem('rightContainer')}>
         <p>{copy}</p>
+        {containsList && (
+          <div className={bem('listContainer')}>
+            <List items={items} renderItem={renderItem} />
+          </div>
+        )}
       </div>
     </div>
   )
