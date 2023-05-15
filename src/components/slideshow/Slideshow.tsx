@@ -89,6 +89,7 @@ export const Slideshow = ({ automaticallyChange, showIndicators, showArrows, src
         <div className={bem('indicatorsContainer')}>
           {srcSet.map((s, i) => (
             <div
+              key={`indicator-${i}`}
               data-active={count === i}
               className={bem('indicator')}
               onClick={() => setCount([i, count > i ? -1 : 1])}
