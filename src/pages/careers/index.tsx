@@ -2,13 +2,17 @@ import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { JobPage, TeamTailorJob } from '@customTypes/cms'
+import { List } from '@components/list'
+import { JobListItem } from '@components/job-list-item'
 
 interface JobsPageProp extends JobPage {
   jobs: TeamTailorJob[]
   images: string[]
+  openings: any[]
 }
 
-const Jobs = (props: JobsPageProp) => {
+const Careers = (props: JobsPageProp) => {
+  console.log(props)
   return (
     <>
       <Head>
@@ -24,6 +28,8 @@ const Jobs = (props: JobsPageProp) => {
       </Head>
       <main style={{ paddingTop: '80px' }}>
         <h1>Careers page</h1>
+        <h2>Openings</h2>
+        <List items={props.openings} renderItem={JobListItem} />
         <Link href="/">Back</Link>
       </main>
     </>
@@ -31,59 +37,63 @@ const Jobs = (props: JobsPageProp) => {
 }
 
 export async function getServerSideProps() {
-  return {
-    props: {},
+  var myHeaders = new Headers()
+  myHeaders.append('Authorization', `Token token=${process.env.NEXT_PUBLIC_TEAMTAILOR_TOKEN}`)
+  myHeaders.append('X-Api-Version', '20210218')
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow',
   }
 
-  // var myHeaders = new Headers()
-  // myHeaders.append('Authorization', `Token token=${process.env.NEXT_PUBLIC_TEAMTAILOR_TOKEN}`)
-  // myHeaders.append('X-Api-Version', '20210218')
-  // var requestOptions = {
-  //   method: 'GET',
-  //   headers: myHeaders,
-  //   redirect: 'follow',
-  // }
+  return fetch('https://api.teamtailor.com/v1/jobs', requestOptions as RequestInit)
+    .then((response) => {
+      return response.json()
+    })
+    .then((result) => {
+      return {
+        props: {
+          openings:
+            result.data.length > 0
+              ? result.data
+              : [{ title: 'OPEN APP', location: 'sweden', link: 'https://www.link.com' }],
+        },
+      }
+      // let resultData = result.data
+      // return Promise.all(
+      //   resultData.map((job: any) => {
+      //     return fetch(job.relationships.locations.links.related, requestOptions as RequestInit)
+      //       .then((res) => res.json())
+      //       .then((locationData) => {
+      //         return locationData.data.length > 1
+      //           ? locationData.data
+      //               .reduce((previousValue: string, item: any) => (previousValue += item.attributes.city + ' / '), '')
+      //               .slice(0, -2)
+      //           : locationData.data.length === 0
+      //           ? ``
+      //           : locationData.data[0].attributes.city
+      //       })
+      //   })
+      // ).then((cities) => {
+      //   let jobs: TeamTailorJob[] = resultData.map((job: any) => job.attributes)
 
-  // return fetch('https://api.teamtailor.com/v1/jobs', requestOptions as RequestInit)
-  //   .then((response) => {
-  //     return response.json()
-  //   })
-  //   .then((result) => {
-  //     let resultData = result.data
-  //     return Promise.all(
-  //       resultData.map((job: any) => {
-  //         return fetch(job.relationships.locations.links.related, requestOptions as RequestInit)
-  //           .then((res) => res.json())
-  //           .then((locationData) => {
-  //             return locationData.data.length > 1
-  //               ? locationData.data
-  //                   .reduce((previousValue: string, item: any) => (previousValue += item.attributes.city + ' / '), '')
-  //                   .slice(0, -2)
-  //               : locationData.data.length === 0
-  //               ? ``
-  //               : locationData.data[0].attributes.city
-  //           })
-  //       })
-  //     ).then((cities) => {
-  //       let jobs: TeamTailorJob[] = resultData.map((job: any) => job.attributes)
+      //   jobs.forEach((job, i) => {
+      //     job.location = cities[i]
+      //     job.id = resultData[i].id
+      //   })
 
-  //       jobs.forEach((job, i) => {
-  //         job.location = cities[i]
-  //         job.id = resultData[i].id
-  //       })
-
-  //       return Promise.all([getAboutPage(), getJobPage()]).then(([aboutPageData, contentfulData]) => {
-  //         return {
-  //           props: {
-  //             jobs,
-  //             ...contentfulData,
-  //             images: aboutPageData.sectionTwoImages.sort(() => Math.random() - Math.random()).slice(0, 10),
-  //           },
-  //         }
-  //       })
-  //     })
-  //   })
-  //   .catch((error) => console.log('error', error))
+      //   return Promise.all([getAboutPage(), getJobPage()]).then(([aboutPageData, contentfulData]) => {
+      //     return {
+      //       props: {
+      //         jobs,
+      //         ...contentfulData,
+      //         images: aboutPageData.sectionTwoImages.sort(() => Math.random() - Math.random()).slice(0, 10),
+      //       },
+      //     }
+      //   })
+      // })
+    })
+    .catch((error) => console.log('error', error))
 }
 
-export default Jobs
+export default Careers

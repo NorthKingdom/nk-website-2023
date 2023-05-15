@@ -1,0 +1,14 @@
+.jobListItem {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+
+  p:first-child {
+    width: 50%;
+  }
+
+  a {
+    margin-left: auto;
+  }
+}
