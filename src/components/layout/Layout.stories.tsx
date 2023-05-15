@@ -13,7 +13,7 @@ type Story = StoryObj<typeof Layout>
 export const LightMode: Story = {
   args: {},
   render: () => (
-    <Layout>
+    <Layout hideFooter={false}>
       <div
         style={{
           backgroundColor: 'var(--color-bg)',
@@ -32,7 +32,7 @@ export const DarkMode: Story = {
   parameters: { theme: 'dark' },
   args: {},
   render: () => (
-    <Layout>
+    <Layout hideFooter={false}>
       <div
         style={{
           backgroundColor: 'var(--color-bg)',
