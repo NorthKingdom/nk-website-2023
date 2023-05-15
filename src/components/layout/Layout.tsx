@@ -63,7 +63,7 @@ export function Layout({ children }: LayoutProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTouchDevice])
 
-  const onPageTransitionStart = (variant) => {
+  const onPageTransitionStart = (variant: 'animate' | 'exit') => {
     if (lenis && variant === 'animate') {
       lenis.scrollTo(0, { immediate: true })
     }
