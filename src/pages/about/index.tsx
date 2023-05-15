@@ -29,7 +29,7 @@ const About = (props: AboutPageProps) => {
 }
 
 export async function getStaticProps({ preview = false }) {
-  return client
+  return client(false)
     .query({
       query: ABOUT_PAGE_QUERY,
     })
