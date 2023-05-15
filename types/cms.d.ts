@@ -33,12 +33,11 @@ export interface ResponsiveImage {
   desktopImage: {
     url: string
   }
-
   mobileImage: {
     url: string
   }
-
   altText: string
+  imageCaption?: string
 }
 
 export interface Case {

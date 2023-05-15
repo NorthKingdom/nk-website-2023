@@ -12,9 +12,16 @@ interface SlideshowProps {
   showIndicators: boolean
   showArrows: boolean
   srcSet: ResponsiveImage[]
+  showCaption?: boolean
 }
 
-export const Slideshow = ({ automaticallyChange, showIndicators, showArrows, srcSet }: SlideshowProps) => {
+export const Slideshow = ({
+  automaticallyChange,
+  showIndicators,
+  showArrows,
+  srcSet,
+  showCaption = false,
+}: SlideshowProps) => {
   const [[count, direction], setCount] = useState([0, 0])
 
   const variants = {
@@ -85,18 +92,31 @@ export const Slideshow = ({ automaticallyChange, showIndicators, showArrows, src
           </div>
         )}
       </div>
-      {showIndicators && (
-        <div className={bem('indicatorsContainer')}>
-          {srcSet.map((s, i) => (
-            <div
-              key={`indicator-${i}`}
-              data-active={count === i}
-              className={bem('indicator')}
-              onClick={() => setCount([i, count > i ? -1 : 1])}
-            />
-          ))}
-        </div>
-      )}
+      <div data-hasCaption={showCaption} className={bem('informationContainer')}>
+        {showCaption && srcSet[count].imageCaption && (
+          <motion.p
+            key={`caption-for-image-${count}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            {srcSet[count].imageCaption}
+          </motion.p>
+        )}
+        {showIndicators && (
+          <div className={bem('indicatorsContainer')}>
+            {srcSet.map((s, i) => (
+              <div
+                key={`indicator-${i}`}
+                data-active={count === i}
+                className={bem('indicator')}
+                onClick={() => setCount([i, count > i ? -1 : 1])}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
