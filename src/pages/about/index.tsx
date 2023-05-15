@@ -28,10 +28,10 @@ const About = (props: AboutPageProps) => {
   )
 }
 
-export async function getStaticProps({ preview = false }) {
-  return client(false)
+export async function getStaticProps({ draftMode = false }) {
+  return client(draftMode)
     .query({
-      query: ABOUT_PAGE_QUERY,
+      query: ABOUT_PAGE_QUERY(draftMode),
     })
     .then((res: any) => res.data)
     .then((data: any) => {
