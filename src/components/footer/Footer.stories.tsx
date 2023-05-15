@@ -16,5 +16,7 @@ export const LightMode: Story = {
 
 export const DarkMode: Story = {
   parameters: { theme: 'dark' },
-  args: {},
+  args: {
+    theme: 'dark',
+  },
 }

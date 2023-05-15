@@ -1,13 +1,24 @@
 @import 'styles/variables.scss';
 
 .footer {
+  &[data-theme='dark'] {
+    --_footer-color-bg: var(--color-black);
+    --_footer-color-fg: var(--color-white);
+  }
+
+  &[data-theme='light'] {
+    --_footer-color-bg: var(--color-white);
+    --_footer-color-fg: var(--color-black);
+  }
+
+  $block: &;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   width: 100%;
-  background-color: var(--color-bg);
-  color: var(--color-fg);
+  background-color: var(--_footer-color-bg);
+  color: var(--_footer-color-fg);
   transition: background-color 0.3s, color 0.3s;
   z-index: $z-footer;
   padding: 92px 20px 56px 20px;
@@ -28,7 +39,7 @@
     width: 100%;
 
     path {
-      fill: var(--color-fg);
+      fill: var(--_footer-color-fg);
     }
   }
 
@@ -41,7 +52,6 @@
     line-height: 175%;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--color-white-60);
     display: grid;
     grid-gap: 20px;
     pointer-events: auto;
@@ -51,7 +61,11 @@
       grid-template-columns: repeat(12, 1fr);
     }
 
-    html[data-theme='light'] & {
+    #{$block}[data-theme='dark'] & {
+      color: var(--color-white-60);
+    }
+
+    #{$block}[data-theme='light'] & {
       color: var(--color-black-50);
     }
   }
