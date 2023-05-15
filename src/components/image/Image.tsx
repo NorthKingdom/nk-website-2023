@@ -1,25 +1,28 @@
 import React from 'react'
 import styles from './Image.module.scss'
-import { motion } from 'framer-motion'
 import { bemify } from '@utils/bemify'
+import { ResponsiveImage } from '@customTypes/cms'
 const bem = bemify(styles, 'image')
 
 interface ImageProps {
   className?: string
-  srcSet: string[]
-  alt: string
+  srcSet: ResponsiveImage
   caption?: string
 }
 
-export const Image = ({ className, srcSet, alt, caption }: ImageProps) => {
+export const Image = ({ className, srcSet, caption }: ImageProps) => {
   {
     /* TODO :: Can change to next/image component */
+    /* TODO :: Change from Desktop to Mobile Image on diff sizes */
   }
+  console.log(srcSet)
   return (
     <>
       <picture className={`${className} ${styles['image']}`}>
-        <source srcSet={srcSet[0]} />
-        <img srcSet={srcSet[0]} alt={alt} />
+        <source srcSet={srcSet?.desktopImage.url} />
+        <source srcSet={srcSet?.mobileImage.url} />
+
+        <img srcSet={srcSet?.desktopImage.url} alt={srcSet?.altText} />
       </picture>
       {caption && <p>{caption}</p>}
     </>

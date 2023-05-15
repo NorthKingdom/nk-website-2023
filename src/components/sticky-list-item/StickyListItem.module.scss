@@ -1,15 +1,10 @@
-.stickyList {
-  height: auto;
+.stickyListItem {
+  display: flex;
+  flex-direction: row;
+  padding: 14px 0 64px 0;
 
-  &__item {
-    display: flex;
-    flex-direction: row;
-    border-top: 2px solid black;
-    padding: 14px 0 64px 0;
-
-    @include mq($until: tablet) {
-      flex-direction: column;
-    }
+  @include mq($until: tablet) {
+    flex-direction: column;
   }
 
   &__leftContainer {

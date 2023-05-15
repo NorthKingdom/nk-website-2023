@@ -15,6 +15,32 @@ export interface About {
   sectionThreeCopy: string
 }
 
+export interface Video {
+  muted: boolean
+  autoPlay: boolean
+  loop: boolean
+  posterImage: {
+    url: string
+  }
+  srcCollection: {
+    items: {
+      url: string
+    }[]
+  }
+}
+
+export interface ResponsiveImage {
+  desktopImage: {
+    url: string
+  }
+
+  mobileImage: {
+    url: string
+  }
+
+  altText: string
+}
+
 export interface Case {
   title: string
   slides: Slides[]
