@@ -80,10 +80,10 @@ const Case = (props: CasePageProps) => {
   )
 }
 
-export async function getStaticProps({ params, preview = false }: { params: { case: string }; preview: boolean }) {
-  return client
+export async function getStaticProps({ params, draftMode = false }: { params: { case: string }; draftMode: boolean }) {
+  return client(draftMode)
     .query({
-      query: CASE_PAGE_QUERY(params.case),
+      query: CASE_PAGE_QUERY(params.case, draftMode),
     })
     .then((res) => res.data)
     .then((data) => {

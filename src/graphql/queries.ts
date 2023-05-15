@@ -138,7 +138,7 @@ export const ABOUT_PAGE_QUERY = gql`
   }
 `
 
-export const CASE_PAGE_QUERY = (caseSlug: string) => gql`
+export const CASE_PAGE_QUERY = (caseSlug: string, draftMode: boolean) => gql`
   ${VIDEO}
   ${RESPONSIVE_IMAGE}
   ${CASE_HERO}
@@ -146,7 +146,7 @@ export const CASE_PAGE_QUERY = (caseSlug: string) => gql`
   ${TWO_IMAGE_COMPONENT}
 
   query {
-    caseCollection(limit: 1, where: { slug: "${caseSlug}" }) {
+    caseCollection(preview: ${draftMode}, limit: 1, where: { slug: "${caseSlug}" }) {
       items {
         title
         client
