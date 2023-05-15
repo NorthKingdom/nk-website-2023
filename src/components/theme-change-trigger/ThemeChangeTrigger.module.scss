@@ -1,0 +1,10 @@
+.themeChangeTrigger {
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  pointer-events: none;
+
+  &[data-debug='true'] {
+    border: 1px solid red;
+  }
+}
