@@ -12,8 +12,10 @@ import client from '@graphql/client'
 
 export default function App({ Component, pageProps, router }: AppProps) {
   const { publicRuntimeConfig } = getConfig()
+  const { theme: pageTheme = 'dark' } = pageProps
 
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
+  const setTheme = useGlobalStateStore((state) => state.setTheme)
   const theme = useGlobalStateStore((state) => state.theme)
 
   // theming
@@ -25,6 +27,10 @@ export default function App({ Component, pageProps, router }: AppProps) {
   useEffect(() => {
     document.documentElement.setAttribute('data-is-menu-open', String(isMenuOpen))
   }, [isMenuOpen])
+
+  useEffect(() => {
+    setTheme(pageTheme)
+  }, [router.asPath, setTheme, pageTheme])
 
   return (
     <>

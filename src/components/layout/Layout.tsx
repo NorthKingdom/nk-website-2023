@@ -28,7 +28,7 @@ export function Layout({ children }: LayoutProps) {
     const lenis = new Lenis({
       wrapper: wrapperRef.current,
       content: contentRef.current,
-      smooth: isTouchDevice,
+      smooth: !isTouchDevice,
     })
 
     setLenis(lenis)
@@ -61,10 +61,9 @@ export function Layout({ children }: LayoutProps) {
           exit={{ opacity: 0, transition: { ease: 'circIn' } }}
           transition={{ duration: 0.1 }}
         >
-          <div ref={contentRef} className={styles.content} key={router.route}>
+          <div ref={contentRef} className={styles.content}>
             {children}
           </div>
-          <div className={styles['footer-spacer']}></div>
           <Footer />
         </motion.main>
       </AnimatePresence>

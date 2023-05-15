@@ -1,9 +1,10 @@
 @import 'styles/variables.scss';
 
 .main {
-  overflow: auto;
-  height: 100vh;
+  overflow-x: hidden;
   width: 100%;
+  height: 100vh;
+  scroll-behavior: auto;
 }
 
 .content {
@@ -13,7 +14,6 @@
   min-height: 100vh;
   background: var(--color-bg);
   border-radius: 0px 0px 12px 12px;
-  overflow: hidden;
 }
 
 .footer-spacer {
