@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { List } from './List'
 import { StickyListItem } from '@components/sticky-list-item'
+import { JobListItem } from '@components/job-list-item'
 
 const meta: Meta<typeof List> = {
   title: 'UI/List',
@@ -37,6 +38,14 @@ export const DarkTheme: Story = {
       renderItem={renderItem}
     />
   ),
+}
+
+export const WithoutBottomBar: Story = {
+  args: {
+    items,
+    renderItem,
+    hideBottomBar: true,
+  },
 }
 
 const complexItems = Array.from({ length: 10 }, (_, i) => ({
@@ -265,5 +274,40 @@ export const StickyItemsWithListInside: Story = {
   args: {
     items: stickyItemsWithListInLastOne,
     renderItem: renderStickyItemsWithInternalList,
+  },
+}
+
+const jobOpenings = [
+  {
+    title: 'Senior Developer',
+    location: 'Stockholm/Skellefteå',
+    link: 'https//www.example-link.com',
+  },
+  {
+    title: 'Design Intern',
+    location: 'Sweden/Barcelona',
+    link: 'https//www.example-link.com',
+  },
+  {
+    title: 'Development Intern',
+    location: 'Sweden/Barcelona',
+    link: 'https//www.example-link.com',
+  },
+  {
+    title: 'Producer',
+    location: 'Sweden/Barcelona',
+    link: 'https//www.example-link.com',
+  },
+]
+
+const renderJobOpenings = ({ title, location, link }: (typeof jobOpenings)[0]) => (
+  <JobListItem title={title} location={location} link={link} />
+)
+
+export const JobOpenings: Story = {
+  args: {
+    items: jobOpenings,
+    renderItem: renderJobOpenings,
+    hideBottomBar: true,
   },
 }

@@ -10,11 +10,19 @@ interface ListProps<T> {
   items: T[]
   id?: (item: T) => string
   renderItem: (item: T) => JSX.Element
+  hideBottomBar?: boolean
 }
 
-export const List = <T extends {}>({ items = [], renderItem, style = {}, className = '', id }: ListProps<T>) => {
+export const List = <T extends {}>({
+  items = [],
+  renderItem,
+  style = {},
+  className = '',
+  id,
+  hideBottomBar = false,
+}: ListProps<T>) => {
   return (
-    <ul className={cx(bem(), className)} style={style}>
+    <ul data-no-bottom-bar={hideBottomBar} className={cx(bem(), className)} style={style}>
       {items.map((item, i) => (
         <li key={!!id ? id(item) : i}>{renderItem(item)}</li>
       ))}

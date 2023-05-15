@@ -27,4 +27,12 @@
       background-color: var(--_list-color);
     }
   }
+
+  &[data-no-bottom-bar='true'] {
+    li:last-child {
+      &:last-child:after {
+        visibility: hidden;
+      }
+    }
+  }
 }
