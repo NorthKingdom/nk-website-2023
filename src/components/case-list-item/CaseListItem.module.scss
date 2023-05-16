@@ -1,3 +1,5 @@
+@import 'styles/mixins/typography.scss';
+
 .caseListItem {
   &__imageContainer {
     background: var(--color-white);
@@ -24,11 +26,13 @@
     font-size: 1.4rem;
     font-weight: 700;
     color: var(--color-white);
+    @include BodyRegular;
   }
 
   &__projectTitle {
     font-size: 1rem;
     font-weight: 700;
     color: var(--color-white-60);
+    @include BodyRegular;
   }
 }

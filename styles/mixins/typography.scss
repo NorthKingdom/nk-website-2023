@@ -1,0 +1,66 @@
+@use 'sass:math';
+
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+/*
+    From: https://css-tricks.com/snippets/css/fluid-typography/
+*/
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+  $u1: unit($min-vw);
+  $u2: unit($max-vw);
+  $u3: unit($min-font-size);
+  $u4: unit($max-font-size);
+
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    & {
+      font-size: $min-font-size;
+      @media screen and (min-width: $min-vw) {
+        font-size: calc(
+          #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+            ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+        );
+      }
+      @media screen and (min-width: $max-vw) {
+        font-size: $max-font-size;
+      }
+    }
+  }
+}
+
+$fluid_typo_screen_width_min: 375px;
+$fluid_typo_screen_width_max: 2560px;
+
+/**
+  * Use fluid typography mixin
+  * @include fluid-type($fluid_typo_screen_width_min, $fluid_typo_screen_width_max, $min_font, $max_font);
+*/
+
+@mixin Heading1 {
+  font-family: 'FKGroteskNeue-Bold', sans-serif;
+  @include fluid-type($fluid_typo_screen_width_min, $fluid_typo_screen_width_max, 44px, 222px);
+  line-height: 0.95em;
+  letter-spacing: -0.02em;
+
+  @include mq($from: desktop) {
+    letter-spacing: -0.05em;
+  }
+}
+
+@mixin BodyRegular {
+  font-family: 'FKGroteskNeue-Regular', sans-serif;
+  @include fluid-type($fluid_typo_screen_width_min, $fluid_typo_screen_width_max, 16px, 50px);
+  line-height: 1.15em;
+
+  @include mq($from: desktop) {
+    letter-spacing: -0.01em;
+  }
+}
+
+@mixin Label {
+  font-family: monospace;
+  @include fluid-type($fluid_typo_screen_width_min, $fluid_typo_screen_width_max, 9px, 17px);
+  line-height: 1.15em;
+  letter-spacing: 0.05em;
+}

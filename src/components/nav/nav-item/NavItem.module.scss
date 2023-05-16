@@ -1,9 +1,10 @@
 @import 'styles/mixins/hover.scss';
-@import 'styles/mixins/fluid-typography.scss';
+@import 'styles/mixins/typography.scss';
 
 .navItem {
   opacity: 1;
   transition: opacity 0.1s cubic-bezier(0, 0, 0.6, 1);
+  @include BodyRegular;
 
   &[data-active='true'] {
     opacity: 0.4;
