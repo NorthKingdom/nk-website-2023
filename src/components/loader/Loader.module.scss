@@ -1,0 +1,13 @@
+.loader {
+  --_color-bg: var(--color-bg-inverted);
+  --_color-fg: var(--color-bg);
+  max-width: 108px;
+
+  &__bg {
+    fill: var(--_color-bg);
+  }
+
+  &__fg {
+    fill: var(--_color-fg);
+  }
+}

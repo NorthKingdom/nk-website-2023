@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber'
-import { Suspense } from 'react'
-import { Html } from '@react-three/drei'
+import { Html, Preload } from '@react-three/drei'
 import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
 const Shield = dynamic(() => import('./Shield').then((Mod) => Mod.Shield), { ssr: false })
@@ -13,6 +13,7 @@ export const Scene = (props: any) => {
         <Effects />
         <Shield lod="low" scale={1.1} />
         <Shield scale={0.75} position-z={0.1} />
+        <Preload all />
       </Suspense>
     </Canvas>
   )

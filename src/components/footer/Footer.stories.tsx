@@ -11,7 +11,9 @@ export default meta
 type Story = StoryObj<typeof Footer>
 
 export const LightMode: Story = {
-  args: {},
+  args: {
+    theme: 'light',
+  },
 }
 
 export const DarkMode: Story = {
