@@ -24,7 +24,7 @@ const CaseArchiveItem = (props: CaseArchiveItem) => {
       <p className={bemItem('vertical')}>{props.vertical}</p>
       {!!props.projectLink && (
         <a className={bemItem('link')} href={props.projectLink} target="_blank" rel="noopener">
-          Link
+          ↗
         </a>
       )}
     </div>
