@@ -1,0 +1,8 @@
+.filterItem {
+  padding: 5px 0;
+
+  &[data-active='true'] {
+    text-decoration: underline;
+    color: red;
+  }
+}
