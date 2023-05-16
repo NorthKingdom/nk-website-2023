@@ -66,8 +66,8 @@ export const HOME_PAGE_QUERY = (draftMode: boolean) => gql`
 `
 
 export const CASE_ARCHIVE_QUERY = gql`
-  query CaseArchiveQuery($limit: Int = 20, $skip: Int = 0) {
-    caseArchive: caseCollection(limit: $limit, skip: $skip, order: date_DESC) {
+  query CaseArchiveQuery($limit: Int = 20, $skip: Int = 0, $vertical: String) {
+    caseArchive: caseCollection(limit: $limit, skip: $skip, order: date_DESC, where: { vertical: $vertical }) {
       total
       items {
         __typename
@@ -80,6 +80,7 @@ export const CASE_ARCHIVE_QUERY = gql`
         client
         date
         projectLink
+        vertical
       }
     }
   }

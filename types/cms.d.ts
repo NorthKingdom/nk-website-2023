@@ -62,7 +62,7 @@ export interface Case {
   }
 }
 
-export interface CaseArchiveItem extends Pick<Case, 'title' | 'date' | 'client' | 'projectLink'> {
+export interface CaseArchiveItem extends Pick<Case, 'title' | 'date' | 'client' | 'projectLink' | 'vertical'> {
   sys: {
     id: string
   }
