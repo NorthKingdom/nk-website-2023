@@ -1,4 +1,9 @@
 .gutterWrapper {
+  --_background-color: var(--background-color, black);
+
+  color: var(--_background-color);
+  background-color: var(--_background-color);
+
   &[data-size='small'] {
     padding: 0 20px;
   }
@@ -7,5 +12,15 @@
   }
 
   &[data-size='large'] {
+  }
+
+  &[data-theme='light'] {
+    background-color: var(--color-white);
+    color: var(--color-black);
+  }
+
+  &[data-theme='dark'] {
+    background-color: var(--color-black);
+    color: var(--color-white);
   }
 }

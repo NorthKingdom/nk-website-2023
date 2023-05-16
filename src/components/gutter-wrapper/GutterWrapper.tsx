@@ -5,12 +5,14 @@ const bem = bemify(styles, 'gutterWrapper')
 
 interface GutterWrapperProps {
   children: JSX.Element | JSX.Element[]
+  style?: React.CSSProperties
   size: 'small' | 'medium' | 'large'
+  theme?: 'light' | 'dark'
 }
 
-export const GutterWrapper = ({ children, size }: GutterWrapperProps) => {
+export const GutterWrapper = ({ children, size, style, theme }: GutterWrapperProps) => {
   return (
-    <div data-size={size} className={styles['gutterWrapper']}>
+    <div data-size={size} data-theme={theme} className={styles['gutterWrapper']} style={style}>
       {children}
     </div>
   )
