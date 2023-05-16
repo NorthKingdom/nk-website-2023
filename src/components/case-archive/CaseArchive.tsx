@@ -10,9 +10,9 @@ import { useInViewEffect } from 'react-hook-inview'
 import { noop } from '@utils/noop'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import * as Filters from '@components/filters'
-import { unsubscribe } from 'diagnostics_channel'
 import Cursor from '@utils/cursor'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
+import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -105,7 +105,9 @@ export const CaseArchive = () => {
     <ContentWrapper className={bem()}>
       <ThemeChangeTrigger theme="light" />
 
-      <div ref={cursorRef} className={bem('cursor')} data-active={sectionHovered} />
+      <AspectRatio ratio={4 / 3} className={bem('cursor')} ref={cursorRef} data-active={sectionHovered}>
+        <img src="dummy/case-thumb-fallback.webp" alt="" aria-hidden="true" />
+      </AspectRatio>
 
       <div className={bem('header')}>
         <h1 className={bem('title')}>Archive</h1>
