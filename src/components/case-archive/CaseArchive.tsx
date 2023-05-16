@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './CaseArchive.module.scss'
 import { bemify } from '@utils/bemify'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
@@ -9,13 +9,10 @@ import type { CaseArchiveItem } from '@customTypes/cms'
 import { useInViewEffect } from 'react-hook-inview'
 import { noop } from '@utils/noop'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
+import * as Filters from '@components/filters'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
-
-interface CaseArchiveProps {
-  // cases: CaseArchiveItem[]
-}
 
 const CaseArchiveItem = (props: CaseArchiveItem) => {
   const projectYear = new Date(props.date).getFullYear()
@@ -24,7 +21,7 @@ const CaseArchiveItem = (props: CaseArchiveItem) => {
     <div className={bemItem()}>
       <p className={bemItem('year')}>{projectYear}</p>
       <h2 className={bemItem('projectTitle')}>{props.title}</h2>
-      <p>{props.client}</p>
+      <p className={bemItem('vertical')}>{props.vertical}</p>
       {!!props.projectLink && (
         <a className={bemItem('link')} href={props.projectLink} target="_blank" rel="noopener">
           Link
@@ -56,11 +53,15 @@ export const FetchMoreTrigger = ({ fetchMore = noop }: FetchMoreTriggerProps) =>
   return <div ref={ref} className={bem('fetchMoreTrigger')}></div>
 }
 
-export const CaseArchive = (props: CaseArchiveProps) => {
+const FILTERS = ['all', 'gaming', 'entertainment']
+
+export const CaseArchive = () => {
+  const [filter, setFilter] = React.useState(FILTERS[0])
   const { data, previousData, loading, error, fetchMore } = useQuery(CASE_ARCHIVE_QUERY, {
     variables: {
       skip: 0,
       limit: 20,
+      vertical: filter === 'all' ? undefined : filter,
     },
   })
 
@@ -88,7 +89,16 @@ export const CaseArchive = (props: CaseArchiveProps) => {
   return (
     <ContentWrapper className={bem()}>
       <ThemeChangeTrigger theme="light" />
-      <h1 className={bem('title')}>Archive</h1>
+      <div className={bem('header')}>
+        <h1 className={bem('title')}>Archive</h1>
+        <Filters.Root defaultValue={filter} onValueChange={setFilter} className={bem('filterRoot')}>
+          {FILTERS.map((f) => (
+            <Filters.Item key={f} value={f} className={bem('filterItem')}>
+              {f}
+            </Filters.Item>
+          ))}
+        </Filters.Root>
+      </div>
       <List items={caseArchiveData.items} id={(item) => item.sys.id} renderItem={CaseArchiveItem} />
       {loading ? <p>Loading...</p> : <FetchMoreTrigger fetchMore={_fetchMore} />}
     </ContentWrapper>

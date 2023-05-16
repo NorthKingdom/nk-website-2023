@@ -4,7 +4,7 @@ import styles from './Filters.module.scss'
 import { createContext, useContext, useState } from 'react'
 
 interface FilterRootProps {
-  style: React.CSSProperties
+  style?: React.CSSProperties
   className?: string
   defaultValue: string
   onValueChange: (value: string) => void

@@ -11,13 +11,43 @@
   @include notch(var(--color-white));
 
   &__title {
-    margin-bottom: 40px;
   }
 
   &__fetchMoreTrigger {
     height: 1px;
     width: 100%;
     opacity: 0;
+  }
+
+  &__header {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    & > * {
+      flex-shrink: 0;
+    }
+  }
+
+  &__filterRoot {
+    display: flex;
+    flex-wrap: wrap;
+
+    & > * {
+      margin-right: 10px;
+    }
+
+    & > *:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__filterItem {
+    &[data-active='true'] {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -31,6 +61,10 @@
 
   &__projectTitle {
     width: calc(50% - 120px);
+  }
+
+  &__vertical {
+    text-transform: capitalize;
   }
 
   &__link {
