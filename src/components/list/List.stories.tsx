@@ -11,7 +11,7 @@ const meta: Meta<typeof List> = {
 }
 
 export default meta
-type Story = StoryObj<typeof List<any>>
+type Story = StoryObj<typeof List>
 
 const items = Array.from({ length: 10 }, (_, i) => ({ label: String(i) }))
 const renderItem = ({ label }: { label: string }) => <div>{label}</div>

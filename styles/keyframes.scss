@@ -6,6 +6,10 @@
   animation: image-fade-up 500ms ease-out forwards;
 }
 
+.animate-list-item-fade-up {
+  animation: fade-up 500ms ease-out forwards;
+}
+
 @keyframes fade-up {
   from {
     transform: translateY(1rem);

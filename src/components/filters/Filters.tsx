@@ -1,7 +1,7 @@
 import { noop } from '@utils/noop'
 import cx from 'clsx'
 import styles from './Filters.module.scss'
-import { createContext, useContext, useState } from 'react'
+import { ForwardedRef, RefObject, createContext, forwardRef, useContext, useState } from 'react'
 
 interface FilterRootProps {
   style?: React.CSSProperties
@@ -21,17 +21,23 @@ const FilterContext = createContext<{
   onValueChange: () => {},
 })
 
-export const Root = ({ className = '', style = {}, defaultValue, onValueChange = noop, children }: FilterRootProps) => {
-  const [value, setValue] = useState<string>(defaultValue)
+export const Root = forwardRef(
+  (
+    { className = '', style = {}, defaultValue, onValueChange = noop, children }: FilterRootProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => {
+    const [value, setValue] = useState<string>(defaultValue)
 
-  return (
-    <FilterContext.Provider value={{ value, setValue, onValueChange }}>
-      <div className={className} style={style}>
-        {children}
-      </div>
-    </FilterContext.Provider>
-  )
-}
+    return (
+      <FilterContext.Provider value={{ value, setValue, onValueChange }}>
+        <div className={className} style={style} ref={ref}>
+          {children}
+        </div>
+      </FilterContext.Provider>
+    )
+  }
+)
+Root.displayName = 'Filters.Root'
 
 interface FilterItemProps {
   value: any
@@ -41,25 +47,32 @@ interface FilterItemProps {
   className?: string
 }
 
-export const Item = ({ className = '', style = {}, value, children, disabled = false, ...props }: FilterItemProps) => {
-  const { setValue, onValueChange } = useContext(FilterContext)
-  const isActive = value === useContext(FilterContext).value
+export const Item = forwardRef(
+  (
+    { className = '', style = {}, value, children, disabled = false, ...props }: FilterItemProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => {
+    const { setValue, onValueChange } = useContext(FilterContext)
+    const isActive = value === useContext(FilterContext).value
 
-  const handleClick = () => {
-    setValue(value)
-    onValueChange(value)
+    const handleClick = () => {
+      setValue(value)
+      onValueChange(value)
+    }
+
+    return (
+      <div
+        ref={ref}
+        className={cx(styles.filterItem, className)}
+        style={style}
+        onClick={handleClick}
+        data-active={isActive}
+        data-disabled={disabled}
+        {...props}
+      >
+        {children}
+      </div>
+    )
   }
-
-  return (
-    <div
-      className={cx(styles.filterItem, className)}
-      style={style}
-      onClick={handleClick}
-      data-active={isActive}
-      data-disabled={disabled}
-      {...props}
-    >
-      {children}
-    </div>
-  )
-}
+)
+Item.displayName = 'Filters.Item'
