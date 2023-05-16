@@ -1,11 +1,15 @@
-import React, { useRef } from 'react'
+import React, { Suspense, useRef } from 'react'
 import styles from './HomeHero.module.scss'
 import { bemify } from '@utils/bemify'
 import { use100vh } from 'react-div-100vh'
 import dynamic from 'next/dynamic'
+import { Loader } from '@components/loader'
 const bem = bemify(styles, 'homeHero')
 
-const Scene = dynamic(() => import('./scene/Scene').then((Mod) => Mod.Scene), { ssr: false })
+const Scene = dynamic(() => import('./scene/Scene').then((Mod) => Mod.Scene), {
+  ssr: false,
+  loading: () => <Loader className={bem('loader')} />,
+})
 
 interface HomeHeroProps {}
 
