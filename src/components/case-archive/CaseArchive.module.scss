@@ -13,6 +13,24 @@
   &__title {
   }
 
+  &__cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+
+    &[data-active='true'] {
+      opacity: 1;
+    }
+  }
+
   &__fetchMoreTrigger {
     height: 1px;
     width: 100%;

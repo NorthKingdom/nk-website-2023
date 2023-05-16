@@ -4,7 +4,7 @@ import { bemify } from '@utils/bemify'
 import cx from 'clsx'
 const bem = bemify(styles, 'list')
 
-interface ListProps {
+interface ListProps extends Omit<React.HTMLAttributes<HTMLUListElement>, 'id'> {
   className?: string
   style?: React.CSSProperties
   items: any[]
@@ -15,11 +15,11 @@ interface ListProps {
 
 export const List = forwardRef(
   (
-    { items = [], renderItem, style = {}, className = '', id, hideBottomBar = false }: ListProps,
+    { items = [], renderItem, style = {}, className = '', id, hideBottomBar = false, ...props }: ListProps,
     ref: ForwardedRef<HTMLUListElement>
   ) => {
     return (
-      <ul ref={ref} data-no-bottom-bar={hideBottomBar} className={cx(bem(), className)} style={style}>
+      <ul ref={ref} data-no-bottom-bar={hideBottomBar} className={cx(bem(), className)} style={style} {...props}>
         {items.map((item, i) => (
           <li key={!!id ? id(item) : i}>{renderItem(item)}</li>
         ))}

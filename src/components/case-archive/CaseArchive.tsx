@@ -10,6 +10,9 @@ import { useInViewEffect } from 'react-hook-inview'
 import { noop } from '@utils/noop'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import * as Filters from '@components/filters'
+import { unsubscribe } from 'diagnostics_channel'
+import Cursor from '@utils/cursor'
+import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -56,6 +59,8 @@ export const FetchMoreTrigger = ({ fetchMore = noop }: FetchMoreTriggerProps) =>
 const FILTERS = ['all', 'gaming', 'entertainment']
 
 export const CaseArchive = () => {
+  const cursorRef = useRef<HTMLDivElement>(null)
+  const isTouchDevice = useIsTouchDevice()
   const [filter, setFilter] = React.useState(FILTERS[0])
   const { data, previousData, loading, error, fetchMore } = useQuery(CASE_ARCHIVE_QUERY, {
     variables: {
@@ -86,9 +91,22 @@ export const CaseArchive = () => {
     })
   }
 
+  const [sectionHovered, setSectionHovered] = useState(false)
+
+  useEffect(() => {
+    if (!cursorRef.current || isTouchDevice) return
+
+    const unsubscribe = Cursor.subscribe(cursorRef.current)
+
+    return () => unsubscribe()
+  }, [isTouchDevice])
+
   return (
     <ContentWrapper className={bem()}>
       <ThemeChangeTrigger theme="light" />
+
+      <div ref={cursorRef} className={bem('cursor')} data-active={sectionHovered} />
+
       <div className={bem('header')}>
         <h1 className={bem('title')}>Archive</h1>
         <Filters.Root defaultValue={filter} onValueChange={setFilter} className={bem('filterRoot')}>
@@ -99,7 +117,20 @@ export const CaseArchive = () => {
           ))}
         </Filters.Root>
       </div>
-      <List items={caseArchiveData.items} id={(item) => item.sys.id} renderItem={CaseArchiveItem} />
+
+      <List
+        items={caseArchiveData.items}
+        id={(item) => item.sys.id}
+        renderItem={CaseArchiveItem}
+        onMouseEnter={() => {
+          if (isTouchDevice) return
+          setSectionHovered(true)
+        }}
+        onMouseLeave={() => {
+          if (isTouchDevice) return
+          setSectionHovered(false)
+        }}
+      />
       {loading ? <p>Loading...</p> : <FetchMoreTrigger fetchMore={_fetchMore} />}
     </ContentWrapper>
   )
