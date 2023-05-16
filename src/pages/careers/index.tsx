@@ -1,9 +1,16 @@
 import React from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { JobPage, TeamTailorJob } from '@customTypes/cms'
 import { List } from '@components/list'
 import { JobListItem } from '@components/job-list-item'
+import { PageHero } from '@components/page-hero'
+import { Description } from '@components/description'
+import { GutterWrapper } from '@components/gutter-wrapper'
+import { StickyListItem } from '@components/sticky-list-item'
+import { ThemeChangeTrigger } from '@components/theme-change-trigger'
+import styles from './Careers.module.scss'
+import { bemify } from '@utils/bemify'
+const bem = bemify(styles, 'careers')
 
 interface JobsPageProp extends JobPage {
   jobs: TeamTailorJob[]
@@ -12,7 +19,6 @@ interface JobsPageProp extends JobPage {
 }
 
 const Careers = (props: JobsPageProp) => {
-  console.log(props)
   return (
     <>
       <Head>
@@ -26,11 +32,112 @@ const Careers = (props: JobsPageProp) => {
         <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
         <link rel="canonical" href="https://www.northkingdom.com/jobs" />
       </Head>
-      <main style={{ paddingTop: '80px' }}>
-        <h1>Careers page</h1>
-        <h2>Openings</h2>
-        <List items={props.openings} renderItem={JobListItem} />
-        <Link href="/">Back</Link>
+      <main className={styles['careers']}>
+        <PageHero
+          title={'Be apart of our kingdom'}
+          srcSet={{
+            desktopImage: {
+              url: '/dummy/temp-riot-hero-image.jpg',
+            },
+            mobileImage: {
+              url: '/dummy/temp-riot-hero-image.jpg',
+            },
+            altText: 'temp alt',
+          }}
+        />
+        <GutterWrapper size={'small'} theme="light">
+          <Description
+            header={'4 current openings'}
+            copy={
+              'Working at North Kingdom means being part of a team-based culture where diverse talents bring different perspectives and are empowered to act on their combined ideas. Our team consists of passionate, curious, and caring people from 15 different countries around the world.'
+            }
+          />
+          <List
+            items={[
+              {
+                copy: "We have over 10 years of experience creating innovative VR/AR solutions for some of \nthe biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting\nedge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating\ninnovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked\nwith Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and\nnative solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,\nmobile web, mobile apps and native solutions.",
+                header: 'Extended Reality',
+                isVideoAsset: false,
+                srcSet: {
+                  altText: 'temp alt',
+                  desktopImage: {
+                    url: '/dummy/temp-left-riot-img.jpg',
+                  },
+                  mobileImage: {
+                    url: '/dummy/temp-left-riot-img.jpg',
+                  },
+                },
+              },
+              {
+                copy: "We have over 10 years of experience creating innovative VR/AR solutions for some of\n  the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting\n  edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating\n  innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked\n  with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and\n  native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,\n  mobile web, mobile apps and native solutions.",
+                header: 'Extended Reality',
+                isVideoAsset: true,
+                srcSet: {
+                  autoPlay: true,
+                  loop: true,
+                  muted: true,
+                  posterImage: {
+                    url: '/dummy/showreelposter.jpg',
+                  },
+                  srcCollection: {
+                    items: [
+                      {
+                        url: '/dummy/showreel23.mp4',
+                      },
+                    ],
+                  },
+                },
+              },
+              {
+                copy: "We have over 10 years of experience creating innovative VR/AR solutions for some of\n  the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting\n  edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating\n  innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked\n  with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and\n  native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,\n  mobile web, mobile apps and native solutions.",
+                header: 'Extended Reality',
+                isVideoAsset: false,
+                srcSet: [
+                  {
+                    altText: 'temp alt',
+                    desktopImage: {
+                      url: '/dummy/temp-left-riot-img.jpg',
+                    },
+                    mobileImage: {
+                      url: '/dummy/temp-left-riot-img.jpg',
+                    },
+                  },
+                  {
+                    altText: 'temp alt',
+                    desktopImage: {
+                      url: '/dummy/temp-right-riot-img.jpg',
+                    },
+                    mobileImage: {
+                      url: '/dummy/temp-right-riot-img.jpg',
+                    },
+                  },
+                  {
+                    altText: 'temp alt',
+                    desktopImage: {
+                      url: '/dummy/temp-riot-right-image-2.jpg',
+                    },
+                    mobileImage: {
+                      url: '/dummy/temp-riot-right-image-2.jpg',
+                    },
+                  },
+                ],
+              },
+            ]}
+            renderItem={StickyListItem}
+            hideBottomBar
+          />
+        </GutterWrapper>
+        <GutterWrapper size={'small'} theme="dark">
+          <h2 className={bem('openings')}>Openings</h2>
+          <List
+            style={{
+              '--list-color': 'white',
+            }}
+            items={props.openings}
+            renderItem={JobListItem}
+            hideBottomBar
+          />
+        </GutterWrapper>
       </main>
     </>
   )
@@ -56,7 +163,15 @@ export async function getServerSideProps() {
           openings:
             result.data.length > 0
               ? result.data
-              : [{ title: 'OPEN APP', location: 'sweden', link: 'https://www.link.com' }],
+              : [
+                  {
+                    title: 'Open application',
+                    location: 'Sweden/Barcelona',
+                    link: 'https://www.link.com',
+                    description:
+                      'Although we currently don’t have any open positions, we always welcome applications from talented individuals.',
+                  },
+                ],
         },
       }
       // let resultData = result.data

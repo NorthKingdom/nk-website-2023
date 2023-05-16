@@ -7,17 +7,24 @@ interface JobListItemProps {
   title: string
   location: string
   link: string
+  description?: string
 }
 
-export const JobListItem = ({ title, location, link }: JobListItemProps) => {
+export const JobListItem = ({ title, location, link, description }: JobListItemProps) => {
   return (
     <div className={styles['jobListItem']}>
-      <p>{title}</p>
-
-      <p>{location}</p>
-      <a href={link} target="_blank">
-        Apply
-      </a>
+      <div className={bem('topRow')}>
+        <p>{title}</p>
+        <p>{location}</p>
+        <a href={link} target="_blank">
+          Apply
+        </a>
+      </div>
+      {description && (
+        <div className={bem('descriptionContainer')}>
+          <p className={bem('description')}>{description}</p>
+        </div>
+      )}
     </div>
   )
 }

@@ -18,3 +18,12 @@ export const Default: Story = {
     link: 'https://www.exmaple-link.com',
   },
 }
+
+export const OpenApplication: Story = {
+  args: {
+    title: 'Open Application',
+    location: 'Sweden/Barcelona',
+    link: 'https://www.exmaple-link.com',
+    description: `Although we currently don’t have any open positions, we always welcome applications from talented individuals.`,
+  },
+}

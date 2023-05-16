@@ -1,0 +1,24 @@
+.careers {
+  padding-top: 80px;
+
+  &__openings {
+    /* Desktop/Heading */
+
+    margin: 115px 0 36px 0;
+
+    font-family: 'FKGroteskNeue-Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 124px;
+    line-height: 116px;
+    /* identical to box height, or 94% */
+
+    display: flex;
+    align-items: flex-end;
+    letter-spacing: -0.05em;
+
+    /* White/100% */
+
+    color: #ffffff;
+  }
+}
