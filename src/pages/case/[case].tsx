@@ -101,7 +101,7 @@ const Case = (props: CasePageProps) => {
           <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
           <link href={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`} rel="canonical" />
         </Head>
-        <motion.main
+        {/* <motion.main
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.5 } }}
@@ -111,18 +111,18 @@ const Case = (props: CasePageProps) => {
             backgroundColor: props.backgroundColor?.value || `#FFF`,
             color: props.backgroundColor?.value === '#000000' ? '#FFF' : '#000',
           }}
-        >
-          <CaseHero
-            client={props.client}
-            caseName={props.title}
-            src={props.componentsCollection?.items[0].heroMedia}
-            isVideoAsset={props.componentsCollection?.items[0].heroMedia.__typename === 'Video'}
-          />
-          <GutterWrapper size="small">
-            <ComponentResolver components={props.componentsCollection?.items || []} />
-          </GutterWrapper>
-          <NextCasePreview caseTitle={'Masterclash'} client={'Riot'} src={'/dummy/temp-riot-1.jpg'} />
-        </motion.main>
+        > */}
+        <CaseHero
+          client={props.client}
+          caseName={props.title}
+          src={props.componentsCollection?.items[0].heroMedia}
+          isVideoAsset={props.componentsCollection?.items[0].heroMedia.__typename === 'Video'}
+        />
+        <GutterWrapper size="small">
+          <ComponentResolver components={props.componentsCollection?.items || []} />
+        </GutterWrapper>
+        <NextCasePreview caseTitle={'Masterclash'} client={'Riot'} src={'/dummy/temp-riot-1.jpg'} />
+        {/* </motion.main> */}
       </>
     </>
   )
