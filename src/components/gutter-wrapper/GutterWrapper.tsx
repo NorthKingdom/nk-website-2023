@@ -7,7 +7,7 @@ interface GutterWrapperProps {
   children: JSX.Element | JSX.Element[]
   style?: React.CSSProperties
   size: 'small' | 'medium' | 'large'
-  theme: 'light' | 'dark'
+  theme?: 'light' | 'dark'
 }
 
 export const GutterWrapper = ({ children, size, style, theme }: GutterWrapperProps) => {
