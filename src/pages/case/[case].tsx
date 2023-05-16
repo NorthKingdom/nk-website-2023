@@ -102,6 +102,7 @@ const Case = (props: CasePageProps) => {
           <link href={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`} rel="canonical" />
         </Head>
         {/* <motion.main
+
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.5 } }}

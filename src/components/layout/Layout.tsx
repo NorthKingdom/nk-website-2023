@@ -13,6 +13,7 @@ interface LayoutProps {
   hideFooter: boolean
 }
 
+
 const variants = {
   initial: {
     opacity: 0,
