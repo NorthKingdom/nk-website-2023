@@ -15,7 +15,7 @@ const nextConfig = {
           @import "@styles/fonts.scss";
           @import "@styles/variables.scss";
           @import "@styles/mixins/_base.scss";
-          @import "@styles/mixins/fluid-typography.scss";
+          @import "@styles/mixins/typography.scss";
           @import '~sass-mq';
         `,
   },
