@@ -10,15 +10,39 @@ import { useInViewEffect } from 'react-hook-inview'
 import { noop } from '@utils/noop'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import * as Filters from '@components/filters'
+import Cursor from '@utils/cursor'
+import { useIsTouchDevice } from '@hooks/use-is-touch-device'
+import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
 
-const CaseArchiveItem = (props: CaseArchiveItem) => {
+const FILTERS = ['all', 'gaming', 'entertainment']
+
+/**
+ * Custom cursor image context.
+ */
+const CustomCursorImageContext = React.createContext<{
+  setSrc: (src: string) => void
+}>({ setSrc: noop })
+
+/**
+ * Case archive item component.
+ */
+
+interface CaseArchiveItemProps extends CaseArchiveItem {
+  index: number
+}
+
+const IMAGE_POOL = ['dummy/case-thumb-fallback.webp', 'dummy/temp-left-riot-img.jpg', 'dummy/temp-right-riot-img.jpg']
+
+const CaseArchiveItem = (props: CaseArchiveItemProps) => {
   const projectYear = new Date(props.date).getFullYear()
+  const { setSrc } = React.useContext(CustomCursorImageContext)
+  const src = IMAGE_POOL[props.index % IMAGE_POOL.length]
 
   return (
-    <div className={bemItem()}>
+    <div className={bemItem()} onMouseOver={() => setSrc(src)}>
       <p className={bemItem('year')}>{projectYear}</p>
       <h2 className={bemItem('projectTitle')}>{props.title}</h2>
       <p className={bemItem('vertical')}>{props.vertical}</p>
@@ -31,6 +55,9 @@ const CaseArchiveItem = (props: CaseArchiveItem) => {
   )
 }
 
+/**
+ * Fetch more case data trigger
+ */
 interface FetchMoreTriggerProps {
   fetchMore: () => void
 }
@@ -53,9 +80,12 @@ export const FetchMoreTrigger = ({ fetchMore = noop }: FetchMoreTriggerProps) =>
   return <div ref={ref} className={bem('fetchMoreTrigger')}></div>
 }
 
-const FILTERS = ['all', 'gaming', 'entertainment']
-
+/**
+ * Case archive component.
+ */
 export const CaseArchive = () => {
+  const cursorRef = useRef<HTMLDivElement>(null)
+  const isTouchDevice = useIsTouchDevice()
   const [filter, setFilter] = React.useState(FILTERS[0])
   const { data, previousData, loading, error, fetchMore } = useQuery(CASE_ARCHIVE_QUERY, {
     variables: {
@@ -86,9 +116,25 @@ export const CaseArchive = () => {
     })
   }
 
+  const [src, setSrc] = useState('dummy/case-thumb-fallback.webp')
+  const [sectionHovered, setSectionHovered] = useState(false)
+
+  useEffect(() => {
+    if (!cursorRef.current || isTouchDevice) return
+
+    const unsubscribe = Cursor.subscribe(cursorRef.current)
+
+    return () => unsubscribe()
+  }, [isTouchDevice])
+
   return (
     <ContentWrapper className={bem()}>
       <ThemeChangeTrigger theme="light" />
+
+      <AspectRatio ratio={4 / 3} className={bem('cursor')} ref={cursorRef} data-active={sectionHovered}>
+        <img src={src} alt="" width={200} height={150} aria-hidden="true" />
+      </AspectRatio>
+
       <div className={bem('header')}>
         <h1 className={bem('title')}>Archive</h1>
         <Filters.Root defaultValue={filter} onValueChange={setFilter} className={bem('filterRoot')}>
@@ -99,7 +145,23 @@ export const CaseArchive = () => {
           ))}
         </Filters.Root>
       </div>
-      <List items={caseArchiveData.items} id={(item) => item.sys.id} renderItem={CaseArchiveItem} />
+
+      <CustomCursorImageContext.Provider value={{ setSrc }}>
+        <List
+          items={caseArchiveData.items.map((item: any, i: number) => ({ ...item, index: i }))}
+          id={(item) => item.sys.id}
+          renderItem={CaseArchiveItem}
+          onMouseEnter={() => {
+            if (isTouchDevice) return
+            setSectionHovered(true)
+          }}
+          onMouseLeave={() => {
+            if (isTouchDevice) return
+            setSectionHovered(false)
+          }}
+        />
+      </CustomCursorImageContext.Provider>
+
       {loading ? <p>Loading...</p> : <FetchMoreTrigger fetchMore={_fetchMore} />}
     </ContentWrapper>
   )

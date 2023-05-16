@@ -1,7 +1,7 @@
 import { useMemo, forwardRef } from 'react'
 import styles from './AspectRatio.module.scss'
 
-export interface Props {
+export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className?: string
   style?: React.CSSProperties
   children: React.ReactNode
