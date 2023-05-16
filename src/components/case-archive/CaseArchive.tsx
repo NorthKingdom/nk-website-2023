@@ -87,7 +87,7 @@ export const CaseArchive = (props: CaseArchiveProps) => {
 
   return (
     <ContentWrapper className={bem()}>
-      <ThemeChangeTrigger theme="light" debug />
+      <ThemeChangeTrigger theme="light" />
       <h1 className={bem('title')}>Archive</h1>
       <List items={caseArchiveData.items} id={(item) => item.sys.id} renderItem={CaseArchiveItem} />
       {loading ? <p>Loading...</p> : <FetchMoreTrigger fetchMore={_fetchMore} />}
