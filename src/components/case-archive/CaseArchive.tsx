@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styles from './CaseArchive.module.scss'
 import { bemify } from '@utils/bemify'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
@@ -8,6 +8,7 @@ import { CASE_ARCHIVE_QUERY } from '@graphql/queries'
 import type { CaseArchiveItem } from '@customTypes/cms'
 import { useInViewEffect } from 'react-hook-inview'
 import { noop } from '@utils/noop'
+import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -56,25 +57,24 @@ export const FetchMoreTrigger = ({ fetchMore = noop }: FetchMoreTriggerProps) =>
 }
 
 export const CaseArchive = (props: CaseArchiveProps) => {
-  const { data, loading, error, fetchMore } = useQuery(CASE_ARCHIVE_QUERY, {
-    variables: { limit: 20, skip: 0 },
+  const { data, previousData, loading, error, fetchMore } = useQuery(CASE_ARCHIVE_QUERY, {
+    variables: {
+      skip: 0,
+      limit: 20,
+    },
   })
 
+  const caseArchiveData = data?.caseArchive ?? previousData?.caseArchive ?? { items: [], total: 0 }
+
   const _fetchMore = () => {
-    const canFetchMore = data?.caseArchive?.items?.length < (data?.caseArchive?.total ?? 50)
-
+    const canFetchMore = caseArchiveData.items.length < caseArchiveData.total
     if (!canFetchMore || loading) return
-
     fetchMore({
       variables: {
-        skip: data?.caseArchive?.items?.length,
+        skip: caseArchiveData.items.length,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev
-        console.log({
-          prev,
-          fetchMoreResult,
-        })
         return Object.assign({}, prev, {
           caseArchive: {
             ...prev.caseArchive,
@@ -87,8 +87,9 @@ export const CaseArchive = (props: CaseArchiveProps) => {
 
   return (
     <ContentWrapper className={bem()}>
+      <ThemeChangeTrigger theme="light" debug />
       <h1 className={bem('title')}>Archive</h1>
-      <List items={data?.caseArchive?.items ?? []} id={(item) => item.sys.id} renderItem={CaseArchiveItem} />
+      <List items={caseArchiveData.items} id={(item) => item.sys.id} renderItem={CaseArchiveItem} />
       {loading ? <p>Loading...</p> : <FetchMoreTrigger fetchMore={_fetchMore} />}
     </ContentWrapper>
   )

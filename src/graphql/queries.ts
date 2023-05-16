@@ -73,6 +73,7 @@ export const CASE_ARCHIVE_QUERY = gql`
         __typename
         sys {
           id
+          __typename
         }
         slug
         title
