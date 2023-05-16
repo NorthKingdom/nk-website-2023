@@ -26,7 +26,7 @@ const CaseArchiveItem = (props: CaseArchiveItem) => {
       <h2 className={bemItem('projectTitle')}>{props.title}</h2>
       <p>{props.client}</p>
       {!!props.projectLink && (
-        <a className={bemItem('link')} href={props.projectLink}>
+        <a className={bemItem('link')} href={props.projectLink} target="_blank" rel="noopener">
           Link
         </a>
       )}
