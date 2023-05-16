@@ -6,13 +6,19 @@ import { Suspense } from 'react'
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
 const Shield = dynamic(() => import('./Shield').then((Mod) => Mod.Shield), { ssr: false })
 
-export const Scene = (props: any) => {
+interface SceneProps {
+  cta: JSX.Element
+  [key: string]: any
+}
+
+export const Scene = ({ cta, ...props }: SceneProps) => {
   return (
     <Canvas camera={{ position: [0, 0, 5] }} {...props}>
       <Suspense fallback={null}>
         <Effects />
         <Shield lod="low" scale={1.1} />
-        <Shield scale={0.75} position-z={0.1} />
+        <Shield scale={0.6} position-z={1} />
+        <Html center>{cta}</Html>
         <Preload all />
       </Suspense>
     </Canvas>
