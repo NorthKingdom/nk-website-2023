@@ -11,7 +11,7 @@ interface DescriptionProps {
     copy: string
     url: string
   }
-  theme: 'light' | 'dark'
+  theme?: 'light' | 'dark'
 }
 
 export const Description = ({ header, headerSize, copy, link, theme = 'light' }: DescriptionProps) => {
