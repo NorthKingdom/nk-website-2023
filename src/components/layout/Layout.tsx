@@ -23,7 +23,7 @@ const variants = {
   },
   exit: {
     opacity: 0,
-    transition: { ease: 'circOut', duration: 0 },
+    transition: { ease: 'circOut' },
   },
 }
 
