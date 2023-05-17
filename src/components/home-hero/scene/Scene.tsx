@@ -13,18 +13,23 @@ const ShieldBackgroundLight = dynamic(
 )
 
 interface SceneProps {
+  visible?: boolean
   fullscreen: boolean
   cta: JSX.Element
   [key: string]: any
 }
 
-export const Scene = ({ fullscreen = false, cta, ...props }: SceneProps) => {
+export const Scene = ({ visible = true, fullscreen = false, cta, ...props }: SceneProps) => {
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
   const [frameloop, setFrameloop] = useState<'always' | 'never'>('always')
 
   useEffect(() => {
     setFrameloop(isMenuOpen ? 'never' : 'always')
   }, [isMenuOpen])
+
+  useEffect(() => {
+    setFrameloop(visible ? 'always' : 'never')
+  }, [visible])
 
   const onFullscreenTransitionStart = (isFullscreen: boolean) => {
     if (!isFullscreen) {
