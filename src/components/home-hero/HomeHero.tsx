@@ -48,6 +48,7 @@ export const HomeHero = (props: HomeHeroProps) => {
       }}
     >
       <Scene
+        fullscreen={showVideoPlayer}
         style={{
           position: 'relative',
           top: 0,
@@ -56,12 +57,11 @@ export const HomeHero = (props: HomeHeroProps) => {
           height: '100%',
           pointerEvents: 'none',
         }}
-        frameloop={frameloop}
         eventSource={$container}
         eventPrefix="client"
         cta={<PlayButton onClick={() => setShowVideoPlayer(true)} />}
       />
-      <Modal visible={showVideoPlayer}>
+      <Modal visible={showVideoPlayer} animate={{ opacity: 1, transition: { delay: 0.3 } }}>
         <CloseButton className={videoModalBem('closeButton')} onClick={() => setShowVideoPlayer(false)} />
         <VideoPlayer
           className={videoModalBem('videoPlayer')}
