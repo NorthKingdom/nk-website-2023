@@ -10,6 +10,7 @@ import { StickyListItem } from '@components/sticky-list-item'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import styles from './Careers.module.scss'
 import { bemify } from '@utils/bemify'
+import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 const bem = bemify(styles, 'careers')
 
 interface JobsPageProp extends JobPage {
@@ -45,8 +46,10 @@ const Careers = (props: JobsPageProp) => {
             altText: 'temp alt',
           }}
         />
-        <GutterWrapper size={'small'} theme="light">
+        <ContentWrapper style={{ position: 'relative', background: 'white' }}>
+          <ThemeChangeTrigger theme="light" />
           <Description
+            theme="light"
             header={'4 current openings'}
             copy={
               'Working at North Kingdom means being part of a team-based culture where diverse talents bring different perspectives and are empowered to act on their combined ideas. Our team consists of passionate, curious, and caring people from 15 different countries around the world.'
@@ -126,18 +129,21 @@ const Careers = (props: JobsPageProp) => {
             renderItem={StickyListItem}
             hideBottomBar
           />
-        </GutterWrapper>
-        <GutterWrapper size={'small'} theme="dark">
+        </ContentWrapper>
+        <ContentWrapper style={{ position: 'relative', background: 'black' }}>
+          <ThemeChangeTrigger theme="dark" />
           <h2 className={bem('openings')}>Openings</h2>
           <List
+            className={bem('jobList')}
             style={{
               '--list-color': 'white',
             }}
+            data-open-application={props.openings.length === 1}
             items={props.openings}
             renderItem={JobListItem}
             hideBottomBar
           />
-        </GutterWrapper>
+        </ContentWrapper>
       </main>
     </>
   )
@@ -160,6 +166,7 @@ export async function getServerSideProps() {
     .then((result) => {
       return {
         props: {
+          footerTheme: 'light',
           openings:
             result.data.length > 0
               ? result.data

@@ -11,21 +11,42 @@
     align-items: center;
     width: 100%;
 
-    p:first-child {
-      width: 50%;
+    @include mq($until: tablet) {
+      flex-wrap: wrap;
     }
+  }
 
-    a {
-      margin-left: auto;
+  &__title {
+    width: 50%;
+  }
+
+  &__location {
+    @include mq($until: tablet) {
+      order: 3;
+      width: 100%;
+      opacity: 0.6;
+    }
+  }
+
+  &__applyLink {
+    margin-left: auto;
+  }
+
+  &__applyCaption {
+    display: inline-block;
+
+    @include mq($until: tablet) {
+      display: none;
     }
   }
 
   &__descriptionContainer {
     width: 50%;
     margin-left: auto;
+  }
 
-    p {
-      max-width: 675px;
-    }
+  &__description {
+    opacity: 0.6;
+    max-width: 675px;
   }
 }

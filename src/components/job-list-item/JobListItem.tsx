@@ -14,10 +14,10 @@ export const JobListItem = ({ title, location, link, description }: JobListItemP
   return (
     <div className={styles['jobListItem']}>
       <div className={bem('topRow')}>
-        <p>{title}</p>
-        <p>{location}</p>
-        <a href={link} target="_blank">
-          Apply
+        <p className={bem('title')}>{title}</p>
+        <p className={bem('location')}>{location}</p>
+        <a className={bem('applyLink')} href={link} target="_blank">
+          <span className={bem('applyCaption')}>Apply</span> ↗
         </a>
       </div>
       {description && (

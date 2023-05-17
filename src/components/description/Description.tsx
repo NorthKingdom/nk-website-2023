@@ -11,11 +11,12 @@ interface DescriptionProps {
     copy: string
     url: string
   }
+  theme: 'light' | 'dark'
 }
 
-export const Description = ({ header, headerSize, copy, link }: DescriptionProps) => {
+export const Description = ({ header, headerSize, copy, link, theme = 'light' }: DescriptionProps) => {
   return (
-    <section className={styles['description']}>
+    <section className={styles['description']} data-theme={theme}>
       <div className={bem('left')}>{header && <h2 data-size={headerSize}>{header}</h2>}</div>
       <div className={bem('right')}>
         <p>{copy}</p>
