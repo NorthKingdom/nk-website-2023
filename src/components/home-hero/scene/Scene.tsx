@@ -1,8 +1,9 @@
 import { Canvas } from '@react-three/fiber'
 import { Html, Preload } from '@react-three/drei'
 import dynamic from 'next/dynamic'
-import { Suspense, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { noop } from '@utils/noop'
+import { useGlobalStateStore } from '@store'
 
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
 const ShieldVideo = dynamic(() => import('./ShieldVideo').then((Mod) => Mod.ShieldVideo), { ssr: false })
@@ -18,7 +19,12 @@ interface SceneProps {
 }
 
 export const Scene = ({ fullscreen = false, cta, ...props }: SceneProps) => {
+  const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
   const [frameloop, setFrameloop] = useState<'always' | 'never'>('always')
+
+  useEffect(() => {
+    setFrameloop(isMenuOpen ? 'never' : 'always')
+  }, [isMenuOpen])
 
   const onFullscreenTransitionStart = (isFullscreen: boolean) => {
     if (!isFullscreen) {
