@@ -1,0 +1,23 @@
+.playButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 40px;
+  width: 104px;
+  height: 72px;
+  border-radius: 100px;
+  overflow: hidden;
+  background: rgba(26, 26, 26, 0.32);
+  backdrop-filter: blur(32px);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  @include hover {
+    transform: scale(1.1);
+  }
+
+  @include active {
+    transform: scale(1);
+  }
+}
