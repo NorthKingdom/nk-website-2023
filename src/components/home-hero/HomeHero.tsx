@@ -8,7 +8,9 @@ import { PlayButton } from '@components/play-button'
 import { VideoPlayer } from '@components/video-player'
 import { useGlobalStateStore } from '@store'
 import { Modal } from '@components/modal'
+import { CloseButton } from '@components/close-button'
 const bem = bemify(styles, 'homeHero')
+const videoModalBem = bemify(styles, 'videoPlayerModal')
 
 const Scene = dynamic(() => import('./scene/Scene').then((Mod) => Mod.Scene), {
   ssr: false,
@@ -60,20 +62,9 @@ export const HomeHero = (props: HomeHeroProps) => {
         cta={<PlayButton onClick={() => setShowVideoPlayer(true)} />}
       />
       <Modal visible={showVideoPlayer}>
-        <button
-          onClick={() => setShowVideoPlayer(false)}
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            zIndex: 1001,
-            cursor: 'pointer',
-          }}
-        >
-          Close
-        </button>
+        <CloseButton className={videoModalBem('closeButton')} onClick={() => setShowVideoPlayer(false)} />
         <VideoPlayer
-          className={bem('videoPlayer')}
+          className={videoModalBem('videoPlayer')}
           autoPlay={true}
           src={{
             muted: true,

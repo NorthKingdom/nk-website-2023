@@ -12,7 +12,16 @@
   }
 }
 
-video.home__videoPlayer {
+.videoPlayerModal {
+  &__closeButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
+  }
+}
+
+.videoPlayerModal__videoPlayer video {
   position: absolute;
   top: 0;
   left: 0;
