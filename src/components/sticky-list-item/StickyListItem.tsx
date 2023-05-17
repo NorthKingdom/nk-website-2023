@@ -15,9 +15,9 @@ interface StickyListItemProps {
   srcSet: Video | ResponsiveImage[] | ResponsiveImage
   containsList?: boolean
   items?: any[]
-  automaticallyChange: boolean
-  showIndicators: boolean
-  showArrows: boolean
+  automaticallyChange?: boolean
+  showIndicators?: boolean
+  showArrows?: boolean
   renderItem?: (item: any) => JSX.Element
 }
 
