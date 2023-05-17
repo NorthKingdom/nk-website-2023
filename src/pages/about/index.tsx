@@ -32,7 +32,7 @@ const renderAwards = ({ awardName, numberOfAwards }: { awardName: string; number
 
 const About = (props: AboutPageProps) => {
   return (
-    <main className={styles['about']}>
+    <>
       <Head>
         <title>North Kingdom | About</title>
         <meta property="og:title" content={`North Kingdom | About`} key="ogtitle" />
@@ -44,7 +44,7 @@ const About = (props: AboutPageProps) => {
         <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
         <link rel="canonical" href="https://www.northkingdom.com/about" />
       </Head>
-      <main style={{ paddingTop: '80px' }}>
+      <main className={styles['about']}>
         <PageHero
           className={bem('pageHeroTitle')}
           title={'Creativity & Innovation since 2003'}
@@ -157,7 +157,7 @@ const About = (props: AboutPageProps) => {
           />
         </ContentWrapper>
       </main>
-    </main>
+    </>
   )
 }
 
