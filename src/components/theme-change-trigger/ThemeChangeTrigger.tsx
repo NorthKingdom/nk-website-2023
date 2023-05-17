@@ -11,7 +11,7 @@ interface ThemeChangeTriggerProps {
   style?: React.CSSProperties
 }
 
-export const ThemeChangeTrigger = ({ theme, debug = true, className = '', style = {} }: ThemeChangeTriggerProps) => {
+export const ThemeChangeTrigger = ({ theme, debug = false, className = '', style = {} }: ThemeChangeTriggerProps) => {
   const get = useGlobalStateStore((state) => state.get)
   const setTheme = useGlobalStateStore((state) => state.setTheme)
   const previousTheme = useRef(get().theme)
