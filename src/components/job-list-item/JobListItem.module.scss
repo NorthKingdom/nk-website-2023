@@ -43,6 +43,11 @@
   &__descriptionContainer {
     width: 50%;
     margin-left: auto;
+
+    @include mq($until: tablet) {
+      width: 100%;
+      margin: 16px 0;
+    }
   }
 
   &__description {
