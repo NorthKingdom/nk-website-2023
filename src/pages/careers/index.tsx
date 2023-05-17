@@ -5,12 +5,11 @@ import { List } from '@components/list'
 import { JobListItem } from '@components/job-list-item'
 import { PageHero } from '@components/page-hero'
 import { Description } from '@components/description'
-import { GutterWrapper } from '@components/gutter-wrapper'
 import { StickyListItem } from '@components/sticky-list-item'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
+import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import styles from './Careers.module.scss'
 import { bemify } from '@utils/bemify'
-import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 const bem = bemify(styles, 'careers')
 
 interface JobsPageProp extends JobPage {
@@ -35,6 +34,7 @@ const Careers = (props: JobsPageProp) => {
       </Head>
       <main className={styles['careers']}>
         <PageHero
+          className={bem('pageHeroTitle')}
           title={'Be apart of our kingdom'}
           srcSet={{
             desktopImage: {
@@ -95,6 +95,9 @@ const Careers = (props: JobsPageProp) => {
                 copy: "We have over 10 years of experience creating innovative VR/AR solutions for some of\n  the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting\n  edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating\n  innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked\n  with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and\n  native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,\n  mobile web, mobile apps and native solutions.",
                 header: 'Extended Reality',
                 isVideoAsset: false,
+                automaticallyChange: true,
+                showIndicators: true,
+                showArrows: true,
                 srcSet: [
                   {
                     altText: 'temp alt',

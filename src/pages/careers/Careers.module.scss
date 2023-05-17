@@ -1,9 +1,13 @@
 .careers {
   padding-top: 80px;
 
-  &__openings {
-    /* Desktop/Heading */
+  &__pageHeroTitle {
+    h1 {
+      max-width: 875px;
+    }
+  }
 
+  &__openings {
     @include Heading1;
     padding: 115px 0 36px 0;
     color: $white;

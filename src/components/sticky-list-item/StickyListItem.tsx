@@ -15,6 +15,9 @@ interface StickyListItemProps {
   srcSet: Video | ResponsiveImage[] | ResponsiveImage
   containsList?: boolean
   items?: any[]
+  automaticallyChange?: boolean
+  showIndicators?: boolean
+  showArrows?: boolean
   renderItem?: (item: any) => JSX.Element
 }
 
@@ -25,6 +28,9 @@ export const StickyListItem = ({
   srcSet,
   containsList = false,
   items = [],
+  automaticallyChange = true,
+  showIndicators = false,
+  showArrows = false,
   renderItem = () => <div />,
 }: StickyListItemProps) => {
   return (
@@ -41,7 +47,12 @@ export const StickyListItem = ({
               src={srcSet as Video} // '/dummy/showreel23.mp4'
             />
           ) : Array.isArray(srcSet) ? (
-            <Slideshow automaticallyChange showIndicators showArrows srcSet={srcSet} />
+            <Slideshow
+              automaticallyChange={automaticallyChange}
+              showIndicators={showIndicators}
+              showArrows={showArrows}
+              srcSet={srcSet}
+            />
           ) : (
             <Image srcSet={srcSet as ResponsiveImage} />
           )}
