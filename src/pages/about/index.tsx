@@ -1,21 +1,19 @@
 import React from 'react'
 import Head from 'next/head'
-import style from './About.module.scss'
 import client from '@graphql/client'
 import { ABOUT_PAGE_QUERY } from '@graphql/queries'
 import { About as AboutPageProps } from '@customTypes/cms'
 import { PageHero } from '@components/page-hero'
-import styles from './About.module.scss'
-import { bemify } from '@utils/bemify'
 import { Description } from '@components/description'
 import { List } from '@components/list'
 import { StickyListItem } from '@components/sticky-list-item'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
+import styles from './About.module.scss'
+import { bemify } from '@utils/bemify'
 const bem = bemify(styles, 'about')
 
 const renderAwards = ({ awardName, numberOfAwards }: { awardName: string; numberOfAwards: number }) => {
-  console.log()
   return (
     <div
       style={{

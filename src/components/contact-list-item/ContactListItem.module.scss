@@ -1,0 +1,29 @@
+.contactListItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 32px;
+
+  @include mq($until: tablet) {
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  &__header {
+    width: 50%;
+
+    @include mq($until: tablet) {
+      width: 100%;
+      margin-bottom: 8px;
+    }
+  }
+
+  &__information {
+    width: 50%;
+
+    @include mq($until: tablet) {
+      width: 100%;
+    }
+  }
+}
