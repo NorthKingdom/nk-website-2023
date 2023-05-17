@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import styles from './Modal.module.scss'
 import { noop } from '@utils/noop'
 
@@ -22,5 +23,5 @@ export const Modal = ({ visible, onOpen = noop, onClose = noop, children }: Moda
     visiblePrev.current = visible
   }, [visible, onClose, onOpen])
 
-  return <>{visible && <div className={styles['modal']}>{children}</div>}</>
+  return <>{visible && createPortal(<div className={styles['modal']}>{children}</div>, document.body)}</>
 }

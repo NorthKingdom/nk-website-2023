@@ -32,9 +32,13 @@ export function Layout({ children }: LayoutProps) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const isTouchDevice = useIsTouchDevice()
+  const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
   const lenis = useGlobalStateStore((state) => state.lenis)
   const setLenis = useGlobalStateStore((state) => state.setLenis)
 
+  /*
+   * Initialize lenis
+   */
   useEffect(() => {
     if (!wrapperRef.current || !contentRef.current) return
 
@@ -63,6 +67,22 @@ export function Layout({ children }: LayoutProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTouchDevice])
 
+  /*
+   * Stop lenis when menu is open
+   */
+  useEffect(() => {
+    if (!lenis) return
+
+    if (isMenuOpen) {
+      lenis.stop()
+    } else {
+      lenis.start()
+    }
+  }, [lenis, isMenuOpen])
+
+  /*
+   * Scroll to top when page transition starts
+   */
   const onPageTransitionStart = (variant: 'animate' | 'exit') => {
     if (lenis && variant === 'animate') {
       lenis.scrollTo(0, { immediate: true })
