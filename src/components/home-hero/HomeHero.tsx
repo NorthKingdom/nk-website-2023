@@ -9,6 +9,7 @@ import { VideoPlayer } from '@components/video-player'
 import { useGlobalStateStore } from '@store'
 import { Modal } from '@components/modal'
 import { CloseButton } from '@components/close-button'
+import { useInView } from 'framer-motion'
 const bem = bemify(styles, 'homeHero')
 const videoModalBem = bemify(styles, 'videoPlayerModal')
 
@@ -24,6 +25,7 @@ export const HomeHero = (props: HomeHeroProps) => {
   const height100vh = use100vh() as number
   const [showVideoPlayer, setShowVideoPlayer] = useState(false)
   const lenis = useGlobalStateStore((state) => state.lenis)
+  const isInView = useInView($container)
 
   useEffect(() => {
     if (!lenis) return
@@ -47,6 +49,7 @@ export const HomeHero = (props: HomeHeroProps) => {
       }}
     >
       <Scene
+        visible={isInView}
         fullscreen={showVideoPlayer}
         style={{
           position: 'relative',
