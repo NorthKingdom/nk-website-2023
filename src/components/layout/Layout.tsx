@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 interface LayoutProps {
   children: React.ReactNode
+  footerTheme?: 'light' | 'dark'
 }
 
 const variants = {
@@ -26,7 +27,7 @@ const variants = {
   },
 }
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children, footerTheme }: LayoutProps) {
   const router = useRouter()
   const rafId = useRef<number>()
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -85,7 +86,7 @@ export function Layout({ children }: LayoutProps) {
               transition={{ duration: 0.1 }}
             >
               <div className={styles.content}>{children}</div>
-              <Footer />
+              <Footer theme={footerTheme} />
             </motion.main>
           </AnimatePresence>
         </div>

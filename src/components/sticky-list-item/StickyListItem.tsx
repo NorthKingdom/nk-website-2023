@@ -27,7 +27,6 @@ export const StickyListItem = ({
   items = [],
   renderItem = () => <div />,
 }: StickyListItemProps) => {
-  console.log(srcSet)
   return (
     <div className={styles['stickyListItem']}>
       <div className={bem('leftContainer')}>

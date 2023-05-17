@@ -89,7 +89,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
         }}
       />
       <ApolloProvider client={client(false)}>
-        <Layout>
+        <Layout footerTheme={pageProps.footerTheme}>
           <Component {...pageProps} />
         </Layout>
       </ApolloProvider>

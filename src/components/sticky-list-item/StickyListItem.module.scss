@@ -17,13 +17,6 @@
     }
 
     h3 {
-      font-family: 'FKGroteskNeue-Regular';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 28px;
-      line-height: 32px;
-      letter-spacing: -0.01em;
-      color: #000000;
       margin-bottom: 12px;
 
       @include mq($until: tablet) {
@@ -51,16 +44,6 @@
 
     @include mq($until: tablet) {
       width: 100%;
-    }
-
-    p {
-      font-family: 'FKGroteskNeue-Regular';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 28px;
-      line-height: 32px;
-      letter-spacing: -0.01em;
-      color: #000000;
     }
   }
 

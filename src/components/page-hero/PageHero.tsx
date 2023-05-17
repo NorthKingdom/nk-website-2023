@@ -3,6 +3,7 @@ import styles from './PageHero.module.scss'
 import { bemify } from '@utils/bemify'
 import { Image } from '@components/image'
 import { ResponsiveImage } from '@customTypes/cms'
+import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 const bem = bemify(styles, 'pageHero')
 
 interface PageHeroProps {
