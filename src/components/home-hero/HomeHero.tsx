@@ -23,7 +23,6 @@ export const HomeHero = (props: HomeHeroProps) => {
   const $container = useRef<HTMLDivElement>(null)
   const height100vh = use100vh() as number
   const [showVideoPlayer, setShowVideoPlayer] = useState(false)
-  const frameloop = showVideoPlayer ? 'never' : 'always'
   const lenis = useGlobalStateStore((state) => state.lenis)
 
   useEffect(() => {
@@ -66,6 +65,7 @@ export const HomeHero = (props: HomeHeroProps) => {
         <VideoPlayer
           className={videoModalBem('videoPlayer')}
           autoPlay={true}
+          playsinline={true}
           src={{
             muted: true,
             loop: true,
