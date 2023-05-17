@@ -4,9 +4,9 @@ import client from '@graphql/client'
 import { Case as CasePageProps } from '@customTypes/cms'
 import { CASE_PAGE_QUERY } from '../../graphql/queries'
 import { CaseHero } from '@components/case-hero'
-import { GutterWrapper } from '@components/gutter-wrapper'
 import { ComponentResolver } from '@components/component-resolver'
 import styles from './Case.module.scss'
+import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 
 const Case = (props: CasePageProps) => {
   return (
@@ -72,9 +72,9 @@ const Case = (props: CasePageProps) => {
           src={props.componentsCollection?.items[0].heroMedia}
           isVideoAsset={props.componentsCollection?.items[0].heroMedia.__typename === 'Video'}
         />
-        <GutterWrapper size="small">
+        <ContentWrapper>
           <ComponentResolver components={props.componentsCollection?.items || []} />
-        </GutterWrapper>
+        </ContentWrapper>
       </main>
     </>
   )
