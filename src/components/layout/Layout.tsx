@@ -7,6 +7,7 @@ import { useGlobalStateStore } from '@store/global-state-store'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 import { useRouter } from 'next/router'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useNextCssRemovalPrevention } from '@hooks/use-next-css-removal-prevention'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -36,6 +37,7 @@ export function Layout({ children, footerTheme }: LayoutProps) {
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
   const lenis = useGlobalStateStore((state) => state.lenis)
   const setLenis = useGlobalStateStore((state) => state.setLenis)
+  const removeExpiredStyles = useNextCssRemovalPrevention()
 
   /*
    * Initialize lenis
@@ -90,6 +92,10 @@ export function Layout({ children, footerTheme }: LayoutProps) {
     }
   }
 
+  const onPageTransitionEnd = (variant: 'animate' | 'exit') => {
+    if (variant === 'exit') removeExpiredStyles()
+  }
+
   return (
     <>
       <Header />
@@ -103,6 +109,7 @@ export function Layout({ children, footerTheme }: LayoutProps) {
               animate="animate"
               exit="exit"
               onAnimationStart={onPageTransitionStart}
+              onAnimationComplete={onPageTransitionEnd}
               transition={{ duration: 0.1 }}
             >
               <div className={styles.content}>{children}</div>
