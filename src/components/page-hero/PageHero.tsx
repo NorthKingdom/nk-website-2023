@@ -9,11 +9,12 @@ const bem = bemify(styles, 'pageHero')
 interface PageHeroProps {
   title: string
   srcSet: ResponsiveImage
+  className?: string
 }
 
-export const PageHero = ({ title, srcSet }: PageHeroProps) => {
+export const PageHero = ({ title, srcSet, className }: PageHeroProps) => {
   return (
-    <div className={styles['pageHero']}>
+    <div className={`${styles['pageHero']} ${className}`}>
       <div className={bem('titleContainer')}>
         <h1 className={bem('title')}>{title}</h1>
       </div>
