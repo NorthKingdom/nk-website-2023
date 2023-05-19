@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { forwardRef, useEffect, useMemo, useRef } from 'react'
+import { forwardRef, useEffect, useMemo, useRef, useContext } from 'react'
 import { useVideoTexture, useTexture } from '@react-three/drei'
 import { Uniform } from 'three'
 import { useFrame, useThree } from '@react-three/fiber'
@@ -10,8 +10,10 @@ import { useMotionValue } from 'framer-motion'
 import type { AnimationPlaybackControls } from 'framer-motion'
 import { animate } from 'framer-motion'
 import { noop } from '@utils/noop'
+import { ShieldContainerContext } from './ShieldContainer'
 
 interface ShieldVideoProps {
+  debug?: boolean
   scale?: number
   z?: number
   fullscreen?: boolean
@@ -21,11 +23,11 @@ interface ShieldVideoProps {
 }
 
 const SHIELD_VIDEO_DIMENTIONS = [9, 5]
-const SHIELD_INNER_VIDEO_DIMENSIONS = [3, 4]
 
 export const ShieldVideo = forwardRef(
   (
     {
+      debug = false,
       scale = 1,
       z = 0,
       fullscreen = false,
@@ -47,30 +49,32 @@ export const ShieldVideo = forwardRef(
       }),
       []
     )
-
-    const viewport = useThree((state) => state.viewport)
-    const camera = useThree((state) => state.camera)
     const scaleMotionValue = useMotionValue(scale)
+    const { scaleFullscreen } = useContext(ShieldContainerContext)
 
     useEffect(() => {
       if (!$mesh.current) return
 
       let animationControls: AnimationPlaybackControls
 
-      const viewportSize = viewport.getCurrentViewport(camera, [0, 0, z])
-      const fullscreenScale = Math.max(
-        viewportSize.width / SHIELD_INNER_VIDEO_DIMENSIONS[0],
-        viewportSize.height / SHIELD_INNER_VIDEO_DIMENSIONS[1]
-      )
-      const videoScale = fullscreen ? fullscreenScale : scale
+      const videoScale = fullscreen ? scaleFullscreen : scale
 
       if (scaleMotionValue.get() === videoScale) return
 
+      const motionConfig = {
+        collapse: {
+          duration: 0.9,
+          ease: [0.87, 0, 0.13, 1],
+        },
+        expand: {
+          duration: 1.2,
+          ease: [1, 0, 0.1, 1],
+        },
+      }
+
       animationControls = animate(scaleMotionValue, videoScale, {
-        duration: 0.9,
-        ease: [0.87, 0, 0.13, 1],
+        ...(motionConfig[fullscreen ? 'expand' : 'collapse'] as Partial<AnimationPlaybackControls>),
         onPlay: () => {
-          console.log('transition start', fullscreen)
           onFullscreenTransitionStart(fullscreen)
         },
         onUpdate: (value) => {
@@ -104,13 +108,13 @@ export const ShieldVideo = forwardRef(
             transparent={true}
           />
         </mesh>
-        {/* <mesh scale={scale} position-z={z + 0.1} {...props}>
-          <planeGeometry
-            attach="geometry"
-            args={[SHIELD_INNER_VIDEO_DIMENSIONS[0], SHIELD_INNER_VIDEO_DIMENSIONS[1], 32, 32]}
-          />
-          <meshBasicMaterial attach="material" color="red" transparent wireframe />
-        </mesh> */}
+        <mesh></mesh>
+        {debug && (
+          <mesh scale={scale} position-z={z + 0.1} {...props}>
+            <planeGeometry attach="geometry" args={[SHIELD_VIDEO_DIMENTIONS[0], SHIELD_VIDEO_DIMENTIONS[1], 32, 32]} />
+            <meshBasicMaterial attach="material" color="white" transparent wireframe opacity={0.2} />
+          </mesh>
+        )}
       </>
     )
   }
