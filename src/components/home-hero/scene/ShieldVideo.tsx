@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { forwardRef, useEffect, useMemo, useRef } from 'react'
+import { forwardRef, useEffect, useMemo, useRef, useContext } from 'react'
 import { useVideoTexture, useTexture } from '@react-three/drei'
 import { Uniform } from 'three'
 import { useFrame, useThree } from '@react-three/fiber'
@@ -10,6 +10,7 @@ import { useMotionValue } from 'framer-motion'
 import type { AnimationPlaybackControls } from 'framer-motion'
 import { animate } from 'framer-motion'
 import { noop } from '@utils/noop'
+import { ShieldContainerContext } from './ShieldContainer'
 
 interface ShieldVideoProps {
   debug?: boolean
@@ -49,22 +50,15 @@ export const ShieldVideo = forwardRef(
       }),
       []
     )
-
-    const viewport = useThree((state) => state.viewport)
-    const camera = useThree((state) => state.camera)
     const scaleMotionValue = useMotionValue(scale)
+    const { scaleFullscreen } = useContext(ShieldContainerContext)
 
     useEffect(() => {
       if (!$mesh.current) return
 
       let animationControls: AnimationPlaybackControls
 
-      const viewportSize = viewport.getCurrentViewport(camera, [0, 0, z])
-      const fullscreenScale = Math.max(
-        viewportSize.width / SHIELD_INNER_VIDEO_DIMENSIONS[0],
-        viewportSize.height / SHIELD_INNER_VIDEO_DIMENSIONS[1]
-      )
-      const videoScale = fullscreen ? fullscreenScale : scale
+      const videoScale = fullscreen ? scaleFullscreen : scale
 
       if (scaleMotionValue.get() === videoScale) return
 

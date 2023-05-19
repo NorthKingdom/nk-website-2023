@@ -65,7 +65,15 @@ export const HomeHero = (props: HomeHeroProps) => {
         cta={<PlayButton onClick={() => setShowVideoPlayer(true)} />}
       />
 
-      <HomeHeroTitle />
+      <h1 className={bem('title')} aria-label="North Kingdom">
+        <span>North</span>
+        <span>Kingdom</span>
+      </h1>
+
+      <h2 className={bem('statement')}>
+        A global design studio that creates experiences, services and products which play meaningful roles in people’s
+        lives
+      </h2>
 
       <Modal visible={showVideoPlayer} animate={{ opacity: 1, transition: { delay: 0.3 } }}>
         <CloseButton className={videoModalBem('closeButton')} onClick={() => setShowVideoPlayer(false)} />

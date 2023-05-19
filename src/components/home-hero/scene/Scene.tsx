@@ -48,20 +48,18 @@ export const Scene = ({ visible = true, fullscreen = false, cta, ...props }: Sce
     <Canvas camera={{ position: [0, 0, 5] }} frameloop={frameloop} {...props}>
       <Suspense fallback={null}>
         <Effects />
-        <ShieldContainer position-x={-1.05}>
+        <ShieldContainer debug={false}>
           <ShieldVideo
-            // debug
-            scale={0.55}
-            z={1}
             fullscreen={fullscreen}
             onFullscreenTransitionStart={onFullscreenTransitionStart}
             onFullscreenTransitionEnd={onFullscreenTransitionEnd}
           />
-          <ShieldBackgroundLight scale={1} />
+          <ShieldBackgroundLight scale={1.7} position-z={-1} />
+          <Html center zIndexRange={[100, 0]}>
+            {cta}
+          </Html>
         </ShieldContainer>
-        <Html position-x={-1.05} position-z={1} center zIndexRange={[100, 0]}>
-          {cta}
-        </Html>
+
         <Preload all />
       </Suspense>
     </Canvas>

@@ -4,6 +4,7 @@ import { noop } from '@utils/noop'
 import styles from './HeaderLogo.module.scss'
 import { bemify } from '@utils/bemify'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 const bem = bemify(styles, 'headerLogo')
 
@@ -15,7 +16,13 @@ interface HeaderLogoProps {
 
 export const HeaderLogo = ({ className, style, onClick = noop }: HeaderLogoProps) => {
   return (
-    <div className={cx(bem(''), className)} style={style}>
+    <motion.div
+      className={cx(bem(''), className)}
+      style={style}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { delay: 0.5 } }}
+      exit={{ opacity: 0 }}
+    >
       <Link href={`/`} legacyBehavior>
         <a onClick={onClick}>
           <svg viewBox="0 0 66 86" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,6 +47,6 @@ export const HeaderLogo = ({ className, style, onClick = noop }: HeaderLogoProps
           </svg>
         </a>
       </Link>
-    </div>
+    </motion.div>
   )
 }
