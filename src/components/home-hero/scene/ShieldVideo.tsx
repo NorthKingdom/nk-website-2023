@@ -12,6 +12,7 @@ import { animate } from 'framer-motion'
 import { noop } from '@utils/noop'
 
 interface ShieldVideoProps {
+  debug?: boolean
   scale?: number
   z?: number
   fullscreen?: boolean
@@ -26,6 +27,7 @@ const SHIELD_INNER_VIDEO_DIMENSIONS = [3, 4]
 export const ShieldVideo = forwardRef(
   (
     {
+      debug = false,
       scale = 1,
       z = 0,
       fullscreen = false,
@@ -104,13 +106,15 @@ export const ShieldVideo = forwardRef(
             transparent={true}
           />
         </mesh>
-        {/* <mesh scale={scale} position-z={z + 0.1} {...props}>
-          <planeGeometry
-            attach="geometry"
-            args={[SHIELD_INNER_VIDEO_DIMENSIONS[0], SHIELD_INNER_VIDEO_DIMENSIONS[1], 32, 32]}
-          />
-          <meshBasicMaterial attach="material" color="red" transparent wireframe />
-        </mesh> */}
+        {debug && (
+          <mesh scale={scale} position-z={z + 0.1} {...props}>
+            <planeGeometry
+              attach="geometry"
+              args={[SHIELD_INNER_VIDEO_DIMENSIONS[0], SHIELD_INNER_VIDEO_DIMENSIONS[1], 32, 32]}
+            />
+            <meshBasicMaterial attach="material" color="red" transparent wireframe />
+          </mesh>
+        )}
       </>
     )
   }

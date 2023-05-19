@@ -10,6 +10,7 @@ import { useGlobalStateStore } from '@store'
 import { Modal } from '@components/modal'
 import { CloseButton } from '@components/close-button'
 import { useInView } from 'framer-motion'
+import { HomeHeroTitle } from './home-hero-title'
 const bem = bemify(styles, 'homeHero')
 const videoModalBem = bemify(styles, 'videoPlayerModal')
 
@@ -63,6 +64,9 @@ export const HomeHero = (props: HomeHeroProps) => {
         eventPrefix="client"
         cta={<PlayButton onClick={() => setShowVideoPlayer(true)} />}
       />
+
+      <HomeHeroTitle />
+
       <Modal visible={showVideoPlayer} animate={{ opacity: 1, transition: { delay: 0.3 } }}>
         <CloseButton className={videoModalBem('closeButton')} onClick={() => setShowVideoPlayer(false)} />
         <VideoPlayer

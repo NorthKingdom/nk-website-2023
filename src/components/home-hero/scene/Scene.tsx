@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { Suspense, useEffect, useState } from 'react'
 import { noop } from '@utils/noop'
 import { useGlobalStateStore } from '@store'
+import { ShieldContainer } from './ShieldContainer'
 
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
 const ShieldVideo = dynamic(() => import('./ShieldVideo').then((Mod) => Mod.ShieldVideo), { ssr: false })
@@ -47,43 +48,22 @@ export const Scene = ({ visible = true, fullscreen = false, cta, ...props }: Sce
     <Canvas camera={{ position: [0, 0, 5] }} frameloop={frameloop} {...props}>
       <Suspense fallback={null}>
         <Effects />
-        <ShieldVideo
-          scale={0.6}
-          z={1}
-          fullscreen={fullscreen}
-          onFullscreenTransitionStart={onFullscreenTransitionStart}
-          onFullscreenTransitionEnd={onFullscreenTransitionEnd}
-        />
-        <ShieldBackgroundLight scale={1.1} />
-        <Html center>{cta}</Html>
+        <ShieldContainer position-x={-1.05}>
+          <ShieldVideo
+            // debug
+            scale={0.55}
+            z={1}
+            fullscreen={fullscreen}
+            onFullscreenTransitionStart={onFullscreenTransitionStart}
+            onFullscreenTransitionEnd={onFullscreenTransitionEnd}
+          />
+          <ShieldBackgroundLight scale={1} />
+        </ShieldContainer>
+        <Html position-x={-1.05} position-z={1} center zIndexRange={[100, 0]}>
+          {cta}
+        </Html>
         <Preload all />
       </Suspense>
     </Canvas>
   )
-}
-
-{
-  /* <Html center>
-          <h1
-            style={{
-              fontSize: '8vw',
-              marginRight: '45vw',
-            }}
-          >
-            North
-          </h1>
-        </Html>
-        <Html center>
-          <h1
-            style={{
-              fontSize: '8vw',
-              marginLeft: '55vw',
-            }}
-          >
-            Kingdom
-          </h1>
-        </Html> */
-}
-{
-  /* Shield video */
 }

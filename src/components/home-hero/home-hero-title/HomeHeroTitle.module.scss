@@ -1,0 +1,43 @@
+.homeHeroTitle {
+  @include mq($until: desktop-small) {
+    position: absolute;
+    left: 15px;
+    bottom: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__word {
+    display: block;
+    z-index: 1000;
+    position: absolute;
+    color: white;
+    letter-spacing: -0.05em;
+    font-family: 'FKGroteskNeue-Regular';
+    font-size: 12vw;
+
+    &:first-child {
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+    }
+
+    &:last-child {
+      top: 50%;
+      left: 52%;
+      transform: translateY(-50%);
+    }
+
+    @include mq($until: desktop-small) {
+      &:first-child,
+      &:last-child {
+        position: relative;
+        left: 0;
+        top: auto;
+        transform: none;
+        font-size: 23.8vw;
+        line-height: 0.85;
+      }
+    }
+  }
+}
