@@ -4,7 +4,6 @@ import { bemify } from '@utils/bemify'
 import { use100vh } from 'react-div-100vh'
 import dynamic from 'next/dynamic'
 import { Loader } from '@components/loader'
-import { PlayButton } from '@components/play-button'
 import { VideoPlayer } from '@components/video-player'
 import { useGlobalStateStore } from '@store'
 import { Modal } from '@components/modal'
@@ -21,6 +20,7 @@ const Scene = dynamic(() => import('./scene/Scene').then((Mod) => Mod.Scene), {
 interface HomeHeroProps {}
 
 export const HomeHero = (props: HomeHeroProps) => {
+  const [loaded, setLoaded] = useState(false)
   const $container = useRef<HTMLDivElement>(null)
   const height100vh = use100vh() as number
   const [showVideoPlayer, setShowVideoPlayer] = useState(false)
@@ -49,8 +49,10 @@ export const HomeHero = (props: HomeHeroProps) => {
       }}
     >
       <Scene
+        onLoaded={() => setLoaded(true)}
         visible={isInView}
         fullscreen={showVideoPlayer}
+        onCtaClick={() => setShowVideoPlayer(true)}
         style={{
           position: 'relative',
           top: 0,
@@ -61,9 +63,19 @@ export const HomeHero = (props: HomeHeroProps) => {
         }}
         eventSource={$container}
         eventPrefix="client"
-        cta={<PlayButton onClick={() => setShowVideoPlayer(true)} />}
       />
-      <Modal visible={showVideoPlayer} animate={{ opacity: 1, transition: { delay: 0.3 } }}>
+
+      <h1 className={bem('title')} aria-label="North Kingdom" data-visible={loaded && !showVideoPlayer}>
+        <span>North</span>
+        <span>Kingdom</span>
+      </h1>
+
+      <h2 className={bem('statement')} data-visible={loaded && !showVideoPlayer}>
+        A global design studio that creates experiences, services and products which play meaningful roles in people’s
+        lives
+      </h2>
+
+      <Modal visible={showVideoPlayer} animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.4 } }}>
         <CloseButton className={videoModalBem('closeButton')} onClick={() => setShowVideoPlayer(false)} />
         <VideoPlayer
           className={videoModalBem('videoPlayer')}
