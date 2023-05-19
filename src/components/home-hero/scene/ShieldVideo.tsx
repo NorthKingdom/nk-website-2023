@@ -23,7 +23,6 @@ interface ShieldVideoProps {
 }
 
 const SHIELD_VIDEO_DIMENTIONS = [9, 5]
-const SHIELD_INNER_VIDEO_DIMENSIONS = [3, 4]
 
 export const ShieldVideo = forwardRef(
   (
@@ -62,11 +61,20 @@ export const ShieldVideo = forwardRef(
 
       if (scaleMotionValue.get() === videoScale) return
 
+      const motionConfig = {
+        collapse: {
+          duration: 0.9,
+          ease: [0.87, 0, 0.13, 1],
+        },
+        expand: {
+          duration: 1.2,
+          ease: [1, 0, 0.1, 1],
+        },
+      }
+
       animationControls = animate(scaleMotionValue, videoScale, {
-        duration: 0.9,
-        ease: [0.87, 0, 0.13, 1],
+        ...(motionConfig[fullscreen ? 'expand' : 'collapse'] as Partial<AnimationPlaybackControls>),
         onPlay: () => {
-          console.log('transition start', fullscreen)
           onFullscreenTransitionStart(fullscreen)
         },
         onUpdate: (value) => {
@@ -100,13 +108,11 @@ export const ShieldVideo = forwardRef(
             transparent={true}
           />
         </mesh>
+        <mesh></mesh>
         {debug && (
           <mesh scale={scale} position-z={z + 0.1} {...props}>
-            <planeGeometry
-              attach="geometry"
-              args={[SHIELD_INNER_VIDEO_DIMENSIONS[0], SHIELD_INNER_VIDEO_DIMENSIONS[1], 32, 32]}
-            />
-            <meshBasicMaterial attach="material" color="red" transparent wireframe />
+            <planeGeometry attach="geometry" args={[SHIELD_VIDEO_DIMENTIONS[0], SHIELD_VIDEO_DIMENTIONS[1], 32, 32]} />
+            <meshBasicMaterial attach="material" color="white" transparent wireframe opacity={0.2} />
           </mesh>
         )}
       </>

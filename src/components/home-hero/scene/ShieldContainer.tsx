@@ -1,5 +1,5 @@
-import { forwardRef, createContext, useMemo, useContext } from 'react'
-import { Html } from '@react-three/drei'
+import { forwardRef, createContext, useMemo, useContext, useState } from 'react'
+import { Html, useCursor } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
 
@@ -18,12 +18,13 @@ const SHIELD_VW_WIDTH = {
 
 export const ShieldContainerContext = createContext({
   position: [0, 0, 0],
+  hovered: false,
   scaleIdle: 1,
   scaleFullscreen: 1,
 })
 
 export const ShieldContainer = forwardRef(
-  ({ z = 0, children, debug = false, ...props }: ShieldContainerProps, ref: React.Ref<THREE.Group>) => {
+  ({ z = 0, children, debug = true, ...props }: ShieldContainerProps, ref: React.Ref<THREE.Group>) => {
     const camera = useThree((state) => state.camera)
     const viewport = useThree((state) => state.viewport)
     const isDesktopBp = useBreakpointFrom('desktopSmall')
@@ -38,10 +39,17 @@ export const ShieldContainer = forwardRef(
     const positionX = isDesktopBp ? -SHIELD_INNER_DIMENSIONS[0] * scaleIdle * 0.5 : 0
     const position = useMemo(() => [positionX, 0, z], [positionX, z])
 
+    const [hovered, setHovered] = useState(false)
+    useCursor(hovered)
+
     return (
-      <ShieldContainerContext.Provider value={{ position, scaleIdle, scaleFullscreen }}>
+      <ShieldContainerContext.Provider value={{ hovered, position, scaleIdle, scaleFullscreen }}>
         <group ref={ref} {...props} position={[position[0], position[1], position[2]]} scale={scaleIdle}>
           {children}
+          <mesh onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)}>
+            <planeBufferGeometry args={[...SHIELD_INNER_DIMENSIONS.map((d) => d * 1.5), 32, 32]} />
+            <meshBasicMaterial color="cyan" wireframe={debug} transparent={true} opacity={debug ? 0.2 : 0} />
+          </mesh>
           {debug && (
             <>
               <Html center>

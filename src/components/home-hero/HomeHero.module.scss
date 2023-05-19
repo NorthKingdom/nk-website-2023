@@ -74,6 +74,17 @@
       }
     }
   }
+
+  &__statement,
+  &__title {
+    opacity: 0;
+    transition: all 0.3s ease-out;
+    transition-delay: 0.2s;
+
+    &[data-visible='true'] {
+      opacity: 1;
+    }
+  }
 }
 
 .videoPlayerModal {

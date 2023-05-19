@@ -1,10 +1,11 @@
 import { Canvas } from '@react-three/fiber'
-import { Html, Preload } from '@react-three/drei'
+import { Preload } from '@react-three/drei'
 import dynamic from 'next/dynamic'
 import { Suspense, useEffect, useState } from 'react'
-import { noop } from '@utils/noop'
 import { useGlobalStateStore } from '@store'
 import { ShieldContainer } from './ShieldContainer'
+import { PlayButton } from './PlayButton'
+import { noop } from '@utils/noop'
 
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
 const ShieldVideo = dynamic(() => import('./ShieldVideo').then((Mod) => Mod.ShieldVideo), { ssr: false })
@@ -16,13 +17,23 @@ const ShieldBackgroundLight = dynamic(
 interface SceneProps {
   visible?: boolean
   fullscreen: boolean
-  cta: JSX.Element
+  onLoaded?: () => void
+  onCtaClick: () => void
   [key: string]: any
 }
 
-export const Scene = ({ visible = true, fullscreen = false, cta, ...props }: SceneProps) => {
+export const Scene = ({
+  visible = true,
+  fullscreen = false,
+  onLoaded = noop,
+  onCtaClick = noop,
+  ...props
+}: SceneProps) => {
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
   const [frameloop, setFrameloop] = useState<'always' | 'never'>('always')
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(onLoaded, [])
 
   useEffect(() => {
     setFrameloop(isMenuOpen ? 'never' : 'always')
@@ -55,9 +66,7 @@ export const Scene = ({ visible = true, fullscreen = false, cta, ...props }: Sce
             onFullscreenTransitionEnd={onFullscreenTransitionEnd}
           />
           <ShieldBackgroundLight scale={1.7} position-z={-1} />
-          <Html center zIndexRange={[100, 0]}>
-            {cta}
-          </Html>
+          <PlayButton onClick={onCtaClick} />
         </ShieldContainer>
 
         <Preload all />
