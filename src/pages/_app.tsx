@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import { Layout } from '@components/layout'
 import { ApolloProvider } from '@apollo/client'
 import client from '@graphql/client'
+const apolloClient = client(false)
 
 export default function App({ Component, pageProps, router }: AppProps) {
   const { publicRuntimeConfig } = getConfig()
@@ -88,7 +89,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
           `,
         }}
       />
-      <ApolloProvider client={client(false)}>
+      <ApolloProvider client={apolloClient}>
         <Layout footerTheme={pageProps.footerTheme}>
           <Component {...pageProps} />
         </Layout>
