@@ -12,6 +12,7 @@ export const ContactListItem = ({ header, information }: ContactListItemProps) =
   return (
     <div className={styles['contactListItem']}>
       <p className={bem('header')}>{header}</p>
+      {/* TODO :: Miha - copy the 'copy email' from old nk.com */}
       <p className={bem('information')}>{information}</p>
     </div>
   )
