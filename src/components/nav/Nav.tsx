@@ -32,7 +32,7 @@ export const Nav = ({ className = '', style = {}, navItems = NAV_ITEMS }: NavPro
   const bpDesktop = useBreakpointFrom('desktopSmall')
 
   return (
-    <nav className={cx(bem(), className)} style={style}>
+    <nav className={cx(bem(), className)} style={style} data-is-touch-device={isTouchDevice}>
       {bpDesktop || !isTouchDevice ? (
         navItems.map((item) => (
           <AnimatePresence key={item.href}>

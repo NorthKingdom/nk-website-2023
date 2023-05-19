@@ -2,7 +2,9 @@
   margin-left: auto;
   display: flex;
 
-  & > * {
-    margin-left: 24px;
+  &:not([data-is-touch-device='true']) {
+    & > * {
+      margin-left: 24px;
+    }
   }
 }
