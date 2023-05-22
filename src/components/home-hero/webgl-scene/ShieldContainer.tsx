@@ -38,22 +38,25 @@ const useCalculateShieldLayout = () => {
 }
 
 export const ShieldContainer = forwardRef(
-  ({ z = 0, children, debug = true, ...props }: ShieldContainerProps, ref: React.Ref<THREE.Group>) => {
-    const set = useWebglSceneStore((state) => state.set)
+  ({ z = 0, children, debug = false, ...props }: ShieldContainerProps, ref: React.Ref<THREE.Group>) => {
+    const shieldState = useWebglSceneStore((state) => state.shieldState)
+    const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
     const config = useWebglSceneStore((state) => state.config)
-    const hovered = useWebglSceneStore((state) => state.hovered)
     const shieldAnchor = useWebglSceneStore((state) => state.shieldAnchor)
     const shieldScaleIdle = useWebglSceneStore((state) => state.shieldScaleIdle)
 
     const { SHIELD_INNER_SIZE } = config
 
     useCalculateShieldLayout()
-    useCursor(hovered)
+    useCursor(shieldState === 'hovered')
 
     return (
       <group ref={ref} {...props} position={shieldAnchor} scale={shieldScaleIdle}>
         {children}
-        <mesh onPointerOver={() => set({ hovered: true })} onPointerOut={() => set({ hovered: false })}>
+        <mesh
+          onPointerOver={() => dispatchShieldStateEvent({ type: 'POINTER_OVER' })}
+          onPointerOut={() => dispatchShieldStateEvent({ type: 'POINTER_OUT' })}
+        >
           <planeBufferGeometry args={[...SHIELD_INNER_SIZE.map((d) => d * 1.5), 32, 32]} />
           <meshBasicMaterial color="cyan" wireframe={debug} transparent={true} opacity={debug ? 0.2 : 0} />
         </mesh>

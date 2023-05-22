@@ -7,6 +7,7 @@ import { ShieldContainer } from './ShieldContainer'
 import { PlayButton } from './PlayButton'
 import { noop } from '@utils/noop'
 import { Wordmark } from './Wordmark'
+import { useWebglSceneStore } from './WebglScene.store'
 
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
 const ShieldVideo = dynamic(() => import('./ShieldVideo').then((Mod) => Mod.ShieldVideo), { ssr: false })
@@ -17,19 +18,14 @@ const ShieldBackgroundLight = dynamic(
 
 interface WebglProps {
   visible?: boolean
-  fullscreen: boolean
   onLoaded?: () => void
-  onCtaClick: () => void
   [key: string]: any
 }
 
-export const WebglScene = ({
-  visible = true,
-  fullscreen = false,
-  onLoaded = noop,
-  onCtaClick = noop,
-  ...props
-}: WebglProps) => {
+export const WebglScene = ({ visible = true, onLoaded = noop, ...props }: WebglProps) => {
+  const set = useWebglSceneStore((state) => state.set)
+  const shieldState = useWebglSceneStore((state) => state.shieldState)
+  const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
   const [frameloop, setFrameloop] = useState<'always' | 'never'>('always')
 
@@ -44,30 +40,18 @@ export const WebglScene = ({
     setFrameloop(visible ? 'always' : 'never')
   }, [visible])
 
-  const onFullscreenTransitionStart = (isFullscreen: boolean) => {
-    if (!isFullscreen) {
-      setFrameloop('always')
-    }
-  }
-
-  const onFullscreenTransitionEnd = (isFullscreen: boolean) => {
-    if (isFullscreen) {
-      setFrameloop('never')
-    }
-  }
+  useEffect(() => {
+    setFrameloop(shieldState === 'expanded' ? 'never' : 'always')
+  }, [shieldState])
 
   return (
     <Canvas camera={{ position: [0, 0, 5] }} frameloop={frameloop} {...props}>
       <Suspense fallback={null}>
         <Effects />
         <ShieldContainer debug={false}>
-          <ShieldVideo
-            fullscreen={fullscreen}
-            onFullscreenTransitionStart={onFullscreenTransitionStart}
-            onFullscreenTransitionEnd={onFullscreenTransitionEnd}
-          />
+          <ShieldVideo position-z={0.02} />
           <ShieldBackgroundLight scale={1.7} position-z={-1} />
-          <PlayButton onClick={onCtaClick} />
+          <PlayButton onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })} />
         </ShieldContainer>
         <Wordmark />
         <Preload all />

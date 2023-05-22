@@ -1,13 +1,37 @@
 /* eslint-disable react/no-children-prop */
+import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { Text } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
 import { useWebglSceneStore } from './WebglScene.store'
+import { animate, useMotionValue } from 'framer-motion'
+import type { AnimationPlaybackControls } from 'framer-motion'
 // import { useControls } from 'leva'
 
+const VIDEO_SHIELD_OFFSET_MULTIPLIER = 0.7
+
+const MOTION_CONFIG = {
+  HOVER: {
+    type: 'spring',
+    stiffness: 1500,
+    damping: 100,
+  },
+  COLLAPSE: {
+    duration: 0.9,
+    ease: [0.87, 0, 0.13, 1],
+  },
+  EXPAND: {
+    duration: 1.2,
+    ease: [1, 0, 0.1, 1],
+  },
+}
+
 export const Wordmark = () => {
-  const { config, shieldAnchor, shieldScaleIdle } = useWebglSceneStore()
+  const leftWordRef = useRef<THREE.Group>(null!)
+  const rightWordRef = useRef<THREE.Group>(null!)
+
+  const { config, shieldAnchor, shieldScaleIdle, shieldState } = useWebglSceneStore()
   const { SHIELD_INNER_SIZE } = config
 
   const viewport = useThree((state) => state.viewport)
@@ -19,21 +43,76 @@ export const Wordmark = () => {
   //   fontSize: { value: 0.125, min: 0.01, max: 3, step: 0.01 },
   // })
 
+  const offsetAbsMotionValue = useMotionValue(0)
+
+  useEffect(() => {
+    /*
+     * Set video scale based on shield state
+     */
+    let offsetAbs = 0
+    let motionData = {}
+
+    switch (shieldState) {
+      case 'expanding':
+      case 'expanded':
+        offsetAbs = width * 0.5
+        motionData = MOTION_CONFIG.EXPAND
+        break
+      case 'hovered':
+        offsetAbs = shieldScaleIdle * VIDEO_SHIELD_OFFSET_MULTIPLIER
+        motionData = MOTION_CONFIG.HOVER
+        break
+      case 'collapsing':
+        offsetAbs = 0
+        motionData = MOTION_CONFIG.COLLAPSE
+      default:
+        offsetAbs = 0
+    }
+
+    /*
+     * Short circuit if:
+     * If the video is already at the desired scale
+     * No mesh is available
+     */
+    if (offsetAbsMotionValue.get() === offsetAbs) return
+    if (!leftWordRef.current || !rightWordRef.current) return
+
+    let animationControls: AnimationPlaybackControls
+
+    animationControls = animate(offsetAbsMotionValue, offsetAbs, {
+      ...(motionData as Partial<AnimationPlaybackControls>),
+      onUpdate: (value) => {
+        leftWordRef.current.position.x = -value
+        rightWordRef.current.position.x = value
+      },
+    })
+
+    return () => {
+      animationControls?.stop()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shieldState])
+
   return (
     <>
       {isDesktopBp ? (
         <>
-          <Word
-            position-z={0.01}
-            position-x={-(SHIELD_INNER_SIZE[0] * 0.5 * shieldScaleIdle) + shieldAnchor[0]}
-            anchorX="right"
-            fontSize={fontSize * width}
-          >
-            North
-          </Word>
-          <Word position-z={0.01} anchorX="left" fontSize={fontSize * width}>
-            Kingdom
-          </Word>
+          <group ref={leftWordRef}>
+            <Word
+              position-z={0.01}
+              position-x={-(SHIELD_INNER_SIZE[0] * 0.5 * shieldScaleIdle) + shieldAnchor[0]}
+              anchorX="right"
+              fontSize={fontSize * width}
+            >
+              North
+            </Word>
+          </group>
+
+          <group ref={rightWordRef}>
+            <Word position-z={0.01} anchorX="left" fontSize={fontSize * width}>
+              Kingdom
+            </Word>
+          </group>
         </>
       ) : (
         <Word

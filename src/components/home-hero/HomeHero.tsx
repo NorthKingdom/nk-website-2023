@@ -9,6 +9,7 @@ import { useGlobalStateStore } from '@store'
 import { Modal } from '@components/modal'
 import { CloseButton } from '@components/close-button'
 import { useInView } from 'framer-motion'
+import { useWebglSceneStore } from './webgl-scene/WebglScene.store'
 const bem = bemify(styles, 'homeHero')
 const videoModalBem = bemify(styles, 'videoPlayerModal')
 
@@ -23,18 +24,22 @@ export const HomeHero = (props: HomeHeroProps) => {
   const [loaded, setLoaded] = useState(false)
   const $container = useRef<HTMLDivElement>(null)
   const height100vh = use100vh() as number
-  const [showVideoPlayer, setShowVideoPlayer] = useState(false)
+  const shieldState = useWebglSceneStore((state) => state.shieldState)
+  const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
+  // const [showVideoPlayer, setShowVideoPlayer] = useState(false)
   const lenis = useGlobalStateStore((state) => state.lenis)
   const isInView = useInView($container)
 
   useEffect(() => {
     if (!lenis) return
-    if (showVideoPlayer) {
+    if (['expanding', 'expanded', 'collapsing'].includes(shieldState)) {
       lenis.stop()
     } else {
       lenis.start()
     }
-  }, [showVideoPlayer, lenis])
+  }, [shieldState, lenis])
+
+  const showVideoPlayer = shieldState === 'expanding' || shieldState === 'expanded'
 
   return (
     <div
@@ -51,8 +56,6 @@ export const HomeHero = (props: HomeHeroProps) => {
       <WebglScene
         onLoaded={() => setLoaded(true)}
         visible={isInView}
-        fullscreen={showVideoPlayer}
-        onCtaClick={() => setShowVideoPlayer(true)}
         style={{
           position: 'relative',
           top: 0,
@@ -75,7 +78,10 @@ export const HomeHero = (props: HomeHeroProps) => {
       </h2>
 
       <Modal visible={showVideoPlayer} animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.4 } }}>
-        <CloseButton className={videoModalBem('closeButton')} onClick={() => setShowVideoPlayer(false)} />
+        <CloseButton
+          className={videoModalBem('closeButton')}
+          onClick={() => dispatchShieldStateEvent({ type: 'COLLAPSE' })}
+        />
         <VideoPlayer
           className={videoModalBem('videoPlayer')}
           autoPlay={true}
