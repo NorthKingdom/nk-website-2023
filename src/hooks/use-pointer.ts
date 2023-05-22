@@ -4,15 +4,21 @@ import { noop } from '@utils/noop'
 
 type PointerEvent = TouchEvent | MouseEvent
 
+interface PointerState {
+  position: PointerPosition
+  previousPosition: PointerPosition
+  delta: PointerPosition
+}
+
 interface PointerPosition {
   x: number
   y: number
 }
 
 interface usePointerProps {
-  onDown?: (event: PointerEvent, position: PointerPosition) => void
-  onMove?: (event: PointerEvent, position: PointerPosition) => void
-  onUp?: (event: PointerEvent, position: PointerPosition) => void
+  onDown?: (event: PointerEvent, position: PointerState) => void
+  onMove?: (event: PointerEvent, position: PointerState) => void
+  onUp?: (event: PointerEvent, position: PointerState) => void
 }
 
 /**
@@ -20,7 +26,9 @@ interface usePointerProps {
  * @returns {x: number, y: number}
  */
 export const usePointer = ({ onDown = noop, onMove = noop, onUp = noop }: usePointerProps = {}) => {
+  const [previousPosition] = useState({ x: 0, y: 0 })
   const [position] = useState({ x: 0, y: 0 })
+  const [delta] = useState({ x: 0, y: 0 })
   const { width, height } = useWindowSize()
 
   const onDownRef = useRef(onDown)
@@ -48,16 +56,25 @@ export const usePointer = ({ onDown = noop, onMove = noop, onUp = noop }: usePoi
         : (event as MouseEvent)
       position.x = clientX / width
       position.y = clientY / height
-      onDownRef.current(event, position)
+      delta.x = 0
+      delta.y = 0
+      previousPosition.x = position.x
+      previousPosition.y = position.y
+      onDownRef.current(event, { position, previousPosition, delta })
     }
 
     function _onMove(event: TouchEvent | MouseEvent) {
       const { clientX, clientY } = (event as TouchEvent).changedTouches
         ? (event as TouchEvent).changedTouches[0]
         : (event as MouseEvent)
+
       position.x = clientX / width
       position.y = clientY / height
-      onMoveRef.current(event, position)
+      delta.x = position.x - previousPosition.x
+      delta.y = position.y - previousPosition.y
+      previousPosition.x = position.x
+      previousPosition.y = position.y
+      onMoveRef.current(event, { position, previousPosition, delta })
     }
 
     function _onUp(event: TouchEvent | MouseEvent) {
@@ -66,7 +83,11 @@ export const usePointer = ({ onDown = noop, onMove = noop, onUp = noop }: usePoi
         : (event as MouseEvent)
       position.x = clientX / width
       position.y = clientY / height
-      onUpRef.current(event, position)
+      delta.x = position.x - previousPosition.x
+      delta.y = position.y - previousPosition.y
+      previousPosition.x = position.x
+      previousPosition.y = position.y
+      onUpRef.current(event, { position, previousPosition, delta })
     }
 
     function removeMouseEventListeners() {
@@ -102,7 +123,7 @@ export const usePointer = ({ onDown = noop, onMove = noop, onUp = noop }: usePoi
     return () => {
       removeEventListeners()
     }
-  }, [width, height, position])
+  }, [width, height, position, delta, previousPosition])
 
   return position
 }

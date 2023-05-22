@@ -6,6 +6,7 @@ import * as THREE from 'three'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import { distortionEffect } from './DistortionEffect'
 import { usePointer } from '@hooks/use-pointer'
+import { lerp } from '@utils/math'
 
 extend({
   EffectComposer,
@@ -13,6 +14,11 @@ extend({
   ShaderPass,
   UnrealBloomPass,
 })
+
+const CONFIG = {
+  VELOCITY_MULTIPLIER: 100,
+  VELOCITY_RESTITUTION: 0.95,
+}
 
 export const Effects = React.forwardRef<EffectComposer>((props, ref) => {
   const gl = useThree((s) => s.gl)
@@ -35,17 +41,30 @@ export const Effects = React.forwardRef<EffectComposer>((props, ref) => {
     }
   }, [width, height])
 
+  const intensity = useRef(1)
+
   useFrame(() => {
+    velocity.current *= CONFIG.VELOCITY_RESTITUTION
+    intensity.current *= CONFIG.VELOCITY_RESTITUTION
+    if (distortionPass.current) {
+      distortionPass.current.uniforms.uIntensity.value = intensity.current
+    }
+
     if (composer.current) {
       composer.current.render()
     }
   }, 1)
 
+  const velocity = useRef(0)
+
   usePointer({
-    onMove: (_, { x, y }) => {
+    onMove: (_, { position, delta }) => {
+      intensity.current = lerp(intensity.current, 1, 0.05)
+      velocity.current = (delta.x ** 2 + delta.y ** 2) * CONFIG.VELOCITY_MULTIPLIER
+
       if (distortionPass.current) {
-        distortionPass.current.uniforms.uMouse.value.x = x
-        distortionPass.current.uniforms.uMouse.value.y = 1 - y
+        distortionPass.current.uniforms.uMouse.value.x = position.x
+        distortionPass.current.uniforms.uMouse.value.y = 1 - position.y
       }
     },
   })

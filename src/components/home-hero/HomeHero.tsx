@@ -12,7 +12,7 @@ import { useInView } from 'framer-motion'
 const bem = bemify(styles, 'homeHero')
 const videoModalBem = bemify(styles, 'videoPlayerModal')
 
-const Scene = dynamic(() => import('./scene/Scene').then((Mod) => Mod.Scene), {
+const WebglScene = dynamic(() => import('./webgl-scene/WebglScene').then((Mod) => Mod.WebglScene), {
   ssr: false,
   loading: () => <Loader className={bem('loader')} />,
 })
@@ -48,7 +48,7 @@ export const HomeHero = (props: HomeHeroProps) => {
         touchAction: 'auto',
       }}
     >
-      <Scene
+      <WebglScene
         onLoaded={() => setLoaded(true)}
         visible={isInView}
         fullscreen={showVideoPlayer}
@@ -65,9 +65,8 @@ export const HomeHero = (props: HomeHeroProps) => {
         eventPrefix="client"
       />
 
-      <h1 className={bem('title')} aria-label="North Kingdom" data-visible={loaded && !showVideoPlayer}>
-        <span>North</span>
-        <span>Kingdom</span>
+      <h1 className={bem('title')} aria-label="North Kingdom">
+        North Kingdom
       </h1>
 
       <h2 className={bem('statement')} data-visible={loaded && !showVideoPlayer}>
