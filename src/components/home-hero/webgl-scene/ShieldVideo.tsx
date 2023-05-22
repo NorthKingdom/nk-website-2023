@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { forwardRef, useEffect, useMemo, useRef, useContext } from 'react'
+import { forwardRef, useEffect, useMemo, useRef } from 'react'
 import { useVideoTexture, useTexture } from '@react-three/drei'
 import { Uniform } from 'three'
 import { useFrame } from '@react-three/fiber'
 import { mergeRefs } from 'react-merge-refs'
 import shieldVideoVS from './shaders/shield-video-vs.glsl'
 import shieldVideoFS from './shaders/shield-video-fs.glsl'
-import { useMotionValue } from 'framer-motion'
+import { animate, useMotionValue } from 'framer-motion'
 import type { AnimationPlaybackControls } from 'framer-motion'
-import { animate } from 'framer-motion'
 import { noop } from '@utils/noop'
 import { useWebglSceneStore } from './WebglScene.store'
 
@@ -17,12 +16,28 @@ interface ShieldVideoProps {
   scale?: number
   z?: number
   fullscreen?: boolean
-  onFullscreenTransitionStart?: (isFullscreen: boolean) => void
-  onFullscreenTransitionEnd?: (isFullscreen: boolean) => void
+  onTransitionStart?: (shieldState: string) => void
+  onTransitionEnd?: (shieldState: string) => void
   [key: string]: any
 }
 
 const SHIELD_VIDEO_DIMENTIONS = [9, 5]
+
+const MOTION_CONFIG = {
+  HOVER: {
+    type: 'spring',
+    stiffness: 1500,
+    damping: 100,
+  },
+  COLLAPSE: {
+    duration: 0.9,
+    ease: [0.87, 0, 0.13, 1],
+  },
+  EXPAND: {
+    duration: 1.2,
+    ease: [1, 0, 0.1, 1],
+  },
+}
 
 export const ShieldVideo = forwardRef(
   (
@@ -31,13 +46,18 @@ export const ShieldVideo = forwardRef(
       scale = 1,
       z = 0,
       fullscreen = false,
-      onFullscreenTransitionStart = noop,
-      onFullscreenTransitionEnd = noop,
+      onTransitionStart = noop,
+      onTransitionEnd = noop,
       ...props
     }: ShieldVideoProps,
     ref: React.Ref<THREE.Mesh>
   ) => {
     const $mesh = useRef<THREE.Mesh>(null!)
+
+    const shieldState = useWebglSceneStore((state) => state.shieldState)
+    const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
+    const shieldScaleFullscreen = useWebglSceneStore((state) => state.shieldScaleFullscreen)
+
     const videoTexture = useVideoTexture('/dummy/EA_NFS_Heat_Studio_case_study_30s.mp4', { start: true })
     const maskTexture = useTexture('/images/shield-mask-sharp.png')
 
@@ -50,45 +70,60 @@ export const ShieldVideo = forwardRef(
       []
     )
     const scaleMotionValue = useMotionValue(scale)
-    const shieldScaleFullscreen = useWebglSceneStore((state) => state.shieldScaleFullscreen)
 
     useEffect(() => {
+      /*
+       * Set video scale based on shield state
+       */
+      let videoScale = scale
+      let motionData = {}
+
+      switch (shieldState) {
+        case 'expanding':
+        case 'expanded':
+          videoScale = shieldScaleFullscreen
+          motionData = MOTION_CONFIG.EXPAND
+          break
+        case 'hovered':
+          videoScale = scale * 1.3
+          motionData = MOTION_CONFIG.HOVER
+          break
+        case 'collapsing':
+          videoScale = scale
+          motionData = MOTION_CONFIG.COLLAPSE
+        default:
+          videoScale = scale
+      }
+
+      /*
+       * Short circuit if:
+       * If the video is already at the desired scale
+       * No mesh is available
+       */
+      if (scaleMotionValue.get() === videoScale) return
       if (!$mesh.current) return
 
       let animationControls: AnimationPlaybackControls
 
-      const videoScale = fullscreen ? shieldScaleFullscreen : scale
-
-      if (scaleMotionValue.get() === videoScale) return
-
-      const motionConfig = {
-        collapse: {
-          duration: 0.9,
-          ease: [0.87, 0, 0.13, 1],
-        },
-        expand: {
-          duration: 1.2,
-          ease: [1, 0, 0.1, 1],
-        },
-      }
-
       animationControls = animate(scaleMotionValue, videoScale, {
-        ...(motionConfig[fullscreen ? 'expand' : 'collapse'] as Partial<AnimationPlaybackControls>),
+        ...(motionData as Partial<AnimationPlaybackControls>),
         onPlay: () => {
-          onFullscreenTransitionStart(fullscreen)
+          dispatchShieldStateEvent({ type: 'TRANSITION_START' })
+          onTransitionStart(shieldState)
         },
         onUpdate: (value) => {
           $mesh.current.scale.set(value, value, value)
         },
         onComplete: () => {
-          onFullscreenTransitionEnd(fullscreen)
+          dispatchShieldStateEvent({ type: 'TRANSITION_END' })
+          onTransitionEnd(shieldState)
         },
       })
 
       return () => {
         animationControls?.stop()
       }
-    }, [fullscreen])
+    }, [shieldState])
 
     useFrame(({ clock }) => {
       if (!$mesh.current) return
@@ -98,7 +133,7 @@ export const ShieldVideo = forwardRef(
 
     return (
       <>
-        <mesh ref={mergeRefs([ref, $mesh])} scale={scale} position-z={z} {...props}>
+        <mesh ref={mergeRefs([ref, $mesh])} position-z={z} {...props}>
           <planeGeometry attach="geometry" args={[SHIELD_VIDEO_DIMENTIONS[0], SHIELD_VIDEO_DIMENTIONS[1], 32, 32]} />
           <shaderMaterial
             vertexShader={shieldVideoVS}
