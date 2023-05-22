@@ -6,6 +6,7 @@ import { useGlobalStateStore } from '@store'
 import { ShieldContainer } from './ShieldContainer'
 import { PlayButton } from './PlayButton'
 import { noop } from '@utils/noop'
+import { Wordmark } from './Wordmark'
 
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
 const ShieldVideo = dynamic(() => import('./ShieldVideo').then((Mod) => Mod.ShieldVideo), { ssr: false })
@@ -14,7 +15,7 @@ const ShieldBackgroundLight = dynamic(
   { ssr: false }
 )
 
-interface SceneProps {
+interface WebglProps {
   visible?: boolean
   fullscreen: boolean
   onLoaded?: () => void
@@ -22,13 +23,13 @@ interface SceneProps {
   [key: string]: any
 }
 
-export const Scene = ({
+export const WebglScene = ({
   visible = true,
   fullscreen = false,
   onLoaded = noop,
   onCtaClick = noop,
   ...props
-}: SceneProps) => {
+}: WebglProps) => {
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
   const [frameloop, setFrameloop] = useState<'always' | 'never'>('always')
 
@@ -68,7 +69,7 @@ export const Scene = ({
           <ShieldBackgroundLight scale={1.7} position-z={-1} />
           <PlayButton onClick={onCtaClick} />
         </ShieldContainer>
-
+        <Wordmark />
         <Preload all />
       </Suspense>
     </Canvas>

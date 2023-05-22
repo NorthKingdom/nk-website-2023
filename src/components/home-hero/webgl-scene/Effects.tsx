@@ -14,6 +14,11 @@ extend({
   UnrealBloomPass,
 })
 
+const CONFIG = {
+  VELOCITY_MULTIPLIER: 100,
+  VELOCITY_RESTITUTION: 0.999,
+}
+
 export const Effects = React.forwardRef<EffectComposer>((props, ref) => {
   const gl = useThree((s) => s.gl)
   const scene = useThree((s) => s.scene)
@@ -36,16 +41,26 @@ export const Effects = React.forwardRef<EffectComposer>((props, ref) => {
   }, [width, height])
 
   useFrame(() => {
+    velocity.current *= CONFIG.VELOCITY_RESTITUTION
+    if (distortionPass.current) {
+      // distortionPass.current.uniforms.uVelocity.value = velocity.current
+    }
+
     if (composer.current) {
       composer.current.render()
     }
   }, 1)
 
+  const velocity = useRef(0)
+
   usePointer({
-    onMove: (_, { x, y }) => {
+    onMove: (_, { position, delta }) => {
+      velocity.current = (delta.x ** 2 + delta.y ** 2) * CONFIG.VELOCITY_MULTIPLIER
+      console.log(velocity.current)
+
       if (distortionPass.current) {
-        distortionPass.current.uniforms.uMouse.value.x = x
-        distortionPass.current.uniforms.uMouse.value.y = 1 - y
+        distortionPass.current.uniforms.uMouse.value.x = position.x
+        distortionPass.current.uniforms.uMouse.value.y = 1 - position.y
       }
     },
   })
