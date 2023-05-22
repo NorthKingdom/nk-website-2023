@@ -2,7 +2,7 @@
 import { forwardRef, useEffect, useMemo, useRef, useContext } from 'react'
 import { useVideoTexture, useTexture } from '@react-three/drei'
 import { Uniform } from 'three'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { mergeRefs } from 'react-merge-refs'
 import shieldVideoVS from './shaders/shield-video-vs.glsl'
 import shieldVideoFS from './shaders/shield-video-fs.glsl'
@@ -10,7 +10,7 @@ import { useMotionValue } from 'framer-motion'
 import type { AnimationPlaybackControls } from 'framer-motion'
 import { animate } from 'framer-motion'
 import { noop } from '@utils/noop'
-import { ShieldContainerContext } from './ShieldContainer'
+import { useWebglSceneStore } from './WebglScene.store'
 
 interface ShieldVideoProps {
   debug?: boolean
@@ -50,14 +50,14 @@ export const ShieldVideo = forwardRef(
       []
     )
     const scaleMotionValue = useMotionValue(scale)
-    const { scaleFullscreen } = useContext(ShieldContainerContext)
+    const shieldScaleFullscreen = useWebglSceneStore((state) => state.shieldScaleFullscreen)
 
     useEffect(() => {
       if (!$mesh.current) return
 
       let animationControls: AnimationPlaybackControls
 
-      const videoScale = fullscreen ? scaleFullscreen : scale
+      const videoScale = fullscreen ? shieldScaleFullscreen : scale
 
       if (scaleMotionValue.get() === videoScale) return
 
