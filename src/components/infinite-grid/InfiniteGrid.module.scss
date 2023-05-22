@@ -1,0 +1,28 @@
+.infiniteGrid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  &__grid {
+    position: relative;
+    // TODO :: Fix this on load
+    width: calc(240px * 9) !important;
+    min-width: calc(240px * 9);
+    height: calc(240px * 9);
+  }
+
+  &__square {
+    user-select: none;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      user-select: none;
+    }
+  }
+}
