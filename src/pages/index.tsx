@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
-import { HOME_PAGE_QUERY } from '@graphql/queries/HomePage.query'
+import { HOME_PAGE_QUERY } from '@graphql/queries'
 import client from '@graphql/client'
 import { HomePage } from '@customTypes/cms'
 import { HomeHero } from '@components/home-hero'

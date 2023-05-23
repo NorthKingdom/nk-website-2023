@@ -88,9 +88,8 @@ export interface CaseArchiveItem extends Pick<Case, 'title' | 'date' | 'client' 
 }
 
 export interface CaseArchive {
-  casesCollection: {
-    items: CaseArchiveItem[]
-  }
+  total: number
+  items: CaseArchiveItem[]
 }
 
 export interface Collection {
@@ -152,6 +151,11 @@ export type HomePageSection = HomeHero | FeaturedCases | FeaturedVideo | ImageMa
 
 export interface HomePage {
   sections: { items: HomePageSection[] }
+}
+
+export interface WorkPage {
+  featuredCases: { cases: { items: Case[] } }
+  caseArchive: CaseArchive
 }
 
 export interface FooterData {
