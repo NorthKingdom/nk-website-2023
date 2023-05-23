@@ -88,9 +88,8 @@ export interface CaseArchiveItem extends Pick<Case, 'title' | 'date' | 'client' 
 }
 
 export interface CaseArchive {
-  casesCollection: {
-    items: CaseArchiveItem[]
-  }
+  total: number
+  items: CaseArchiveItem[]
 }
 
 export interface Collection {
@@ -106,16 +105,57 @@ export interface CollectionsPage {
   name: string
 }
 
-export interface HomePage {
-  aboutNk: string
-  heroCasesCollection: {
-    items: Case[]
+export interface HomeHero {
+  __typename: 'HomeHeroComponent'
+  sys: { id: string }
+  statement: string
+  shieldVideo: Video
+  showreelVideo: Video
+}
+
+export interface FeaturedCases {
+  __typename: 'FeaturedCasesComponent'
+  sys: { id: string }
+  cases: { items: Case[] }
+}
+
+export interface FeaturedVideo {
+  __typename: 'FeaturedVideo'
+  sys: { id: string }
+  title: string
+  description?: string
+  video: Video
+}
+
+export interface ImageMarquee {
+  __typename: 'ImageMarqueeComponent'
+  sys: { id: string }
+  images: {
+    items: {
+      clientName: string
+      clientLogo: ResponsiveImage
+      relatedImage: ResponsiveImage
+    }[]
   }
-  journalSectionHeading: string
-  journalSectionText: string
-  infoBlock: FooterData
-  linkText: string
-  linkImageGallery: LinkImageGallery
+}
+
+export interface Description {
+  __typename: 'DescriptionComponent'
+  sys: { id: string }
+  header?: string
+  copy: string
+  link?: Link
+}
+
+export type HomePageSection = HomeHero | FeaturedCases | FeaturedVideo | ImageMarquee | Description
+
+export interface HomePage {
+  sections: { items: HomePageSection[] }
+}
+
+export interface WorkPage {
+  featuredCases: { cases: { items: Case[] } }
+  caseArchive: CaseArchive
 }
 
 export interface FooterData {
