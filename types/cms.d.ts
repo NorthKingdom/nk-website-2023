@@ -5,6 +5,15 @@ export interface PageHero {
   image: ResponsiveImage
 }
 
+export interface DescriptionComponent {
+  header: string
+  copy: string
+  link?: {
+    copy: string
+    url: string
+  }
+}
+
 export interface About {
   hero: PageHero
   list: StickyList

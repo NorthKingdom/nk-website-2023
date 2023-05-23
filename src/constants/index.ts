@@ -17,11 +17,10 @@ const COLORS = {
  * Teamtailor Location ID's
  */
 const LOCATION_ID = {
-  stockholm: '154908',
-  skellefteå: '154907',
-  all: '154907',
+  '154907': 'Skellefteå',
+  '154908': 'Stockholm',
+  '255361': 'Barcelona',
 }
-
 /**
  * Navigation items
  */

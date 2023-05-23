@@ -5,18 +5,19 @@ const bem = bemify(styles, 'jobListItem')
 
 interface JobListItemProps {
   title: string
-  location: string
-  link: string
+  locations: string[]
+  url: string
   description?: string
 }
 
-export const JobListItem = ({ title, location, link, description }: JobListItemProps) => {
+export const JobListItem = ({ title, locations, url, description }: JobListItemProps) => {
+  console.log(locations)
   return (
     <div className={styles['jobListItem']}>
       <div className={bem('topRow')}>
         <p className={bem('title')}>{title}</p>
-        <p className={bem('location')}>{location}</p>
-        <a className={bem('applyLink')} href={link} target="_blank">
+        <p className={bem('location')}>{locations.sort().join('/')}</p>
+        <a className={bem('applyLink')} href={url} target="_blank">
           <span className={bem('applyCaption')}>Apply</span> ↗
         </a>
       </div>
