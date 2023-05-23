@@ -19,8 +19,14 @@ export const Default: Story = {
       muted: true,
       loop: true,
       autoPlay: true,
-      mobileVideoCollection: { items: [] },
       desktopVideoCollection: {
+        items: [
+          {
+            url: '/dummy/showreel23.mp4',
+          },
+        ],
+      },
+      mobileVideoCollection: {
         items: [
           {
             url: '/dummy/showreel23.mp4',

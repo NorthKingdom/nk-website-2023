@@ -10,57 +10,8 @@ export const HOME_PAGE_QUERY = (draftMode: boolean) => gql`
   ${VIDEO}
 
   query {
-    home(preview: ${draftMode}, id: "3uX3aK4XeCQySQQohsAsyN") {
-      aboutNk
-      heroCasesCollection {
-        items {
-          title
-          client
-          vertical
-          slug
-          description
-          thumbnail {
-            ...responsiveImage
-            ...video
-          }
-        }
-      }
-      journalSectionText
-      journalSectionHeading
-      infoBlock {
-        footerHeroText
-        changingFooterWords
-        skeOfficeName
-        skeOfficeAddrLine1
-        skeOfficeAddrLine2
-        skeOfficeImgGallery
-        sthlmOfficeName
-        sthlmOfficeAddrLine1
-        sthlmOfficeAddrLine2
-        sthlmOfficeImgGallery
-        bcnOfficeName
-        bcnOfficeAddrLine1
-        bcnOfficeAddrLine2
-        bcnOfficeImgGallery
-        careersMail
-        internMail
-        pressMail
-        infoPhoneNumber
-        infoMail
-        linkedinLink
-        twitterLink
-        instagramLink
-        facebookLink
-        noaText
-      }
-      linkText
-      linkImages {
-        imageCollection {
-          items {
-            url
-          }
-        }
-      }
+    home(preview: ${draftMode}, id: "1adP5ve54HEOfoZthZju8A") {
+      homePageTitle
     }
   }
 `
@@ -110,30 +61,44 @@ export const WORK_PAGE_QUERY = (draftMode: boolean) => gql`
 `
 
 export const ABOUT_PAGE_QUERY = (draftMode: boolean) => gql`
+  ${RESPONSIVE_IMAGE}
+  ${VIDEO}
+
   query {
-    about(preview: ${draftMode}, id: "51Nfb7PPc4BlNbxemmxCJS") {
-      sectionOneCopy
-      sectionOneHeader
-      sectionOneSubheader
-      sectionOneImagesCollection {
-        items {
-          url
+    about(id: "4UezmZj7umAjZ51VwvkU9x") {
+      hero {
+        title
+        image {
+          desktopImage {
+            url
+          }
+          mobileImage {
+            url
+          }
+          altText
         }
       }
-      sectionTwoCopy
-      sectionTwoHeader
-      sectionTwoSubheader
-      sectionTwoImagesCollection {
-        items {
-          url
+      list {
+        itemsCollection(limit: 5) {
+          items {
+            header
+            description
+            mediaCollection {
+              items {
+                ...responsiveImage
+                ...video
+              }
+            }
+            link {
+              copy
+              url
+            }
+          }
         }
       }
-      sectionThreeCopy
-      sectionThreeHeader
-      sectionThreeSubheader
-      sectionThreeImagesCollection {
+      gridImagesCollection {
         items {
-          url
+          ...responsiveImage
         }
       }
     }

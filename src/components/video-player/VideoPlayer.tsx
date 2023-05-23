@@ -36,6 +36,7 @@ export const VideoPlayer = ({
       autoPlay={autoPlay}
       loop={loop}
     >
+      {/* TODO :: Fix which array to loop through based on device desktopVideo or mobileVideo */}
       {src.desktopVideoCollection.items.map((s, i: number) => {
         // TODO :: fix 'type'
         return <source key={`video-src-${i}`} src={s.url} type="video/mp4" />

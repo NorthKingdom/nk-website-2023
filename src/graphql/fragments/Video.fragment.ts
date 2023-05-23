@@ -6,7 +6,6 @@ export const VIDEO = gql`
     sys {
       id
     }
-    videoName
     desktopVideoCollection(limit: 5) {
       items {
         url

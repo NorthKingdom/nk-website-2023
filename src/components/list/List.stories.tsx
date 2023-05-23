@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { List } from './List'
 import { StickyListItem } from '@components/sticky-list-item'
 import { JobListItem } from '@components/job-list-item'
+import { ResponsiveImage, Video } from '@customTypes/cms'
+import { AwardItem } from '@components/award-item'
 
 const meta: Meta<typeof List> = {
   title: 'UI/List',
@@ -71,96 +73,110 @@ export const ComplexItems: Story = {
 
 const stickyItems = [
   {
-    isVideoAsset: false,
     header: 'Extended Reality',
-    copy: `We have over 10 years of experience creating innovative VR/AR solutions for some of 
+    description: `We have over 10 years of experience creating innovative VR/AR solutions for some of 
 the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting
 edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating
 innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked
 with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and
 native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,
 mobile web, mobile apps and native solutions.`,
-    srcSet: {
-      desktopImage: {
-        url: '/dummy/temp-left-riot-img.jpg',
-      },
-      mobileImage: {
-        url: '/dummy/temp-left-riot-img.jpg',
-      },
-      altText: 'temp alt',
-    },
-  },
-  {
-    isVideoAsset: true,
-    header: 'Extended Reality',
-    copy: `We have over 10 years of experience creating innovative VR/AR solutions for some of
-  the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting
-  edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating
-  innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked
-  with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and
-  native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,
-  mobile web, mobile apps and native solutions.`,
-    srcSet: {
-      muted: true,
-      autoPlay: true,
-      loop: true,
-      posterImage: {
-        url: '/dummy/showreelposter.jpg',
-      },
-      mobileVideoCollection: { items: [] },
-      desktopVideoCollection: {
-        items: [
-          {
-            url: '/dummy/showreel23.mp4',
+    mediaCollection: {
+      items: [
+        {
+          desktopImage: {
+            url: '/dummy/temp-left-riot-img.jpg',
           },
-        ],
-      },
+          mobileImage: {
+            url: '/dummy/temp-left-riot-img.jpg',
+          },
+          altText: 'temp alt',
+        },
+      ] as ResponsiveImage[],
     },
   },
   {
-    isVideoAsset: false,
     header: 'Extended Reality',
-    copy: `We have over 10 years of experience creating innovative VR/AR solutions for some of
+    description: `We have over 10 years of experience creating innovative VR/AR solutions for some of
   the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting
   edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating
   innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked
   with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and
   native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,
   mobile web, mobile apps and native solutions.`,
-    srcSet: [
-      {
-        desktopImage: {
-          url: '/dummy/temp-left-riot-img.jpg',
+    mediaCollection: {
+      items: [
+        {
+          muted: true,
+          autoPlay: true,
+          loop: true,
+          posterImage: {
+            url: '/dummy/showreelposter.jpg',
+          },
+          desktopVideoCollection: {
+            items: [
+              {
+                url: '/dummy/showreel23.mp4',
+              },
+            ],
+          },
+          mobileVideoCollection: {
+            items: [
+              {
+                url: '/dummy/showreel23.mp4',
+              },
+            ],
+          },
         },
-        mobileImage: {
-          url: '/dummy/temp-left-riot-img.jpg',
+      ] as Video[],
+    },
+  },
+  {
+    header: 'Extended Reality',
+    description: `We have over 10 years of experience creating innovative VR/AR solutions for some of
+  the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting
+  edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating
+  innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked
+  with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and
+  native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,
+  mobile web, mobile apps and native solutions.`,
+    mediaCollection: {
+      items: [
+        {
+          desktopImage: {
+            url: '/dummy/temp-left-riot-img.jpg',
+          },
+          mobileImage: {
+            url: '/dummy/temp-left-riot-img.jpg',
+          },
+          altText: 'temp alt',
         },
-        altText: 'temp alt',
-      },
-      {
-        desktopImage: {
-          url: '/dummy/temp-right-riot-img.jpg',
+        {
+          desktopImage: {
+            url: '/dummy/temp-right-riot-img.jpg',
+          },
+          mobileImage: {
+            url: '/dummy/temp-right-riot-img.jpg',
+          },
+          altText: 'temp alt',
         },
-        mobileImage: {
-          url: '/dummy/temp-right-riot-img.jpg',
+        {
+          desktopImage: {
+            url: '/dummy/temp-riot-right-image-2.jpg',
+          },
+          mobileImage: {
+            url: '/dummy/temp-riot-right-image-2.jpg',
+          },
+          altText: 'temp alt',
         },
-        altText: 'temp alt',
-      },
-      {
-        desktopImage: {
-          url: '/dummy/temp-riot-right-image-2.jpg',
-        },
-        mobileImage: {
-          url: '/dummy/temp-riot-right-image-2.jpg',
-        },
-        altText: 'temp alt',
-      },
-    ],
+      ] as ResponsiveImage[],
+    },
   },
 ]
 
-const renderStickyItems = ({ isVideoAsset, header, copy, srcSet }: (typeof stickyItems)[0]) => (
-  <StickyListItem isVideoAsset={isVideoAsset} header={header} copy={copy} srcSet={srcSet} />
+const renderStickyItems = ({ mediaCollection, header, description }: (typeof stickyItems)[0]) => (
+  // @ts-ignore
+  <StickyListItem header={header} description={description} mediaCollection={mediaCollection} />
 )
 
 export const StickyItems: Story = {
@@ -170,105 +186,83 @@ export const StickyItems: Story = {
   },
 }
 
-const awardItems = [
-  { awardName: 'FWA of the Day ', number: 54 },
-  { awardName: 'FWA of the Month ', number: 11 },
-  { awardName: 'Awwwards Site of the Day', number: 3 },
-  { awardName: "FWA People's Choice", number: 4 },
-  { awardName: 'Red Dot', number: 3 },
-  { awardName: 'Awwards Site of the Day', number: 3 },
-  { awardName: "FWA People's Choice", number: 4 },
-  { awardName: 'Red Dot', number: 3 },
-  { awardName: 'Awwards Site of the Day', number: 3 },
-  { awardName: "FWA People's Choice", number: 4 },
-  { awardName: 'Red Dot', number: 3 },
-]
-
-const renderAwards = ({ awardName, number }: (typeof awardItems)[0]) => {
-  return (
-    <div
-      style={{
-        display: `flex`,
-        justifyContent: `space-between`,
-        alignItems: `center`,
-      }}
-    >
-      <p>{awardName}</p>
-      <p>{number}</p>
-    </div>
-  )
+const awardItems = {
+  awards: [
+    { awardName: 'FWA of the Day ', count: 54 },
+    { awardName: 'FWA of the Month ', count: 11 },
+    { awardName: 'Awwwards Site of the Day', count: 3 },
+    { awardName: "FWA People's Choice", count: 4 },
+    { awardName: 'Red Dot', count: 3 },
+    { awardName: 'Awwards Site of the Day', count: 3 },
+    { awardName: "FWA People's Choice", count: 4 },
+    { awardName: 'Red Dot', count: 3 },
+    { awardName: 'Awwards Site of the Day', count: 3 },
+    { awardName: "FWA People's Choice", count: 4 },
+    { awardName: 'Red Dot', count: 3 },
+  ],
 }
 
 const stickyItemsWithListInLastOne = [
   ...stickyItems.map((i) => ({
     ...i,
-    containsList: false,
+    subList: {
+      awards: [],
+    },
     items: [],
     renderItem: () => <div />,
   })),
   {
-    isVideoAsset: false,
     header: 'Extended Reality',
-    copy: `We have over 10 years of experience creating innovative VR/AR solutions for some of
+    description: `We have over 10 years of experience creating innovative VR/AR solutions for some of
     the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting
     edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating
     innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked
     with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and
     native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,
     mobile web, mobile apps and native solutions.`,
-    srcSet: [
-      {
-        desktopImage: {
-          url: '/dummy/temp-left-riot-img.jpg',
+    mediaCollection: {
+      items: [
+        {
+          desktopImage: {
+            url: '/dummy/temp-left-riot-img.jpg',
+          },
+          mobileImage: {
+            url: '/dummy/temp-left-riot-img.jpg',
+          },
+          altText: 'temp alt',
         },
-        mobileImage: {
-          url: '/dummy/temp-left-riot-img.jpg',
+        {
+          desktopImage: {
+            url: '/dummy/temp-right-riot-img.jpg',
+          },
+          mobileImage: {
+            url: '/dummy/temp-right-riot-img.jpg',
+          },
+          altText: 'temp alt',
         },
-        altText: 'temp alt',
-      },
-      {
-        desktopImage: {
-          url: '/dummy/temp-right-riot-img.jpg',
+        {
+          desktopImage: {
+            url: '/dummy/temp-riot-right-image-2.jpg',
+          },
+          mobileImage: {
+            url: '/dummy/temp-riot-right-image-2.jpg',
+          },
+          altText: 'temp alt',
         },
-        mobileImage: {
-          url: '/dummy/temp-right-riot-img.jpg',
-        },
-        altText: 'temp alt',
-      },
-      {
-        desktopImage: {
-          url: '/dummy/temp-riot-right-image-2.jpg',
-        },
-        mobileImage: {
-          url: '/dummy/temp-riot-right-image-2.jpg',
-        },
-        altText: 'temp alt',
-      },
-    ],
-    containsList: true,
-    items: awardItems,
-    renderItem: renderAwards,
+      ] as ResponsiveImage[],
+    },
+    subList: awardItems,
+    renderItem: AwardItem,
   },
 ]
 
 const renderStickyItemsWithInternalList = ({
-  isVideoAsset,
   header,
-  copy,
-  srcSet,
-  containsList,
-  items,
-  renderItem,
+  description,
+  mediaCollection,
+  subList,
 }: (typeof stickyItemsWithListInLastOne)[0]) => (
-  <StickyListItem
-    isVideoAsset={isVideoAsset}
-    header={header}
-    copy={copy}
-    srcSet={srcSet}
-    containsList={containsList}
-    items={items}
-    renderItem={renderItem}
-  />
+  <StickyListItem header={header} description={description} mediaCollection={mediaCollection} subList={subList} />
 )
 
 export const StickyItemsWithListInside: Story = {

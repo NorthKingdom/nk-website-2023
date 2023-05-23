@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue } from 'framer-motion'
 import styles from './InfiniteGrid.module.scss'
 import { bemify } from '@utils/bemify'
@@ -12,16 +12,42 @@ const col_size = 240
 const row_size = 240
 const square_size = 240
 
-const Square = ({ i, w, h, row, col }: { i: number; w: number; h: number; row: number; col: number }) => {
+const IS_DEBUG = true
+
+const Square = ({
+  i,
+  w,
+  h,
+  row,
+  col,
+  debug,
+  onClick,
+}: {
+  i: number
+  w: number
+  h: number
+  row: number
+  col: number
+  debug: boolean
+  onClick: any
+}) => {
   const x = (i % num_cols) * col_size
   const y = Math.floor(i / num_rows) * row_size
 
+  const scale = useMotionValue(1) as any
+
   return (
     <motion.div
-      className={`${bem('square')} ${`row-${row}`} ${`col-${col}`}`}
+      onClick={() => {
+        // scale.set(scale.current === 2 ? 1 : 2)
+        onClick(i)
+      }}
+      className={`${bem('square')} ${`row-${row}`} ${`col-${col}`} item`}
       style={{
         x,
         y,
+        scale,
+        border: debug ? `2px solid black` : 'none',
         transform: `translateX(${x}px) tranlateY(${y}px) translateZ(0px)`,
         width: w,
         height: h,
@@ -33,7 +59,7 @@ const Square = ({ i, w, h, row, col }: { i: number; w: number; h: number; row: n
 }
 
 export const InfiniteGrid = (props: InfiniteGridProps) => {
-  const ref = useRef(null)
+  const infiniteGridRef = useRef<HTMLDivElement>(null)
   const [w, setW] = useState(col_size)
   const [h, setH] = useState(row_size)
 
@@ -58,7 +84,9 @@ export const InfiniteGrid = (props: InfiniteGridProps) => {
   const x = useMotionValue(0) as any
   const y = useMotionValue(0) as any
 
-  const mouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const scale = useMotionValue(1) as any
+
+  const mouseDown = (e: any) => {
     isMouseDown = true
     prevPageX = e.pageX
     prevPageY = e.pageY
@@ -68,7 +96,7 @@ export const InfiniteGrid = (props: InfiniteGridProps) => {
     isMouseDown = false
   }
 
-  const mouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const mouseMove = (e: any) => {
     if (isMouseDown) {
       const movedX = e.pageX - prevPageX
       const movedY = e.pageY - prevPageY
@@ -182,18 +210,64 @@ export const InfiniteGrid = (props: InfiniteGridProps) => {
     }
   }
 
+  useEffect(() => {
+    if (infiniteGridRef.current) {
+      console.log(`adding`)
+      infiniteGridRef.current.addEventListener('mousedown', mouseDown)
+      infiniteGridRef.current.addEventListener('mouseup', mouseUp)
+      infiniteGridRef.current.addEventListener('mousemove', mouseMove)
+      infiniteGridRef.current.addEventListener('touchstart', mouseDown)
+      infiniteGridRef.current.addEventListener('touchend', mouseUp)
+      infiniteGridRef.current.addEventListener('touchmove', mouseMove)
+    }
+
+    return () => {
+      if (infiniteGridRef.current) {
+        infiniteGridRef.current.removeEventListener('mousedown', mouseDown)
+        infiniteGridRef.current.removeEventListener('mouseup', mouseUp)
+        infiniteGridRef.current.removeEventListener('mousemove', mouseMove)
+        infiniteGridRef.current.removeEventListener('touchstart', mouseDown)
+        infiniteGridRef.current.removeEventListener('touchend', mouseUp)
+        infiniteGridRef.current.removeEventListener('touchmove', mouseMove)
+      }
+    }
+  }, [infiniteGridRef])
+
+  const clickEvent = (i: number) => {
+    // console.log(`element ${i} was clicked`)
+    // const allElements = [...document.querySelectorAll(`.item`)] as HTMLElement[]
+    // allElements.forEach((item, j) => {
+    //   if (j === i) {
+    //   } else {
+    //     item.style.transform += 'scale(0.5)'
+    //   }
+    // })
+    // scale.set(2)
+  }
+
   return (
-    <div className={styles['infiniteGrid']} onMouseDown={mouseDown} onMouseUp={mouseUp} onMouseMove={mouseMove}>
+    <div className={styles['infiniteGrid']} ref={infiniteGridRef}>
       <motion.div
         className={bem('grid')}
-        ref={ref}
         style={{
           x,
           y,
+          scale,
         }}
       >
         {Array.from(Array(num_cols * num_rows)).map((a, i) => {
-          return <Square col={i % num_cols} row={Math.floor(i / num_rows)} w={w} h={h} key={`sq-${i}`} i={i} />
+          return (
+            <Square
+              onClick={clickEvent}
+              debug={IS_DEBUG}
+              col={i % num_cols}
+              row={Math.floor(i / num_rows)}
+              w={w}
+              h={h}
+              key={`sq-${i}`}
+              i={i}
+            />
+          )
         })}
       </motion.div>
     </div>
