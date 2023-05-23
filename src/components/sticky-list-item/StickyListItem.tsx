@@ -43,7 +43,8 @@ export const StickyListItem = ({
               showArrows={showArrows}
               srcSet={mediaCollection.items as ResponsiveImage[]}
             />
-          ) : mediaCollection.items[0].__typename === 'Video' || (mediaCollection.items[0] as Video).desktopVideo ? (
+          ) : mediaCollection.items[0].__typename === 'Video' ||
+            (mediaCollection.items[0] as Video).desktopVideoCollection ? (
             <VideoPlayer
               playsinline
               loop
