@@ -13,6 +13,11 @@ export interface About {
   }
 }
 
+export interface Link {
+  copy: string
+  url: string
+}
+
 export interface Video {
   muted: boolean
   autoPlay: boolean

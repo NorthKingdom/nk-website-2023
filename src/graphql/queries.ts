@@ -132,3 +132,41 @@ export const CASE_PAGE_QUERY = (caseSlug: string, draftMode: boolean) => gql`
     }
   }
 `
+
+export const CONTACT_PAGE_QUERY = (draftMode: boolean) => gql`
+  ${RESPONSIVE_IMAGE}
+
+  query {
+    contactPage(id: "6G3HwVWkI0Asw2dCdLlKng") {
+      hero {
+        title
+        image {
+          ...responsiveImage
+        }
+      }
+      contactSectionCollection {
+        items {
+          title
+          linksCollection {
+            items {
+              copy
+              url
+            }
+          }
+        }
+      }
+      officeSectionCollection {
+        items {
+          officeName
+          addressLineOne
+          addressLineTwo
+          country
+          directions {
+            copy
+            url
+          }
+        }
+      }
+    }
+  }
+`

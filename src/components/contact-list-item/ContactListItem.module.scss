@@ -1,7 +1,7 @@
 .contactListItem {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 
   margin-bottom: 32px;
 
@@ -19,8 +19,12 @@
     }
   }
 
-  &__information {
+  &__contactsContainer {
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
 
     @include mq($until: tablet) {
       width: 100%;

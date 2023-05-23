@@ -1,19 +1,28 @@
 import React from 'react'
 import styles from './ContactListItem.module.scss'
 import { bemify } from '@utils/bemify'
+import { Link } from '@customTypes/cms'
 const bem = bemify(styles, 'contactListItem')
 
 interface ContactListItemProps {
-  header: string
-  information: string
+  title: string
+  linksCollection: {
+    items: Link[]
+  }
 }
 
-export const ContactListItem = ({ header, information }: ContactListItemProps) => {
+export const ContactListItem = ({ title, linksCollection }: ContactListItemProps) => {
   return (
     <div className={styles['contactListItem']}>
-      <p className={bem('header')}>{header}</p>
-      {/* TODO :: Miha - copy the 'copy email' from old nk.com */}
-      <p className={bem('information')}>{information}</p>
+      <p className={bem('header')}>{title}</p>
+      <div className={bem('contactsContainer')}>
+        {/* TODO :: Miha - copy the 'copy email' from old nk.com */}
+        {linksCollection.items.map((link) => (
+          <a key={link.copy} href={link.url} target="_blank">
+            {link.copy}
+          </a>
+        ))}
+      </div>
     </div>
   )
 }
