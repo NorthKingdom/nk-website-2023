@@ -6,8 +6,6 @@ import { DESCRIPTION } from './fragments/DescriptionComponent.fragment'
 import { TWO_IMAGE_COMPONENT } from './fragments/TwoImageComponent.fragment'
 
 export const HOME_PAGE_QUERY = (draftMode: boolean) => gql`
-  ${RESPONSIVE_IMAGE}
-  ${VIDEO}
 
   query {
     home(preview: ${draftMode}, id: "1adP5ve54HEOfoZthZju8A") {

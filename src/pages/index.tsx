@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { HOME_PAGE_QUERY } from '@graphql/queries'
+import { HOME_PAGE_QUERY } from '@graphql/queries/HomePage.query'
 import client from '@graphql/client'
 import { HomePage } from '@customTypes/cms'
 import { HomeHero } from '@components/home-hero'
@@ -7,6 +7,7 @@ import { CaseList } from '@components/case-list'
 import { About } from '@components/about'
 
 const Home = (props: HomePage) => {
+  console.log(props)
   return (
     <>
       <Head>
@@ -15,21 +16,27 @@ const Home = (props: HomePage) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeHero />
-      <CaseList cases={props.heroCasesCollection.items} />
+      {/* <CaseList cases={props.heroCasesCollection.items} /> */}
       <About />
     </>
   )
 }
 
 export async function getStaticProps({ draftMode = false }) {
-  return client(draftMode)
-    .query({
+  try {
+    const res = await client(draftMode).query({
       query: HOME_PAGE_QUERY(draftMode),
     })
-    .then((res: any) => res.data)
-    .then((data: any) => {
-      return { props: data.home }
-    })
+
+    if (!res.data.home) {
+      return { notFound: true }
+    } else {
+      return { props: res.data.home }
+    }
+  } catch (error) {
+    console.error(error)
+    return { notFound: true }
+  }
 }
 
 export default Home

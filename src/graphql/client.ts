@@ -1,4 +1,13 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache, createHttpLink, from } from '@apollo/client'
+import { onError } from '@apollo/client/link/error'
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
+    )
+  if (networkError) console.log(`[Network error]: ${networkError}`)
+})
 
 const createContentfulhttpLink = (draftMode: boolean) =>
   createHttpLink({
@@ -14,7 +23,7 @@ const createContentfulhttpLink = (draftMode: boolean) =>
 
 const client = (draftMode: boolean) => {
   return new ApolloClient({
-    link: createContentfulhttpLink(draftMode),
+    link: from([errorLink, createContentfulhttpLink(draftMode)]),
     cache: new InMemoryCache(),
   })
 }
