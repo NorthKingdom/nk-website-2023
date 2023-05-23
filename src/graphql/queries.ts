@@ -8,6 +8,7 @@ import { FEATURED_CASES } from './fragments/FeaturedCases.fragment'
 import { HOME_HERO } from '@graphql/fragments/HomeHero.fragment'
 import { FEATURED_VIDEO } from '@graphql/fragments/FeaturedVideo.fragment'
 import { IMAGE_MARQUEE } from '@graphql/fragments/ImageMarquee.fragment'
+import { PAGE_HERO } from './fragments/PageHero.fragment'
 
 export const HOME_PAGE_QUERY = (draftMode: boolean) => gql`
     ${HOME_HERO}
@@ -67,20 +68,12 @@ export const CASE_ARCHIVE_QUERY = gql`
 export const ABOUT_PAGE_QUERY = (draftMode: boolean) => gql`
   ${RESPONSIVE_IMAGE}
   ${VIDEO}
+  ${PAGE_HERO}
 
   query {
-    about(id: "4UezmZj7umAjZ51VwvkU9x") {
+    about(preview: ${draftMode}, id: "4UezmZj7umAjZ51VwvkU9x") {
       hero {
-        title
-        image {
-          desktopImage {
-            url
-          }
-          mobileImage {
-            url
-          }
-          altText
-        }
+        ...pageHero
       }
       list {
         itemsCollection(limit: 5) {
@@ -139,14 +132,12 @@ export const CASE_PAGE_QUERY = (caseSlug: string, draftMode: boolean) => gql`
 
 export const CONTACT_PAGE_QUERY = (draftMode: boolean) => gql`
   ${RESPONSIVE_IMAGE}
+  ${PAGE_HERO}
 
   query {
-    contactPage(id: "6G3HwVWkI0Asw2dCdLlKng") {
+    contactPage(preview: ${draftMode}, id: "6G3HwVWkI0Asw2dCdLlKng") {
       hero {
-        title
-        image {
-          ...responsiveImage
-        }
+        ...pageHero
       }
       contactSectionCollection {
         items {
@@ -170,6 +161,24 @@ export const CONTACT_PAGE_QUERY = (draftMode: boolean) => gql`
             url
           }
         }
+      }
+    }
+  }
+`
+
+export const CAREERS_PAGE_QUERY = (draftMode: boolean) => gql`
+  ${RESPONSIVE_IMAGE}
+  ${DESCRIPTION}
+  ${PAGE_HERO}
+
+  query {
+    careersPage(preview: ${draftMode}, id: "1biZZL9Xnhz09yjM8cF1uF") {
+      careersPageTitle
+      hero {
+        ...pageHero
+      }
+      introduction {
+        ...desc
       }
     }
   }

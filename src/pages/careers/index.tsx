@@ -1,24 +1,27 @@
 import React from 'react'
 import Head from 'next/head'
-import { JobPage, TeamTailorJob } from '@customTypes/cms'
+import client from '@graphql/client'
+import { CAREERS_PAGE_QUERY } from '@graphql/queries'
+import { JobPage, PageHero as PageHeroType, DescriptionComponent } from '@customTypes/cms'
 import { List } from '@components/list'
 import { JobListItem } from '@components/job-list-item'
 import { PageHero } from '@components/page-hero'
 import { Description } from '@components/description'
-import { StickyListItem } from '@components/sticky-list-item'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import styles from './Careers.module.scss'
 import { bemify } from '@utils/bemify'
+import { LOCATION_ID } from '@constants'
 const bem = bemify(styles, 'careers')
 
 interface JobsPageProp extends JobPage {
-  jobs: TeamTailorJob[]
-  images: string[]
+  footerTheme: 'light' | 'dark'
+  hero: PageHeroType
+  introduction: DescriptionComponent
   openings: any[]
 }
 
-const Careers = (props: JobsPageProp) => {
+const Careers = ({ hero, introduction, openings }: JobsPageProp) => {
   return (
     <>
       <Head>
@@ -33,106 +36,10 @@ const Careers = (props: JobsPageProp) => {
         <link rel="canonical" href="https://www.northkingdom.com/jobs" />
       </Head>
       <main className={styles['careers']}>
-        <PageHero
-          className={bem('pageHeroTitle')}
-          title={'Be apart of our kingdom'}
-          srcSet={{
-            desktopImage: {
-              url: '/dummy/temp-riot-hero-image.jpg',
-            },
-            mobileImage: {
-              url: '/dummy/temp-riot-hero-image.jpg',
-            },
-            altText: 'temp alt',
-          }}
-        />
+        <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
         <ContentWrapper style={{ position: 'relative', background: 'white' }}>
           <ThemeChangeTrigger theme="light" />
-          <Description
-            theme="light"
-            header={'4 current openings'}
-            copy={
-              'Working at North Kingdom means being part of a team-based culture where diverse talents bring different perspectives and are empowered to act on their combined ideas. Our team consists of passionate, curious, and caring people from 15 different countries around the world.'
-            }
-          />
-          <List
-            items={[
-              {
-                copy: "We have over 10 years of experience creating innovative VR/AR solutions for some of \nthe biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting\nedge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating\ninnovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked\nwith Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and\nnative solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,\nmobile web, mobile apps and native solutions.",
-                header: 'Extended Reality',
-                isVideoAsset: false,
-                srcSet: {
-                  altText: 'temp alt',
-                  desktopImage: {
-                    url: '/dummy/temp-left-riot-img.jpg',
-                  },
-                  mobileImage: {
-                    url: '/dummy/temp-left-riot-img.jpg',
-                  },
-                },
-              },
-              {
-                copy: "We have over 10 years of experience creating innovative VR/AR solutions for some of\n  the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting\n  edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating\n  innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked\n  with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and\n  native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,\n  mobile web, mobile apps and native solutions.",
-                header: 'Extended Reality',
-                isVideoAsset: true,
-                srcSet: {
-                  autoPlay: true,
-                  loop: true,
-                  muted: true,
-                  posterImage: {
-                    url: '/dummy/showreelposter.jpg',
-                  },
-                  mobileVideoCollection: { items: [] },
-                  desktopVideoCollection: {
-                    items: [
-                      {
-                        url: '/dummy/showreel23.mp4',
-                      },
-                    ],
-                  },
-                },
-              },
-              {
-                copy: "We have over 10 years of experience creating innovative VR/AR solutions for some of\n  the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting\n  edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating\n  innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked\n  with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and\n  native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,\n  mobile web, mobile apps and native solutions.",
-                header: 'Extended Reality',
-                isVideoAsset: false,
-                automaticallyChange: true,
-                showIndicators: true,
-                showArrows: true,
-                srcSet: [
-                  {
-                    altText: 'temp alt',
-                    desktopImage: {
-                      url: '/dummy/temp-left-riot-img.jpg',
-                    },
-                    mobileImage: {
-                      url: '/dummy/temp-left-riot-img.jpg',
-                    },
-                  },
-                  {
-                    altText: 'temp alt',
-                    desktopImage: {
-                      url: '/dummy/temp-right-riot-img.jpg',
-                    },
-                    mobileImage: {
-                      url: '/dummy/temp-right-riot-img.jpg',
-                    },
-                  },
-                  {
-                    altText: 'temp alt',
-                    desktopImage: {
-                      url: '/dummy/temp-riot-right-image-2.jpg',
-                    },
-                    mobileImage: {
-                      url: '/dummy/temp-riot-right-image-2.jpg',
-                    },
-                  },
-                ],
-              },
-            ]}
-            renderItem={StickyListItem}
-            hideBottomBar
-          />
+          <Description theme="light" header={introduction.header} copy={introduction.copy} link={introduction.link} />
         </ContentWrapper>
         <ContentWrapper style={{ position: 'relative', background: 'black' }}>
           <ThemeChangeTrigger theme="dark" />
@@ -142,8 +49,8 @@ const Careers = (props: JobsPageProp) => {
             style={{
               '--list-color': 'white',
             }}
-            data-open-application={props.openings.length === 1}
-            items={props.openings}
+            data-open-application={openings.length === 1}
+            items={openings}
             renderItem={JobListItem}
             hideBottomBar
           />
@@ -153,7 +60,7 @@ const Careers = (props: JobsPageProp) => {
   )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ draftMode = false }) {
   var myHeaders = new Headers()
   myHeaders.append('Authorization', `Token token=${process.env.NEXT_PUBLIC_TEAMTAILOR_TOKEN}`)
   myHeaders.append('X-Api-Version', '20210218')
@@ -162,62 +69,47 @@ export async function getServerSideProps() {
     headers: myHeaders,
     redirect: 'follow',
   }
-
-  return fetch('https://api.teamtailor.com/v1/jobs', requestOptions as RequestInit)
-    .then((response) => {
-      return response.json()
+  return client(draftMode)
+    .query({
+      query: CAREERS_PAGE_QUERY(draftMode),
     })
-    .then((result) => {
-      return {
-        props: {
-          footerTheme: 'light',
-          openings:
-            result.data.length > 0
-              ? result.data
-              : [
-                  {
-                    title: 'Open application',
-                    location: 'Sweden/Barcelona',
-                    link: 'https://www.link.com',
-                    description:
-                      'Although we currently don’t have any open positions, we always welcome applications from talented individuals.',
-                  },
-                ],
-        },
-      }
-      // let resultData = result.data
-      // return Promise.all(
-      //   resultData.map((job: any) => {
-      //     return fetch(job.relationships.locations.links.related, requestOptions as RequestInit)
-      //       .then((res) => res.json())
-      //       .then((locationData) => {
-      //         return locationData.data.length > 1
-      //           ? locationData.data
-      //               .reduce((previousValue: string, item: any) => (previousValue += item.attributes.city + ' / '), '')
-      //               .slice(0, -2)
-      //           : locationData.data.length === 0
-      //           ? ``
-      //           : locationData.data[0].attributes.city
-      //       })
-      //   })
-      // ).then((cities) => {
-      //   let jobs: TeamTailorJob[] = resultData.map((job: any) => job.attributes)
+    .then((res: any) => res.data)
+    .then((CMSData: any) => {
+      return fetch('https://api.teamtailor.com/v1/jobs?include=role,locations', requestOptions as RequestInit)
+        .then((response) => {
+          return response.json()
+        })
+        .then((result) => {
+          const openings = result.data.map((job: any) => {
+            return {
+              title: job.attributes.title,
+              url: job.links[`careersite-job-url`],
+              locations: job.relationships.locations.data.map(
+                (location: any) => LOCATION_ID[location.id as keyof typeof LOCATION_ID]
+              ),
+            }
+          })
 
-      //   jobs.forEach((job, i) => {
-      //     job.location = cities[i]
-      //     job.id = resultData[i].id
-      //   })
-
-      //   return Promise.all([getAboutPage(), getJobPage()]).then(([aboutPageData, contentfulData]) => {
-      //     return {
-      //       props: {
-      //         jobs,
-      //         ...contentfulData,
-      //         images: aboutPageData.sectionTwoImages.sort(() => Math.random() - Math.random()).slice(0, 10),
-      //       },
-      //     }
-      //   })
-      // })
+          return {
+            props: {
+              footerTheme: 'light',
+              ...CMSData.careersPage,
+              openings:
+                openings.length > 0
+                  ? openings
+                  : [
+                      {
+                        title: 'Open application',
+                        locations: ['Skellefteå', 'Stockholm', 'Barcelona'],
+                        link: 'https://www.link.com',
+                        description:
+                          'Although we currently don’t have any open positions, we always welcome applications from talented individuals.',
+                      },
+                    ],
+            },
+          }
+        })
+        .catch((error) => console.log('error', error))
     })
     .catch((error) => console.log('error', error))
 }

@@ -275,28 +275,28 @@ export const StickyItemsWithListInside: Story = {
 const jobOpenings = [
   {
     title: 'Senior Developer',
-    location: 'Stockholm/Skellefteå',
-    link: 'https//www.example-link.com',
+    locations: ['Stockholm', 'Skellefteå'],
+    url: 'https//www.example-url.com',
   },
   {
     title: 'Design Intern',
-    location: 'Sweden/Barcelona',
-    link: 'https//www.example-link.com',
+    locations: ['Stockholm', 'Barcelona'],
+    url: 'https//www.example-url.com',
   },
   {
     title: 'Development Intern',
-    location: 'Sweden/Barcelona',
-    link: 'https//www.example-link.com',
+    locations: ['Stockholm', 'Barcelona'],
+    url: 'https//www.example-url.com',
   },
   {
     title: 'Producer',
-    location: 'Sweden/Barcelona',
-    link: 'https//www.example-link.com',
+    locations: ['Stockholm', 'Barcelona'],
+    url: 'https//www.example-url.com',
   },
 ]
 
-const renderJobOpenings = ({ title, location, link }: (typeof jobOpenings)[0]) => (
-  <JobListItem title={title} location={location} link={link} />
+const renderJobOpenings = ({ title, locations, url }: (typeof jobOpenings)[0]) => (
+  <JobListItem title={title} locations={locations} url={url} />
 )
 
 export const JobOpenings: Story = {
