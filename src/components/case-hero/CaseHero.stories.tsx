@@ -24,8 +24,14 @@ export const Default: Story = {
       posterImage: {
         url: '/dummy/showreelposter.jpg',
       },
-      mobileVideoCollection: { items: [] },
       desktopVideoCollection: {
+        items: [
+          {
+            url: '/dummy/showreel23.mp4',
+          },
+        ],
+      },
+      mobileVideoCollection: {
         items: [
           {
             url: '/dummy/showreel23.mp4',

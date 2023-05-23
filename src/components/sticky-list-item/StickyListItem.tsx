@@ -4,65 +4,63 @@ import { bemify } from '@utils/bemify'
 import { VideoPlayer } from '@components/video-player'
 import { Image } from '@components/image'
 import { Slideshow } from '@components/slideshow'
-import { Video, ResponsiveImage } from '@customTypes/cms'
+import { AwardItem } from '@components/award-item'
+import { Video, ResponsiveImage, AwardList } from '@customTypes/cms'
 import { List } from '@components/list'
 const bem = bemify(styles, 'stickyListItem')
 
 interface StickyListItemProps {
-  isVideoAsset: boolean
   header: string
-  copy: string
-  srcSet: Video | ResponsiveImage[] | ResponsiveImage
-  containsList?: boolean
-  items?: any[]
+  description: string
+  mediaCollection: {
+    items: Video[] | ResponsiveImage[]
+  }
+  subList?: AwardList
   automaticallyChange?: boolean
   showIndicators?: boolean
   showArrows?: boolean
-  renderItem?: (item: any) => JSX.Element
 }
 
 export const StickyListItem = ({
-  isVideoAsset,
   header,
-  copy,
-  srcSet,
-  containsList = false,
-  items = [],
+  description,
+  mediaCollection,
+  subList = { awards: [] },
   automaticallyChange = true,
   showIndicators = false,
   showArrows = false,
-  renderItem = () => <div />,
 }: StickyListItemProps) => {
+  console.log(mediaCollection.items[0])
   return (
     <div className={styles['stickyListItem']}>
       <div className={bem('leftContainer')}>
         <h3>{header}</h3>
         <div className={bem('stickyMediaContainer')}>
-          {isVideoAsset ? (
-            <VideoPlayer
-              playsinline
-              loop
-              autoPlay
-              poster={(srcSet as Video).posterImage.url} //'/dummy/showreelposter/jpg'
-              src={srcSet as Video} // '/dummy/showreel23.mp4'
-            />
-          ) : Array.isArray(srcSet) ? (
+          {mediaCollection.items.length > 1 ? (
             <Slideshow
               automaticallyChange={automaticallyChange}
               showIndicators={showIndicators}
               showArrows={showArrows}
-              srcSet={srcSet}
+              srcSet={mediaCollection.items as ResponsiveImage[]}
+            />
+          ) : mediaCollection.items[0].__typename === 'Video' || (mediaCollection.items[0] as Video).desktopVideo ? (
+            <VideoPlayer
+              playsinline
+              loop
+              autoPlay
+              poster={(mediaCollection.items[0] as Video).posterImage.url}
+              src={mediaCollection.items[0] as Video}
             />
           ) : (
-            <Image srcSet={srcSet as ResponsiveImage} />
+            <Image srcSet={mediaCollection.items[0] as ResponsiveImage} />
           )}
         </div>
       </div>
       <div className={bem('rightContainer')}>
-        <p>{copy}</p>
-        {containsList && (
+        <p>{description}</p>
+        {subList && (
           <div className={bem('listContainer')}>
-            <List items={items} renderItem={renderItem} />
+            <List items={subList.awards} renderItem={AwardItem} />
           </div>
         )}
       </div>

@@ -1,18 +1,16 @@
 import { idText } from 'typescript'
 
+export interface PageHero {
+  title: string
+  image: ResponsiveImage
+}
+
 export interface About {
-  sectionOneImages: images[]
-  sectionOneSubheader: string
-  sectionOneHeader: string
-  sectionOneCopy: string
-  sectionTwoImages: images[]
-  sectionTwoSubheader: string
-  sectionTwoHeader: string
-  sectionTwoCopy: string
-  sectionThreeImages: images[]
-  sectionThreeSubheader: string
-  sectionThreeHeader: string
-  sectionThreeCopy: string
+  hero: PageHero
+  list: StickyList
+  gridImagesCollection: {
+    items: ResponsiveImage[]
+  }
 }
 
 export interface Video {
@@ -32,6 +30,7 @@ export interface Video {
       url: string
     }[]
   }
+  __typename?: string
 }
 
 export interface ResponsiveImage {
@@ -43,6 +42,16 @@ export interface ResponsiveImage {
   }
   altText: string
   imageCaption?: string
+  __typename?: string
+}
+
+export interface Award {
+  awardName: string
+  count: number
+}
+
+export interface AwardList {
+  awards: Award[]
 }
 
 export interface Case {

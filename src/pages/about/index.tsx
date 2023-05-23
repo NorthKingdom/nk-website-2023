@@ -4,31 +4,17 @@ import client from '@graphql/client'
 import { ABOUT_PAGE_QUERY } from '@graphql/queries'
 import { About as AboutPageProps } from '@customTypes/cms'
 import { PageHero } from '@components/page-hero'
-import { Description } from '@components/description'
 import { List } from '@components/list'
 import { StickyListItem } from '@components/sticky-list-item'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import styles from './About.module.scss'
 import { bemify } from '@utils/bemify'
+import { InfiniteGrid } from '@components/infinite-grid'
 const bem = bemify(styles, 'about')
 
-const renderAwards = ({ awardName, numberOfAwards }: { awardName: string; numberOfAwards: number }) => {
-  return (
-    <div
-      style={{
-        display: `flex`,
-        justifyContent: `space-between`,
-        alignItems: `center`,
-      }}
-    >
-      <p>{awardName}</p>
-      <p>{numberOfAwards}</p>
-    </div>
-  )
-}
-
-const About = (props: AboutPageProps) => {
+// TODO :: Fix about page props from any
+const About = ({ hero, list, gridImagesCollection }: AboutPageProps) => {
   return (
     <>
       <Head>
@@ -43,117 +29,12 @@ const About = (props: AboutPageProps) => {
         <link rel="canonical" href="https://www.northkingdom.com/about" />
       </Head>
       <main className={styles['about']}>
-        <PageHero
-          className={bem('pageHeroTitle')}
-          title={'Creativity & Innovation since 2003'}
-          srcSet={{
-            desktopImage: {
-              url: '/dummy/case-thumb-fallback.webp',
-            },
-            mobileImage: {
-              url: '/dummy/case-thumb-fallback.webp',
-            },
-            altText: 'temp alt',
-          }}
-        />
+        <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
         <ContentWrapper style={{ position: 'relative', background: 'white' }}>
           <ThemeChangeTrigger theme="light" />
-          <Description
-            header={'About Us'}
-            copy={
-              'Working at North Kingdom means being part of a team-based culture where diverse talents bring different perspectives and are empowered to act on their combined ideas. Our team consists of passionate, curious, and caring people from 15 different countries around the world.'
-            }
-          />
-          <List
-            hideBottomBar
-            items={[
-              {
-                copy: "We have over 10 years of experience creating innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms. We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and native solutions.",
-                header: 'Extended Reality',
-                isVideoAsset: false,
-                srcSet: {
-                  altText: 'temp alt',
-                  desktopImage: {
-                    url: '/dummy/temp-left-riot-img.jpg',
-                  },
-                  mobileImage: {
-                    url: '/dummy/temp-left-riot-img.jpg',
-                  },
-                },
-              },
-              {
-                copy: `Gaming and digital experiences is deeply rooted in our DNA. We have created and injected game elements into our projects over the last 15 years for brands like Vodafone, adidas & Disney. We have created our own games, such as Sparks, and we have worked closely in extending game universes and engaging communities with the biggest gaming players on earth, including EA, Mojang, King, Riot Games, Yuga Labs & Supercell.`,
-                header: 'Gaming',
-                isVideoAsset: true,
-                srcSet: {
-                  autoPlay: true,
-                  loop: true,
-                  muted: true,
-                  posterImage: {
-                    url: '/dummy/showreelposter.jpg',
-                  },
-                  mobileVideoCollection: { items: [] },
-                  desktopVideoCollection: {
-                    items: [
-                      {
-                        url: '/dummy/showreel23.mp4',
-                      },
-                    ],
-                  },
-                },
-              },
-              {
-                copy: 'A amet ridiculus nunc sed. Feugiat facilisis commodo odio quam facilisis non. Odio sagittis bibendum neque id lorem enim eget. ',
-                header: 'Awards',
-                isVideoAsset: false,
-                srcSet: [
-                  {
-                    altText: 'temp alt',
-                    desktopImage: {
-                      url: '/dummy/temp-left-riot-img.jpg',
-                    },
-                    mobileImage: {
-                      url: '/dummy/temp-left-riot-img.jpg',
-                    },
-                  },
-                  {
-                    altText: 'temp alt',
-                    desktopImage: {
-                      url: '/dummy/temp-right-riot-img.jpg',
-                    },
-                    mobileImage: {
-                      url: '/dummy/temp-right-riot-img.jpg',
-                    },
-                  },
-                  {
-                    altText: 'temp alt',
-                    desktopImage: {
-                      url: '/dummy/temp-riot-right-image-2.jpg',
-                    },
-                    mobileImage: {
-                      url: '/dummy/temp-riot-right-image-2.jpg',
-                    },
-                  },
-                ],
-                containsList: true,
-                items: [
-                  { awardName: 'FWA of the Day ', numberOfAwards: 54 },
-                  { awardName: 'FWA of the Month ', numberOfAwards: 11 },
-                  { awardName: 'Awwwards Site of the Day', numberOfAwards: 3 },
-                  { awardName: "FWA People's Choice", numberOfAwards: 4 },
-                  { awardName: 'Red Dot', numberOfAwards: 3 },
-                  { awardName: 'Awwards Site of the Day', numberOfAwards: 3 },
-                  { awardName: "FWA People's Choice", numberOfAwards: 4 },
-                  { awardName: 'Red Dot', numberOfAwards: 3 },
-                  { awardName: 'Awwards Site of the Day', numberOfAwards: 3 },
-                  { awardName: "FWA People's Choice", numberOfAwards: 4 },
-                  { awardName: 'Red Dot', numberOfAwards: 3 },
-                ],
-                renderItem: renderAwards,
-              },
-            ]}
-            renderItem={StickyListItem}
-          />
+          <List hideBottomBar items={list.itemsCollection.items} renderItem={StickyListItem} />
+          {/* TODO :: Add in props here for grid images */}
+          {/* <InfiniteGrid images={gridImagesCollection.items}/> */}
         </ContentWrapper>
       </main>
     </>
