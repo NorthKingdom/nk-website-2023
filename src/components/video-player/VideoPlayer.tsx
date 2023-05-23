@@ -36,7 +36,7 @@ export const VideoPlayer = ({
       autoPlay={autoPlay}
       loop={loop}
     >
-      {src.srcCollection.items.map((s, i: number) => {
+      {src.desktopVideoCollection.items.map((s, i: number) => {
         // TODO :: fix 'type'
         return <source key={`video-src-${i}`} src={s.url} type="video/mp4" />
       })}

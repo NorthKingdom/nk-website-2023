@@ -2,16 +2,26 @@ import { gql } from '@apollo/client'
 
 export const VIDEO = gql`
   fragment video on Video {
-    muted
-    autoPlay
-    loop
-    posterImage {
-      url
+    __typename
+    sys {
+      id
     }
-    srcCollection(limit: 5) {
+    videoName
+    desktopVideoCollection(limit: 5) {
       items {
         url
       }
     }
+    mobileVideoCollection(limit: 5) {
+      items {
+        url
+      }
+    }
+    posterImage {
+      url
+    }
+    autoPlay
+    loop
+    muted
   }
 `

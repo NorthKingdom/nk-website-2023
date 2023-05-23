@@ -52,7 +52,8 @@ mobile web, mobile apps and native solutions.`,
       posterImage: {
         url: '',
       },
-      srcCollection: {
+      mobileVideoCollection: { items: [] },
+      desktopVideoCollection: {
         items: [
           {
             url: '/dummy/showreel23.mp4',

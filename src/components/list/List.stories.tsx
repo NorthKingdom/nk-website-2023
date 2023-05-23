@@ -107,7 +107,8 @@ mobile web, mobile apps and native solutions.`,
       posterImage: {
         url: '/dummy/showreelposter.jpg',
       },
-      srcCollection: {
+      mobileVideoCollection: { items: [] },
+      desktopVideoCollection: {
         items: [
           {
             url: '/dummy/showreel23.mp4',

@@ -22,7 +22,12 @@ export interface Video {
   posterImage: {
     url: string
   }
-  srcCollection: {
+  desktopVideoCollection: {
+    items: {
+      url: string
+    }[]
+  }
+  mobileVideoCollection: {
     items: {
       url: string
     }[]

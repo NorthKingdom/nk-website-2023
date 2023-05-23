@@ -19,7 +19,8 @@ export const Default: Story = {
       muted: true,
       loop: true,
       autoPlay: true,
-      srcCollection: {
+      mobileVideoCollection: { items: [] },
+      desktopVideoCollection: {
         items: [
           {
             url: '/dummy/showreel23.mp4',
