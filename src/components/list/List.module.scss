@@ -35,4 +35,16 @@
       }
     }
   }
+
+  &[data-no-bars='true'] {
+    li {
+      &:before {
+        visibility: hidden;
+      }
+
+      &:after {
+        visibility: hidden;
+      }
+    }
+  }
 }
