@@ -3,8 +3,15 @@ import { VIDEO } from '../fragments/Video.fragment'
 
 export const HOME_HERO = gql`
   ${VIDEO}
+
   fragment homeHero on HomeHeroComponent {
     statement
+    shieldVideo {
+      ...video
+    }
+    showreelVideo {
+      ...video
+    }
   }
 `
 
