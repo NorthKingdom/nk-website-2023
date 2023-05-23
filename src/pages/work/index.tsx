@@ -1,17 +1,12 @@
 import React from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
-import { CASE_ARCHIVE_QUERY, WORK_PAGE_QUERY } from '@graphql/queries'
-import { HomePage, CaseArchive as CaseArchiveType } from '@customTypes/cms'
+import { WORK_PAGE_QUERY } from '@graphql/queries'
+import type { WorkPage } from '@customTypes/cms'
 import { CaseList } from '@components/case-list'
 import { CaseArchive } from '@components/case-archive'
 
-interface WorkPageProps {
-  home: Pick<HomePage, 'heroCasesCollection'>
-  caseArchive: CaseArchiveType
-}
-
-function Work(props: WorkPageProps) {
+function Work(props: WorkPage) {
   return (
     <>
       <Head>
@@ -25,7 +20,7 @@ function Work(props: WorkPageProps) {
         <link rel="canonical" href="https://www.northkingdom.com/work" />
       </Head>
       <main style={{ paddingTop: '80px' }}>
-        <CaseList cases={props.home.heroCasesCollection.items} />
+        <CaseList cases={props.featuredCases.cases.items} />
         <CaseArchive />
       </main>
     </>
@@ -33,17 +28,21 @@ function Work(props: WorkPageProps) {
 }
 
 export async function getStaticProps({ draftMode = false }) {
-  const res = await client(draftMode).query({
-    query: WORK_PAGE_QUERY(draftMode),
-  })
-  const data = res.data
+  try {
+    const res = await client(draftMode).query({
+      query: WORK_PAGE_QUERY(draftMode),
+    })
 
-  // const caseArchive = await client.query({
-  //   query: CASE_ARCHIVE_QUERY,
-  // })
+    console.log(res.data)
 
-  return {
-    props: { ...data },
+    if (!res.data.workPage) {
+      return { notFound: true }
+    } else {
+      return { props: res.data.workPage }
+    }
+  } catch (error) {
+    console.error(error)
+    return { notFound: true }
   }
 }
 export default Work
