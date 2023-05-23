@@ -18,7 +18,7 @@ export const ContactListItem = ({ title, linksCollection }: ContactListItemProps
       <div className={bem('contactsContainer')}>
         {/* TODO :: Miha - copy the 'copy email' from old nk.com */}
         {linksCollection.items.map((link) => (
-          <a href={link.url} target="_blank">
+          <a key={link.copy} href={link.url} target="_blank">
             {link.copy}
           </a>
         ))}
