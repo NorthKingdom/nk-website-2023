@@ -14,7 +14,9 @@ const nextConfig = {
     prependData: `
           @import "@styles/fonts.scss";
           @import "@styles/variables.scss";
+          @import 'styles/mixins/notch.scss';
           @import "@styles/mixins/_base.scss";
+          @import 'styles/mixins/hover.scss';
           @import "@styles/mixins/typography.scss";
           @import '~sass-mq';
         `,
