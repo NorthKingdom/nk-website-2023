@@ -1,31 +1,37 @@
 @font-face {
-  font-family: "FKGroteskNeue-Regular";
-  src: url("/fonts/FKGroteskNeue/otf/FKGroteskNeue-Regular.otf"),
-    url("/fonts/FKGroteskNeue/ttf/FKGroteskNeue-Regular.ttf"),
-    url("/fonts/FKGroteskNeue/woff/FKGroteskNeue-Regular.woff"),
-    url("/fonts/FKGroteskNeue/woff2/FKGroteskNeue-Regular.woff2");
+  font-family: 'FKGroteskNeue-Regular';
+  src: url('/fonts/FKGroteskNeue/woff2/FKGroteskNeue-Regular.woff2'),
+    url('/fonts/FKGroteskNeue/woff/FKGroteskNeue-Regular.woff'),
+    url('/fonts/FKGroteskNeue/ttf/FKGroteskNeue-Regular.ttf'), url('/fonts/FKGroteskNeue/otf/FKGroteskNeue-Regular.otf');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "FKGroteskNeue-Bold";
-  src: url("/fonts/FKGroteskNeue/otf/FKGroteskNeue-Bold.otf"),
-    url("/fonts/FKGroteskNeue/ttf/FKGroteskNeue-Bold.ttf"),
-    url("/fonts/FKGroteskNeue/woff/FKGroteskNeue-Bold.woff"),
-    url("/fonts/FKGroteskNeue/woff2/FKGroteskNeue-Bold.woff2");
+  font-family: 'FKGroteskNeue-Bold';
+  src: url('/fonts/FKGroteskNeue/otf/FKGroteskNeue-Bold.woff2'), url('/fonts/FKGroteskNeue/ttf/FKGroteskNeue-Bold.woff'),
+    url('/fonts/FKGroteskNeue/woff/FKGroteskNeue-Bold.ttf'), url('/fonts/FKGroteskNeue/woff2/FKGroteskNeue-Bold.otf');
   font-style: bold;
   font-weight: 700;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "FKRasterGrotesk-Blended";
-  src: url("/fonts/FKRasterGrotesk/otf/FKRasterGrotesk-Blended.otf"),
-    url("/fonts/FKRasterGrotesk/ttf/FKRasterGrotesk-Blended.ttf"),
-    url("/fonts/FKRasterGrotesk/woff/FKRasterGrotesk-Blended.woff"),
-    url("/fonts/FKRasterGrotesk/woff2/FKRasterGrotesk-Blended.woff2");
+  font-family: 'FKRasterGrotesk-Blended';
+  src: url('/fonts/FKDisplay/FKDisplaynarrowdotv1-RegularAlt.woff2'),
+    url('/fonts/FKRasterGrotesk/ttf/FKRasterGrotesk-Blended.woff'),
+    url('/fonts/FKRasterGrotesk/woff/FKRasterGrotesk-Blended.ttf'),
+    url('/fonts/FKRasterGrotesk/woff2/FKRasterGrotesk-Blended.otf');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FKDisplay';
+  src: url('/fonts/FKDisplay/FKDisplaynarrowdotv1-RegularAlt.woff'),
+    url('/fonts/FKDisplay/FKDisplaynarrowdotv1-RegularAlt.oft');
   font-style: normal;
   font-weight: 400;
   font-display: swap;

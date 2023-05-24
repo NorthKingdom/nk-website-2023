@@ -33,8 +33,6 @@ export async function getStaticProps({ draftMode = false }) {
       query: WORK_PAGE_QUERY(draftMode),
     })
 
-    console.log(res.data)
-
     if (!res.data.workPage) {
       return { notFound: true }
     } else {

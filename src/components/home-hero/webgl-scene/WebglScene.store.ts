@@ -28,7 +28,7 @@ interface WebglSceneStore {
 export const useWebglSceneStore = create<WebglSceneStore>()((set, get) => ({
   shieldState: 'idle',
   dispatchShieldStateEvent: (event: ShieldStateEvent) => {
-    console.log('dispatchShieldStateEvent', event, 'current shield state', get().shieldState)
+    // console.log('dispatchShieldStateEvent', event, 'current shield state', get().shieldState)
     const { shieldState: currentShieldState } = get()
     switch (event.type) {
       case 'POINTER_OVER':
