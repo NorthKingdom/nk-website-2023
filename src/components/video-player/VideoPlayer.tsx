@@ -9,7 +9,7 @@ interface VideoPlayerProps {
   className?: string
   poster: string
   playsinline?: boolean
-  controls?: boolean
+  controls: boolean
   muted?: boolean
   autoPlay?: boolean
   loop?: boolean

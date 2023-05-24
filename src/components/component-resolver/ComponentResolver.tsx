@@ -3,6 +3,7 @@ import { Description } from '@components/description'
 import { VideoPlayer } from '@components/video-player'
 import { Image } from '@components/image'
 import { TwoImageLayout } from '@components/two-image-layout'
+import { CaseMediaGrid } from '@components/case-media-grid'
 
 // TODO :: Fix any type here
 interface ComponentResolverProps {
@@ -22,6 +23,7 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
             return (
               <VideoPlayer
                 src={c}
+                controls={true}
                 poster={c.posterImage.url}
                 loop={c.loop}
                 muted={c.muted}
@@ -41,6 +43,16 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
                 rightCaption={c.imageTwoCaption}
                 leftAlt={c.imageOne.altText}
                 rightAlt={c.imageTwo.altText}
+              />
+            )
+          case 'CaseMediaGrid':
+            return (
+              <CaseMediaGrid
+                key={`case-twoimage-${i}`}
+                slotOne={c.slotOne}
+                slotTwo={c.slotTwo}
+                slotThree={c.slotThree}
+                slotFour={c.slotFour}
               />
             )
           default:

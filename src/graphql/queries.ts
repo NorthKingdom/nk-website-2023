@@ -9,6 +9,7 @@ import { HOME_HERO } from '@graphql/fragments/HomeHero.fragment'
 import { FEATURED_VIDEO } from '@graphql/fragments/FeaturedVideo.fragment'
 import { IMAGE_MARQUEE } from '@graphql/fragments/ImageMarquee.fragment'
 import { PAGE_HERO } from './fragments/PageHero.fragment'
+import { CASE_MEDIA_GRID } from './fragments/CaseMediaGrid.fragment'
 
 export const HOME_PAGE_QUERY = (draftMode: boolean) => gql`
     ${HOME_HERO}
@@ -108,6 +109,7 @@ export const CASE_PAGE_QUERY = (caseSlug: string, draftMode: boolean) => gql`
   ${CASE_HERO}
   ${DESCRIPTION}
   ${TWO_IMAGE_COMPONENT}
+  ${CASE_MEDIA_GRID}
 
   query {
     caseCollection(preview: ${draftMode}, limit: 1, where: { slug: "${caseSlug}" }) {
@@ -123,6 +125,7 @@ export const CASE_PAGE_QUERY = (caseSlug: string, draftMode: boolean) => gql`
             ...responsiveImage
             ...video
             ...twoImageData
+            ...mediaGrid
           }
         }
       }

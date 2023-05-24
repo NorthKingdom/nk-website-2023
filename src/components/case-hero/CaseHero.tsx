@@ -18,6 +18,7 @@ export const CaseHero = ({ client, caseName, src, isVideoAsset }: CaseHeroProps)
     <section className={styles['caseHero']}>
       {isVideoAsset ? (
         <VideoPlayer
+          controls={false}
           poster={(src as Video).posterImage.url}
           src={src as Video}
           muted={(src as Video).muted}
