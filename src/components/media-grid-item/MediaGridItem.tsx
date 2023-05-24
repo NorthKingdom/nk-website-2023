@@ -13,7 +13,12 @@ interface MediaGridItemProps {
 
 export const MediaGridItem = ({ item, maxHeight }: MediaGridItemProps) => {
   return (
-    <div data-offset={item?.offset} style={{ '--maxHeight': `${maxHeight}px` }} className={styles['mediaGridItem']}>
+    <div
+      data-isEmpty={item === undefined || item === null}
+      data-offset={item?.offset}
+      style={{ '--maxHeight': `${maxHeight}px` }}
+      className={styles['mediaGridItem']}
+    >
       {item && (
         <>
           {item.media.__typename === 'Video' || (item.media as Video).desktopVideoCollection ? (
