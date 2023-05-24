@@ -1,0 +1,45 @@
+.imageMarquee {
+  width: 100%;
+  position: relative;
+  //   height: 300vh;
+  background-color: var(--color-white);
+
+  &__stickyContainer {
+    position: sticky;
+    top: 0;
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &__row {
+    display: flex;
+    height: 140px;
+    margin-top: 20px;
+    position: relative;
+    transform: translateX(-50%);
+    left: 50%;
+    width: fit-content;
+
+    &:nth-child(1) {
+      margin-top: 0;
+    }
+
+    &:nth-child(2) {
+      transform: translateX(calc(-50% + (-1 * 50px)));
+    }
+  }
+
+  &__item {
+    width: 40vw;
+
+    @include mq($from: tablet) {
+      width: 20vw;
+    }
+  }
+
+  &__image {
+    display: block;
+    margin: 0 auto;
+  }
+}

@@ -142,7 +142,7 @@ export interface FeaturedVideo {
 }
 
 export interface ImageMarquee {
-  __typename: 'ImageMarqueeComponent'
+  __typename: 'ImageMarquee'
   sys: { id: string }
   images: {
     items: {
