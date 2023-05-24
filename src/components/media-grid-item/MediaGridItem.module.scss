@@ -1,0 +1,33 @@
+.mediaGridItem {
+  width: 25%;
+  --offset: 0%;
+  --maxHeight: 0;
+
+  &[data-offset='25%'] {
+    --offset: 0.25;
+  }
+
+  &[data-offset='50%'] {
+    --offset: 0.5;
+  }
+
+  padding-top: calc(var(--offset) * var(--maxHeight));
+  margin: 0 10px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  video,
+  img {
+    width: 100%;
+    height: var(--maxHeight);
+    max-height: 67vh;
+    // min-height: 100%;
+    object-fit: cover;
+  }
+}

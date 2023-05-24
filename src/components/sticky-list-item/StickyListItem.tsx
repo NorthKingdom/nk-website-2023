@@ -49,6 +49,7 @@ export const StickyListItem = ({
               playsinline
               loop
               autoPlay
+              controls={false}
               poster={(mediaCollection.items[0] as Video).posterImage.url}
               src={mediaCollection.items[0] as Video}
             />

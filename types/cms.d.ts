@@ -14,6 +14,11 @@ export interface DescriptionComponent {
   }
 }
 
+export interface MediaGridItem {
+  media: ResponsiveImage | Video
+  offset: '0%' | '25%' | '50%'
+}
+
 export interface About {
   hero: PageHero
   list: StickyList
