@@ -1,11 +1,11 @@
 .caseListItem {
-  &__imageContainer {
+  &__thumbnailContainer {
     background: var(--color-white);
     border-radius: 8px;
     overflow: hidden;
   }
 
-  &__image {
+  &__thumbnail {
     width: 100%;
     height: 100%;
     object-fit: cover;

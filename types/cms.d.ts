@@ -77,8 +77,8 @@ export interface Case {
   capability: string
   tags: Tags[]
   slug: string
-  thumbnail: image
-  thumbnailMobile: image
+  thumbnail: Video | ResponsiveImage
+  thumbnailMobile: Video | ResponsiveImage
   projectLink: string
   readMoreLink: string
   public: boolean

@@ -31,7 +31,7 @@ export const VideoPlayer = ({
       poster={poster}
       playsInline={playsinline}
       // TODO :: Create custom controls and switch this to false
-      controls={true}
+      controls={controls}
       muted={muted}
       autoPlay={autoPlay}
       loop={loop}

@@ -10,6 +10,7 @@ import { Modal } from '@components/modal'
 import { CloseButton } from '@components/close-button'
 import { useInView } from 'framer-motion'
 import { useWebglSceneStore } from './webgl-scene/WebglScene.store'
+import type { HomeHero as HomeHeroProps } from '@customTypes/cms'
 const bem = bemify(styles, 'homeHero')
 const videoModalBem = bemify(styles, 'videoPlayerModal')
 
@@ -18,9 +19,7 @@ const WebglScene = dynamic(() => import('./webgl-scene/WebglScene').then((Mod) =
   loading: () => <Loader className={bem('loader')} />,
 })
 
-interface HomeHeroProps {}
-
-export const HomeHero = (props: HomeHeroProps) => {
+export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProps) => {
   const [loaded, setLoaded] = useState(false)
   const $container = useRef<HTMLDivElement>(null)
   const height100vh = use100vh() as number
@@ -64,6 +63,7 @@ export const HomeHero = (props: HomeHeroProps) => {
           height: '100%',
           pointerEvents: 'none',
         }}
+        shieldVideo={shieldVideo}
         eventSource={$container}
         eventPrefix="client"
       />
@@ -73,8 +73,7 @@ export const HomeHero = (props: HomeHeroProps) => {
       </h1>
 
       <h2 className={bem('statement')} data-visible={loaded && !showVideoPlayer}>
-        A global design studio that creates experiences, services and products which play meaningful roles in people’s
-        lives
+        {statement}
       </h2>
 
       <Modal visible={showVideoPlayer} animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.4 } }}>
@@ -86,26 +85,7 @@ export const HomeHero = (props: HomeHeroProps) => {
           className={videoModalBem('videoPlayer')}
           autoPlay={true}
           playsinline={true}
-          src={{
-            muted: true,
-            loop: true,
-            autoPlay: true,
-            desktopVideoCollection: {
-              items: [
-                {
-                  url: '/dummy/showreel23.mp4',
-                },
-              ],
-            },
-            mobileVideoCollection: {
-              items: [
-                {
-                  url: '/dummy/showreel23.mp4',
-                },
-              ],
-            },
-            posterImage: { url: '/dummy/showreel-poster.jpg' },
-          }}
+          src={showreelVideo}
           poster=""
         />
       </Modal>
