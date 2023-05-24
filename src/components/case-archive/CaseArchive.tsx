@@ -56,31 +56,6 @@ const CaseArchiveItem = (props: CaseArchiveItemProps) => {
 }
 
 /**
- * Fetch more case data trigger
- */
-interface FetchMoreTriggerProps {
-  fetchMore: () => void
-}
-
-export const FetchMoreTrigger = ({ fetchMore = noop }: FetchMoreTriggerProps) => {
-  const callback = useRef(fetchMore)
-  useEffect(() => {
-    callback.current = fetchMore
-  }, [fetchMore])
-
-  const ref = useInViewEffect(
-    ([entry], observer) => {
-      if (entry.isIntersecting) {
-        callback.current()
-      }
-    },
-    { threshold: 1 }
-  )
-
-  return <div ref={ref} className={bem('fetchMoreTrigger')}></div>
-}
-
-/**
  * Case archive component.
  */
 export const CaseArchive = () => {
@@ -96,9 +71,9 @@ export const CaseArchive = () => {
   })
 
   const caseArchiveData = data?.caseArchive ?? previousData?.caseArchive ?? { items: [], total: 0 }
+  const canFetchMore = caseArchiveData.items.length < caseArchiveData.total
 
   const _fetchMore = () => {
-    const canFetchMore = caseArchiveData.items.length < caseArchiveData.total
     if (!canFetchMore || loading) return
     fetchMore({
       variables: {
@@ -162,7 +137,11 @@ export const CaseArchive = () => {
         />
       </CustomCursorImageContext.Provider>
 
-      {loading ? <p>Loading...</p> : <FetchMoreTrigger fetchMore={_fetchMore} />}
+      {canFetchMore && (
+        <button className={bem('fetchMoreButton')} disabled={loading} onClick={_fetchMore}>
+          Fetch More
+        </button>
+      )}
     </ContentWrapper>
   )
 }
