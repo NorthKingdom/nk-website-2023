@@ -3,6 +3,11 @@
   position: relative;
   //   height: 300vh;
   background-color: var(--color-white);
+  @include notch(var(--color-white));
+
+  @include mq($from: tablet) {
+    padding: 80px 0;
+  }
 
   &__stickyContainer {
     position: sticky;
