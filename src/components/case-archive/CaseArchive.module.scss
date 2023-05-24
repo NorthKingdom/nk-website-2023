@@ -9,6 +9,8 @@
   @include notch(var(--color-white));
 
   &__title {
+    @include Heading1;
+    font-family: 'FKDisplay';
   }
 
   &__fetchMoreTrigger {

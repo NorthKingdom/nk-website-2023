@@ -136,7 +136,7 @@ export const CaseArchive = () => {
       </AspectRatio>
 
       <div className={bem('header')}>
-        <h1 className={bem('title')}>Archive</h1>
+        <h2 className={bem('title')}>Archive</h2>
         <Filters.Root defaultValue={filter} onValueChange={setFilter} className={bem('filterRoot')}>
           {FILTERS.map((f) => (
             <Filters.Item key={f} value={f} className={bem('filterItem')}>
