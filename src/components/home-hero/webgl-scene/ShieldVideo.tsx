@@ -12,6 +12,7 @@ import { noop } from '@utils/noop'
 import { useWebglSceneStore } from './WebglScene.store'
 
 interface ShieldVideoProps {
+  src: string
   debug?: boolean
   scale?: number
   z?: number
@@ -42,6 +43,7 @@ const MOTION_CONFIG = {
 export const ShieldVideo = forwardRef(
   (
     {
+      src,
       debug = false,
       scale = 1,
       z = 0,
@@ -58,7 +60,7 @@ export const ShieldVideo = forwardRef(
     const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
     const shieldScaleFullscreen = useWebglSceneStore((state) => state.shieldScaleFullscreen)
 
-    const videoTexture = useVideoTexture('/dummy/EA_NFS_Heat_Studio_case_study_30s.mp4', { start: true })
+    const videoTexture = useVideoTexture(src, { start: true })
     const maskTexture = useTexture('/images/shield-mask-sharp.png')
 
     const uniforms = useMemo(

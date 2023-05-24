@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
 import styles from './Footer.module.scss'
 import { bemify } from '@utils/bemify'
-import { useResize } from '@hooks/use-resize'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
 const bem = bemify(styles, 'footer')
 
@@ -12,15 +11,6 @@ interface FooterProps {
 export const Footer = ({ theme = 'dark' }: FooterProps) => {
   const $footer = useRef<HTMLDivElement>(null)
   const bpFromTablet = useBreakpointFrom('tablet')
-
-  useResize(
-    () => {
-      if (!$footer.current) return
-      const footerBB = $footer.current.getBoundingClientRect()
-      document.documentElement.style.setProperty('--footer-height', `${footerBB.height - 12}px`)
-    },
-    { wait: 100 }
-  )
 
   return (
     <footer className={bem()} ref={$footer} data-theme={theme}>

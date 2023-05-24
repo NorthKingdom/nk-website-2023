@@ -57,7 +57,7 @@ export const ShieldContainer = forwardRef(
           onPointerOver={() => dispatchShieldStateEvent({ type: 'POINTER_OVER' })}
           onPointerOut={() => dispatchShieldStateEvent({ type: 'POINTER_OUT' })}
         >
-          <planeBufferGeometry args={[...SHIELD_INNER_SIZE.map((d) => d * 1.5), 32, 32]} />
+          <planeGeometry args={[...(SHIELD_INNER_SIZE.map((d) => d * 1.5) as [number, number]), 32, 32]} />
           <meshBasicMaterial color="cyan" wireframe={debug} transparent={true} opacity={debug ? 0.2 : 0} />
         </mesh>
         {debug && (
@@ -67,7 +67,7 @@ export const ShieldContainer = forwardRef(
               <div style={{ width: '100px', height: '2px', background: 'red', transform: 'translateY(-50px)' }} />
             </Html>
             <mesh position-z={0.1}>
-              <planeBufferGeometry args={[...SHIELD_INNER_SIZE, 32, 32]} />
+              <planeGeometry args={[...SHIELD_INNER_SIZE, 32, 32]} />
               <meshBasicMaterial color="red" wireframe />
             </mesh>
           </>
