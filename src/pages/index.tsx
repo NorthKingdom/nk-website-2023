@@ -12,6 +12,7 @@ import type {
   ImageMarquee as ImageMarqueeData,
   Description as DescriptionData,
 } from '@customTypes/cms'
+import { ImageMarquee } from '@components/image-marquee'
 
 const Description = dynamic(() => import('@/components/description/Description').then((Mod) => Mod.Description), {
   ssr: false,
@@ -59,6 +60,8 @@ const HomePageSectionResolver = ({ __typename, ...props }: { __typename: string;
       return <CaseList key={props.sys.id} cases={props.cases.items} />
     case 'DescriptionComponent':
       return <Description key={props.sys.id} {...(props as DescriptionData)} />
+    case 'ImageMarquee':
+      return <ImageMarquee key={props.sys.id} {...(props as ImageMarqueeData)} />
     default:
       return <></>
   }
