@@ -2,31 +2,46 @@ import React, { useRef } from 'react'
 import styles from './Footer.module.scss'
 import { bemify } from '@utils/bemify'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
+import { gql } from '@apollo/client'
+import { useQuery } from '@apollo/client'
+import type { Link } from '@customTypes/cms'
+
 const bem = bemify(styles, 'footer')
 
 interface FooterProps {
   theme?: 'light' | 'dark'
 }
 
+const FOOTER_QUERY = gql`
+  query FooterQuery {
+    footer(id: "6sB0eIDYQXM5x0g8VE0JwE") {
+      statement
+      links: linksCollection(limit: 10) {
+        items {
+          copy
+          url
+        }
+      }
+    }
+  }
+`
+
 export const Footer = ({ theme = 'dark' }: FooterProps) => {
   const $footer = useRef<HTMLDivElement>(null)
   const bpFromTablet = useBreakpointFrom('tablet')
+  const { data } = useQuery(FOOTER_QUERY)
 
   return (
     <footer className={bem()} ref={$footer} data-theme={theme}>
       {bpFromTablet ? <WordmarkOneLine /> : <WordmarkTwoLines />}
       <div className={bem('content')}>
-        <div className={bem('noa')}>A proud member of North Alliance</div>
+        <div className={bem('noa')}>{data?.footer?.statement}</div>
         <div className={bem('links')}>
-          <a href="https://www.thenorthalliance.com/about/" target="_blank" rel="noopener">
-            About
-          </a>
-          <a href="https://www.thenorthalliance.com/privacy-policy/" target="_blank" rel="noopener">
-            Privacy Policy
-          </a>
-          <a href="https://www.thenorthalliance.com/sustainability/" target="_blank" rel="noopener">
-            Sustainability
-          </a>
+          {(data?.footer?.links?.items ?? []).map((link: Link) => (
+            <a key={link.url} href={link.url} target="_blank" rel="noopener">
+              {link.copy}
+            </a>
+          ))}
         </div>
       </div>
     </footer>
