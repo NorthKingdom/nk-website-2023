@@ -2,4 +2,13 @@
   width: 100%;
   display: flex;
   height: fit-content;
+
+  @include mq($until: tablet) {
+    display: block;
+    width: fit-content;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+  }
 }

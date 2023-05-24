@@ -11,8 +11,22 @@
     --offset: 0.5;
   }
 
+  @include mq($until: tablet) {
+    --offset: 0% !important;
+  }
+
   padding-top: calc(var(--offset) * var(--maxHeight));
   margin: 0 10px;
+
+  @include mq($until: tablet) {
+    width: 75%;
+    display: inline-block;
+    scroll-snap-align: start;
+
+    &[data-isEmpty='true'] {
+      display: none;
+    }
+  }
 
   &:first-child {
     margin-left: 0;
@@ -20,6 +34,10 @@
 
   &:last-child {
     margin-right: 0;
+
+    @include mq($until: tablet) {
+      margin-right: 25%;
+    }
   }
 
   video,
