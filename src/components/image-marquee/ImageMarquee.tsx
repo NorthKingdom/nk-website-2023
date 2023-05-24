@@ -49,7 +49,6 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
         finalItems.push(originalItems[i])
         i++
         i = i % originalItems.length
-        console.log('push original image', i)
       }
     } else if (isItemsListTooLong) {
       finalItems = finalItems.slice(0, NUM_OF_ITEMS)
@@ -86,7 +85,7 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
         {/* <motion.div
           style={{
             position: 'absolute',
-            top: 0,
+            top: 0, 
             width: '100%',
             height: '1px',
             background: 'red',

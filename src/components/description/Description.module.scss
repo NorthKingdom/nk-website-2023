@@ -15,11 +15,13 @@
   &[data-theme='light'] {
     background-color: $white;
     color: $black;
+    @include notch($white);
   }
 
   &[data-theme='dark'] {
     background-color: $black;
     color: $white;
+    @include notch($black);
   }
 
   &__left {
