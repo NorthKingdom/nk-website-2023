@@ -68,3 +68,10 @@ export const WithSmallHeaderAndLink: Story = {
     },
   },
 }
+
+export const WithTextOnLeft: Story = {
+  args: {
+    header:
+      'From concept to execution, we design experiences, products and services that help our international clients create emotional and meaningful connections between their brand and people.',
+  },
+}
