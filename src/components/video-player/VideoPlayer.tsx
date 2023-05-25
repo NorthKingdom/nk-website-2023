@@ -4,12 +4,12 @@ import { bemify } from '@utils/bemify'
 import { Video } from '@customTypes/cms'
 const bem = bemify(styles, 'videoPlayer')
 
-interface VideoPlayerProps {
+export interface VideoPlayerProps {
   src: Video
   className?: string
   poster: string
   playsinline?: boolean
-  controls: boolean
+  controls?: boolean
   muted?: boolean
   autoPlay?: boolean
   loop?: boolean
