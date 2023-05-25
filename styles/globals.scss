@@ -158,3 +158,10 @@ video {
 #hero-text {
   transition: color 0.4s;
 }
+
+/**
+plyr
+*/
+.plyr video {
+  object-fit: cover;
+}
