@@ -23,20 +23,45 @@ export const CaseMediaGrid = ({ slotOne, slotTwo, slotThree, slotFour }: CaseMed
       let tempMX = 0
       let tempRatio = 0
 
+      console.log([...imgs, ...videos])
+
       if (imgs.length > 0) {
-        imgs[0].onload = () => {
+        console.log(imgs[0])
+        imgs[0].onerror = (e) => {
+          console.log(`eer`, e)
+        }
+
+        if (imgs[0].complete) {
+          console.log(`load`)
           imgs.forEach((img) => {
+            console.log(`img`, img, img.naturalHeight / img.naturalWidth, tempRatio)
             if (img.naturalHeight / img.naturalWidth > tempRatio) {
               tempMX = Math.max(img.naturalHeight, tempMX)
               tempRatio = img.naturalHeight / img.naturalWidth
+              console.log(tempMX, tempRatio)
               sMH(tempMX)
             }
           })
+        } else {
+          imgs[0].onload = () => {
+            console.log(`load`)
+            imgs.forEach((img) => {
+              console.log(`img`, img, img.naturalHeight / img.naturalWidth, tempRatio)
+              if (img.naturalHeight / img.naturalWidth > tempRatio) {
+                tempMX = Math.max(img.naturalHeight, tempMX)
+                tempRatio = img.naturalHeight / img.naturalWidth
+                console.log(tempMX, tempRatio)
+                sMH(tempMX)
+              }
+            })
+          }
         }
       }
 
       if (videos.length > 0) {
+        console.log(`vid`)
         videos[0].onloadeddata = () => {
+          console.log(`vid loaded data`)
           videos.forEach((v) => {
             console.log(`v`, v.videoHeight / v.videoWidth, tempRatio)
             if (v.videoHeight / v.videoWidth > tempRatio) {

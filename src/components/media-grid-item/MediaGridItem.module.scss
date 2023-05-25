@@ -1,7 +1,11 @@
 .mediaGridItem {
-  width: 25%;
   --offset: 0%;
   --maxHeight: 0;
+
+  position: relative;
+
+  width: 25%;
+  height: var(--maxHeight) !important;
 
   &[data-offset='25%'] {
     --offset: 0.25;
@@ -44,6 +48,14 @@
   img {
     width: 100%;
     height: var(--maxHeight);
+    max-height: 67vh;
+    // min-height: 100%;
+    object-fit: cover;
+  }
+
+  &__videoPlayerContainer {
+    width: 100% !important;
+    height: var(--maxHeight) !important;
     max-height: 67vh;
     // min-height: 100%;
     object-fit: cover;
