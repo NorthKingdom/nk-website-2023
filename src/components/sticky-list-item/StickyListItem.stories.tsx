@@ -80,33 +80,31 @@ mobile web, mobile apps and native solutions.`,
     mediaCollection: {
       items: [
         {
-          muted: true,
-          autoPlay: true,
-          loop: true,
-          posterImage: {
-            url: '',
-          },
+          __typename: 'Video',
+
           desktopVideoCollection: {
             items: [
               {
-                url: '/dummy/showreel23.mp4',
+                url: 'https://videos.ctfassets.net/vwfx2n1hr26h/3zwFhCKXIUlzPlzSaTGxO8/1ad6725f1c0344b6a65a6ecb364270a1/MasterClash-Cover.mp4',
               },
             ],
           },
           mobileVideoCollection: {
-            items: [
-              {
-                url: '/dummy/showreel23.mp4',
-              },
-            ],
+            items: [],
           },
+          posterImage: {
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/JKz0VPSPjmlmBWemMJEYL/099bec4f033daa34a345fa77afd561f4/masterclash_thumbnail_mobile.jpg',
+          },
+          autoPlay: true,
+          loop: false,
+          muted: true,
         },
       ],
     },
   },
 }
 
-export const WithSlideshow: Story = {
+export const WithImageSlideshow: Story = {
   args: {
     header: 'Extended Reality',
     description: `We have over 10 years of experience creating innovative VR/AR solutions for some of 
@@ -119,31 +117,91 @@ mobile web, mobile apps and native solutions.`,
     mediaCollection: {
       items: [
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
-            url: '/dummy/temp-left-riot-img.jpg',
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
           },
           mobileImage: {
-            url: '/dummy/temp-left-riot-img.jpg',
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
           },
-          altText: 'temp alt',
+          altText: '[EXAMPLE] riot image',
         },
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
-            url: '/dummy/temp-right-riot-img.jpg',
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
           },
           mobileImage: {
-            url: '/dummy/temp-right-riot-img.jpg',
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
           },
-          altText: 'temp alt',
+          altText: '[EXAMPLE] riot image',
         },
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
-            url: '/dummy/temp-riot-right-image-2.jpg',
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
           },
           mobileImage: {
-            url: '/dummy/temp-riot-right-image-2.jpg',
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
           },
-          altText: 'temp alt',
+          altText: '[EXAMPLE] riot image',
+        },
+      ],
+    },
+  },
+}
+
+export const WithImageAndVideoSlideshow: Story = {
+  args: {
+    header: 'Extended Reality',
+    description: `We have over 10 years of experience creating innovative VR/AR solutions for some of 
+the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting
+edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating
+innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked
+with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and
+native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,
+mobile web, mobile apps and native solutions.`,
+    mediaCollection: {
+      items: [
+        {
+          __typename: 'ResponsiveImage',
+          desktopImage: {
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
+          },
+          mobileImage: {
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
+          },
+          altText: '[EXAMPLE] riot image',
+        },
+        {
+          __typename: 'Video',
+
+          desktopVideoCollection: {
+            items: [
+              {
+                url: 'https://videos.ctfassets.net/vwfx2n1hr26h/3zwFhCKXIUlzPlzSaTGxO8/1ad6725f1c0344b6a65a6ecb364270a1/MasterClash-Cover.mp4',
+              },
+            ],
+          },
+          mobileVideoCollection: {
+            items: [],
+          },
+          posterImage: {
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/JKz0VPSPjmlmBWemMJEYL/099bec4f033daa34a345fa77afd561f4/masterclash_thumbnail_mobile.jpg',
+          },
+          autoPlay: true,
+          loop: false,
+          muted: true,
+        },
+        {
+          __typename: 'ResponsiveImage',
+          desktopImage: {
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
+          },
+          mobileImage: {
+            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
+          },
+          altText: '[EXAMPLE] riot image',
         },
       ],
     },

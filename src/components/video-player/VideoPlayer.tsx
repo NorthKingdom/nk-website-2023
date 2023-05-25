@@ -4,6 +4,7 @@ import { bemify } from '@utils/bemify'
 import { Video } from '@customTypes/cms'
 import Plyr from 'plyr'
 import 'plyr/dist/plyr.css'
+import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 
 const bem = bemify(styles, 'videoPlayer')
 
@@ -83,6 +84,7 @@ export const VideoPlayer = ({
   }, [])
 
   return (
+    // <AspectRatio ratio={16 / 10} style={{ width: '400px' }}>
     <div className={`${styles['videoPlayer']} ${className}`}>
       <video id={id} poster={poster} muted={muted}>
         {/* TODO :: Fix which array to loop through based on device desktopVideo or mobileVideo */}
@@ -94,5 +96,6 @@ export const VideoPlayer = ({
         {controls && <div>controls</div>}
       </video>
     </div>
+    // </AspectRatio>
   )
 }

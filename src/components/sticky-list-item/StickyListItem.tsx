@@ -7,13 +7,15 @@ import { Slideshow } from '@components/slideshow'
 import { AwardItem } from '@components/award-item'
 import { Video, ResponsiveImage, AwardList, Link } from '@customTypes/cms'
 import { List } from '@components/list'
+import { Media } from '@components/media'
+import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 const bem = bemify(styles, 'stickyListItem')
 
 interface StickyListItemProps {
   header: string
   description: string
   mediaCollection: {
-    items: Video[] | ResponsiveImage[]
+    items: (Video | ResponsiveImage)[]
   }
   subList?: AwardList
   automaticallyChange?: boolean
@@ -43,20 +45,12 @@ export const StickyListItem = ({
               automaticallyChange={automaticallyChange}
               showIndicators={showIndicators}
               showArrows={showArrows}
-              srcSet={mediaCollection.items as ResponsiveImage[]}
-            />
-          ) : mediaCollection.items[0].__typename === 'Video' ||
-            (mediaCollection.items[0] as Video).desktopVideoCollection ? (
-            <VideoPlayer
-              playsinline
-              loop
-              autoPlay
-              controls={false}
-              poster={(mediaCollection.items[0] as Video).posterImage.url}
-              src={mediaCollection.items[0] as Video}
+              srcSet={mediaCollection.items as (ResponsiveImage | Video)[]}
             />
           ) : (
-            <Image srcSet={mediaCollection.items[0] as ResponsiveImage} />
+            <AspectRatio ratio={333 / 188}>
+              <Media {...mediaCollection.items[0]} />
+            </AspectRatio>
           )}
           {/* TODO :: Change into next/link ? */}
           {link && (

@@ -28,10 +28,11 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
   const { src } = useContentfulMediaSrc(props)
 
   console.log(props)
+  console.log(src)
 
   return (
     <>
-      {props?.__typename === 'Video' ? (
+      {props?.__typename === 'Video' || props?.desktopVideoCollection ? (
         <VideoPlayer poster={(props as VideoMediaProps).posterImage.url} src={props as VideoMediaProps} {...props} />
       ) : props?.__typename === 'ResponsiveImage' ? (
         <Image
@@ -39,6 +40,9 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
           src={getContentfulImageSrc(src)}
           alt={(props as ImageMediaProps).altText}
           aria-hidden={Boolean((props as ImageMediaProps).altText)}
+          fill={true}
+          // width={150}
+          // height={200}
           {...props}
         />
       ) : null}

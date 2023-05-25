@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './Slideshow.module.scss'
 import { bemify } from '@utils/bemify'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Image } from '@components/image'
 import { Arrow } from '@components/arrow'
-import { ResponsiveImage } from '@customTypes/cms'
+import { ResponsiveImage, Video } from '@customTypes/cms'
+import { Media } from '@components/media'
 const bem = bemify(styles, 'slideshow')
 
 interface SlideshowProps {
   automaticallyChange: boolean
   showIndicators: boolean
   showArrows: boolean
-  srcSet: ResponsiveImage[]
+  srcSet: (ResponsiveImage | Video)[]
   showCaption?: boolean
 }
 
@@ -23,6 +23,7 @@ export const Slideshow = ({
   showCaption = false,
 }: SlideshowProps) => {
   const [[count, direction], setCount] = useState([0, 0])
+  const ref = useRef<HTMLDivElement>(null)
 
   const variants = {
     enter: (direction: number) => {
@@ -45,10 +46,19 @@ export const Slideshow = ({
 
   useEffect(() => {
     let interval: NodeJS.Timer
-    if (automaticallyChange) {
-      interval = setInterval(() => {
-        setCount((c) => (c[0] + 1 === srcSet.length ? [0, 1] : [c[0] + 1, 1]))
-      }, 3000)
+    if (automaticallyChange && ref.current) {
+      if (srcSet[count].__typename === 'Video') {
+        const v2 = ref.current.querySelector(`video`)
+        v2?.play()
+
+        v2!.onended = () => {
+          setCount((c) => (c[0] + 1 === srcSet.length ? [0, 1] : [c[0] + 1, 1]))
+        }
+      } else {
+        interval = setInterval(() => {
+          setCount((c) => (c[0] + 1 === srcSet.length ? [0, 1] : [c[0] + 1, 1]))
+        }, 3000)
+      }
     }
 
     return () => {
@@ -56,10 +66,10 @@ export const Slideshow = ({
         clearInterval(interval)
       }
     }
-  }, [automaticallyChange, count])
+  }, [automaticallyChange, ref, count])
 
   return (
-    <div className={styles['slideshow']}>
+    <div ref={ref} className={styles['slideshow']}>
       <div className={bem('imageContainer')}>
         {showArrows && (
           <div
@@ -80,7 +90,7 @@ export const Slideshow = ({
             key={`img-${count}`}
             className={bem('motion')}
           >
-            <Image srcSet={srcSet[count]} />
+            <Media {...srcSet[count]} />
           </motion.div>
         </AnimatePresence>
         {showArrows && (
@@ -92,8 +102,8 @@ export const Slideshow = ({
           </div>
         )}
       </div>
-      <div data-hasCaption={showCaption} className={bem('informationContainer')}>
-        {showCaption && srcSet[count].imageCaption && (
+      <div data-hascaption={showCaption} className={bem('informationContainer')}>
+        {showCaption && (srcSet[count] as ResponsiveImage).imageCaption && (
           <motion.p
             key={`caption-for-image-${count}`}
             initial={{ opacity: 0 }}
@@ -101,7 +111,7 @@ export const Slideshow = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            {srcSet[count].imageCaption}
+            {(srcSet[count] as ResponsiveImage).imageCaption}
           </motion.p>
         )}
         {showIndicators && (
