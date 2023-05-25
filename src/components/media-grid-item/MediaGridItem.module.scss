@@ -23,7 +23,7 @@
     display: inline-block;
     scroll-snap-align: start;
 
-    &[data-isEmpty='true'] {
+    &[data-isempty='true'] {
       display: none;
     }
   }
