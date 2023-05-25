@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from './CaseArchive.module.scss'
 import { bemify } from '@utils/bemify'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
@@ -6,13 +6,14 @@ import { List } from '@components/list'
 import { useQuery } from '@apollo/client'
 import { CASE_ARCHIVE_QUERY } from '@graphql/queries'
 import type { CaseArchiveItem } from '@customTypes/cms'
-import { useInViewEffect } from 'react-hook-inview'
+import Image from 'next/image'
 import { noop } from '@utils/noop'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import * as Filters from '@components/filters'
-import Cursor from '@utils/cursor'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
+import { useResize } from '@hooks/use-resize'
+import { useCustomCursor } from '@hooks/use-custom-cursor'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -94,20 +95,26 @@ export const CaseArchive = () => {
   const [src, setSrc] = useState('dummy/case-thumb-fallback.webp')
   const [sectionHovered, setSectionHovered] = useState(false)
 
-  useEffect(() => {
-    if (!cursorRef.current || isTouchDevice) return
+  const { cursor, effect: cursorEffect } = useCustomCursor(cursorRef, {
+    enabled: !isTouchDevice,
+  })
 
-    const unsubscribe = Cursor.subscribe(cursorRef.current)
-
-    return () => unsubscribe()
-  }, [isTouchDevice])
+  useResize(
+    (e) => {
+      cursor.setLimit(cursorEffect?.id, {
+        x: window.innerWidth * 0.5,
+      })
+    },
+    { wait: 100 }
+  )
 
   return (
     <ContentWrapper className={bem()}>
       <ThemeChangeTrigger theme="light" />
 
+      {/** Custom cursor */}
       <AspectRatio ratio={4 / 3} className={bem('cursor')} ref={cursorRef} data-active={sectionHovered}>
-        <img src={src} alt="" width={200} height={150} aria-hidden="true" />
+        <Image src={src} alt="" width={200} height={150} aria-hidden="true" />
       </AspectRatio>
 
       <div className={bem('header')}>
