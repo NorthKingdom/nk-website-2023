@@ -66,12 +66,7 @@ const Case = (props: CasePageProps) => {
         <link href={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`} rel="canonical" />
       </Head>
       <main className={styles['case']}>
-        <CaseHero
-          client={props.client}
-          caseName={props.title}
-          src={props.componentsCollection?.items[0].heroMedia}
-          isVideoAsset={props.componentsCollection?.items[0].heroMedia.__typename === 'Video'}
-        />
+        <CaseHero client={props.client} caseName={props.title} src={props.componentsCollection?.items[0].heroMedia} />
         <ContentWrapper>
           <ComponentResolver components={props.componentsCollection?.items || []} />
         </ContentWrapper>

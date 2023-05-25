@@ -4,31 +4,19 @@ import { Image } from '@components/image'
 import styles from './CaseHero.module.scss'
 import { bemify } from '@utils/bemify'
 import { Video, ResponsiveImage } from '@customTypes/cms'
+import { Media } from '@components/media'
 const bem = bemify(styles, 'caseHero')
 
 interface CaseHeroProps {
   client: string
   caseName: string
   src: Video | ResponsiveImage
-  isVideoAsset: boolean
 }
 
 export const CaseHero = ({ client, caseName, src, isVideoAsset }: CaseHeroProps) => {
   return (
     <section className={styles['caseHero']}>
-      {isVideoAsset ? (
-        <VideoPlayer
-          controls={false}
-          poster={(src as Video).posterImage.url}
-          src={src as Video}
-          muted={true} //(src as Video).muted}
-          autoPlay={true} //(src as Video).autoPlay}
-          loop={true}
-          playsinline={true}
-        />
-      ) : (
-        <Image srcSet={src as ResponsiveImage} />
-      )}
+      <Media {...src} controls={false} muted={true} autoPlay={true} loop={true} playsinline={true} />
       <div className={styles['caseHero__description']}>
         <p>{client}</p>
         <h1>{caseName}</h1>
