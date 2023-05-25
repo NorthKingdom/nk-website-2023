@@ -120,8 +120,11 @@ export const ImageMarqueeItem = ({ debug = false, ...props }: ImageMarqueeItemPr
     }
   })
 
-  const { src: clientLogoSrc } = useContentfulMediaSrc(props.clientLogo)
-  const { src: relatedImageSrc } = useContentfulMediaSrc(props.relatedImage)
+  const { src: clientLogoSrc } = useContentfulMediaSrc(props.clientLogo, { width: 300, quality: 95 })
+  const { src: relatedImageSrc } = useContentfulMediaSrc(props.relatedImage, {
+    width: 300,
+    quality: 95,
+  })
 
   return (
     <div className={bem('item')}>
