@@ -30,6 +30,8 @@ export const CaseListItem = ({
     thumbnail?.__typename === 'Video'
       ? {
           playsinline: true,
+          autoPlay: true,
+          muted: true,
         }
       : thumbnail?.__typename === 'ResponsiveImage'
       ? {
