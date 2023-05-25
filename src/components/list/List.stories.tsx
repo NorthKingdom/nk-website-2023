@@ -94,6 +94,10 @@ mobile web, mobile apps and native solutions.`,
         },
       ] as ResponsiveImage[],
     },
+    link: {
+      url: '/about',
+      copy: 'Sem mattis View case',
+    },
   },
   {
     header: 'Extended Reality',
@@ -174,15 +178,10 @@ mobile web, mobile apps and native solutions.`,
   },
 ]
 
-const renderStickyItems = ({ mediaCollection, header, description }: (typeof stickyItems)[0]) => (
-  // @ts-ignore
-  <StickyListItem header={header} description={description} mediaCollection={mediaCollection} />
-)
-
 export const StickyItems: Story = {
   args: {
     items: stickyItems,
-    renderItem: renderStickyItems,
+    renderItem: StickyListItem,
   },
 }
 
