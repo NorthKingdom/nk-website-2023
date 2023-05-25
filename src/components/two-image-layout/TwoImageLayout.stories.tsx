@@ -14,23 +14,25 @@ type Story = StoryObj<typeof TwoImageLayout>
 export const Default: Story = {
   args: {
     leftSrcSet: {
+      __typename: 'ResponsiveImage',
       desktopImage: {
-        url: '/dummy/showreelposter.jpg',
+        url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
       },
       mobileImage: {
-        url: '/dummy/showreelposter.jpg',
+        url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
       },
-      altText: 'temp alt',
+      altText: '[EXAMPLE] riot image',
     },
     leftCaption: 'RiotX Arcane Map',
     rightSrcSet: {
+      __typename: 'ResponsiveImage',
       desktopImage: {
-        url: '/dummy/temp-right-riot-img.jpg',
+        url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
       },
       mobileImage: {
-        url: '/dummy/temp-right-riot-img.jpg',
+        url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
       },
-      altText: 'temp alt',
+      altText: '[EXAMPLE] riot image',
     },
 
     rightCaption: 'Gameplay Screens',

@@ -1,8 +1,6 @@
 import React from 'react'
 import styles from './StickyListItem.module.scss'
 import { bemify } from '@utils/bemify'
-import { VideoPlayer } from '@components/video-player'
-import { Image } from '@components/image'
 import { Slideshow } from '@components/slideshow'
 import { AwardItem } from '@components/award-item'
 import { Video, ResponsiveImage, AwardList, Link } from '@customTypes/cms'

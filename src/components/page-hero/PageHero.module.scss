@@ -25,4 +25,17 @@
       margin-bottom: 17px;
     }
   }
+
+  &__imageContainer {
+    height: 66vh;
+    position: relative;
+
+    @include mq($until: desktop) {
+      height: 47vh;
+    }
+  }
+
+  &__image {
+    object-fit: cover;
+  }
 }

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Description } from '@components/description'
 import { VideoPlayer } from '@components/video-player'
-import { Image } from '@components/image'
 import { TwoImageLayout } from '@components/two-image-layout'
 import { CaseMediaGrid } from '@components/case-media-grid'
+import { Media } from '@components/media'
 
 // TODO :: Fix any type here
 interface ComponentResolverProps {
@@ -32,7 +32,11 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
               />
             )
           case 'ResponsiveImage':
-            return <Image key={`case-image-${i}`} srcSet={c} />
+            return (
+              <div style={{ width: `100%`, height: `100vh`, position: `relative` }}>
+                <Media key={`case-image-${i}`} style={{ objectFit: `cover` }} {...c} />
+              </div>
+            )
           case 'TwoImageComponent':
             return (
               <TwoImageLayout

@@ -39,6 +39,5 @@ export const Default: Story = {
         ],
       },
     },
-    isVideoAsset: true,
   },
 }

@@ -1,6 +1,4 @@
 import React from 'react'
-import { VideoPlayer } from '@components/video-player'
-import { Image } from '@components/image'
 import styles from './CaseHero.module.scss'
 import { bemify } from '@utils/bemify'
 import { Video, ResponsiveImage } from '@customTypes/cms'
@@ -13,7 +11,7 @@ interface CaseHeroProps {
   src: Video | ResponsiveImage
 }
 
-export const CaseHero = ({ client, caseName, src, isVideoAsset }: CaseHeroProps) => {
+export const CaseHero = ({ client, caseName, src }: CaseHeroProps) => {
   return (
     <section className={styles['caseHero']}>
       <Media {...src} controls={false} muted={true} autoPlay={true} loop={true} playsinline={true} />

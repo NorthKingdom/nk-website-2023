@@ -17,13 +17,14 @@ export const Default: Story = {
   args: {
     title: 'Be apart of our kingdom',
     srcSet: {
+      __typename: 'ResponsiveImage',
       desktopImage: {
-        url: '/dummy/temp-riot-hero-image.jpg',
+        url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
       },
       mobileImage: {
-        url: '/dummy/temp-riot-hero-image.jpg',
+        url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
       },
-      altText: 'temp alt',
+      altText: '[EXAMPLE] riot image',
     },
   },
 }
