@@ -7,13 +7,26 @@ type Srcset = {
   type: string
 }[]
 
+interface ContentfulMediaSrcImageOptions {
+  format?: 'webp' | 'jpg' | 'png' | 'gif' | 'svg' | 'avif'
+  width?: number
+  height?: number
+  quality?: number
+}
+
+interface ContentfulMediaSrcVideoOptions {}
+
+interface ContentfulMediaSrcOptions extends ContentfulMediaSrcImageOptions, ContentfulMediaSrcVideoOptions {}
+
 /**
  * This hook is used to get the src and srcset for a media object (Video | ResponsiveImage) from Contentful based on the current breakpoint
  * @param {Video | ResponsiveImage} media Video or ResponsiveImage object from Contentful
  * @returns {Object} The location of the event
  */
+
 export const useContentfulMediaSrc = (
-  media: Video | ResponsiveImage
+  media: Video | ResponsiveImage,
+  options: ContentfulMediaSrcOptions = {}
 ): {
   src: string
   srcset: Srcset
@@ -42,10 +55,24 @@ export const useContentfulMediaSrc = (
     const image = media as ResponsiveImage
     const src = isMobileBreakpoint ? image.mobileImage.url : image.desktopImage.url
 
-    // @TODO: image URL transformations here
+    const imageParams: { [key: string]: any } = {
+      q: options.quality ?? '80',
+      fit: 'thumb',
+      fm: options.format ?? 'webp',
+    }
+
+    if (!!options.width) {
+      imageParams.w = options.width
+    }
+
+    if (!!options.height) {
+      imageParams.h = options.height
+    }
+
+    const imageParamsString = new URLSearchParams(imageParams).toString()
 
     return {
-      src,
+      src: `${src}?${imageParamsString}`,
       srcset: [],
     }
   }
