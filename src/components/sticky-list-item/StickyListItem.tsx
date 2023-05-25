@@ -58,6 +58,7 @@ export const StickyListItem = ({
           ) : (
             <Image srcSet={mediaCollection.items[0] as ResponsiveImage} />
           )}
+          {/* TODO :: Change into next/link ? */}
           {link && (
             <a href={link.url} target={'_blank'} className={bem('label')}>
               {link.copy}
