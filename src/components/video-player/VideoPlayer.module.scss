@@ -1,4 +1,25 @@
 .videoPlayer {
   width: 100%;
   height: auto;
+
+  --plyr-color-main: transparent;
+  --plyr-video-control-color: #fff;
+  --plyr-video-control-color-hover: #ffffff60;
+  --plyr-range-fill-background: #fff;
+}
+
+.customIcon {
+  transition: all 0.3s ease;
+
+  svg {
+    fill: white !important;
+    stroke: white !important;
+  }
+
+  &:hover {
+    svg {
+      fill: #ffffff60 !important;
+      stroke: #ffffff60 !important;
+    }
+  }
 }

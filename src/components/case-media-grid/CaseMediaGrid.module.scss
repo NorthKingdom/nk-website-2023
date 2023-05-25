@@ -2,8 +2,10 @@
   width: 100%;
   display: flex;
   height: fit-content;
+  margin-bottom: 20px;
 
   @include mq($until: tablet) {
+    margin-bottom: 100px;
     display: block;
     width: fit-content;
     overflow-x: scroll;

@@ -21,8 +21,10 @@ export const CaseHero = ({ client, caseName, src, isVideoAsset }: CaseHeroProps)
           controls={false}
           poster={(src as Video).posterImage.url}
           src={src as Video}
-          muted={(src as Video).muted}
-          autoPlay={(src as Video).autoPlay}
+          muted={true} //(src as Video).muted}
+          autoPlay={true} //(src as Video).autoPlay}
+          loop={true}
+          playsinline={true}
         />
       ) : (
         <Image srcSet={src as ResponsiveImage} />

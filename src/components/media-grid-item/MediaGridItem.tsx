@@ -14,7 +14,7 @@ interface MediaGridItemProps {
 export const MediaGridItem = ({ item, maxHeight }: MediaGridItemProps) => {
   return (
     <div
-      data-isEmpty={item === undefined || item === null}
+      data-isempty={item === undefined || item === null}
       data-offset={item?.offset}
       style={{ '--maxHeight': `${maxHeight}px` }}
       className={styles['mediaGridItem']}
