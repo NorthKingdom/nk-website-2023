@@ -13,11 +13,12 @@ interface RenderedStyles {
   ty: { previous: number; current: number; amt: number }
 }
 
-interface CursorChild {
+export interface CursorChild {
   id: string
   el: HTMLElement
   bounds: DOMRect
   renderedStyles: RenderedStyles
+  limit: { x?: number; y?: number }
 }
 
 class Cursor {
@@ -63,8 +64,8 @@ class Cursor {
     for (let i = 0; i < this.children.length; i++) {
       const child = this.children[i]
 
-      child.renderedStyles['tx'].current = this.pointer.x - child.bounds.width / 2
-      child.renderedStyles['ty'].current = this.pointer.y - child.bounds.height / 2
+      child.renderedStyles['tx'].current = (child.limit.x ?? this.pointer.x) - child.bounds.width / 2
+      child.renderedStyles['ty'].current = (child.limit.y ?? this.pointer.y) - child.bounds.height / 2
       let key: keyof typeof child.renderedStyles
       for (key in child.renderedStyles) {
         child.renderedStyles[key].previous = lerp(
@@ -78,12 +79,22 @@ class Cursor {
     requestAnimationFrame(this.render)
   }
 
-  subscribe(el: HTMLElement, config: DeepPartial<RenderedStyles> = {}): () => void {
+  subscribe(
+    el: HTMLElement,
+    config: DeepPartial<RenderedStyles> = {}
+  ): {
+    effect: CursorChild
+    unsubscribe: () => void
+  } {
     const id = uuidv4()
-    this.children.push({
+    const child = {
       id,
       el,
       bounds: el.getBoundingClientRect(),
+      limit: {
+        x: undefined,
+        y: undefined,
+      },
       renderedStyles: mergeDeepRight(
         {
           tx: { previous: 0, current: 0, amt: 0.15 },
@@ -91,15 +102,27 @@ class Cursor {
         },
         config
       ),
-    } as CursorChild)
+    } as CursorChild
+    this.children.push(child)
 
-    return () => {
-      this.children = this.children.filter((child) => child.id !== id)
+    return {
+      effect: child,
+      unsubscribe: () => {
+        this.children = this.children.filter((child) => child.id !== id)
+      },
     }
   }
 
+  setLimit(id: string | undefined, { x, y }: { x?: number; y?: number }) {
+    const child = this.children.find((child) => child.id === id)
+    if (!child) return
+    child.limit.x = x
+    child.limit.y = y
+  }
+
   destroy() {
-    window.removeEventListener('mousemove', this.onMove)
+    console.log('destroying cursor')
+    this.removeEventListeners()
   }
 
   _bind(...args: string[]) {

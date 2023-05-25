@@ -98,11 +98,14 @@ div.caseArchive__cursor {
   width: 100%;
 
   &__year {
-    width: 120px;
+    min-width: 100px;
+    width: grid-columns(1);
+    margin-right: var(--grid-gap);
   }
 
   &__projectTitle {
-    width: calc(50% - 120px);
+    width: grid-columns(6);
+    margin-right: var(--grid-gap);
   }
 
   &__vertical {
