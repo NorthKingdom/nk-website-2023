@@ -37,6 +37,36 @@ mobile web, mobile apps and native solutions.`,
   },
 }
 
+export const WithLink: Story = {
+  args: {
+    header: 'Extended Reality',
+    description: `We have over 10 years of experience creating innovative VR/AR solutions for some of 
+the biggest brands in the world on a wide variety of platforms.We've worked with Google, HBO, Disney, McDonalds and more to create cutting
+edge AR/VR on web, mobile web, mobile apps and native solutions. We have over 10 years of experience creating
+innovative VR/AR solutions for some of the biggest brands in the world on a wide variety of platforms.We've worked
+with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web, mobile web, mobile apps and
+native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,
+mobile web, mobile apps and native solutions.`,
+    mediaCollection: {
+      items: [
+        {
+          desktopImage: {
+            url: '/dummy/temp-left-riot-img.jpg',
+          },
+          mobileImage: {
+            url: '/dummy/temp-left-riot-img.jpg',
+          },
+          altText: 'temp alt',
+        },
+      ],
+    },
+    link: {
+      url: '/about',
+      copy: 'Sem mattis View case',
+    },
+  },
+}
+
 export const WithVideo: Story = {
   args: {
     header: 'Extended Reality',

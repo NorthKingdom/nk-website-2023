@@ -5,7 +5,7 @@ import { VideoPlayer } from '@components/video-player'
 import { Image } from '@components/image'
 import { Slideshow } from '@components/slideshow'
 import { AwardItem } from '@components/award-item'
-import { Video, ResponsiveImage, AwardList } from '@customTypes/cms'
+import { Video, ResponsiveImage, AwardList, Link } from '@customTypes/cms'
 import { List } from '@components/list'
 const bem = bemify(styles, 'stickyListItem')
 
@@ -19,6 +19,7 @@ interface StickyListItemProps {
   automaticallyChange?: boolean
   showIndicators?: boolean
   showArrows?: boolean
+  link?: Link
 }
 
 export const StickyListItem = ({
@@ -29,6 +30,7 @@ export const StickyListItem = ({
   automaticallyChange = true,
   showIndicators = false,
   showArrows = false,
+  link,
 }: StickyListItemProps) => {
   console.log(mediaCollection.items[0])
   return (
@@ -55,6 +57,12 @@ export const StickyListItem = ({
             />
           ) : (
             <Image srcSet={mediaCollection.items[0] as ResponsiveImage} />
+          )}
+          {/* TODO :: Change into next/link ? */}
+          {link && (
+            <a href={link.url} target={'_blank'} className={bem('label')}>
+              {link.copy}
+            </a>
           )}
         </div>
       </div>
