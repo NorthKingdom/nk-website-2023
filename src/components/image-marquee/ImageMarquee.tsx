@@ -9,6 +9,7 @@ import type { ImageMarquee as ImageMarqueeData, ImageMarqueeItem as ImageMarquee
 import { useBreakpointUntil } from '@hooks/use-breakpoint'
 const bem = bemify(styles, 'imageMarquee')
 import Image from 'next/image'
+import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
 
 interface ImageMarqueeProps extends ImageMarqueeData {
   height?: number
@@ -118,6 +119,10 @@ export const ImageMarqueeItem = ({ debug = false, ...props }: ImageMarqueeItemPr
       if (revealed) setRevealed(false)
     }
   })
+
+  const { src: clientLogoSrc } = useContentfulMediaSrc(props.clientLogo)
+  const { src: relatedImageSrc } = useContentfulMediaSrc(props.relatedImage)
+
   return (
     <div className={bem('item')}>
       {debug && <div className={bem('debug')}>{Number(props.revealThreshold).toFixed(2)}</div>}
@@ -126,7 +131,7 @@ export const ImageMarqueeItem = ({ debug = false, ...props }: ImageMarqueeItemPr
         className={bem('image')}
         data-revealed={!revealed}
         alt={props.clientName}
-        src={props.clientLogo.desktopImage.url}
+        src={clientLogoSrc}
         width={217}
         height={140}
       />
@@ -135,7 +140,7 @@ export const ImageMarqueeItem = ({ debug = false, ...props }: ImageMarqueeItemPr
         className={bem('image')}
         data-revealed={revealed}
         alt={props.clientName}
-        src={props.relatedImage.desktopImage.url}
+        src={relatedImageSrc}
         width={217}
         height={140}
       />

@@ -27,9 +27,6 @@ interface ImageMediaProps extends ResponsiveImage {
 export const Media = (props: VideoMediaProps | ImageMediaProps) => {
   const { src } = useContentfulMediaSrc(props)
 
-  console.log(props)
-  console.log(src)
-
   return (
     <>
       {props?.__typename === 'Video' || props?.desktopVideoCollection ? (
