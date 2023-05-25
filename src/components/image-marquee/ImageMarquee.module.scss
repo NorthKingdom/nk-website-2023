@@ -36,6 +36,7 @@
   }
 
   &__item {
+    position: relative;
     width: 40vw;
 
     @include mq($from: tablet) {
@@ -43,8 +44,36 @@
     }
   }
 
+  &__debug {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: red;
+  }
+
   &__image {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
     display: block;
     margin: 0 auto;
+    opacity: 1;
+    transition: all 0.25s ease-in-out;
+
+    &[data-revealed='false'] {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0);
+    }
+
+    &[data-revealed='true'] {
+      transition: all 0.35s ease-in-out;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
   }
 }

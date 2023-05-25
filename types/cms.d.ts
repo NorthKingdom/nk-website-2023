@@ -141,15 +141,17 @@ export interface FeaturedVideo {
   video: Video
 }
 
+export interface ImageMarqueeItem {
+  clientName: string
+  clientLogo: ResponsiveImage
+  relatedImage: ResponsiveImage
+}
+
 export interface ImageMarquee {
   __typename: 'ImageMarquee'
   sys: { id: string }
   images: {
-    items: {
-      clientName: string
-      clientLogo: ResponsiveImage
-      relatedImage: ResponsiveImage
-    }[]
+    items: ImageMarqueeItem[]
   }
 }
 

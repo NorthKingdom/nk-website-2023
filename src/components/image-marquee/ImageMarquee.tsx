@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react'
+import { useRef, useState, useMemo } from 'react'
 import styles from './ImageMarquee.module.scss'
 import { bemify } from '@utils/bemify'
 import cx from 'clsx'
-import { motion, useMotionValue } from 'framer-motion'
+import { MotionValue, useMotionValue, useMotionValueEvent } from 'framer-motion'
 import { useOnScroll } from '@hooks/use-on-scroll'
-import { map } from '@utils/math'
-import type { ImageMarquee as ImageMarqueeData } from '@customTypes/cms'
+import { clamp, map } from '@utils/math'
+import type { ImageMarquee as ImageMarqueeData, ImageMarqueeItem as ImageMarqueeItemData } from '@customTypes/cms'
 import { useBreakpointUntil } from '@hooks/use-breakpoint'
 const bem = bemify(styles, 'imageMarquee')
 import Image from 'next/image'
@@ -17,13 +17,13 @@ interface ImageMarqueeProps extends ImageMarqueeData {
 }
 
 export const ImageMarquee = ({ className = '', style = {}, images = { items: [] } }: ImageMarqueeProps) => {
-  const ref = React.useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
   const isMobileBreakpoint = useBreakpointUntil('tablet')
   const progressMotionValue = useMotionValue(0)
 
   useOnScroll(
     ({ progress }) => {
-      progressMotionValue.set(map(progress, 0, 0.66, 0, 1))
+      progressMotionValue.set(clamp(map(progress, 0, 0.66, 0, 1), 0, 1))
     },
     { target: ref }
   )
@@ -68,17 +68,20 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
       <div className={bem('stickyContainer')}>
         {rows.map((row, i) => (
           <div key={i} className={bem('row')}>
-            {row.map((item, j) => (
-              <div key={`${item.clientName}=${i}`} className={bem('item')}>
-                <Image
-                  className={bem('image')}
-                  alt={item.clientName}
-                  src={item.clientLogo.desktopImage.url}
-                  width={217}
-                  height={140}
+            {row.map((item, j) => {
+              const itemIndex = i * row.length + j
+              const revealIndex = (itemIndex % row.length) + i + 1
+              const revealThreshold = revealIndex / (row.length + 2) + i * 0.03
+              return (
+                <ImageMarqueeItem
+                  key={j}
+                  {...item}
+                  scrollProgress={progressMotionValue}
+                  revealThreshold={revealThreshold}
+                  // debug
                 />
-              </div>
-            ))}
+              )
+            })}
           </div>
         ))}
 
@@ -94,6 +97,48 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
           }}
         ></motion.div> */}
       </div>
+    </div>
+  )
+}
+
+interface ImageMarqueeItemProps extends ImageMarqueeItemData {
+  scrollProgress: MotionValue
+  revealThreshold: number
+  debug?: boolean
+}
+
+export const ImageMarqueeItem = ({ debug = false, ...props }: ImageMarqueeItemProps) => {
+  const [revealed, setRevealed] = useState(false)
+  const { revealThreshold } = props
+
+  useMotionValueEvent(props.scrollProgress, 'change', (latest) => {
+    if (latest > revealThreshold) {
+      if (!revealed) setRevealed(true)
+    } else {
+      if (revealed) setRevealed(false)
+    }
+  })
+  return (
+    <div className={bem('item')}>
+      {debug && <div className={bem('debug')}>{Number(props.revealThreshold).toFixed(2)}</div>}
+      {/* logo */}
+      <Image
+        className={bem('image')}
+        data-revealed={!revealed}
+        alt={props.clientName}
+        src={props.clientLogo.desktopImage.url}
+        width={217}
+        height={140}
+      />
+      {/* related image */}
+      <Image
+        className={bem('image')}
+        data-revealed={revealed}
+        alt={props.clientName}
+        src={props.relatedImage.desktopImage.url}
+        width={217}
+        height={140}
+      />
     </div>
   )
 }
