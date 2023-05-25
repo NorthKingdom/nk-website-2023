@@ -10,8 +10,9 @@
 
 @font-face {
   font-family: 'FKGroteskNeue-Bold';
-  src: url('/fonts/FKGroteskNeue/otf/FKGroteskNeue-Bold.woff2'), url('/fonts/FKGroteskNeue/ttf/FKGroteskNeue-Bold.woff'),
-    url('/fonts/FKGroteskNeue/woff/FKGroteskNeue-Bold.ttf'), url('/fonts/FKGroteskNeue/woff2/FKGroteskNeue-Bold.otf');
+  src: url('/fonts/FKGroteskNeue/woff2/FKGroteskNeue-Bold.woff2'),
+    url('/fonts/FKGroteskNeue/woff/FKGroteskNeue-Bold.woff'), url('/fonts/FKGroteskNeue/ttf/FKGroteskNeue-Bold.ttf'),
+    url('/fonts/FKGroteskNeue/otf/FKGroteskNeue-Bold.otf');
   font-style: bold;
   font-weight: 700;
   font-display: swap;

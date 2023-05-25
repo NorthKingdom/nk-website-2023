@@ -22,9 +22,9 @@ const Home = (props: HomePage) => {
   return (
     <>
       <Head>
-        <title>NK Website 2023</title>
+        <title>North Kingdom Website</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/shield.ico" />
       </Head>
       {(props.sections.items ?? []).map((section) => (
         <HomePageSectionResolver key={section.sys.id} {...section} />
