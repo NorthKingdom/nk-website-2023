@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useReducer, useRef, useState } from 'react'
 import styles from './CaseArchive.module.scss'
 import { bemify } from '@utils/bemify'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
@@ -16,8 +16,7 @@ import { useResize } from '@hooks/use-resize'
 import { useCustomCursor } from '@hooks/use-custom-cursor'
 import { useBreakpointUntil } from '@hooks/use-breakpoint'
 import { useOnScroll } from '@hooks/use-on-scroll'
-import { useScroll } from 'framer-motion'
-import { useGlobalStateStore } from '@store'
+import * as Select from '@components/select'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -127,7 +126,7 @@ export const CaseArchive = () => {
 
   const caseArchiveHeaderRef = useRef<HTMLDivElement>(null)
   const filtersContainerRef = useRef<HTMLDivElement>(null)
-  const [filtersAreSticky, setFiltersAreSticky] = useState(false)
+  const [filtersDisplayMode, toggleFiltersDisplayMode] = useReducer((s) => (s === 'list' ? 'dropdown' : 'list'), 'list')
   const [filtersContainerHeight, setFiltersContainerHeight] = useState(20)
 
   useResize(
@@ -137,18 +136,20 @@ export const CaseArchive = () => {
     { wait: 0 }
   )
 
-  const THRESHOLD = 0.93
+  const FILTERS_STICKY_THRESHOLD = 0.93
 
   useOnScroll(
     ({ progress }) => {
-      if (progress >= THRESHOLD && !filtersAreSticky) {
-        setFiltersAreSticky(true)
-      } else if (progress < THRESHOLD && filtersAreSticky) {
-        setFiltersAreSticky(false)
+      if (progress >= FILTERS_STICKY_THRESHOLD && filtersDisplayMode === 'list') {
+        toggleFiltersDisplayMode()
+      } else if (progress < FILTERS_STICKY_THRESHOLD && filtersDisplayMode === 'dropdown') {
+        toggleFiltersDisplayMode()
       }
     },
     { target: caseArchiveHeaderRef }
   )
+
+  const FILTERS_DROPDOWN_ITEMS = [...FILTERS].filter((f) => f !== filter).sort((a, b) => a.length - b.length)
 
   return (
     <ContentWrapper className={bem()}>
@@ -170,18 +171,34 @@ export const CaseArchive = () => {
           '--filters-container-height': `${filtersContainerHeight}px`,
         }}
       >
-        <Filters.Root
-          defaultValue={filter}
-          onValueChange={setFilter}
-          className={bem('filters')}
-          data-is-sticky={filtersAreSticky}
-        >
-          {FILTERS.map((f) => (
-            <Filters.Item key={f} value={f} className={bem('filterItem')}>
-              {f}
-            </Filters.Item>
-          ))}
-        </Filters.Root>
+        {filtersDisplayMode === 'list' && (
+          <Filters.Root
+            defaultValue={filter}
+            onValueChange={setFilter}
+            className={bem('filters')}
+            // data-is-sticky={filtersAreSticky}
+          >
+            {FILTERS.map((f) => (
+              <Filters.Item key={f} value={f} className={bem('filterItem')}>
+                {f}
+              </Filters.Item>
+            ))}
+          </Filters.Root>
+        )}
+        {filtersDisplayMode === 'dropdown' && (
+          <Select.Root
+            defaultValue={filter}
+            onValueChange={setFilter}
+            // className={bem('filters')}
+            // data-is-sticky={filtersAreSticky}
+          >
+            {FILTERS_DROPDOWN_ITEMS.map((f) => (
+              <Select.Item key={f} value={f}>
+                {f}
+              </Select.Item>
+            ))}
+          </Select.Root>
+        )}
       </div>
 
       <CustomCursorImageContext.Provider value={{ setSrc }}>
