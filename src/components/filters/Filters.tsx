@@ -1,7 +1,7 @@
 import { noop } from '@utils/noop'
 import cx from 'clsx'
 import styles from './Filters.module.scss'
-import { ForwardedRef, RefObject, createContext, forwardRef, useContext, useState } from 'react'
+import { ForwardedRef, createContext, forwardRef, useContext, useState } from 'react'
 
 interface FilterRootProps {
   style?: React.CSSProperties
@@ -23,14 +23,14 @@ const FilterContext = createContext<{
 
 export const Root = forwardRef(
   (
-    { className = '', style = {}, defaultValue, onValueChange = noop, children }: FilterRootProps,
+    { className = '', style = {}, defaultValue, onValueChange = noop, children, ...props }: FilterRootProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const [value, setValue] = useState<string>(defaultValue)
 
     return (
       <FilterContext.Provider value={{ value, setValue, onValueChange }}>
-        <div className={className} style={style} ref={ref}>
+        <div className={className} style={style} ref={ref} {...props}>
           {children}
         </div>
       </FilterContext.Provider>

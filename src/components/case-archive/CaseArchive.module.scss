@@ -22,18 +22,60 @@
   &__header {
     margin-bottom: 40px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @include mq($from: tablet) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
 
     & > * {
       flex-shrink: 0;
     }
   }
 
-  &__filterRoot {
+  &__filtersContainer {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+    position: sticky;
+    top: 85px;
+    z-index: 10;
+    --case-archive-title-size: 44px;
+    --margin-top: 0px;
+
+    @include mq($from: tablet) {
+      justify-content: flex-end;
+      --margin-top: calc(var(--filters-container-height) * -1 - var(--case-archive-title-size) * 0.2);
+      margin-top: var(--margin-top);
+      margin-bottom: calc(var(--margin-top) * -1);
+    }
+
+    @include mq($from: desktop) {
+      --margin-top: calc(var(--filters-container-height) * -1 - var(--case-archive-title-size) * 0.15);
+    }
+
+    @include mq($from: desktop) {
+      --case-archive-title-size: calc(44px + 178 * ((100vw - 850px) / 1714));
+    }
+  }
+
+  &__filters {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
+    background: white;
+    // border: 1px solid red;
+    // border-radius: 50px;
+    // padding: 0 10px;
+
+    &[data-is-sticky='true'] {
+      background: var(--color-black-25);
+    }
 
     & > * {
       margin-right: 10px;
@@ -98,18 +140,40 @@ div.caseArchive__cursor {
   width: 100%;
 
   &__year {
-    min-width: 100px;
-    width: grid-columns(1);
+    width: 60px;
     margin-right: var(--grid-gap);
+
+    @include mq($from: tablet) {
+      width: grid-columns(1);
+      min-width: 100px;
+    }
+  }
+
+  &__projectInfo {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+
+    @include mq($from: tablet) {
+      flex-direction: row;
+    }
   }
 
   &__projectTitle {
-    width: grid-columns(6);
     margin-right: var(--grid-gap);
+
+    @include mq($from: tablet) {
+      width: grid-columns(6);
+    }
   }
 
   &__vertical {
     text-transform: capitalize;
+    color: var(--color-black-60);
+
+    @include mq($from: tablet) {
+      color: inherit;
+    }
   }
 
   &__link {

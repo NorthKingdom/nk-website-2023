@@ -14,6 +14,10 @@ import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 import { useResize } from '@hooks/use-resize'
 import { useCustomCursor } from '@hooks/use-custom-cursor'
+import { useBreakpointUntil } from '@hooks/use-breakpoint'
+import { useOnScroll } from '@hooks/use-on-scroll'
+import { useScroll } from 'framer-motion'
+import { useGlobalStateStore } from '@store'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -33,6 +37,7 @@ const CustomCursorImageContext = React.createContext<{
 
 interface CaseArchiveItemProps extends CaseArchiveItem {
   index: number
+  mobile: boolean
 }
 
 const IMAGE_POOL = ['dummy/case-thumb-fallback.webp', 'dummy/temp-left-riot-img.jpg', 'dummy/temp-right-riot-img.jpg']
@@ -45,8 +50,19 @@ const CaseArchiveItem = (props: CaseArchiveItemProps) => {
   return (
     <div className={bemItem()} onMouseOver={() => setSrc(src)}>
       <p className={bemItem('year')}>{projectYear}</p>
-      <h2 className={bemItem('projectTitle')}>{props.title}</h2>
-      <p className={bemItem('vertical')}>{props.vertical}</p>
+
+      {props.mobile ? (
+        <div className={bemItem('projectInfo')}>
+          <h2 className={bemItem('projectTitle')}>{props.title}</h2>
+          <p className={bemItem('vertical')}>{props.vertical}</p>
+        </div>
+      ) : (
+        <>
+          <h2 className={bemItem('projectTitle')}>{props.title}</h2>
+          <p className={bemItem('vertical')}>{props.vertical}</p>
+        </>
+      )}
+
       {!!props.projectLink && (
         <a className={bemItem('link')} href={props.projectLink} target="_blank" rel="noopener">
           ↗
@@ -62,6 +78,7 @@ const CaseArchiveItem = (props: CaseArchiveItemProps) => {
 export const CaseArchive = () => {
   const cursorRef = useRef<HTMLDivElement>(null)
   const isTouchDevice = useIsTouchDevice()
+  const isMobileBreakpoint = useBreakpointUntil('tablet')
   const [filter, setFilter] = React.useState(FILTERS[0])
   const { data, previousData, loading, error, fetchMore } = useQuery(CASE_ARCHIVE_QUERY, {
     variables: {
@@ -108,6 +125,31 @@ export const CaseArchive = () => {
     { wait: 100 }
   )
 
+  const caseArchiveHeaderRef = useRef<HTMLDivElement>(null)
+  const filtersContainerRef = useRef<HTMLDivElement>(null)
+  const [filtersAreSticky, setFiltersAreSticky] = useState(false)
+  const [filtersContainerHeight, setFiltersContainerHeight] = useState(20)
+
+  useResize(
+    () => {
+      filtersContainerRef.current && setFiltersContainerHeight(filtersContainerRef.current.offsetHeight)
+    },
+    { wait: 0 }
+  )
+
+  const THRESHOLD = 0.93
+
+  useOnScroll(
+    ({ progress }) => {
+      if (progress >= THRESHOLD && !filtersAreSticky) {
+        setFiltersAreSticky(true)
+      } else if (progress < THRESHOLD && filtersAreSticky) {
+        setFiltersAreSticky(false)
+      }
+    },
+    { target: caseArchiveHeaderRef }
+  )
+
   return (
     <ContentWrapper className={bem()}>
       <ThemeChangeTrigger theme="light" />
@@ -117,9 +159,23 @@ export const CaseArchive = () => {
         <Image src={src} alt="" width={200} height={150} aria-hidden="true" />
       </AspectRatio>
 
-      <div className={bem('header')}>
-        <h2 className={bem('title')}>Archive</h2>
-        <Filters.Root defaultValue={filter} onValueChange={setFilter} className={bem('filterRoot')}>
+      {/* <div className={bem('header')}> */}
+      <h2 className={bem('title')} ref={caseArchiveHeaderRef}>
+        Archive
+      </h2>
+      <div
+        ref={filtersContainerRef}
+        className={bem('filtersContainer')}
+        style={{
+          '--filters-container-height': `${filtersContainerHeight}px`,
+        }}
+      >
+        <Filters.Root
+          defaultValue={filter}
+          onValueChange={setFilter}
+          className={bem('filters')}
+          data-is-sticky={filtersAreSticky}
+        >
           {FILTERS.map((f) => (
             <Filters.Item key={f} value={f} className={bem('filterItem')}>
               {f}
@@ -132,7 +188,7 @@ export const CaseArchive = () => {
         <List
           items={caseArchiveData.items.map((item: any, i: number) => ({ ...item, index: i }))}
           id={(item) => item.sys.id}
-          renderItem={CaseArchiveItem}
+          renderItem={(props) => <CaseArchiveItem mobile={isMobileBreakpoint} {...props} />}
           onMouseEnter={() => {
             if (isTouchDevice) return
             setSectionHovered(true)
