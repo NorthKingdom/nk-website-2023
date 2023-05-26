@@ -1,6 +1,29 @@
 .select {
+  $block: &;
+  --color-fg: var(--color-black);
+  --color-bg: var(--color-white);
+  --color-fg-inverted: var(--color-white);
+  --color-bg-inverted: var(--color-black);
+
   &__currentValue,
   &__item {
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 80px;
+    padding: 8px 16px;
+    color: var(--color-fg);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-fg);
+    border-radius: 32px;
+    transition: color 0.2s, background-color 0.2s;
+  }
+
+  &__currentValue {
+    #{$block}[data-is-open='true'] & {
+      color: var(--color-fg-inverted);
+      background-color: var(--color-bg-inverted);
+    }
   }
 }

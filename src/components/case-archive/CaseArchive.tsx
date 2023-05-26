@@ -17,6 +17,8 @@ import { useCustomCursor } from '@hooks/use-custom-cursor'
 import { useBreakpointUntil } from '@hooks/use-breakpoint'
 import { useOnScroll } from '@hooks/use-on-scroll'
 import * as Select from '@components/select'
+import { AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -171,34 +173,43 @@ export const CaseArchive = () => {
           '--filters-container-height': `${filtersContainerHeight}px`,
         }}
       >
-        {filtersDisplayMode === 'list' && (
-          <Filters.Root
-            defaultValue={filter}
-            onValueChange={setFilter}
-            className={bem('filters')}
-            // data-is-sticky={filtersAreSticky}
-          >
-            {FILTERS.map((f) => (
-              <Filters.Item key={f} value={f} className={bem('filterItem')}>
-                {f}
-              </Filters.Item>
-            ))}
-          </Filters.Root>
-        )}
-        {filtersDisplayMode === 'dropdown' && (
-          <Select.Root
-            defaultValue={filter}
-            onValueChange={setFilter}
-            // className={bem('filters')}
-            // data-is-sticky={filtersAreSticky}
-          >
-            {FILTERS_DROPDOWN_ITEMS.map((f) => (
-              <Select.Item key={f} value={f}>
-                {f}
-              </Select.Item>
-            ))}
-          </Select.Root>
-        )}
+        <AnimatePresence mode="popLayout">
+          {filtersDisplayMode === 'list' && (
+            <motion.div
+              key="list"
+              initial={{ opacity: 0, x: '50%' }}
+              animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+              exit={{ opacity: 0, x: '50%' }}
+              transition={{ duration: 0.3 }}
+            >
+              <Filters.Root defaultValue={filter} onValueChange={setFilter} className={bem('filtersList')}>
+                {FILTERS.map((f, i, list) => (
+                  <Filters.Item key={f} value={f} className={bem('filtersListItem')}>
+                    {f}
+                    {i < list.length - 1 && ','}
+                  </Filters.Item>
+                ))}
+              </Filters.Root>
+            </motion.div>
+          )}
+          {filtersDisplayMode === 'dropdown' && (
+            <motion.div
+              key="dropdown"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, transition: { delay: 0.2 } }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Select.Root defaultValue={filter} onValueChange={setFilter} className={bem('filtersDropdown')}>
+                {FILTERS_DROPDOWN_ITEMS.map((f) => (
+                  <Select.Item key={f} value={f} className={bem('filtersDropdownItem')}>
+                    {f}
+                  </Select.Item>
+                ))}
+              </Select.Root>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <CustomCursorImageContext.Provider value={{ setSrc }}>

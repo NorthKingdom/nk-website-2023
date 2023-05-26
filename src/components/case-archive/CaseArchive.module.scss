@@ -64,7 +64,7 @@
     }
   }
 
-  &__filters {
+  &__filtersList {
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -86,10 +86,20 @@
     }
   }
 
-  &__filterItem {
-    &[data-active='true'] {
+  &__filtersListItem {
+    text-transform: capitalize;
+    &[data-active='false'] {
       text-decoration: underline;
     }
+  }
+
+  &__filtersDropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  &__filtersDropdownItem {
   }
 
   &__fetchMoreButton {
