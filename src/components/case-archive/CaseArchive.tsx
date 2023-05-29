@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, useState } from 'react'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
 import styles from './CaseArchive.module.scss'
 import { bemify } from '@utils/bemify'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
@@ -19,6 +19,7 @@ import { useOnScroll } from '@hooks/use-on-scroll'
 import * as Select from '@components/select'
 import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion'
+import { useGlobalStateStore } from '@store'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -96,10 +97,19 @@ const CaseArchiveItem = (props: CaseArchiveItemProps) => {
  * Case archive component.
  */
 export const CaseArchive = () => {
+  const lenis = useGlobalStateStore((state) => state.lenis)
   const cursorRef = useRef<HTMLDivElement>(null)
   const isTouchDevice = useIsTouchDevice()
   const isMobileBreakpoint = useBreakpointUntil('tablet')
-  const [filter, setFilter] = React.useState(FILTERS[0])
+
+  const [{ filter, previousFilter }, setFilter] = useReducer(
+    (state: { filter: string; previousFilter: string }, newFilter: string) => ({
+      filter: newFilter,
+      previousFilter: state.filter,
+    }),
+    { filter: FILTERS[0], previousFilter: FILTERS[0] } as { filter: string; previousFilter: string }
+  )
+
   const { data, previousData, loading, error, fetchMore } = useQuery(CASE_ARCHIVE_QUERY, {
     variables: {
       skip: 0,
@@ -147,22 +157,35 @@ export const CaseArchive = () => {
 
   const caseArchiveHeaderRef = useRef<HTMLDivElement>(null)
   const filtersContainerRef = useRef<HTMLDivElement>(null)
-  const [filtersDisplayMode, toggleFiltersDisplayMode] = useReducer((s) => (s === 'list' ? 'dropdown' : 'list'), 'list')
+  const autoScrolling = useRef(false)
+  const [filtersDisplayMode, setFilterDisplayMode] = useState('list')
 
   const FILTERS_STICKY_THRESHOLD = 0.93
 
   useOnScroll(
     ({ progress }) => {
+      if (autoScrolling.current) return
       if (progress >= FILTERS_STICKY_THRESHOLD && filtersDisplayMode === 'list') {
-        toggleFiltersDisplayMode()
+        setFilterDisplayMode('dropdown')
       } else if (progress < FILTERS_STICKY_THRESHOLD && filtersDisplayMode === 'dropdown') {
-        toggleFiltersDisplayMode()
+        setFilterDisplayMode('list')
       }
     },
     { target: caseArchiveHeaderRef }
   )
 
   const FILTERS_DROPDOWN_ITEMS = [...FILTERS].filter((f) => f !== filter).sort((a, b) => a.length - b.length)
+
+  useEffect(() => {
+    if (!lenis || !caseArchiveHeaderRef.current || filter === previousFilter) return
+
+    autoScrolling.current = true
+
+    setTimeout(() => {
+      setFilterDisplayMode('list')
+      lenis.scrollTo(caseArchiveHeaderRef.current, { onComplete: () => (autoScrolling.current = false) })
+    }, 50)
+  }, [filter, lenis, previousFilter])
 
   return (
     <ContentWrapper className={bem()}>
