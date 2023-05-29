@@ -11,7 +11,6 @@ interface JobListItemProps {
 }
 
 export const JobListItem = ({ title, locations, url, description }: JobListItemProps) => {
-  console.log(locations)
   return (
     <div className={styles['jobListItem']}>
       <div className={bem('topRow')}>

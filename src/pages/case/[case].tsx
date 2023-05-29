@@ -10,30 +10,31 @@ import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 
 const Case = (props: CasePageProps) => {
   return (
-    <>
-      <Head>
-        <title>{`North Kingdom | ${props.title}`}</title>
-        <meta property="og:title" content={`North Kingdom | ${props.title}`} key="ogtitle" />
-        <meta name="twitter:title" content={`North Kingdom | ${props.title}`} key="twittertitle" />
+    props.componentsCollection?.items.length > 0 && (
+      <>
+        <Head>
+          <title>{`North Kingdom | ${props.title}`}</title>
+          <meta property="og:title" content={`North Kingdom | ${props.title}`} key="ogtitle" />
+          <meta name="twitter:title" content={`North Kingdom | ${props.title}`} key="twittertitle" />
 
-        <meta
-          name="description"
-          content={props.slides && props.slides.length > 1 ? props.slides[1].solution || props.slides[1].copy : null}
-          key="description"
-        />
+          <meta
+            name="description"
+            content={props.slides && props.slides.length > 1 ? props.slides[1].solution || props.slides[1].copy : null}
+            key="description"
+          />
 
-        <meta
-          property="og:description"
-          content={props.slides && props.slides.length > 1 ? props.slides[1].solution || props.slides[1].copy : null}
-          key="ogdescription"
-        />
-        <meta
-          name="twitter:description"
-          content={props.slides && props.slides.length > 1 ? props.slides[1].solution || props.slides[1].copy : null}
-          key="twitterdescription"
-        />
-        {/* TODO :: Add back in an OG image for the Case */}
-        {/* 
+          <meta
+            property="og:description"
+            content={props.slides && props.slides.length > 1 ? props.slides[1].solution || props.slides[1].copy : null}
+            key="ogdescription"
+          />
+          <meta
+            name="twitter:description"
+            content={props.slides && props.slides.length > 1 ? props.slides[1].solution || props.slides[1].copy : null}
+            key="twitterdescription"
+          />
+          {/* TODO :: Add back in an OG image for the Case */}
+          {/* 
         <meta
           property="og:image"
           content={`${
@@ -57,25 +58,26 @@ const Case = (props: CasePageProps) => {
           key="twitterimage"
         /> */}
 
-        <meta
-          content={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`}
-          property="og:url"
-          key="ogurl"
-        />
-        <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
-        <link href={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`} rel="canonical" />
-      </Head>
-      <main className={styles['case']}>
-        <CaseHero
-          client={props.client}
-          caseName={props.title}
-          src={(props.componentsCollection?.items[0] as CaseHeroType).heroMedia}
-        />
-        <ContentWrapper>
-          <ComponentResolver components={props.componentsCollection?.items || []} />
-        </ContentWrapper>
-      </main>
-    </>
+          <meta
+            content={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`}
+            property="og:url"
+            key="ogurl"
+          />
+          <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
+          <link href={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`} rel="canonical" />
+        </Head>
+        <main className={styles['case']}>
+          <CaseHero
+            client={props.client}
+            caseName={props.title}
+            src={(props.componentsCollection?.items[0] as CaseHeroType).heroMedia}
+          />
+          <ContentWrapper>
+            <ComponentResolver components={props.componentsCollection?.items || []} />
+          </ContentWrapper>
+        </main>
+      </>
+    )
   )
 }
 
