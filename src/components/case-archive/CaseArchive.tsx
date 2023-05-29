@@ -23,7 +23,20 @@ import { motion } from 'framer-motion'
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
 
+// @TODO: decide
 const FILTERS = ['all', 'gaming', 'entertainment']
+
+const DROPDOWN_ANIMATION = {
+  initial: { opacity: 0, x: -20 },
+  animate: { opacity: 1, x: 0, transition: { delay: 0.2, staggerChildren: 0.3 } },
+  exit: { opacity: 0, x: -20 },
+}
+
+const DROPDOWN_ITEM_ANIMATION = {
+  initial: { opacity: 0, x: -20 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -20 },
+}
 
 /**
  * Custom cursor image context.
@@ -197,14 +210,21 @@ export const CaseArchive = () => {
           {filtersDisplayMode === 'dropdown' && (
             <motion.div
               key="dropdown"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              variants={DROPDOWN_ANIMATION}
+              // initial={{ opacity: 0, x: -20 }}
+              // animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+              // exit={{ opacity: 0, x: -20 }}
+              // transition={{ duration: 0.25, ease: 'easeInOut' }}
             >
               <Select.Root defaultValue={filter} onValueChange={setFilter} className={bem('filtersDropdown')}>
                 {FILTERS_DROPDOWN_ITEMS.map((f) => (
-                  <Select.Item key={f} value={f} className={bem('filtersDropdownItem')}>
+                  <Select.Item
+                    key={f}
+                    value={f}
+                    className={bem('filtersDropdownItem')}
+                    as={motion.div}
+                    variants={DROPDOWN_ITEM_ANIMATION}
+                  >
                     {f}
                   </Select.Item>
                 ))}

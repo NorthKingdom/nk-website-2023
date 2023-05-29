@@ -1,7 +1,7 @@
 import styles from './Select.module.scss'
 import { noop } from '@utils/noop'
 import cx from 'clsx'
-import { ForwardedRef, ReactNode, createContext, forwardRef, useContext, useState } from 'react'
+import { ForwardedRef, createContext, forwardRef, useContext, useState } from 'react'
 
 interface SelectRootProps {
   style?: React.CSSProperties
@@ -53,11 +53,23 @@ interface SelectItemProps {
   style?: React.CSSProperties
   disabled?: boolean
   className?: string
+  animated?: boolean
+  as?: React.ElementType
+  [key: string]: any
 }
 
 export const Item = forwardRef(
   (
-    { className = '', style = {}, value, children, disabled = false, ...props }: SelectItemProps,
+    {
+      className = '',
+      style = {},
+      value,
+      children,
+      disabled = false,
+      as = 'div',
+      animated = false,
+      ...props
+    }: SelectItemProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { setValue, setIsOpen, onValueChange } = useContext(SelectContext)
@@ -69,8 +81,10 @@ export const Item = forwardRef(
       onValueChange(value)
     }
 
+    const Tag = as
+
     return (
-      <div
+      <Tag
         ref={ref}
         className={cx(styles['select__item'], className)}
         style={style}
@@ -80,7 +94,7 @@ export const Item = forwardRef(
         {...props}
       >
         {children}
-      </div>
+      </Tag>
     )
   }
 )
