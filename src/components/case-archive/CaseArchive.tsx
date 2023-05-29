@@ -133,7 +133,9 @@ export const CaseArchive = () => {
 
   useResize(
     () => {
-      filtersContainerRef.current && setFiltersContainerHeight(filtersContainerRef.current.offsetHeight)
+      filtersContainerRef.current &&
+        filtersDisplayMode === 'list' &&
+        setFiltersContainerHeight(filtersContainerRef.current.offsetHeight)
     },
     { wait: 0 }
   )
@@ -177,10 +179,10 @@ export const CaseArchive = () => {
           {filtersDisplayMode === 'list' && (
             <motion.div
               key="list"
-              initial={{ opacity: 0, x: '50%' }}
-              animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-              exit={{ opacity: 0, x: '50%' }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, x: '10%' }}
+              animate={{ opacity: 1, x: 0, transition: { delay: 0.2, duration: 0.15, ease: 'easeOut' } }}
+              exit={{ opacity: 0, x: '40%', transition: { duration: 0.15, ease: 'easeIn' } }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
             >
               <Filters.Root defaultValue={filter} onValueChange={setFilter} className={bem('filtersList')}>
                 {FILTERS.map((f, i, list) => (
@@ -196,9 +198,9 @@ export const CaseArchive = () => {
             <motion.div
               key="dropdown"
               initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, transition: { delay: 0.2 } }}
+              animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
               exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
             >
               <Select.Root defaultValue={filter} onValueChange={setFilter} className={bem('filtersDropdown')}>
                 {FILTERS_DROPDOWN_ITEMS.map((f) => (

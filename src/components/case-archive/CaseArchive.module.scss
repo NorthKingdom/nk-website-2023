@@ -45,6 +45,7 @@
     position: sticky;
     top: 85px;
     z-index: 10;
+    // border: 1px solid red;
     --case-archive-title-size: 44px;
     --margin-top: 0px;
 
@@ -97,6 +98,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    height: 56px;
+
+    & > * {
+      user-select: none;
+    }
   }
 
   &__filtersDropdownItem {
