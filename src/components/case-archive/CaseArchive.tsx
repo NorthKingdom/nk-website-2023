@@ -26,12 +26,11 @@ const bemItem = bemify(styles, 'caseArchiveItem')
 // @TODO: decide
 const FILTERS = ['all', 'gaming', 'entertainment']
 
-const FILTERS_ANIMATION = {
-  initial: { opacity: 0, x: '10%' },
-  animate: { opacity: 1, x: 0, transition: { delay: 0.2, duration: 0.15, ease: 'easeOut' } },
-  exit: { opacity: 0, x: '40%', transition: { duration: 0.15, ease: 'easeIn' } },
-  transition: { duration: 0.25, ease: 'easeInOut' },
-}
+// const FILTERS_ANIMATION = {
+//   initial: { opacity: 0, x: '10%' },
+//   animate: { opacity: 1, x: 0, transition: { delay: 0.2, duration: 0.15, ease: 'easeOut' } },
+//   exit: { opacity: 0, x: '40%', transition: { duration: 0.5, ease: 'easeIn' } },
+// }
 
 const DROPDOWN_ANIMATION = {
   initial: { opacity: 0, x: -20 },
@@ -174,14 +173,20 @@ export const CaseArchive = () => {
         <Image src={src} alt="" width={200} height={150} aria-hidden="true" />
       </AspectRatio>
 
-      {/* <div className={bem('header')}> */}
       <h2 className={bem('title')} ref={caseArchiveHeaderRef}>
         Archive
       </h2>
       <div ref={filtersContainerRef} className={bem('filtersContainer')}>
         <AnimatePresence mode="popLayout">
           {filtersDisplayMode === 'list' && (
-            <motion.div key="list" variants={FILTERS_ANIMATION} className={bem('filtersListContainer')}>
+            <motion.div
+              key="list"
+              initial={{ opacity: 0, x: '10%' }}
+              animate={{ opacity: 1, x: 0, transition: { delay: 0.2, duration: 0.15, ease: 'easeOut' } }}
+              exit={{ opacity: 0, x: 50, transition: { duration: 0.1, ease: 'easeIn' } }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              className={bem('filtersListContainer')}
+            >
               <Filters.Root defaultValue={filter} onValueChange={setFilter} className={bem('filtersList')}>
                 {FILTERS.map((f, i, list) => (
                   <Filters.Item key={f} value={f} className={bem('filtersListItem')}>
