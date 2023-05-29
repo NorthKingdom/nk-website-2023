@@ -15,16 +15,23 @@
     margin-left: auto;
     margin-right: auto;
 
+    --color-text: var(--color-black);
+    --color-hover: var(--color-black-60);
+
+    color: var(--color-text);
+
     &[data-theme='light'] {
-      color: var(--color-black);
+      --color-text: var(--color-black);
+      --color-hover: var(--color-black-60);
     }
 
     &[data-theme='dark'] {
-      color: var(--color-white);
+      --color-text: var(--color-white);
+      --color-hover: var(--color-white-60);
     }
 
     @include hover {
-      color: var(--color-black-50);
+      color: var(--color-hover);
     }
   }
 }
