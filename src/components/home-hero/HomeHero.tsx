@@ -11,6 +11,8 @@ import { CloseButton } from '@components/close-button'
 import { useInView } from 'framer-motion'
 import { useWebglSceneStore } from './webgl-scene/WebglScene.store'
 import type { HomeHero as HomeHeroProps } from '@customTypes/cms'
+import { Description } from '@components/description'
+import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 const bem = bemify(styles, 'homeHero')
 const videoModalBem = bemify(styles, 'videoPlayerModal')
 
@@ -41,55 +43,56 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProp
   const showVideoPlayer = shieldState === 'expanding' || shieldState === 'expanded'
 
   return (
-    <div
-      className={bem()}
-      ref={$container}
-      style={{
-        position: 'relative',
-        height: height100vh,
-        width: ' 100%',
-        backgroundColor: 'var(--color-black)',
-        touchAction: 'auto',
-      }}
-    >
-      <WebglScene
-        onLoaded={() => setLoaded(true)}
-        visible={isInView}
+    <>
+      <div
+        className={bem()}
+        ref={$container}
         style={{
           position: 'relative',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          pointerEvents: 'none',
+          height: height100vh,
+          width: ' 100%',
+          backgroundColor: 'var(--color-black)',
+          touchAction: 'auto',
         }}
-        shieldVideo={shieldVideo}
-        eventSource={$container}
-        eventPrefix="client"
-      />
-
-      <h1 className={bem('title')} aria-label="North Kingdom">
-        North Kingdom
-      </h1>
-
-      <h2 className={bem('statement')} data-visible={loaded && !showVideoPlayer}>
-        {statement}
-      </h2>
-
-      <Modal visible={showVideoPlayer} animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.4 } }}>
-        <CloseButton
-          className={videoModalBem('closeButton')}
-          onClick={() => dispatchShieldStateEvent({ type: 'COLLAPSE' })}
+      >
+        <WebglScene
+          onLoaded={() => setLoaded(true)}
+          visible={isInView}
+          style={{
+            position: 'relative',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none',
+          }}
+          shieldVideo={shieldVideo}
+          eventSource={$container}
+          eventPrefix="client"
         />
-        <VideoPlayer
-          className={videoModalBem('videoPlayer')}
-          autoPlay={true}
-          playsinline={true}
-          src={showreelVideo}
-          controls={false}
-          poster=""
-        />
-      </Modal>
-    </div>
+
+        <h1 className={bem('title')} aria-label="North Kingdom">
+          North Kingdom
+        </h1>
+
+        <Modal visible={showVideoPlayer} animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.4 } }}>
+          <CloseButton
+            className={videoModalBem('closeButton')}
+            onClick={() => dispatchShieldStateEvent({ type: 'COLLAPSE' })}
+          />
+          <VideoPlayer
+            className={videoModalBem('videoPlayer')}
+            autoPlay={true}
+            playsinline={true}
+            src={showreelVideo}
+            controls={false}
+            poster=""
+          />
+        </Modal>
+      </div>
+      <ContentWrapper className={bem('statement')}>
+        <Description copyLeft={statement} theme="dark" />
+      </ContentWrapper>
+    </>
   )
 }

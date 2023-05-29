@@ -17,6 +17,7 @@ export const ContentWrapper = React.forwardRef<HTMLDivElement, Props>(
     return (
       <div
         ref={ref}
+        aria-hidden={true}
         className={cx(styles.contentWrapper, className, bem('', { fullscreen }))}
         style={style}
         data-debug={debug}
