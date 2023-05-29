@@ -8,7 +8,7 @@ import { CaseList } from '@components/case-list'
 import type {
   HomeHero as HomeHeroData,
   ImageMarquee as ImageMarqueeData,
-  Description as DescriptionData,
+  DescriptionComponent as DescriptionData,
 } from '@customTypes/cms'
 import { ImageMarquee } from '@components/image-marquee'
 

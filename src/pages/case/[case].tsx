@@ -7,6 +7,7 @@ import { CaseHero } from '@components/case-hero'
 import { ComponentResolver } from '@components/component-resolver'
 import styles from './Case.module.scss'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
+import { NextCasePreview } from '@components/next-case-preview'
 
 const Case = (props: CasePageProps) => {
   return (
@@ -75,6 +76,7 @@ const Case = (props: CasePageProps) => {
           <ContentWrapper>
             <ComponentResolver components={props.componentsCollection?.items || []} />
           </ContentWrapper>
+          <NextCasePreview caseTitle="title" client="client" src="/dummy/landscape-media.jpg" />
         </main>
       </>
     )
@@ -88,7 +90,12 @@ export async function getStaticProps({ params, draftMode = false }: { params: { 
     })
     .then((res) => res.data)
     .then((data) => {
-      return { props: data.caseCollection.items[0] }
+      return {
+        props: {
+          hideFooter: true,
+          ...data.caseCollection.items[0],
+        },
+      }
     })
 }
 

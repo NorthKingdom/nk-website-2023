@@ -12,6 +12,7 @@ import { useNextCssRemovalPrevention } from '@hooks/use-next-css-removal-prevent
 interface LayoutProps {
   children: React.ReactNode
   footerTheme?: 'light' | 'dark'
+  hideFooter?: boolean
 }
 
 const variants = {
@@ -28,7 +29,7 @@ const variants = {
   },
 }
 
-export function Layout({ children, footerTheme }: LayoutProps) {
+export function Layout({ children, hideFooter = false, footerTheme }: LayoutProps) {
   const router = useRouter()
   const rafId = useRef<number>()
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -113,7 +114,7 @@ export function Layout({ children, footerTheme }: LayoutProps) {
               transition={{ duration: 0.1 }}
             >
               <div className={styles.content}>{children}</div>
-              <Footer theme={footerTheme} />
+              {!hideFooter && <Footer theme={footerTheme} />}
             </motion.main>
           </AnimatePresence>
         </div>
