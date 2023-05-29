@@ -189,7 +189,7 @@ export const CaseArchive = () => {
   }, [filter, lenis, previousFilter])
 
   return (
-    <ContentWrapper className={bem()}>
+    <ContentWrapper className={bem()} data-can-fetch-more={canFetchMore}>
       <ThemeChangeTrigger theme="light" />
 
       {/** Custom cursor */}
