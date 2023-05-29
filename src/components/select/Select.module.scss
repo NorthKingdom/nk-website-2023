@@ -21,9 +21,19 @@
   }
 
   &__currentValue {
+    text-transform: capitalize;
+
     #{$block}[data-is-open='true'] & {
       color: var(--color-fg-inverted);
       background-color: var(--color-bg-inverted);
+    }
+  }
+
+  &__currentValueIcon {
+    margin-left: 8px;
+    // adjust for visual glitch when icon changes from "+" to "-"
+    #{$block}[data-is-open='true'] & {
+      transform: translateY(-2px);
     }
   }
 }

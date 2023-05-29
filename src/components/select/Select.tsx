@@ -37,7 +37,7 @@ export const Root = forwardRef(
       <SelectContext.Provider value={{ value, setValue, isOpen, setIsOpen, onValueChange }}>
         <div className={cx(styles['select'], className)} style={style} ref={ref} {...props} data-is-open={isOpen}>
           <div onClick={() => setIsOpen((s) => !s)} className={styles['select__currentValue']}>
-            {value}
+            <span>{value}</span> <span className={styles['select__currentValueIcon']}>{isOpen ? '–' : '+'}</span>
           </div>
           {isOpen && <>{children}</>}
         </div>
