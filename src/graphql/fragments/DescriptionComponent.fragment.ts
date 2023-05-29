@@ -5,8 +5,8 @@ export const DESCRIPTION = gql`
     sys {
       id
     }
-    copy
-    header
+    copyLeft
+    copyRight
     link {
       copy
       url
