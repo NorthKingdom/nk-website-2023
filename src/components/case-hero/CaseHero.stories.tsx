@@ -29,6 +29,7 @@ export const Default: Story = {
         items: [
           {
             url: '/dummy/showreel23.mp4',
+            contentType: 'video/mp4',
           },
         ],
       },
@@ -36,6 +37,7 @@ export const Default: Story = {
         items: [
           {
             url: '/dummy/showreel23.mp4',
+            contentType: 'video/mp4',
           },
         ],
       },
