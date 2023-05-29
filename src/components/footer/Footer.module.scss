@@ -2,11 +2,13 @@
   &[data-theme='dark'] {
     --_footer-color-bg: var(--color-black);
     --_footer-color-fg: var(--color-white);
+    --_footer-color-fg-60: var(--color-white-60);
   }
 
   &[data-theme='light'] {
     --_footer-color-bg: var(--color-white);
     --_footer-color-fg: var(--color-black);
+    --_footer-color-fg-60: var(--color-black-60);
   }
 
   $block: &;
@@ -41,22 +43,27 @@
     }
   }
 
-  &__content {
-    font-family: monospace;
-    margin-top: 20px;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 175%;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    display: grid;
-    grid-gap: 20px;
-    pointer-events: auto;
-    grid-template-columns: repeat(4, 1fr);
+  &__wordmarkContainer {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
 
-    @include mq($from: desktop-small) {
-      grid-template-columns: repeat(12, 1fr);
+  &__content {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    pointer-events: auto;
+    @include BodyRegular;
+    color: var(--_footer-color-fg-60);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    @include mq($until: tablet) {
+      position: relative;
+      flex-direction: row-reverse;
     }
 
     #{$block}[data-theme='dark'] & {
@@ -68,17 +75,12 @@
     }
   }
 
-  &__noa {
-    grid-column: 1 / span 2;
-  }
-
-  &__links {
-    display: flex;
-    flex-direction: column;
-    grid-column: 3 / span 2;
-
-    @include mq($from: desktop-small) {
-      grid-column: 4 / span 2;
-    }
+  &__scrollTopCta {
+    @include BodyRegular;
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: var(--_footer-color-fg-60);
   }
 }
