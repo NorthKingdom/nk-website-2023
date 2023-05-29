@@ -25,7 +25,9 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
           case 'CaseHero':
             return
           case 'DescriptionComponent':
-            return <Description key={`case-description-${i}`} copy={c.copy} header={c.header} link={c.link} />
+            return (
+              <Description key={`case-description-${i}`} copyLeft={c.copyLeft} copyRight={c.copyRight} link={c.link} />
+            )
           case 'Video':
             return (
               <VideoPlayer

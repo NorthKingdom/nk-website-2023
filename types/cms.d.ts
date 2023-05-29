@@ -7,12 +7,10 @@ export interface PageHero {
 
 export interface DescriptionComponent {
   __typename: 'DescriptionComponent'
-  header: string
-  copy: string
-  link?: {
-    copy: string
-    url: string
-  }
+  sys: { id: string }
+  copyLeft?: string
+  copyRight?: string
+  link?: Link
 }
 
 export interface MediaGridItem {
@@ -178,14 +176,6 @@ export interface ImageMarquee {
   images: {
     items: ImageMarqueeItem[]
   }
-}
-
-export interface Description {
-  __typename: 'DescriptionComponent'
-  sys: { id: string }
-  header?: string
-  copy: string
-  link?: Link
 }
 
 export type HomePageSection = HomeHero | FeaturedCases | FeaturedVideo | ImageMarquee | Description

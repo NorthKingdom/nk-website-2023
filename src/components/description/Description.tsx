@@ -4,9 +4,9 @@ import { bemify } from '@utils/bemify'
 const bem = bemify(styles, 'description')
 
 interface DescriptionProps {
-  header?: string
   headerSize?: 'large' | 'small'
-  copy: string
+  copyLeft?: string
+  copyRight?: string
   link?: {
     copy: string
     url: string
@@ -14,12 +14,12 @@ interface DescriptionProps {
   theme?: 'light' | 'dark'
 }
 
-export const Description = ({ header, headerSize, copy, link, theme = 'light' }: DescriptionProps) => {
+export const Description = ({ copyLeft, headerSize, copyRight, link, theme = 'light' }: DescriptionProps) => {
   return (
     <section className={styles['description']} data-theme={theme}>
-      <div className={bem('left')}>{header && <h2 data-size={headerSize}>{header}</h2>}</div>
+      <div className={bem('left')}>{copyLeft && <h2 data-size={headerSize}>{copyLeft}</h2>}</div>
       <div className={bem('right')}>
-        <p>{copy}</p>
+        <p>{copyRight}</p>
         {link && <a href={link.url}>{link.copy}</a>}
       </div>
     </section>
