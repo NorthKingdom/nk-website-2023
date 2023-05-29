@@ -1,7 +1,7 @@
 .caseArchive {
   position: relative;
   padding-top: 84px;
-  padding-bottom: 84px;
+  // padding-bottom: 84px;
   background-color: var(--color-white);
   color: var(--color-black);
   min-height: 100vh;
@@ -127,25 +127,6 @@
 
   &__filtersDropdownItem {
     margin-top: 8px;
-  }
-
-  &__fetchMoreButton {
-    display: block;
-    @include BodyRegular;
-    background: none;
-    border: none;
-    text-decoration: underline;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 40px;
-
-    @include mq($from: tablet) {
-      margin-top: 80px;
-    }
-
-    @include hover {
-      color: var(--color-black-50);
-    }
   }
 }
 
