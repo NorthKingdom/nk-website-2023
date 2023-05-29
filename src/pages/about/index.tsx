@@ -13,7 +13,6 @@ import { bemify } from '@utils/bemify'
 import { InfiniteGrid } from '@components/infinite-grid'
 const bem = bemify(styles, 'about')
 
-// TODO :: Fix about page props from any
 const About = ({ hero, list, gridImagesCollection }: AboutPageProps) => {
   return (
     <>

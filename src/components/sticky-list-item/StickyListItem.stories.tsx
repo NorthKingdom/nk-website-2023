@@ -24,6 +24,7 @@ mobile web, mobile apps and native solutions.`,
     mediaCollection: {
       items: [
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
             url: '/dummy/temp-left-riot-img.jpg',
           },
@@ -50,6 +51,7 @@ mobile web, mobile apps and native solutions.`,
     mediaCollection: {
       items: [
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
             url: '/dummy/temp-left-riot-img.jpg',
           },
@@ -85,6 +87,7 @@ mobile web, mobile apps and native solutions.`,
           desktopVideoCollection: {
             items: [
               {
+                contentType: 'video/mp4',
                 url: 'https://videos.ctfassets.net/vwfx2n1hr26h/3zwFhCKXIUlzPlzSaTGxO8/1ad6725f1c0344b6a65a6ecb364270a1/MasterClash-Cover.mp4',
               },
             ],
@@ -179,6 +182,7 @@ mobile web, mobile apps and native solutions.`,
           desktopVideoCollection: {
             items: [
               {
+                contentType: 'video/mp4',
                 url: 'https://videos.ctfassets.net/vwfx2n1hr26h/3zwFhCKXIUlzPlzSaTGxO8/1ad6725f1c0344b6a65a6ecb364270a1/MasterClash-Cover.mp4',
               },
             ],
@@ -235,6 +239,7 @@ mobile web, mobile apps and native solutions.`,
     mediaCollection: {
       items: [
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
             url: '/dummy/temp-left-riot-img.jpg',
           },
@@ -244,6 +249,7 @@ mobile web, mobile apps and native solutions.`,
           altText: 'temp alt',
         },
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
             url: '/dummy/temp-right-riot-img.jpg',
           },
@@ -253,6 +259,7 @@ mobile web, mobile apps and native solutions.`,
           altText: 'temp alt',
         },
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
             url: '/dummy/temp-riot-right-image-2.jpg',
           },

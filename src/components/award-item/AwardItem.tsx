@@ -9,7 +9,6 @@ interface AwardItemProps {
 }
 
 // For the rendering of Awards List
-// TODO :: Move to its own component
 export const AwardItem = ({ awardName, count }: AwardItemProps) => {
   return (
     <div className={styles['awardItem']}>

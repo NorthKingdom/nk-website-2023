@@ -8,9 +8,9 @@ const bem = bemify(styles, 'twoImageLayout')
 
 interface TwoImageLayoutProps {
   leftSrcSet: ResponsiveImage
-  leftCaption: string
+  leftCaption?: string
   rightSrcSet: ResponsiveImage
-  rightCaption: string
+  rightCaption?: string
   leftAlt: string
   rightAlt: string
 }
@@ -22,13 +22,13 @@ export const TwoImageLayout = ({ leftSrcSet, leftCaption, rightSrcSet, rightCapt
         <AspectRatio ratio={690 / 517}>
           <Media {...leftSrcSet} className={bem('image')} />
         </AspectRatio>
-        <p className={bem('caption')}>{leftCaption}</p>
+        {leftCaption && <p className={bem('caption')}>{leftCaption}</p>}
       </div>
       <div className={`${bem('container')} ${bem('container--right')}`}>
         <AspectRatio ratio={690 / 517}>
           <Media {...rightSrcSet} className={bem('image')} />
         </AspectRatio>
-        <p className={bem('caption')}>{rightCaption}</p>
+        {rightCaption && <p className={bem('caption')}>{rightCaption}</p>}
       </div>
     </section>
   )

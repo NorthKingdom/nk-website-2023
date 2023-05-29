@@ -18,6 +18,7 @@ export const Default: Story = {
     client: 'Riot',
     caseName: 'RiotX Arcane',
     src: {
+      __typename: 'Video',
       muted: true,
       autoPlay: true,
       loop: true,
@@ -28,6 +29,7 @@ export const Default: Story = {
         items: [
           {
             url: '/dummy/showreel23.mp4',
+            contentType: 'video/mp4',
           },
         ],
       },
@@ -35,6 +37,7 @@ export const Default: Story = {
         items: [
           {
             url: '/dummy/showreel23.mp4',
+            contentType: 'video/mp4',
           },
         ],
       },

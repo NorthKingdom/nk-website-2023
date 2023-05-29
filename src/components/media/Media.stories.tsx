@@ -3,7 +3,7 @@ import { Media } from './Media'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 
 const VIDEO_PAYLOAD = {
-  __typename: 'Video',
+  __typename: 'Video' as const,
   sys: {
     __typename: 'Sys',
     id: '1D7wC2kTOZdbBMe9WdZzXw',
@@ -13,6 +13,7 @@ const VIDEO_PAYLOAD = {
     items: [
       {
         __typename: 'Asset',
+        contentType: 'video/mp4',
         url: 'https://videos.ctfassets.net/vwfx2n1hr26h/3zwFhCKXIUlzPlzSaTGxO8/1ad6725f1c0344b6a65a6ecb364270a1/MasterClash-Cover.mp4',
       },
     ],
@@ -31,7 +32,7 @@ const VIDEO_PAYLOAD = {
 }
 
 const IMAGE_PAYLOAD = {
-  __typename: 'ResponsiveImage',
+  __typename: 'ResponsiveImage' as const,
   desktopImage: {
     __typename: 'Asset',
     url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
@@ -40,7 +41,7 @@ const IMAGE_PAYLOAD = {
     __typename: 'Asset',
     url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
   },
-  imageCaption: null,
+  imageCaption: undefined,
   altText: '[EXAMPLE] riot image',
 }
 

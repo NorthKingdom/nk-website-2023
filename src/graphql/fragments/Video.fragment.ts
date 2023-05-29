@@ -9,11 +9,13 @@ export const VIDEO = gql`
     desktopVideoCollection(limit: 5) {
       items {
         url
+        contentType
       }
     }
     mobileVideoCollection(limit: 5) {
       items {
         url
+        contentType
       }
     }
     posterImage {

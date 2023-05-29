@@ -4,10 +4,17 @@ import { VideoPlayer } from '@components/video-player'
 import { TwoImageLayout } from '@components/two-image-layout'
 import { CaseMediaGrid } from '@components/case-media-grid'
 import { Media } from '@components/media'
+import {
+  CaseHero,
+  DescriptionComponent,
+  ResponsiveImage,
+  Video,
+  TwoImageComponent,
+  CaseMediaGrid as CaseMediaGridType,
+} from '@customTypes/cms'
 
-// TODO :: Fix any type here
 interface ComponentResolverProps {
-  components: any[]
+  components: (CaseHero | DescriptionComponent | ResponsiveImage | Video | TwoImageComponent | CaseMediaGridType)[]
 }
 
 export const ComponentResolver = ({ components }: ComponentResolverProps) => {
