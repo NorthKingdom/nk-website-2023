@@ -37,31 +37,49 @@
   }
 
   &__filtersContainer {
+    --height: 50px;
+    --case-archive-title-size: 44px;
+    --margin-top: 0px;
+
     display: flex;
-    justify-content: flex-start;
+    // flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
     margin-top: 16px;
     margin-bottom: 16px;
     width: 100%;
     position: sticky;
     top: 85px;
     z-index: 10;
+    height: var(--height);
+
     // border: 1px solid red;
-    --case-archive-title-size: 44px;
-    --margin-top: 0px;
+
+    @include mq($until: tablet) {
+      --height: 37px;
+      align-items: center;
+    }
 
     @include mq($from: tablet) {
       justify-content: flex-end;
-      --margin-top: calc(var(--filters-container-height) * -1 - var(--case-archive-title-size) * 0.2);
+      --margin-top: calc(var(--height) * -1 - var(--case-archive-title-size) * 0.2);
       margin-top: var(--margin-top);
       margin-bottom: calc(var(--margin-top) * -1);
     }
 
     @include mq($from: desktop) {
-      --margin-top: calc(var(--filters-container-height) * -1 - var(--case-archive-title-size) * 0.15);
+      --margin-top: calc(var(--height) * -1 - var(--case-archive-title-size) * 0.15);
     }
 
     @include mq($from: desktop) {
       --case-archive-title-size: calc(44px + 178 * ((100vw - 850px) / 1714));
+    }
+  }
+
+  &__filtersListContainer {
+    @include mq($until: tablet) {
+      width: 100%;
+      margin-right: auto;
     }
   }
 
@@ -70,9 +88,7 @@
     display: flex;
     flex-wrap: wrap;
     background: white;
-    // border: 1px solid red;
-    // border-radius: 50px;
-    // padding: 0 10px;
+    margin-right: auto;
 
     &[data-is-sticky='true'] {
       background: var(--color-black-25);
@@ -98,7 +114,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    height: 56px;
+    height: 37px;
+
+    @include mq($from: tablet) {
+      height: 60px;
+    }
 
     & > * {
       user-select: none;

@@ -9,6 +9,8 @@ interface FilterRootProps {
   defaultValue: string
   onValueChange: (value: string) => void
   children: React.ReactNode
+  as?: React.ElementType
+  [key: string]: any
 }
 
 const FilterContext = createContext<{
@@ -23,16 +25,18 @@ const FilterContext = createContext<{
 
 export const Root = forwardRef(
   (
-    { className = '', style = {}, defaultValue, onValueChange = noop, children, ...props }: FilterRootProps,
+    { className = '', style = {}, defaultValue, onValueChange = noop, as = 'div', children, ...props }: FilterRootProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const [value, setValue] = useState<string>(defaultValue)
 
+    const Tag = as
+
     return (
       <FilterContext.Provider value={{ value, setValue, onValueChange }}>
-        <div className={className} style={style} ref={ref} {...props}>
+        <Tag className={className} style={style} ref={ref} {...props}>
           {children}
-        </div>
+        </Tag>
       </FilterContext.Provider>
     )
   }
@@ -45,15 +49,19 @@ interface FilterItemProps {
   style?: React.CSSProperties
   disabled?: boolean
   className?: string
+  as?: React.ElementType
+  [key: string]: any
 }
 
 export const Item = forwardRef(
   (
-    { className = '', style = {}, value, children, disabled = false, ...props }: FilterItemProps,
+    { className = '', style = {}, value, children, disabled = false, as = 'div', ...props }: FilterItemProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const { setValue, onValueChange } = useContext(FilterContext)
     const isActive = value === useContext(FilterContext).value
+
+    const Tag = as
 
     const handleClick = () => {
       setValue(value)
@@ -61,7 +69,7 @@ export const Item = forwardRef(
     }
 
     return (
-      <div
+      <Tag
         ref={ref}
         className={cx(styles.filterItem, className)}
         style={style}
@@ -71,7 +79,7 @@ export const Item = forwardRef(
         {...props}
       >
         {children}
-      </div>
+      </Tag>
     )
   }
 )

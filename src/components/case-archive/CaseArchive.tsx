@@ -26,6 +26,13 @@ const bemItem = bemify(styles, 'caseArchiveItem')
 // @TODO: decide
 const FILTERS = ['all', 'gaming', 'entertainment']
 
+const FILTERS_ANIMATION = {
+  initial: { opacity: 0, x: '10%' },
+  animate: { opacity: 1, x: 0, transition: { delay: 0.2, duration: 0.15, ease: 'easeOut' } },
+  exit: { opacity: 0, x: '40%', transition: { duration: 0.15, ease: 'easeIn' } },
+  transition: { duration: 0.25, ease: 'easeInOut' },
+}
+
 const DROPDOWN_ANIMATION = {
   initial: { opacity: 0, x: -20 },
   animate: { opacity: 1, x: 0, transition: { delay: 0.2, staggerChildren: 0.3 } },
@@ -142,16 +149,6 @@ export const CaseArchive = () => {
   const caseArchiveHeaderRef = useRef<HTMLDivElement>(null)
   const filtersContainerRef = useRef<HTMLDivElement>(null)
   const [filtersDisplayMode, toggleFiltersDisplayMode] = useReducer((s) => (s === 'list' ? 'dropdown' : 'list'), 'list')
-  const [filtersContainerHeight, setFiltersContainerHeight] = useState(20)
-
-  useResize(
-    () => {
-      filtersContainerRef.current &&
-        filtersDisplayMode === 'list' &&
-        setFiltersContainerHeight(filtersContainerRef.current.offsetHeight)
-    },
-    { wait: 0 }
-  )
 
   const FILTERS_STICKY_THRESHOLD = 0.93
 
@@ -181,22 +178,10 @@ export const CaseArchive = () => {
       <h2 className={bem('title')} ref={caseArchiveHeaderRef}>
         Archive
       </h2>
-      <div
-        ref={filtersContainerRef}
-        className={bem('filtersContainer')}
-        style={{
-          '--filters-container-height': `${filtersContainerHeight}px`,
-        }}
-      >
+      <div ref={filtersContainerRef} className={bem('filtersContainer')}>
         <AnimatePresence mode="popLayout">
           {filtersDisplayMode === 'list' && (
-            <motion.div
-              key="list"
-              initial={{ opacity: 0, x: '10%' }}
-              animate={{ opacity: 1, x: 0, transition: { delay: 0.2, duration: 0.15, ease: 'easeOut' } }}
-              exit={{ opacity: 0, x: '40%', transition: { duration: 0.15, ease: 'easeIn' } }}
-              transition={{ duration: 0.25, ease: 'easeInOut' }}
-            >
+            <motion.div key="list" variants={FILTERS_ANIMATION} className={bem('filtersListContainer')}>
               <Filters.Root defaultValue={filter} onValueChange={setFilter} className={bem('filtersList')}>
                 {FILTERS.map((f, i, list) => (
                   <Filters.Item key={f} value={f} className={bem('filtersListItem')}>
@@ -208,14 +193,7 @@ export const CaseArchive = () => {
             </motion.div>
           )}
           {filtersDisplayMode === 'dropdown' && (
-            <motion.div
-              key="dropdown"
-              variants={DROPDOWN_ANIMATION}
-              // initial={{ opacity: 0, x: -20 }}
-              // animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-              // exit={{ opacity: 0, x: -20 }}
-              // transition={{ duration: 0.25, ease: 'easeInOut' }}
-            >
+            <motion.div key="dropdown" variants={DROPDOWN_ANIMATION} className={bem('filtersDropdownContainer')}>
               <Select.Root defaultValue={filter} onValueChange={setFilter} className={bem('filtersDropdown')}>
                 {FILTERS_DROPDOWN_ITEMS.map((f) => (
                   <Select.Item
