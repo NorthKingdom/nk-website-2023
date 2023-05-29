@@ -20,6 +20,7 @@ import * as Select from '@components/select'
 import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { useGlobalStateStore } from '@store'
+import { LoadMore } from '@components/load-more'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -256,11 +257,7 @@ export const CaseArchive = () => {
         />
       </CustomCursorImageContext.Provider>
 
-      {canFetchMore && (
-        <button className={bem('fetchMoreButton')} disabled={loading} onClick={_fetchMore}>
-          Fetch More
-        </button>
-      )}
+      {canFetchMore && <LoadMore disabled={loading} onClick={_fetchMore} />}
     </ContentWrapper>
   )
 }
