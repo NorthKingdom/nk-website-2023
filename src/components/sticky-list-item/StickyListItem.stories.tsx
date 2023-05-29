@@ -24,6 +24,7 @@ mobile web, mobile apps and native solutions.`,
     mediaCollection: {
       items: [
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
             url: '/dummy/temp-left-riot-img.jpg',
           },
@@ -50,6 +51,7 @@ mobile web, mobile apps and native solutions.`,
     mediaCollection: {
       items: [
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
             url: '/dummy/temp-left-riot-img.jpg',
           },
@@ -235,6 +237,7 @@ mobile web, mobile apps and native solutions.`,
     mediaCollection: {
       items: [
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
             url: '/dummy/temp-left-riot-img.jpg',
           },
@@ -244,6 +247,7 @@ mobile web, mobile apps and native solutions.`,
           altText: 'temp alt',
         },
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
             url: '/dummy/temp-right-riot-img.jpg',
           },
@@ -253,6 +257,7 @@ mobile web, mobile apps and native solutions.`,
           altText: 'temp alt',
         },
         {
+          __typename: 'ResponsiveImage',
           desktopImage: {
             url: '/dummy/temp-riot-right-image-2.jpg',
           },

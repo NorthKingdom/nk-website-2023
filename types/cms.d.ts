@@ -6,6 +6,7 @@ export interface PageHero {
 }
 
 export interface DescriptionComponent {
+  __typename: 'DescriptionComponent'
   header: string
   copy: string
   link?: {
@@ -42,14 +43,16 @@ export interface Video {
   desktopVideoCollection: {
     items: {
       url: string
+      contentType: string
     }[]
   }
   mobileVideoCollection: {
     items: {
       url: string
+      contentType: string
     }[]
   }
-  __typename?: string
+  __typename: 'Video'
 }
 
 export interface ResponsiveImage {
@@ -61,7 +64,7 @@ export interface ResponsiveImage {
   }
   altText: string
   imageCaption?: string
-  __typename?: string
+  __typename: 'ResponsiveImage'
 }
 
 export interface Award {
@@ -71,6 +74,27 @@ export interface Award {
 
 export interface AwardList {
   awards: Award[]
+}
+
+export interface CaseHero {
+  heroMedia: ResponsiveImage | Video
+  __typename: 'CaseHero'
+}
+
+export interface TwoImageComponent {
+  imageOne: ResponsiveImage
+  imageOneCaption?: string
+  imageTwo: ResponsiveImage
+  imageTwoCaption?: string
+  __typename: 'TwoImageComponent'
+}
+
+export interface CaseMediaGrid {
+  slotOne?: MediaGridItem
+  slotTwo?: MediaGridItem
+  slotThree?: MediaGridItem
+  slotFour?: MediaGridItem
+  __typename: 'CaseMediaGrid'
 }
 
 export interface Case {
@@ -88,8 +112,9 @@ export interface Case {
   readMoreLink: string
   public: boolean
   image?: string
-  // TODO :: Fix this any type!
-  componentsCollection: any
+  componentsCollection: {
+    items: (CaseHero | DescriptionComponent | ResponsiveImage | Video | TwoImageComponent | CaseMediaGrid)[]
+  }
   backgroundColor?: {
     value: string
   }

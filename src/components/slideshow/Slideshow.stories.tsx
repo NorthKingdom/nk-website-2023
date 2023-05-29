@@ -13,6 +13,7 @@ type Story = StoryObj<typeof Slideshow>
 
 const srcSet = [
   {
+    __typename: 'ResponsiveImage' as const,
     desktopImage: {
       url: '/dummy/temp-left-riot-img.jpg',
     },
@@ -23,6 +24,7 @@ const srcSet = [
     imageCaption: 'temp caption 1',
   },
   {
+    __typename: 'ResponsiveImage' as const,
     desktopImage: {
       url: '/dummy/temp-right-riot-img.jpg',
     },
@@ -33,6 +35,7 @@ const srcSet = [
     imageCaption: 'temp caption 2',
   },
   {
+    __typename: 'ResponsiveImage' as const,
     desktopImage: {
       url: '/dummy/temp-riot-right-image-2.jpg',
     },

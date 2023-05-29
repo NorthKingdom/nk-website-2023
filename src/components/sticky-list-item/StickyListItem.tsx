@@ -3,10 +3,11 @@ import styles from './StickyListItem.module.scss'
 import { bemify } from '@utils/bemify'
 import { Slideshow } from '@components/slideshow'
 import { AwardItem } from '@components/award-item'
-import { Video, ResponsiveImage, AwardList, Link } from '@customTypes/cms'
+import { Video, ResponsiveImage, AwardList, Link as LinkType } from '@customTypes/cms'
 import { List } from '@components/list'
 import { Media } from '@components/media'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
+import Link from 'next/link'
 const bem = bemify(styles, 'stickyListItem')
 
 interface StickyListItemProps {
@@ -19,7 +20,7 @@ interface StickyListItemProps {
   automaticallyChange?: boolean
   showIndicators?: boolean
   showArrows?: boolean
-  link?: Link
+  link?: LinkType
 }
 
 export const StickyListItem = ({
@@ -50,11 +51,10 @@ export const StickyListItem = ({
               <Media {...mediaCollection.items[0]} />
             </AspectRatio>
           )}
-          {/* TODO :: Change into next/link ? */}
           {link && (
-            <a href={link.url} target={'_blank'} className={bem('label')}>
+            <Link href={link.url} className={bem('label')}>
               {link.copy}
-            </a>
+            </Link>
           )}
         </div>
       </div>

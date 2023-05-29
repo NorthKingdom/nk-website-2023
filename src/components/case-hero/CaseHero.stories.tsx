@@ -18,6 +18,7 @@ export const Default: Story = {
     client: 'Riot',
     caseName: 'RiotX Arcane',
     src: {
+      __typename: 'Video',
       muted: true,
       autoPlay: true,
       loop: true,

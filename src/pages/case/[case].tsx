@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
-import { Case as CasePageProps } from '@customTypes/cms'
+import { CaseHero as CaseHeroType, Case as CasePageProps } from '@customTypes/cms'
 import { CASE_PAGE_QUERY } from '../../graphql/queries'
 import { CaseHero } from '@components/case-hero'
 import { ComponentResolver } from '@components/component-resolver'
@@ -66,7 +66,11 @@ const Case = (props: CasePageProps) => {
         <link href={`https://www.northkingdom.com/case/${encodeURIComponent(props.slug)}`} rel="canonical" />
       </Head>
       <main className={styles['case']}>
-        <CaseHero client={props.client} caseName={props.title} src={props.componentsCollection?.items[0].heroMedia} />
+        <CaseHero
+          client={props.client}
+          caseName={props.title}
+          src={(props.componentsCollection?.items[0] as CaseHeroType).heroMedia}
+        />
         <ContentWrapper>
           <ComponentResolver components={props.componentsCollection?.items || []} />
         </ContentWrapper>

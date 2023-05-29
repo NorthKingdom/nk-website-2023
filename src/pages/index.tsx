@@ -7,8 +7,6 @@ import { HomeHero } from '@components/home-hero'
 import { CaseList } from '@components/case-list'
 import type {
   HomeHero as HomeHeroData,
-  FeaturedCases as FeaturedCasesData,
-  FeaturedVideo as FeaturedVideoData,
   ImageMarquee as ImageMarqueeData,
   Description as DescriptionData,
 } from '@customTypes/cms'
