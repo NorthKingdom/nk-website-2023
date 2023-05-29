@@ -1,10 +1,13 @@
 .caseArchive {
   position: relative;
   padding-top: 84px;
-  // padding-bottom: 84px;
   background-color: var(--color-white);
   color: var(--color-black);
   min-height: 100vh;
+
+  &[data-can-fetch-more='false'] {
+    padding-bottom: 84px;
+  }
 
   @include notch(var(--color-white));
 
