@@ -17,9 +17,11 @@ export const PageHero = ({ title, srcSet, className }: PageHeroProps) => {
       <div className={bem('titleContainer')}>
         <h1 className={bem('title')}>{title}</h1>
       </div>
-      <div className={bem('imageContainer')}>
-        <Media {...srcSet} className={bem('image')} />
-      </div>
+      {srcSet && (
+        <div className={bem('imageContainer')}>
+          <Media {...srcSet} className={bem('image')} />
+        </div>
+      )}
     </div>
   )
 }
