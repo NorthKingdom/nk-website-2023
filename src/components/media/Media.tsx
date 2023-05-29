@@ -38,8 +38,6 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
           alt={(props as ImageMediaProps).altText}
           aria-hidden={Boolean((props as ImageMediaProps).altText)}
           fill={true}
-          // width={150}
-          // height={200}
           {...props}
         />
       ) : null}
