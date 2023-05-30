@@ -76,7 +76,7 @@ const Case = (props: CasePageProps) => {
           <ContentWrapper>
             <ComponentResolver components={props.componentsCollection?.items || []} />
           </ContentWrapper>
-          <NextCasePreview caseTitle="title" client="client" src="/dummy/landscape-media.jpg" />
+          <NextCasePreview caseTitle="[EXAMPLE] RiotX Arcane" client="RIOT" src="/dummy/landscape-media.jpg" />
         </main>
       </>
     )
