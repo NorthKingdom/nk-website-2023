@@ -34,6 +34,7 @@ export const NextCasePreview = ({ src, caseTitle, client }: NextCasePreviewProps
       console.log(loadingPercentage)
 
       if (!hasRouted.current) {
+        // @ts-ignore
         ref2.current.innerText = loadingPercentage.toString()
 
         if (loadingPercentage >= 100) {
