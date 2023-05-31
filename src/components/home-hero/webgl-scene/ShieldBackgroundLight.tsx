@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { forwardRef, useMemo, useRef } from 'react'
+import { forwardRef, useEffect, useMemo, useRef } from 'react'
 import { shaderMaterial, useTexture } from '@react-three/drei'
 import type { ReactThreeFiber } from '@react-three/fiber'
 import { Uniform, Color } from 'three'
@@ -7,6 +7,7 @@ import { extend, useFrame } from '@react-three/fiber'
 import { mergeRefs } from 'react-merge-refs'
 import shieldBlurVS from './shaders/shield-blur-bg-vs.glsl'
 import shieldBlurFS from './shaders/shield-blur-bg-fs.glsl'
+import { useWebglSceneStore } from './WebglScene.store'
 
 const ShieldBackgroundLightMaterial = shaderMaterial(
   {
@@ -35,6 +36,7 @@ declare global {
 
 export const ShieldBackgroundLight = forwardRef((props: any, ref: React.Ref<THREE.Mesh>) => {
   const $mesh = useRef<THREE.Mesh>(null!)
+  const shieldScaleMotionValue = useWebglSceneStore((state) => state.shieldScaleMotionValue)
   const maskTexture = useTexture('/images/shield-feather-mask-01.png')
 
   const uniforms = useMemo(
@@ -46,6 +48,14 @@ export const ShieldBackgroundLight = forwardRef((props: any, ref: React.Ref<THRE
     }),
     []
   )
+
+  useEffect(() => {
+    if (!shieldScaleMotionValue) return
+    shieldScaleMotionValue.on('change', (v) => {
+      if (!$mesh.current) return
+      $mesh.current.scale.setScalar(v * props.scale)
+    })
+  }, [shieldScaleMotionValue])
 
   useFrame(({ clock }) => {
     if (!$mesh.current) return

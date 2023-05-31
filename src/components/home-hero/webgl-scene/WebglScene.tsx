@@ -54,7 +54,7 @@ export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...pr
         <Effects />
         <ShieldContainer debug={false}>
           <ShieldVideo position-z={0.02} src={videoSrc} visible={true} />
-          <ShieldBackgroundLight scale={2.2} position-z={-0.1} visible={true} />
+          <ShieldBackgroundLight scale={2.2} position-z={-0.1} visible={true} debug={false} />
           <PlayButton onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })} />
           <Lensflare />
         </ShieldContainer>
