@@ -12,6 +12,7 @@ import type { Video } from '@customTypes/cms'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
 import { Lensflare } from './Lensflare'
 
+const Perf = dynamic(() => import('r3f-perf').then((Mod) => Mod.Perf), { ssr: false })
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
 const ShieldVideo = dynamic(() => import('./ShieldVideo').then((Mod) => Mod.ShieldVideo), { ssr: false })
 const ShieldBackgroundLight = dynamic(
@@ -27,6 +28,7 @@ interface WebglSceneProps {
 }
 
 export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...props }: WebglSceneProps) => {
+  const debug = useGlobalStateStore((state) => state.debug)
   const shieldState = useWebglSceneStore((state) => state.shieldState)
   const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
@@ -50,6 +52,7 @@ export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...pr
 
   return (
     <Canvas camera={{ position: [0, 0, 5] }} frameloop={frameloop} {...props}>
+      {debug && <Perf position="top-left" />}
       <Suspense fallback={null}>
         <Effects />
         <ShieldContainer debug={false}>
