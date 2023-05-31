@@ -10,6 +10,7 @@ import { Wordmark } from './Wordmark'
 import { useWebglSceneStore } from './WebglScene.store'
 import type { Video } from '@customTypes/cms'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
+import { Lensflare } from './Lensflare'
 
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
 const ShieldVideo = dynamic(() => import('./ShieldVideo').then((Mod) => Mod.ShieldVideo), { ssr: false })
@@ -52,9 +53,10 @@ export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...pr
       <Suspense fallback={null}>
         <Effects />
         <ShieldContainer debug={false}>
-          <ShieldVideo position-z={0.02} src={videoSrc} />
-          <ShieldBackgroundLight scale={1.7} position-z={-1} />
+          <ShieldVideo position-z={0.02} src={videoSrc} visible={true} />
+          <ShieldBackgroundLight scale={2.2} position-z={-0.1} visible={true} />
           <PlayButton onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })} />
+          <Lensflare />
         </ShieldContainer>
         <Wordmark />
         <Preload all />

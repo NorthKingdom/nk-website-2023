@@ -1,11 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { forwardRef, useMemo, useRef } from 'react'
-import { useTexture } from '@react-three/drei'
+import { shaderMaterial, useTexture } from '@react-three/drei'
+import type { ReactThreeFiber } from '@react-three/fiber'
 import { Uniform, Color } from 'three'
-import { useFrame } from '@react-three/fiber'
+import { extend, useFrame } from '@react-three/fiber'
 import { mergeRefs } from 'react-merge-refs'
 import shieldBlurVS from './shaders/shield-blur-bg-vs.glsl'
 import shieldBlurFS from './shaders/shield-blur-bg-fs.glsl'
+
+const ShieldBackgroundLightMaterial = shaderMaterial(
+  {
+    uTime: 0,
+    uOpacity: 0.4,
+    uColor: new Color('#00fff5'),
+    uMask: null,
+  },
+  shieldBlurVS,
+  shieldBlurFS
+)
+
+extend({ ShieldBackgroundLightMaterial })
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      shieldBackgroundLightMaterial: ReactThreeFiber.Object3DNode<
+        // @ts-ignore
+        ShieldBackgroundLightMaterial,
+        typeof ShieldBackgroundLightMaterial
+      >
+    }
+  }
+}
 
 export const ShieldBackgroundLight = forwardRef((props: any, ref: React.Ref<THREE.Mesh>) => {
   const $mesh = useRef<THREE.Mesh>(null!)
@@ -28,16 +54,30 @@ export const ShieldBackgroundLight = forwardRef((props: any, ref: React.Ref<THRE
   })
 
   return (
-    <mesh ref={mergeRefs([ref, $mesh])} {...props}>
-      <planeGeometry attach="geometry" args={[3, 4, 32, 32]} />
-      <shaderMaterial
-        vertexShader={shieldBlurVS}
-        fragmentShader={shieldBlurFS}
-        uniforms={uniforms}
-        toneMapped={false}
-        transparent={true}
-      />
-    </mesh>
+    <group>
+      <mesh ref={mergeRefs([ref, $mesh])} {...props}>
+        <planeGeometry attach="geometry" args={[3, 4, 32, 32]} />
+        <shieldBackgroundLightMaterial
+          uniforms={uniforms}
+          toneMapped={false}
+          transparent={true}
+          key={ShieldBackgroundLightMaterial.key}
+        />
+        {/* <shaderMaterial
+          vertexShader={shieldBlurVS}
+          fragmentShader={shieldBlurFS}
+          uniforms={uniforms}
+          toneMapped={false}
+          transparent={true}
+        /> */}
+      </mesh>
+      {props.debug && (
+        <mesh {...props}>
+          <planeGeometry attach="geometry" args={[3, 4, 32, 32]} />
+          <meshBasicMaterial color="red" wireframe />
+        </mesh>
+      )}
+    </group>
   )
 })
 ShieldBackgroundLight.displayName = 'ShieldBackgroundLight'
