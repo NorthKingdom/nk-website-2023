@@ -42,7 +42,7 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
             )
           case 'ResponsiveImage':
             return (
-              <div style={{ width: `100%`, height: `100vh`, position: `relative` }}>
+              <div key={'responsive-image'} style={{ width: `100%`, height: `100vh`, position: `relative` }}>
                 <Media key={`case-image-${i}`} style={{ objectFit: `cover` }} {...c} />
               </div>
             )

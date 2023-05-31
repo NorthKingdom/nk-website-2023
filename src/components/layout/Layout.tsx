@@ -6,7 +6,7 @@ import styles from './Layout.module.scss'
 import { useGlobalStateStore } from '@store/global-state-store'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 import { useRouter } from 'next/router'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, AnimateSharedLayout, LayoutGroup } from 'framer-motion'
 import { useNextCssRemovalPrevention } from '@hooks/use-next-css-removal-prevention'
 
 interface LayoutProps {
@@ -102,21 +102,23 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
       <Header />
       <main ref={wrapperRef} className={styles.main}>
         <div ref={contentRef}>
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.main
-              key={router.asPath}
-              variants={variants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              onAnimationStart={onPageTransitionStart}
-              onAnimationComplete={onPageTransitionEnd}
-              transition={{ duration: 0.1 }}
-            >
-              <div className={styles.content}>{children}</div>
-              {!hideFooter && <Footer theme={footerTheme} />}
-            </motion.main>
-          </AnimatePresence>
+          <LayoutGroup id="a">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.main
+                key={router.asPath}
+                variants={variants}
+                // initial="initial"
+                // animate="animate"
+                // exit="exit"
+                onAnimationStart={onPageTransitionStart}
+                onAnimationComplete={onPageTransitionEnd}
+                transition={{ duration: 0.1 }}
+              >
+                <div className={styles.content}>{children}</div>
+                {!hideFooter && <Footer theme={footerTheme} />}
+              </motion.main>
+            </AnimatePresence>
+          </LayoutGroup>
         </div>
       </main>
     </>

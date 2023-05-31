@@ -14,7 +14,16 @@ interface CaseHeroProps {
 export const CaseHero = ({ client, caseName, src }: CaseHeroProps) => {
   return (
     <section className={styles['caseHero']}>
-      <Media {...src} controls={false} muted={true} autoPlay={true} loop={true} playsinline={true} />
+      <Media
+        {...src}
+        client={client}
+        controls={false}
+        muted={true}
+        autoPlay={false}
+        loop={true}
+        playsinline={true}
+        caseHero={true}
+      />
       <div className={styles['caseHero__description']}>
         <p>{client}</p>
         <h1>{caseName}</h1>

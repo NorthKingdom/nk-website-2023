@@ -1,15 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
 import { CaseHero as CaseHeroType, Case as CasePageProps } from '@customTypes/cms'
 import { CASE_PAGE_QUERY } from '../../graphql/queries'
 import { CaseHero } from '@components/case-hero'
 import { ComponentResolver } from '@components/component-resolver'
+import { useGlobalStateStore } from '@store/global-state-store'
 import styles from './Case.module.scss'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import { NextCasePreview } from '@components/next-case-preview'
+import Lenis from '@studio-freight/lenis'
 
 const Case = (props: CasePageProps) => {
+  const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
+
+  useEffect(() => {
+    if (lenis) {
+      console.log(`USE EFFECT LENIS SCROLL TOP `)
+      lenis.scrollTo(0, { immediate: true })
+      lenis.stop()
+      setTimeout(() => {
+        lenis.start()
+      }, 200)
+    }
+  }, [lenis])
+
+  // console.log(props)
+
   return (
     props.componentsCollection?.items.length > 0 && (
       <>
@@ -76,7 +93,11 @@ const Case = (props: CasePageProps) => {
           <ContentWrapper>
             <ComponentResolver components={props.componentsCollection?.items || []} />
           </ContentWrapper>
-          <NextCasePreview caseTitle="[EXAMPLE] RiotX Arcane" client="RIOT" src="/dummy/landscape-media.jpg" />
+          <NextCasePreview
+            caseTitle={props.client === 'Supercell' ? '[EXAMPLE] RiotX Arcane' : '[EXAMPLE] Masterclash'}
+            client={props.client === 'Supercell' ? 'RIOT' : 'Supercell'}
+            src={'/dummy/riotxarcane-map.jpg'}
+          />
         </main>
       </>
     )

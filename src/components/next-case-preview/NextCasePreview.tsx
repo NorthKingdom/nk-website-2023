@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useId, useRef } from 'react'
 import styles from './NextCasePreview.module.scss'
 import { AnimatePresence, animate, motion, useInView, useMotionValue, useTransform } from 'framer-motion'
 import { bemify } from '@utils/bemify'
@@ -19,6 +19,7 @@ export const NextCasePreview = ({ src, caseTitle, client }: NextCasePreviewProps
   const router = useRouter()
   const ref = useRef(null)
   const ref2 = useRef<HTMLDivElement>(null)
+  const id = useId()
 
   const isInView = useInView(ref)
   const hasRouted = useRef(false)
@@ -31,7 +32,7 @@ export const NextCasePreview = ({ src, caseTitle, client }: NextCasePreviewProps
         100
       )
 
-      console.log(loadingPercentage)
+      // console.log(loadingPercentage)
 
       if (!hasRouted.current) {
         // @ts-ignore
@@ -39,14 +40,18 @@ export const NextCasePreview = ({ src, caseTitle, client }: NextCasePreviewProps
 
         if (loadingPercentage >= 100) {
           // hasRouted.current = true
-          console.log(`start`)
+          // console.log(`start`)
           await animate(scale, 14, { duration: 0.5 })
-          console.log(scale, scale.get())
+          // console.log(scale, scale.get())
           if (scale.get() >= 10) {
-            console.log(`end`)
+            // console.log(`end`)
             router.push(
+              '/case/[case]',
               router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
             )
+            // window.location.href =
+            //   router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
+            // window.location = '/case/fake-riot-case'
             hasRouted.current = true
           }
         }
@@ -66,38 +71,43 @@ export const NextCasePreview = ({ src, caseTitle, client }: NextCasePreviewProps
   const backgroundPosition = useTransform(progress, [0.33, 0.67], [`100%`, `0%`])
   const color = useTransform(progress, [0.33, 0.67], ['#ffffff60', '#fff'])
 
+  console.log(`NCP layout id is: `, client === 'RIOT' ? 'layoutidid' : '_no id_')
+
   return (
     <div ref={ref} className={styles['nextCasePreview']}>
       <div className={bem('s')}>
-        <motion.img
-          src="/images/shield-mask-local2.png"
-          style={{
-            scale,
-            y,
-            position: `absolute`,
-            top: 0,
-            left: 0,
-            width: `100%`,
-            height: `100vh`,
-            zIndex: 1,
-          }}
-          exit={{ scale: 14, transition: { duration: 0 } }}
-        />
-        <motion.img
-          key="imageimage"
-          src={src}
-          alt={'temp alt'}
-          style={{
-            scale: s,
-            y,
-            position: `absolute`,
-            top: 0,
-            left: 0,
-            width: `100%`,
-            height: `100vh`,
-            zIndex: 0,
-          }}
-        />
+        <AnimatePresence>
+          <motion.img
+            src="/images/shield-mask-local2.png"
+            style={{
+              scale,
+              y,
+              position: `absolute`,
+              top: 0,
+              left: 0,
+              width: `100%`,
+              height: `100vh`,
+              zIndex: 1,
+            }}
+            exit={{ scale: 14, transition: { duration: 0 } }}
+          />
+          <motion.div
+            key={`#${CSS.escape(id)}`}
+            layoutId={client === 'RIOT' ? 'layoutidid' : ''}
+            style={{
+              scale: s,
+              y,
+              position: `absolute`,
+              top: 0,
+              left: 0,
+              width: `100%`,
+              height: `100vh`,
+              zIndex: 0,
+            }}
+          >
+            <img src={src} alt={'temp alt'} />
+          </motion.div>
+        </AnimatePresence>
       </div>
       {/* </motion.div> */}
       <div className={bem('inner')}>

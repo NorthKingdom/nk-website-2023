@@ -4,6 +4,7 @@ import type { Video, ResponsiveImage } from '@customTypes/cms'
 import Image from 'next/image'
 import { getContentfulImageSrc } from '@utils/contentful'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
+import { AnimatePresence, animate, motion, useInView, useMotionValue, useTransform } from 'framer-motion'
 
 interface VideoMediaProps extends Video {
   index?: number
@@ -27,19 +28,30 @@ interface ImageMediaProps extends ResponsiveImage {
 export const Media = (props: VideoMediaProps | ImageMediaProps) => {
   const { src } = useContentfulMediaSrc(props)
 
+  if (props.caseHero) {
+    console.log(props.caseHero, props.client)
+    console.log(`casehero layout id is: `, props.caseHero && props.client === 'RIOT' ? 'layoutidid' : '_no id_')
+  }
+
   return (
     <>
       {props?.__typename === 'Video' || props?.desktopVideoCollection ? (
         <VideoPlayer poster={(props as VideoMediaProps).posterImage.url} src={props as VideoMediaProps} {...props} />
       ) : props?.__typename === 'ResponsiveImage' ? (
-        <Image
-          fetchPriority={props?.index === 0 ? 'high' : 'auto'}
-          src={getContentfulImageSrc(src)}
-          alt={(props as ImageMediaProps).altText}
-          aria-hidden={Boolean((props as ImageMediaProps).altText)}
-          fill={true}
-          {...props}
-        />
+        <AnimatePresence>
+          <motion.div
+            layoutId={props.caseHero && props.client === 'RIOT' ? 'layoutidid' : ''}
+            initial={{ y: 0 }}
+            animate={{ y: 0 }}
+          >
+            <img
+              //
+
+              src="/dummy/riotxarcane-map.jpg"
+              // exit={{ scale: 14, transition: { duration: 0 } }}
+            />
+          </motion.div>
+        </AnimatePresence>
       ) : null}
     </>
   )
