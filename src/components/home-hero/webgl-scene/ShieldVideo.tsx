@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { forwardRef, useEffect, useMemo, useRef } from 'react'
+import { forwardRef, use, useEffect, useMemo, useRef } from 'react'
 import { useVideoTexture, useTexture } from '@react-three/drei'
 import { Uniform } from 'three'
 import { useFrame } from '@react-three/fiber'
@@ -55,7 +55,7 @@ export const ShieldVideo = forwardRef(
     ref: React.Ref<THREE.Mesh>
   ) => {
     const $mesh = useRef<THREE.Mesh>(null!)
-
+    const set = useWebglSceneStore((state) => state.set)
     const shieldState = useWebglSceneStore((state) => state.shieldState)
     const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
     const shieldScaleFullscreen = useWebglSceneStore((state) => state.shieldScaleFullscreen)
@@ -72,6 +72,9 @@ export const ShieldVideo = forwardRef(
       []
     )
     const scaleMotionValue = useMotionValue(scale)
+    useEffect(() => {
+      set({ shieldScaleMotionValue: scaleMotionValue })
+    }, [scaleMotionValue])
 
     useEffect(() => {
       /*

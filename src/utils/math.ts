@@ -63,12 +63,17 @@ const normalize = (value: number, dimension: number) => {
   return (value / dimension) * 2 - 1
 }
 
+const closestAngle = (from: number, to: number) => {
+  return from + ((((to - from) % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI)) - Math.PI
+}
+
 const math = {
   map,
   lerp,
   clamp,
   normalize,
+  closestAngle,
 }
 
-export { map, lerp, clamp, mod, normalize }
+export { map, lerp, clamp, mod, normalize, closestAngle }
 export default math

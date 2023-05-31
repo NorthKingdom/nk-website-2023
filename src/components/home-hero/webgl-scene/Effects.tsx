@@ -39,6 +39,11 @@ export const Effects = React.forwardRef<EffectComposer>((props, ref) => {
     if (bloomPass.current) {
       bloomPass.current.resolution.set(width, height)
     }
+
+    if (distortionPass.current) {
+      distortionPass.current.uniforms.resolution.value.x = width
+      distortionPass.current.uniforms.resolution.value.y = height
+    }
   }, [width, height])
 
   const intensity = useRef(1)

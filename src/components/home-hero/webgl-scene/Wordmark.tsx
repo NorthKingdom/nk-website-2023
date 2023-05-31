@@ -82,6 +82,7 @@ export const Wordmark = () => {
     animationControls = animate(offsetAbsMotionValue, offsetAbs, {
       ...(motionData as Partial<AnimationPlaybackControls>),
       onUpdate: (value) => {
+        if (!leftWordRef.current || !rightWordRef.current) return
         leftWordRef.current.position.x = -value
         rightWordRef.current.position.x = value
       },
