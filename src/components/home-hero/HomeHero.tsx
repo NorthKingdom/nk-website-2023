@@ -87,7 +87,7 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProp
             autoPlay={true}
             playsinline={true}
             src={showreelVideo}
-            controls={false}
+            controls={true}
             poster=""
           />
         </Modal>
