@@ -38,7 +38,7 @@ $fluid_typo_screen_width_max: 2564px;
 */
 
 @mixin Heading1 {
-  font-family: 'FKGroteskNeue-Bold', sans-serif;
+  font-family: 'FKDisplay', sans-serif;
   @include fluid-type($fluid_typo_screen_width_min, $fluid_typo_screen_width_max, 44px, 222px);
   line-height: 0.95em;
   letter-spacing: -0.02em;
