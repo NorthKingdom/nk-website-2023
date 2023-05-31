@@ -59,7 +59,8 @@ $fluid_typo_screen_width_max: 2564px;
 }
 
 @mixin Label {
-  font-family: monospace;
+  font-family: 'FKGroteskMono';
+  font-weight: 400;
   @include fluid-type($fluid_typo_screen_width_min, $fluid_typo_screen_width_max, 9px, 17px);
   line-height: 1.15em;
   letter-spacing: 0.05em;
