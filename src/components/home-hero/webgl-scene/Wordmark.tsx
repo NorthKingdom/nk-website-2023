@@ -117,14 +117,14 @@ export const Wordmark = () => {
         </>
       ) : (
         <Word
-          position-z={0.01}
+          position-z={0.03}
           position-x={-width * 0.5}
-          position-y={-height * 0.5}
+          position-y={-height * 0.45}
           maxWidth={width}
           lineHeight={0.9}
           anchorX="left"
           anchorY="bottom"
-          fontSize={1.2}
+          fontSize={width * 0.25}
         >
           North Kingdom
         </Word>
