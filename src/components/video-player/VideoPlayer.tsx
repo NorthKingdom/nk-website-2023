@@ -1,14 +1,10 @@
-import React, { useEffect, useId, useRef } from 'react'
+import React, { useEffect, useId, type ComponentPropsWithoutRef } from 'react'
 import styles from './VideoPlayer.module.scss'
-import { bemify } from '@utils/bemify'
 import { Video } from '@customTypes/cms'
-import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
 import { sortVideoFormats } from '@utils/video-format-sorting'
 import Plyr from 'plyr'
 import 'plyr/dist/plyr.css'
-
-const bem = bemify(styles, 'videoPlayer')
 
 const _plyrControls = `
 <div class="plyr__controls">
@@ -40,7 +36,7 @@ const _plyrControls = `
 </div>
 `
 
-interface VideoPlayerProps {
+interface VideoPlayerProps extends Omit<ComponentPropsWithoutRef<'video'>, 'src'> {
   src: Video
   className?: string
   poster: string
@@ -60,6 +56,7 @@ export const VideoPlayer = ({
   muted = true,
   loop = false,
   autoPlay = false,
+  ...props
 }: VideoPlayerProps) => {
   const id = useId()
   const bpFromDesktopSmall = useBreakpointFrom('desktopSmall')
@@ -89,7 +86,7 @@ export const VideoPlayer = ({
   return (
     // <AspectRatio ratio={16 / 10} style={{ width: '400px' }}>
     <div className={`${styles['videoPlayer']} ${className}`}>
-      <video id={id} poster={poster} muted={muted}>
+      <video id={id} poster={poster} muted={muted} {...props}>
         {[...(bpFromDesktopSmall ? src.desktopVideoCollection.items : src.mobileVideoCollection.items)]
           .sort((a, b) => sortVideoFormats(a.url, b.url))
           .map((s, i: number) => (
