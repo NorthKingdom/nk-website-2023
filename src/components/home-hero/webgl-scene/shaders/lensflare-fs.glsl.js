@@ -30,6 +30,7 @@ void main() {
 
   vec2 uv1 = vUv;
   vec2 uv2 = vUv;
+  
 
   // FLARE TOP
   uv1 -= vec2(0.5);
@@ -37,13 +38,10 @@ void main() {
   uv1 *= scaleAndRotate(vec2(flare_top_scale * 1.3, flare_top_scale), 0.0);
   uv1 += vec2(0.5);
   
-
-
   vec3 flare_top = texture2D(uMask, uv1).rgb;
   float flare_top_alpha = texture2D(uMask, uv1).r;
   flare_top *= flare_top_color;
   flare_top *= flare_top_color_opacity;
-
 
   // FLARE BOTTOM
   uv2 -= vec2(0.5);

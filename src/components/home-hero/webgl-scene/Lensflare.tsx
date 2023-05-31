@@ -74,7 +74,8 @@ export const Lensflare: React.FC = ({ debug = false, ...props }: LensflareProps)
     angle.current = lerp(angle.current, angle.target, 0.15, delta)
 
     ref.current.rotation.z = angle.current
-    ref.current.scale.setScalar(dist.current * scale)
+    ref.current.scale.x = dist.current * scale
+    ref.current.scale.y = dist.current * scale
   })
 
   return (
