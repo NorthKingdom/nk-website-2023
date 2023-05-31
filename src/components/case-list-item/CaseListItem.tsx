@@ -6,6 +6,7 @@ import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 import { useInViewAnimation } from '@hooks/use-inview-animation'
 const bem = bemify(styles, 'caseListItem')
 import { Media } from '@components/media/Media'
+import Link from 'next/link'
 
 interface CaseListItemProps extends Case {
   className?: string
@@ -19,6 +20,7 @@ export const CaseListItem = ({
   className = '',
   style = {},
   title = '',
+  slug = '',
   client = '',
   index,
   alt = '',
@@ -41,14 +43,16 @@ export const CaseListItem = ({
       : {}
 
   return (
-    <div ref={$container} className={className} style={style}>
-      <AspectRatio ratio={16 / 10} className={bem('thumbnailContainer')}>
-        <Media className={bem('thumbnail')} {...thumbnail} {...mediaProps} index={index} />
-      </AspectRatio>
-      <div className={bem('content')}>
-        <h3 className={bem('client')}>{client}</h3>
-        <h4 className={bem('projectTitle')}>{title}</h4>
+    <Link href="/case/[case]" as={`/case/${slug ?? title}`}>
+      <div ref={$container} className={className} style={style}>
+        <AspectRatio ratio={16 / 10} className={bem('thumbnailContainer')}>
+          <Media className={bem('thumbnail')} {...thumbnail} {...mediaProps} index={index} />
+        </AspectRatio>
+        <div className={bem('content')}>
+          <h3 className={bem('client')}>{client}</h3>
+          <h4 className={bem('projectTitle')}>{title}</h4>
+        </div>
       </div>
-    </div>
+    </Link>
   )
 }
