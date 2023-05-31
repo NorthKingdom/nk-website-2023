@@ -11,6 +11,7 @@ import { useWebglSceneStore } from './WebglScene.store'
 import type { Video } from '@customTypes/cms'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
 import { Lensflare } from './Lensflare'
+import styles from './WebglScene.module.scss'
 
 const Perf = dynamic(() => import('r3f-perf').then((Mod) => Mod.Perf), { ssr: false })
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
@@ -51,7 +52,7 @@ export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...pr
   }, [shieldState])
 
   return (
-    <Canvas camera={{ position: [0, 0, 5] }} frameloop={frameloop} {...props}>
+    <Canvas className={styles['webglCanvas']} camera={{ position: [0, 0, 5] }} frameloop={frameloop} {...props}>
       {debug && <Perf position="top-left" />}
       <Suspense fallback={null}>
         <Effects />
