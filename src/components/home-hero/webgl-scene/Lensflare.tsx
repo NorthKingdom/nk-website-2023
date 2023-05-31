@@ -33,7 +33,7 @@ interface LensflareProps {
 }
 
 export const Lensflare: React.FC = ({ debug = false, ...props }: LensflareProps) => {
-  const ref = useRef<THREE.Mesh>(null!)
+  const ref = useRef<THREE.Group>(null!)
   const shieldAnchor = useWebglSceneStore((state) => state.shieldAnchor)
   const shieldScaleIdle = useWebglSceneStore((state) => state.shieldScaleIdle)
   const viewport = useThree((state) => state.viewport)
