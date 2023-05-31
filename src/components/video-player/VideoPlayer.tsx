@@ -36,7 +36,7 @@ const _plyrControls = `
 </div>
 `
 
-interface VideoPlayerProps extends ComponentPropsWithoutRef<'video'> {
+interface VideoPlayerProps extends Omit<ComponentPropsWithoutRef<'video'>, 'src'> {
   src: Video
   className?: string
   poster: string
