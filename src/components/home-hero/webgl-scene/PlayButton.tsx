@@ -5,7 +5,7 @@ import styles from './WebglScene.module.scss'
 
 export const PlayButton = ({ onClick = noop }: { onClick: () => void }) => {
   return (
-    <Html center zIndexRange={[100, 0]}>
+    <Html center zIndexRange={[8, 0]}>
       <PlayButtonHtml onClick={onClick} className={styles['playButton']} data-visible={true} />
     </Html>
   )
