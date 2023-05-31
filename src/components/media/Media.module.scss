@@ -1,0 +1,43 @@
+.loading-overlay {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  animation: load-shimmer-dark-theme 1s alternate infinite;
+  transition: opacity 0.2s;
+
+  &[data-theme='light'] {
+    animation: load-shimmer-light-theme 1s alternate infinite;
+  }
+
+  &[data-asset-loaded='true'] {
+    opacity: 0;
+  }
+
+  &[data-load-out-animation-complete='true'] {
+    animation: none;
+  }
+}
+
+@keyframes load-shimmer-dark-theme {
+  0% {
+    background-color: #1a1a1a;
+  }
+
+  100% {
+    background-color: #262626;
+  }
+}
+
+@keyframes load-shimmer-light-theme {
+  0% {
+    background-color: #e6e6e6;
+  }
+
+  100% {
+    background-color: #d9d9d9;
+  }
+}
