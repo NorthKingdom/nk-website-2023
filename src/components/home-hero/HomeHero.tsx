@@ -71,6 +71,8 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProp
           eventPrefix="client"
         />
 
+        <div aria-hidden="true" className={bem('overlay')} data-visible={!loaded} />
+
         <h1 className={bem('title')} aria-label="North Kingdom">
           North Kingdom
         </h1>
