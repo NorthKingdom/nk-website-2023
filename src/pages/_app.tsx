@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import { Layout } from '@components/layout'
 import { ApolloProvider } from '@apollo/client'
 import client from '@graphql/client'
+import { useRouteChangeSpinner } from '@hooks/use-route-change-spinner'
 const apolloClient = client(false)
 
 export default function App({ Component, pageProps, router }: AppProps) {
@@ -18,6 +19,8 @@ export default function App({ Component, pageProps, router }: AppProps) {
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
   const setTheme = useGlobalStateStore((state) => state.setTheme)
   const theme = useGlobalStateStore((state) => state.theme)
+
+  useRouteChangeSpinner()
 
   // theming
   useEffect(() => {

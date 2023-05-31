@@ -95,6 +95,10 @@ body {
   overscroll-behavior: none;
 }
 
+html.loading {
+  cursor: wait !important;
+}
+
 #__next {
   html[data-is-menu-open='true'] & {
     overflow: hidden;
