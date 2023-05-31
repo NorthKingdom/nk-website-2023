@@ -1,15 +1,52 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
 import { CaseHero as CaseHeroType, Case as CasePageProps } from '@customTypes/cms'
-import { CASE_PAGE_QUERY } from '../../graphql/queries'
+import { CASE_PAGE_QUERY, WORK_PAGE_QUERY, NEXT_CASES_QUERY } from '../../graphql/queries'
 import { CaseHero } from '@components/case-hero'
 import { ComponentResolver } from '@components/component-resolver'
+import { useGlobalStateStore } from '@store/global-state-store'
 import styles from './Case.module.scss'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
+import Lenis from '@studio-freight/lenis'
+import { useQuery } from '@apollo/client'
 import { NextCasePreview } from '@components/next-case-preview'
 
 const Case = (props: CasePageProps) => {
+  const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
+  const featuredCases = useGlobalStateStore((state) => state.featuredCases)
+  const setFeaturedCases = useGlobalStateStore((state) => state.setFeaturedCases)
+
+  useEffect(() => {
+    console.log(`featuedcases: `, featuredCases)
+    const a = async () => {
+      return client(false)
+        .query({
+          query: NEXT_CASES_QUERY(false),
+        })
+        .then((res: any) => res.data)
+        .then((data: any) => {
+          console.log(data)
+
+          setFeaturedCases(data.workPage.featuredCases.cases.items)
+        })
+    }
+    if (featuredCases.length === 0) {
+      a()
+    }
+  }, [featuredCases])
+
+  useEffect(() => {
+    if (lenis) {
+      console.log(`USE EFFECT LENIS SCROLL TOP `)
+      lenis.scrollTo(0, { immediate: true })
+      lenis.stop()
+      setTimeout(() => {
+        lenis.start()
+      }, 200)
+    }
+  }, [lenis])
+
   return (
     props.componentsCollection?.items.length > 0 && (
       <>
@@ -76,7 +113,16 @@ const Case = (props: CasePageProps) => {
           <ContentWrapper>
             <ComponentResolver components={props.componentsCollection?.items || []} />
           </ContentWrapper>
-          <NextCasePreview caseTitle="title" client="client" src="/dummy/landscape-media.jpg" />
+          {featuredCases.length > 0 && (
+            <NextCasePreview
+              caseName={props.title === '[EXAMPLE] Masterclash' ? '[EXAMPLE] RiotX Arcane' : '[EXAMPLE] Masterclash'}
+              src={
+                props.title === '[EXAMPLE] Masterclash'
+                  ? featuredCases[0].componentsCollection.items[0].heroMedia
+                  : featuredCases[1].componentsCollection.items[0].heroMedia
+              }
+            />
+          )}
         </main>
       </>
     )

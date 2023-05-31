@@ -47,6 +47,37 @@ export const WORK_PAGE_QUERY = (draftMode: boolean) => gql`
   }
 `
 
+export const NEXT_CASES_QUERY = (draftMode: boolean) => gql`
+${VIDEO}
+${RESPONSIVE_IMAGE}
+${CASE_HERO}
+
+fragment newF on FeaturedCasesComponent {
+  sys {
+    id
+  }
+  cases: casesCollection(limit: 10) {
+    items {
+      title
+      client
+      componentsCollection(limit: 10) {
+        items {
+          ...heroData
+        }
+      }
+    }
+  }
+}
+
+  query WorkPageQuery {
+    workPage(preview: ${draftMode}, id: "57RwiXldBpUyL6FoOP2t0f") {
+        featuredCases {
+            ...newF
+        }
+    }
+  }
+`
+
 export const CASE_ARCHIVE_QUERY = gql`
   query CaseArchiveQuery($limit: Int = 20, $skip: Int = 0, $vertical: String) {
     caseArchive: caseCollection(limit: $limit, skip: $skip, order: date_DESC, where: { vertical: $vertical }) {

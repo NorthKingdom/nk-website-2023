@@ -22,14 +22,14 @@ interface LayoutProps {
 
 const variants = {
   initial: {
-    opacity: 0,
+    opacity: 1,
   },
   animate: {
     opacity: 1,
     transition: { ease: 'circOut' },
   },
   exit: {
-    opacity: 0,
+    opacity: 1,
     transition: { ease: 'circOut' },
   },
 }
@@ -117,7 +117,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
               exit="exit"
               onAnimationStart={onPageTransitionStart}
               onAnimationComplete={onPageTransitionEnd}
-              transition={{ duration: 0.1 }}
+              transition={{ duration: 0 }}
             >
               <div className={styles.content}>{children}</div>
               {!hideFooter && <Footer theme={footerTheme} />}

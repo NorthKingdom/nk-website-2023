@@ -5,8 +5,22 @@
   max-height: 100vh;
   overflow: hidden;
 
+  @include mq($from: desktop-small) {
+    min-height: 100vh;
+  }
+
   img {
     border-radius: 0 !important;
+
+    @include mq($from: tablet) {
+      height: 100vh;
+    }
+  }
+
+  video {
+    @include mq($from: desktop-small) {
+      height: 100vh !important;
+    }
   }
 
   &__description {
