@@ -5,7 +5,7 @@ import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import { List } from '@components/list'
 import { useQuery } from '@apollo/client'
 import { CASE_ARCHIVE_QUERY } from '@graphql/queries'
-import type { CaseArchiveItem } from '@customTypes/cms'
+import type { CaseArchiveItem as CaseArchiveItemData } from '@customTypes/cms'
 import Image from 'next/image'
 import { noop } from '@utils/noop'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
@@ -57,7 +57,7 @@ const CustomCursorImageContext = React.createContext<{
  * Case archive item component.
  */
 
-interface CaseArchiveItemProps extends CaseArchiveItem {
+interface CaseArchiveItemProps extends CaseArchiveItemData {
   index: number
   mobile: boolean
 }

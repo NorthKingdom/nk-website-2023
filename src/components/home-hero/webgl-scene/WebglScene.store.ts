@@ -1,3 +1,4 @@
+import type { MotionValue } from 'framer-motion'
 import { create } from 'zustand'
 
 interface ShieldStateEvent {
@@ -20,6 +21,7 @@ interface WebglSceneStore {
   shieldAnchor: [number, number, number]
   shieldScaleIdle: number
   shieldScaleFullscreen: number
+  shieldScaleMotionValue: MotionValue | null
   hovered: boolean
   stiffness: number
   damping: number
@@ -67,6 +69,7 @@ export const useWebglSceneStore = create<WebglSceneStore>()((set, get) => ({
   shieldAnchor: [0, 0, 0],
   shieldScaleIdle: 1,
   shieldScaleFullscreen: 1,
+  shieldScaleMotionValue: null,
   hovered: false,
   stiffness: 1000,
   damping: 100,
