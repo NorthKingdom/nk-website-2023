@@ -61,7 +61,6 @@ export interface ResponsiveImage {
     url: string
   }
   altText: string
-  imageCaption?: string
   __typename: 'ResponsiveImage'
 }
 

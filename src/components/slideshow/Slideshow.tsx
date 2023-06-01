@@ -13,6 +13,7 @@ interface SlideshowProps {
   showArrows: boolean
   srcSet: (ResponsiveImage | Video)[]
   showCaption?: boolean
+  caption?: string
 }
 
 export const Slideshow = ({
@@ -20,6 +21,7 @@ export const Slideshow = ({
   showIndicators,
   showArrows,
   srcSet,
+  caption,
   showCaption = false,
 }: SlideshowProps) => {
   const [[count, direction], setCount] = useState([0, 0])
@@ -103,7 +105,7 @@ export const Slideshow = ({
         )}
       </div>
       <div data-hascaption={showCaption} className={bem('informationContainer')}>
-        {showCaption && (srcSet[count] as ResponsiveImage).imageCaption && (
+        {showCaption && !!caption && (
           <motion.p
             key={`caption-for-image-${count}`}
             initial={{ opacity: 0 }}
@@ -111,7 +113,7 @@ export const Slideshow = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            {(srcSet[count] as ResponsiveImage).imageCaption}
+            {caption}
           </motion.p>
         )}
         {showIndicators && (

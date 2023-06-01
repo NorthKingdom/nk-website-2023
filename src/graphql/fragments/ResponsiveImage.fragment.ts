@@ -9,7 +9,6 @@ export const RESPONSIVE_IMAGE = gql`
     mobileImage {
       url
     }
-    imageCaption
     altText
   }
 `

@@ -21,7 +21,6 @@ const srcSet = [
       url: '/dummy/temp-left-riot-img.jpg',
     },
     altText: 'temp alt',
-    imageCaption: 'temp caption 1',
   },
   {
     __typename: 'ResponsiveImage' as const,
@@ -32,7 +31,6 @@ const srcSet = [
       url: '/dummy/temp-right-riot-img.jpg',
     },
     altText: 'temp alt',
-    imageCaption: 'temp caption 2',
   },
   {
     __typename: 'ResponsiveImage' as const,
@@ -43,7 +41,6 @@ const srcSet = [
       url: '/dummy/temp-riot-right-image-2.jpg',
     },
     altText: 'temp alt',
-    imageCaption: 'temp caption 3',
   },
 ]
 
