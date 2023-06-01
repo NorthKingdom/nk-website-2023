@@ -1,9 +1,6 @@
 import { gql } from '@apollo/client'
-import { RESPONSIVE_IMAGE } from '@graphql/fragments/ResponsiveImage.fragment'
 
 export const IMAGE_MARQUEE = gql`
-  ${RESPONSIVE_IMAGE}
-
   fragment imageMarquee on ImageMarquee {
     sys {
       id
@@ -12,10 +9,12 @@ export const IMAGE_MARQUEE = gql`
       items {
         clientName
         clientLogo {
-          ...responsiveImage
+          __typename
+          url
         }
         relatedImage {
-          ...responsiveImage
+          __typename
+          url
         }
       }
     }

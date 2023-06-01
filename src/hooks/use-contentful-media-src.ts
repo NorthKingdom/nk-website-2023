@@ -1,4 +1,4 @@
-import type { Video, ResponsiveImage } from '@customTypes/cms'
+import type { Video, ResponsiveImage, Asset } from '@customTypes/cms'
 import { useBreakpointUntil } from './use-breakpoint'
 import { getMimeTypeFromFilename } from '@utils/media-mime-types'
 
@@ -25,7 +25,7 @@ interface ContentfulMediaSrcOptions extends ContentfulMediaSrcImageOptions, Cont
  */
 
 export const useContentfulMediaSrc = (
-  media: Video | ResponsiveImage,
+  media: Video | ResponsiveImage | Asset,
   options: ContentfulMediaSrcOptions = {}
 ): {
   src: string
@@ -42,6 +42,7 @@ export const useContentfulMediaSrc = (
 
   const isVideo = media.__typename === 'Video'
   const isImage = media.__typename === 'ResponsiveImage'
+  const isAsset = media.__typename === 'Asset'
 
   if (isVideo) {
     const video = media as Video
@@ -51,8 +52,8 @@ export const useContentfulMediaSrc = (
       src: sources[0]?.url ?? '',
       srcset: sources.map(({ url }) => ({ url, type: getMimeTypeFromFilename(url) ?? '' })),
     }
-  } else if (isImage) {
-    const image = media as ResponsiveImage
+  } else if (isImage || isAsset) {
+    const image = isAsset ? { mobileImage: { ...media }, desktopImage: { ...media } } : (media as ResponsiveImage)
     const src = isMobileBreakpoint ? image.mobileImage.url : image.desktopImage.url
 
     const imageParams: { [key: string]: any } = {
