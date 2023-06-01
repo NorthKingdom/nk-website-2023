@@ -86,7 +86,7 @@ export const VideoPlayer = ({
   return (
     // <AspectRatio ratio={16 / 10} style={{ width: '400px' }}>
     <div className={`${styles['videoPlayer']} ${className}`}>
-      <video id={id} poster={poster} muted={muted} {...props}>
+      <video id={id} poster={autoPlay ? '' : poster} muted={muted} {...props}>
         {[...(bpFromDesktopSmall ? src.desktopVideoCollection.items : src.mobileVideoCollection.items)]
           .sort((a, b) => sortVideoFormats(a.url, b.url))
           .map((s, i: number) => (
