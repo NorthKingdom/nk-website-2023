@@ -31,13 +31,24 @@
     }
   }
 
+  &__lcp {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 99vw;
+    height: 99vh;
+    max-width: 99vw;
+    max-height: 99vh;
+  }
+
   &__title {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    opacity: 0;
-    // visibility: hidden;
+    // opacity: 0;
+    visibility: hidden;
     pointer-events: none;
   }
 
