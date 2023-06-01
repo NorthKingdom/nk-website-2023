@@ -1,5 +1,10 @@
 import { idText } from 'typescript'
 
+export interface Asset {
+  __typename: 'Asset'
+  url: string
+}
+
 export interface PageHero {
   title: string
   image: ResponsiveImage
@@ -165,8 +170,8 @@ export interface FeaturedVideo {
 
 export interface ImageMarqueeItem {
   clientName: string
-  clientLogo: ResponsiveImage
-  relatedImage: ResponsiveImage
+  clientLogo: Asset
+  relatedImage: Asset
 }
 
 export interface ImageMarquee {
