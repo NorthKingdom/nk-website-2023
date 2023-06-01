@@ -157,6 +157,9 @@ export interface HomeHero {
 export interface FeaturedCases {
   __typename: 'FeaturedCasesComponent'
   sys: { id: string }
+  initial: number
+  enableBatching: boolean
+  batchSize: number
   cases: { items: Case[] }
 }
 
@@ -189,7 +192,7 @@ export interface HomePage {
 }
 
 export interface WorkPage {
-  featuredCases: { cases: { items: Case[] } }
+  featuredCases: FeaturedCases
   caseArchive: CaseArchive
 }
 

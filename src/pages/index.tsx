@@ -2,7 +2,7 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { HOME_PAGE_QUERY } from '@graphql/queries'
 import client from '@graphql/client'
-import { HomePage } from '@customTypes/cms'
+import { HomePage, FeaturedCases } from '@customTypes/cms'
 import { HomeHero } from '@components/home-hero'
 import { CaseList } from '@components/case-list'
 import type {
@@ -55,7 +55,13 @@ const HomePageSectionResolver = ({ __typename, ...props }: { __typename: string;
     case 'HomeHeroComponent':
       return <HomeHero key={props.sys.id} {...(props as HomeHeroData)} />
     case 'FeaturedCasesComponent':
-      return <CaseList key={props.sys.id} cases={props.cases.items} />
+      return (
+        <CaseList
+          key={props.sys.id}
+          {...(props as Pick<FeaturedCases, 'initial' | 'batchSize' | 'enableBatching'>)}
+          cases={props.cases.items}
+        />
+      )
     case 'DescriptionComponent':
       return <Description key={props.sys.id} {...(props as DescriptionData)} />
     case 'ImageMarquee':
