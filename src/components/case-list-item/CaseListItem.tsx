@@ -43,8 +43,8 @@ export const CaseListItem = ({
       : {}
 
   return (
-    <Link href="/case/[case]" as={`/case/${slug ?? title}`}>
-      <div ref={$container} className={className} style={style}>
+    <div ref={$container} className={className} style={style}>
+      <Link href="/case/[case]" as={`/case/${slug ?? title}`}>
         <AspectRatio ratio={16 / 10} className={bem('thumbnailContainer')}>
           <Media className={bem('thumbnail')} {...thumbnail} {...mediaProps} index={index} />
         </AspectRatio>
@@ -52,7 +52,7 @@ export const CaseListItem = ({
           <h3 className={bem('client')}>{client}</h3>
           <h4 className={bem('projectTitle')}>{title}</h4>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   )
 }

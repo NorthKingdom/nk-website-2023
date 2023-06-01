@@ -2,7 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
 import { WORK_PAGE_QUERY } from '@graphql/queries'
-import type { WorkPage } from '@customTypes/cms'
+import type { WorkPage, FeaturedCases } from '@customTypes/cms'
 import { CaseList } from '@components/case-list'
 import { CaseArchive } from '@components/case-archive'
 
@@ -20,7 +20,10 @@ function Work(props: WorkPage) {
         <link rel="canonical" href="https://www.northkingdom.com/work" />
       </Head>
       <main style={{ paddingTop: '80px' }}>
-        <CaseList cases={props.featuredCases.cases.items} />
+        <CaseList
+          {...(props.featuredCases as Pick<FeaturedCases, 'initial' | 'batchSize' | 'enableBatching'>)}
+          cases={props.featuredCases.cases.items}
+        />
         <CaseArchive />
       </main>
     </>
