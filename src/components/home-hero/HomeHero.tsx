@@ -4,7 +4,6 @@ import { bemify } from '@utils/bemify'
 import { use100vh } from 'react-div-100vh'
 import dynamic from 'next/dynamic'
 import { Loader } from '@components/loader'
-import { VideoPlayer } from '@components/video-player'
 import { useGlobalStateStore } from '@store'
 import { Modal } from '@components/modal'
 import { CloseButton } from '@components/close-button'
@@ -21,13 +20,16 @@ const WebglScene = dynamic(() => import('./webgl-scene/WebglScene').then((Mod) =
   loading: () => <Loader className={bem('loader')} />,
 })
 
+const VideoPlayer = dynamic(() => import('@components/video-player').then((Mod) => Mod.VideoPlayer), {
+  ssr: false,
+})
+
 export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProps) => {
   const [loaded, setLoaded] = useState(false)
   const $container = useRef<HTMLDivElement>(null)
   const height100vh = use100vh() as number
   const shieldState = useWebglSceneStore((state) => state.shieldState)
   const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
-  // const [showVideoPlayer, setShowVideoPlayer] = useState(false)
   const lenis = useGlobalStateStore((state) => state.lenis)
   const isInView = useInView($container)
 
@@ -82,14 +84,16 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProp
             className={videoModalBem('closeButton')}
             onClick={() => dispatchShieldStateEvent({ type: 'COLLAPSE' })}
           />
-          <VideoPlayer
-            className={videoModalBem('videoPlayer')}
-            autoPlay={true}
-            playsinline={true}
-            src={showreelVideo}
-            controls={true}
-            poster=""
-          />
+          {loaded && (
+            <VideoPlayer
+              className={videoModalBem('videoPlayer')}
+              autoPlay={true}
+              playsinline={true}
+              src={showreelVideo}
+              controls={true}
+              poster=""
+            />
+          )}
         </Modal>
       </div>
       <ContentWrapper className={bem('statement')}>
