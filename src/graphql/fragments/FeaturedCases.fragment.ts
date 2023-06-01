@@ -10,6 +10,9 @@ export const FEATURED_CASES = gql`
     sys {
       id
     }
+    initial
+    enableBatching
+    batchSize
     cases: casesCollection(limit: 10) {
       items {
         title
