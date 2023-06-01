@@ -36,7 +36,7 @@ export const Menu = ({
   const heigh100vh = use100vh() as number
 
   return (
-    <div className={bem()} style={{ height: heigh100vh }} data-is-menu-open={isOpen}>
+    <menu className={bem()} style={{ height: heigh100vh }} data-is-menu-open={isOpen}>
       <div className={bem('overlay')} onClick={onClickOutside} />
       <div className={bem('content')}>
         <div className={bem('navScrollSafeArea')} />
@@ -72,6 +72,6 @@ export const Menu = ({
           </div>
         </div>
       </div>
-    </div>
+    </menu>
   )
 }

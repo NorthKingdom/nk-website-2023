@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect, useEffect } from 'react'
 
 /**
  * Listen for `matchMedia` change events and determine if the `document`
@@ -10,7 +10,7 @@ export function useMatchMedia(mediaQuery: string, initial = false): boolean {
   //   typeof window !== 'undefined' ? window.matchMedia(mediaQuery).matches : initial
   // )
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const mediaQueryList = matchMedia(mediaQuery)
 
     function onChange() {

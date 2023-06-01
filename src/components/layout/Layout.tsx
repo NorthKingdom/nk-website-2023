@@ -1,13 +1,18 @@
 import { useEffect, useRef } from 'react'
+import dynamic from 'next/dynamic'
 import Lenis from '@studio-freight/lenis'
 import { Header } from '@components/header'
-import { Footer } from '@components/footer'
 import styles from './Layout.module.scss'
 import { useGlobalStateStore } from '@store/global-state-store'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 import { useRouter } from 'next/router'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNextCssRemovalPrevention } from '@hooks/use-next-css-removal-prevention'
+
+const Footer = dynamic(() => import('@components/footer').then((Mod) => Mod.Footer), {
+  ssr: false,
+  suspense: false,
+})
 
 interface LayoutProps {
   children: React.ReactNode
