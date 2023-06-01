@@ -67,11 +67,11 @@ export const Lensflare: React.FC = ({ debug = false, ...props }: LensflareProps)
       Math.pow(pointer.x - normalizedShieldAnchor.x, 2) + Math.pow(pointer.y - normalizedShieldAnchor.y, 2)
     )
     dist.target = rubberbandIfOutOfBounds(dist.target, 1, 4)
-    dist.current = lerp(dist.current, dist.target, 0.15, delta)
+    dist.current = lerp(dist.current, dist.target, 0.2, delta)
 
     angle.target = Math.atan2(pointer.x - normalizedShieldAnchor.x, -1 * (pointer.y - normalizedShieldAnchor.y))
     angle.target = closestAngle(angle.current, angle.target)
-    angle.current = lerp(angle.current, angle.target, 0.15, delta)
+    angle.current = lerp(angle.current, angle.target, 0.02, delta)
 
     ref.current.rotation.z = angle.current
     ref.current.scale.x = dist.current * scale
