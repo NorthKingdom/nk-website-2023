@@ -1,5 +1,5 @@
 import { Vector2 } from 'three'
-import glsl from 'glslify'
+import { grain } from './shaders/grain.glsl'
 
 export const distortionEffect = {
   uniforms: {
@@ -10,7 +10,7 @@ export const distortionEffect = {
     uIntensity: { value: 0 },
   },
   vertexShader: `varying vec2 vUv;void main() {vUv = uv;gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0 );}`,
-  fragmentShader: glsl`
+  fragmentShader: /* glsl */ `
 
     uniform float time;
     uniform sampler2D tDiffuse;
@@ -19,7 +19,7 @@ export const distortionEffect = {
     uniform vec2 uMouse;
     uniform float uIntensity;
 
-    #pragma glslify: grain = require(glsl-film-grain);
+    ${grain}
 
     float circle(vec2 uv, vec2 disc_center, float disc_radius, float border_size) {
       uv -= disc_center;

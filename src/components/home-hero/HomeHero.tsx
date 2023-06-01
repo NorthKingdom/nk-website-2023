@@ -4,7 +4,6 @@ import { bemify } from '@utils/bemify'
 import { use100vh } from 'react-div-100vh'
 import dynamic from 'next/dynamic'
 import { Loader } from '@components/loader'
-import { VideoPlayer } from '@components/video-player'
 import { useGlobalStateStore } from '@store'
 import { Modal } from '@components/modal'
 import { CloseButton } from '@components/close-button'
@@ -21,13 +20,16 @@ const WebglScene = dynamic(() => import('./webgl-scene/WebglScene').then((Mod) =
   loading: () => <Loader className={bem('loader')} />,
 })
 
+const VideoPlayer = dynamic(() => import('@components/video-player').then((Mod) => Mod.VideoPlayer), {
+  ssr: false,
+})
+
 export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProps) => {
   const [loaded, setLoaded] = useState(false)
   const $container = useRef<HTMLDivElement>(null)
   const height100vh = use100vh() as number
   const shieldState = useWebglSceneStore((state) => state.shieldState)
   const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
-  // const [showVideoPlayer, setShowVideoPlayer] = useState(false)
   const lenis = useGlobalStateStore((state) => state.lenis)
   const isInView = useInView($container)
 
@@ -71,6 +73,17 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProp
           eventPrefix="client"
         />
 
+        {/* image to improve LCP */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          aria-hidden={true}
+          alt=""
+          className={bem('lcp')}
+          width={99999}
+          height={99999}
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTk5OTlweCIgaGVpZ2h0PSI5OTk5OXB4IiB2aWV3Qm94PSIwIDAgOTk5OTkgOTk5OTkiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIGZpbGwtb3BhY2l0eT0iMCI+CiAgICAgICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9Ijk5OTk5IiBoZWlnaHQ9Ijk5OTk5Ij48L3JlY3Q+CiAgICA8L2c+Cjwvc3ZnPg=="
+        />
+
         <div aria-hidden="true" className={bem('overlay')} data-visible={!loaded} />
 
         <h1 className={bem('title')} aria-label="North Kingdom">
@@ -82,14 +95,16 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProp
             className={videoModalBem('closeButton')}
             onClick={() => dispatchShieldStateEvent({ type: 'COLLAPSE' })}
           />
-          <VideoPlayer
-            className={videoModalBem('videoPlayer')}
-            autoPlay={true}
-            playsinline={true}
-            src={showreelVideo}
-            controls={true}
-            poster=""
-          />
+          {loaded && (
+            <VideoPlayer
+              className={videoModalBem('videoPlayer')}
+              autoPlay={true}
+              playsinline={true}
+              src={showreelVideo}
+              controls={true}
+              poster=""
+            />
+          )}
         </Modal>
       </div>
       <ContentWrapper className={bem('statement')}>
