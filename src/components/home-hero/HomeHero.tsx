@@ -17,7 +17,6 @@ const videoModalBem = bemify(styles, 'videoPlayerModal')
 
 const WebglScene = dynamic(() => import('./webgl-scene/WebglScene').then((Mod) => Mod.WebglScene), {
   ssr: false,
-  loading: () => <Loader className={bem('loader')} />,
 })
 
 const VideoPlayer = dynamic(() => import('@components/video-player').then((Mod) => Mod.VideoPlayer), {
@@ -84,7 +83,9 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProp
           src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTk5OTlweCIgaGVpZ2h0PSI5OTk5OXB4IiB2aWV3Qm94PSIwIDAgOTk5OTkgOTk5OTkiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIGZpbGwtb3BhY2l0eT0iMCI+CiAgICAgICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9Ijk5OTk5IiBoZWlnaHQ9Ijk5OTk5Ij48L3JlY3Q+CiAgICA8L2c+Cjwvc3ZnPg=="
         />
 
-        <div aria-hidden="true" className={bem('overlay')} data-visible={!loaded} />
+        <div aria-hidden="true" className={bem('overlay')} data-visible={!loaded}>
+          <Loader className={bem('loader')} />
+        </div>
 
         <h1 className={bem('title')} aria-label="North Kingdom">
           North Kingdom
