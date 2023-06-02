@@ -62,13 +62,18 @@ export default function App({ Component, pageProps, router }: AppProps) {
         <meta property="og:url" content="https://www.northkingdom.com/" key="ogurl" />
         <meta property="og:site_name" content="North Kingdom" key="ogsitename" />
 
-        <link rel="preload" href="/fonts/FKGroteskNeue/woff2/FKGroteskNeue-Regular.woff2" as="font" type="font/woff2" />
-
-        <link rel="preload" href="/fonts/FKGroteskNeue/woff2/FKGroteskNeue-Bold.woff2" as="font" type="font/woff2" />
+        <link
+          rel="preload"
+          href="/fonts/FKGroteskNeue/woff2/FKGroteskNeue-Regular.woff2"
+          crossOrigin="anonymous"
+          as="font"
+          type="font/woff2"
+        />
 
         <link
           rel="preload"
-          href="/fonts/FKRasterGrotesk/woff2/FKRasterGrotesk-Blended.woff2"
+          href="/fonts/FKGroteskNeue/woff2/FKGroteskNeue-Bold.woff2"
+          crossOrigin="anonymous"
           as="font"
           type="font/woff2"
         />

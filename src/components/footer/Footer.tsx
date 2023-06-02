@@ -48,9 +48,7 @@ export const Footer = ({ theme = 'dark' }: FooterProps) => {
           <button className={bem('scrollTopCta')} onClick={onScrollToTop}>
             {scrollToTopCopy}
           </button>
-          <Link className={bem('noa')} href="https://www.thenorthalliance.com/">
-            {data?.footer?.statement}
-          </Link>
+          <Link href="https://www.thenorthalliance.com/">{data?.footer?.statement}</Link>
         </div>
       </Wordmark>
     </footer>
