@@ -4,6 +4,7 @@ import type { Video, ResponsiveImage } from '@customTypes/cms'
 import Image from 'next/image'
 import { getContentfulImageSrc } from '@utils/contentful'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
+import pick from 'ramda/src/pick'
 import styles from './Media.module.scss'
 
 // @TODO: add support for light background loader animation
@@ -45,6 +46,9 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
     )
   }, [loaded])
 
+  const videoPlayerProps = pick(['autoPlay', 'muted', 'playsinline'], props)
+  const imageProps = pick(['width', 'height'], props)
+
   return (
     <>
       {props?.__typename === 'Video' || props?.desktopVideoCollection ? (
@@ -53,7 +57,7 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
           src={props as VideoMediaProps}
           onError={() => setLoaded(false)}
           onCanPlay={() => setLoaded(true)}
-          {...props}
+          {...videoPlayerProps}
         />
       ) : props?.__typename === 'ResponsiveImage' ? (
         <Image
@@ -64,7 +68,7 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
           fill={true}
           onError={() => setLoaded(false)}
           onLoadingComplete={() => setLoaded(true)}
-          {...props}
+          {...imageProps}
         />
       ) : null}
       <div
