@@ -1,8 +1,8 @@
-import { useRef, useState, useMemo } from 'react'
+import { useRef, useState, useMemo, useEffect } from 'react'
 import styles from './ImageMarquee.module.scss'
 import { bemify } from '@utils/bemify'
 import cx from 'clsx'
-import { MotionValue, useMotionValue, useMotionValueEvent } from 'framer-motion'
+import { useInView, useMotionValue, useMotionValueEvent } from 'framer-motion'
 import { useOnScroll } from '@hooks/use-on-scroll'
 import { clamp, map } from '@utils/math'
 import type { ImageMarquee as ImageMarqueeData, ImageMarqueeItem as ImageMarqueeItemData } from '@customTypes/cms'
@@ -64,6 +64,20 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
     return rows
   }, [images, isMobileBreakpoint])
 
+  const [revealed, setRevealed] = useState(false)
+
+  const isInView = useInView(ref)
+
+  // useEffect(() => {
+  //   if (!isInView && revealed) setRevealed(false)
+  // }, [isInView, revealed])
+
+  useMotionValueEvent(progressMotionValue, 'change', (latest) => {
+    if (latest > 0.4) {
+      if (!revealed) setRevealed(true)
+    }
+  })
+
   return (
     <div ref={ref} className={cx(bem(), className)} style={style}>
       <div className={bem('stickyContainer')}>
@@ -72,12 +86,13 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
             {row.map((item, j) => {
               const itemIndex = i * row.length + j
               const revealIndex = (itemIndex % row.length) + i + 1
-              const revealThreshold = revealIndex / (row.length + 2) + i * 0.03
+              const revealThreshold = (revealIndex / (row.length + 2)) * 0.5 + i * 0.03
               return (
                 <ImageMarqueeItem
                   key={j}
                   {...item}
-                  scrollProgress={progressMotionValue}
+                  revealed={revealed}
+                  // scrollProgress={progressMotionValue}
                   revealThreshold={revealThreshold}
                   // debug
                 />
@@ -103,23 +118,12 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
 }
 
 interface ImageMarqueeItemProps extends ImageMarqueeItemData {
-  scrollProgress: MotionValue
   revealThreshold: number
+  revealed?: boolean
   debug?: boolean
 }
 
-export const ImageMarqueeItem = ({ debug = false, ...props }: ImageMarqueeItemProps) => {
-  const [revealed, setRevealed] = useState(false)
-  const { revealThreshold } = props
-
-  useMotionValueEvent(props.scrollProgress, 'change', (latest) => {
-    if (latest > revealThreshold) {
-      if (!revealed) setRevealed(true)
-    } else {
-      if (revealed) setRevealed(false)
-    }
-  })
-
+export const ImageMarqueeItem = ({ debug = false, revealed, ...props }: ImageMarqueeItemProps) => {
   const { src: clientLogoSrc } = useContentfulMediaSrc(props.clientLogo, { width: 300, quality: 95 })
   const { src: relatedImageSrc } = useContentfulMediaSrc(props.relatedImage, {
     width: 300,
@@ -133,6 +137,9 @@ export const ImageMarqueeItem = ({ debug = false, ...props }: ImageMarqueeItemPr
       <Image
         className={bem('image')}
         data-revealed={!revealed}
+        style={{
+          '--reveal-delay': `${props.revealThreshold}s`,
+        }}
         alt={props.clientName}
         src={clientLogoSrc}
         width={217}
@@ -144,6 +151,9 @@ export const ImageMarqueeItem = ({ debug = false, ...props }: ImageMarqueeItemPr
         data-revealed={revealed}
         alt={props.clientName}
         src={relatedImageSrc}
+        style={{
+          '--reveal-delay': `${props.revealThreshold}s`,
+        }}
         width={217}
         height={140}
       />
