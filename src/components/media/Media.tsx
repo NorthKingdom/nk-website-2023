@@ -49,6 +49,8 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
   const videoPlayerProps = pick(['autoPlay', 'muted', 'playsInline'], props)
   const imageProps = pick(['width', 'height'], props)
 
+  console.log(props.caseHeroImage)
+
   return (
     <>
       {props?.__typename === 'Video' || props?.desktopVideoCollection ? (
@@ -61,7 +63,8 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
         />
       ) : props?.__typename === 'ResponsiveImage' ? (
         <Image
-          fetchPriority={props?.index === 0 ? 'high' : 'auto'}
+          fetchPriority={props?.index === 0 || props.caseHeroImage ? 'high' : 'auto'}
+          loading={props.caseHeroImage ? 'eager' : 'lazy'}
           src={getContentfulImageSrc(src)}
           alt={(props as ImageMediaProps).altText}
           aria-hidden={Boolean((props as ImageMediaProps).altText)}

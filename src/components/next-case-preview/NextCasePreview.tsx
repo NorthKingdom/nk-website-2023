@@ -57,15 +57,14 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
           await animate(scale, 14, { duration: 0.5 })
           // console.log(scale, scale.get())
           if (scale.get() >= 10) {
-            // console.log(`end`)
             router.push(
               '/case/[case]',
               router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
             )
+            hasRouted.current = true
             // window.location.href =
             //   router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
             // window.location = '/case/fake-riot-case'
-            hasRouted.current = true
           }
         }
       }

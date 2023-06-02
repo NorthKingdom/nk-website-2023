@@ -11,6 +11,7 @@
 
   img {
     border-radius: 0 !important;
+    object-fit: cover;
 
     @include mq($from: tablet) {
       height: 100vh;
