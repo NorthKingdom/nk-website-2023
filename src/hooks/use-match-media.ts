@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 
 /**
  * Listen for `matchMedia` change events and determine if the `document`

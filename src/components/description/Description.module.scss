@@ -1,4 +1,5 @@
 .description {
+  position: relative;
   @include flex-center($direction: row);
   //   height: 250px;
   width: 100%;
