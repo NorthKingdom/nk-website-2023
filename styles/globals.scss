@@ -82,6 +82,13 @@ html[data-theme='light'] {
   --color-fg-inverted: var(--color-white);
 }
 
+/**
+* Debug
+*/
+*[data-debug='true'] {
+  outline: 1px solid red;
+}
+
 /*
 * Foter
 */
