@@ -16,6 +16,8 @@ interface GlobalState {
   setLenis: (lenis: Lenis | null) => void
   featuredCases: any[]
   setFeaturedCases: (arr: any[]) => void
+  isComingFromACasePage: boolean
+  setIsComingFromACasePage: (isOnPage: boolean) => void
 }
 
 export const useGlobalStateStore = create<GlobalState>()((set, get) => ({
@@ -42,4 +44,6 @@ export const useGlobalStateStore = create<GlobalState>()((set, get) => ({
   setLenis: (lenis) => set({ lenis }),
   featuredCases: [],
   setFeaturedCases: (featuredCases) => set({ featuredCases }),
+  isComingFromACasePage: false,
+  setIsComingFromACasePage: (isComingFromACasePage: boolean) => set({ isComingFromACasePage }),
 }))

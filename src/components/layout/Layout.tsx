@@ -46,6 +46,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
   const lenis = useGlobalStateStore((state) => state.lenis)
   const setLenis = useGlobalStateStore((state) => state.setLenis)
+  const setIsComingFromACasePage = useGlobalStateStore((state) => state.setIsComingFromACasePage)
   const removeExpiredStyles = useNextCssRemovalPrevention()
 
   /*
@@ -93,15 +94,25 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
     }
   }, [lenis, isMenuOpen])
 
+  useEffect(() => {
+    console.log(`mount`)
+    return () => {
+      console.log(`setting`, router.route === '/case/[case]')
+      setIsComingFromACasePage(router.route === '/case/[case]')
+    }
+  }, [router])
+
   /*
    * Scroll to top when page transition starts
    */
   const onPageTransitionStart = (variant: 'animate' | 'exit') => {
     if (lenis && variant === 'animate') {
-      setTimeout(() => {
-        console.log(`LENIS SCROLL 1`)
-        lenis.scrollTo(0, { immediate: true })
-      }, 500)
+      // lenis.scrollTo(0, { immediate: true })
+      // setTimeout(() => {
+      console.log(`scroll to immediate `)
+      lenis.scrollTo(0, { immediate: true })
+      lenis.stop()
+      // }, 500)
     }
   }
 
@@ -114,7 +125,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
       <Header />
       <div ref={wrapperRef} className={styles.main}>
         <div ref={contentRef}>
-          <AnimatePresence initial={false}>
+          <AnimatePresence mode="wait" initial={false}>
             <motion.main
               key={router.asPath}
               variants={variants}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
 import { CaseHero as CaseHeroType, Case as CasePageProps } from '@customTypes/cms'
@@ -11,11 +11,15 @@ import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import Lenis from '@studio-freight/lenis'
 import { useQuery } from '@apollo/client'
 import { NextCasePreview } from '@components/next-case-preview'
+import { useRouter } from 'next/router'
 
 const Case = (props: CasePageProps) => {
+  const router = useRouter()
   const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
   const featuredCases = useGlobalStateStore((state) => state.featuredCases)
   const setFeaturedCases = useGlobalStateStore((state) => state.setFeaturedCases)
+  const isComingFromACasePage = useGlobalStateStore((state) => state.isComingFromACasePage)
+  // const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
 
   useEffect(() => {
     console.log(`featuedcases: `, featuredCases)
@@ -35,6 +39,13 @@ const Case = (props: CasePageProps) => {
       a()
     }
   }, [featuredCases])
+
+  useLayoutEffect(() => {
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true })
+      lenis.stop()
+    }
+  }, [lenis])
 
   return (
     props.componentsCollection?.items.length > 0 && (

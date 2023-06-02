@@ -15,15 +15,14 @@
   }
 
   &__stickyInner {
+    // outline: 2px solid green;
     position: relative;
     width: 100%;
-    height: fit-content;
+    height: auto;
     max-height: 100vh;
     overflow: hidden;
     position: sticky;
-    // top: 0;
-    bottom: 0;
-    align-self: flex-end;
+    top: 0;
 
     @include mq($from: desktop-small) {
       min-height: 100vh;
@@ -31,8 +30,10 @@
 
     img {
       border-radius: 0 !important;
+      height: auto;
+      width: 100%;
 
-      @include mq($from: tablet) {
+      @include mq($from: desktop-small) {
         height: 100vh;
       }
     }
