@@ -63,15 +63,18 @@
     display: block;
     margin: 0 auto;
     opacity: 1;
-    transition: all 0.25s ease-in-out;
+    transition: all 0.3s ease-in;
+    transition-delay: var(--reveal-delay, 0s);
 
     &[data-revealed='false'] {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0);
+      transform: translate(-50%, -50%) scale(0.15);
+      transition-delay: 0;
     }
 
     &[data-revealed='true'] {
-      transition: all 0.35s ease-in-out;
+      transition: all 0.4s ease-out;
+      transition-delay: var(--reveal-delay, 0s);
       opacity: 1;
       transform: translate(-50%, -50%) scale(1);
     }
