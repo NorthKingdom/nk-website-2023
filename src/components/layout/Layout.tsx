@@ -56,7 +56,8 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
     const lenis = new Lenis({
       wrapper: wrapperRef.current,
       content: contentRef.current,
-      smooth: !isTouchDevice,
+      smoothTouch: !isTouchDevice,
+      smoothWheel: !isTouchDevice,
     })
 
     setLenis(lenis)
