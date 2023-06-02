@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 
 export function useIsTouchDevice() {
   const [isTouchDevice, setIsTouchDevice] = useState(false)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsTouchDevice(window.matchMedia('(pointer: coarse)').matches)
   }, [])
 
