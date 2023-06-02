@@ -4,18 +4,14 @@
   height: 100%;
   max-height: 100vh;
   overflow: hidden;
+  height: fit-content;
 
   @include mq($from: desktop-small) {
     min-height: 100vh;
   }
 
   img {
-    border-radius: 0 !important;
     object-fit: cover;
-
-    @include mq($from: tablet) {
-      height: 100vh;
-    }
   }
 
   video {
@@ -29,6 +25,6 @@
     z-index: 1;
     bottom: 20px;
     left: 20px;
-    // color: white;
+    color: red;
   }
 }

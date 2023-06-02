@@ -6,6 +6,7 @@
   position: relative;
   height: 200vh;
   width: 100%;
+  display: flex;
 
   &__container {
     width: 100%;
@@ -20,7 +21,9 @@
     max-height: 100vh;
     overflow: hidden;
     position: sticky;
-    top: 0;
+    // top: 0;
+    bottom: 0;
+    align-self: flex-end;
 
     @include mq($from: desktop-small) {
       min-height: 100vh;

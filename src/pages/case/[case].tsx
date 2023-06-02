@@ -36,18 +36,6 @@ const Case = (props: CasePageProps) => {
     }
   }, [featuredCases])
 
-  useEffect(() => {
-    console.log(`use effect for [case] lenis`)
-    if (lenis) {
-      console.log(`USE EFFECT LENIS SCROLL TOP `)
-      lenis.scrollTo(0, { immediate: true })
-      lenis.stop()
-      setTimeout(() => {
-        lenis.start()
-      }, 200)
-    }
-  }, [lenis]) //, props.title])
-
   return (
     props.componentsCollection?.items.length > 0 && (
       <>

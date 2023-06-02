@@ -6,6 +6,8 @@ import { Media } from '@components/media'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 const bem = bemify(styles, 'nextCasePreview')
+import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
+import { useBreakpointUntil } from '@hooks/use-breakpoint'
 import { useOnScroll } from '@hooks/use-on-scroll'
 import { AnimatePresence, animate, motion, useInView, useMotionValue, useTransform } from 'framer-motion'
 
@@ -25,9 +27,11 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
   const isInView = useInView(ref)
   const hasRouted = useRef(false)
 
+  const bpBeforeTablet = useBreakpointUntil('desktopSmall')
+
   useEffect(() => {
     const newHref = router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
-    console.log(newHref)
+    // console.log(newHref)
 
     router.prefetch(newHref)
   }, [router])
@@ -41,7 +45,7 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
   useOnScroll(
     async ({ progress: _progress }) => {
       progress.set(_progress)
-      console.log(_progress)
+      // console.log(_progress)
 
       const loadingPercentage = Math.min(Math.max(0, Math.round(range(_progress * 100, 33, 65, 0, 100))), 100)
 
@@ -57,10 +61,10 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
           await animate(scale, 14, { duration: 0.5 })
           // console.log(scale, scale.get())
           if (scale.get() >= 10) {
-            router.push(
-              '/case/[case]',
-              router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
-            )
+            // router.push(
+            //   '/case/[case]',
+            //   router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
+            // )
             hasRouted.current = true
             // window.location.href =
             //   router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
@@ -71,7 +75,7 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
     },
     {
       target: ref,
-      enabled: isInView,
+      enabled: isInView && !hasRouted.current,
     }
   )
 
@@ -86,6 +90,7 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
         <AnimatePresence mode="wait">
           {!hasRouted.current && (
             <motion.img
+              key="shield-img"
               src="/images/shield-mask-local2.png"
               style={{
                 scale,
@@ -102,20 +107,40 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
             />
           )}
         </AnimatePresence>
-        <motion.img
-          src={(src as ResponsiveImage).desktopImage?.url || (src as Video).posterImage?.url}
-          style={{
-            scale: s,
-            y,
-            position: `absolute`,
-            top: 0,
-            left: 0,
-            width: `100%`,
-            height: `100vh`,
-            zIndex: 0,
-            objectFit: 'cover',
-          }}
-        />
+
+        {bpBeforeTablet ? (
+          <AspectRatio ratio={1920 / 1080}>
+            <motion.img
+              src={(src as ResponsiveImage).desktopImage?.url || (src as Video).posterImage?.url}
+              style={{
+                scale: s,
+                y,
+                position: `absolute`,
+                top: 0,
+                left: 0,
+                width: `100%`,
+                height: `100vh`,
+                zIndex: 0,
+                objectFit: 'cover',
+              }}
+            />
+          </AspectRatio>
+        ) : (
+          <motion.img
+            src={(src as ResponsiveImage).desktopImage?.url || (src as Video).posterImage?.url}
+            style={{
+              scale: s,
+              y,
+              position: `absolute`,
+              top: 0,
+              left: 0,
+              width: `100%`,
+              height: `100vh`,
+              zIndex: 0,
+              objectFit: 'cover',
+            }}
+          />
+        )}
 
         {/* <Media {...src} controls={false} muted={true} autoPlay={true} loop={true} playsinline={true} /> */}
         <div className={bem('description')}>
