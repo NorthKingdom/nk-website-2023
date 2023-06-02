@@ -43,14 +43,14 @@ export const CaseList = ({ cases = [], initial = 6, enableBatching = true, batch
 
   return (
     <ContentWrapper className={bem()}>
-      <div className={bem('cases')}>
+      <div className={bem('cases')} data-can-show-more-cases={canShowMore}>
         {cases
           .filter((_, i) => i < itemsLength)
           .map((c, i) => (
             <CaseListItem key={c.slug} {...c} index={i} />
           ))}
       </div>
-      {enableBatching && canShowMore && <LoadMore onClick={showNewBatch} theme="dark" />}
+      {enableBatching && canShowMore && <LoadMore className={bem('loadMore')} onClick={showNewBatch} theme="dark" />}
     </ContentWrapper>
   )
 }
