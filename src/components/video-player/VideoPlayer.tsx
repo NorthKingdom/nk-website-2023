@@ -39,7 +39,7 @@ const _plyrControls = `
 interface VideoPlayerProps extends Omit<ComponentPropsWithoutRef<'video'>, 'src'> {
   src: Video
   className?: string
-  poster: string
+  poster?: string
   playsInline?: boolean
   controls?: boolean
   muted?: boolean

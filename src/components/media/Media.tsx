@@ -60,6 +60,8 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
           onError={() => setLoaded(false)}
           onCanPlay={() => setLoaded(true)}
           {...videoPlayerProps}
+          src={props as VideoMediaProps}
+          {...props}
         />
       ) : props?.__typename === 'ResponsiveImage' ? (
         <Image
