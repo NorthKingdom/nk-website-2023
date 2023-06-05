@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useRef, useState } from 'react'
 import styles from './CaseArchive.module.scss'
 import { bemify } from '@utils/bemify'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
-import { List } from '@components/list'
 import { useQuery } from '@apollo/client'
 import { CASE_ARCHIVE_QUERY } from '@graphql/queries'
 import type { CaseArchiveItem as CaseArchiveItemData } from '@customTypes/cms'
@@ -17,10 +16,11 @@ import { useCustomCursor } from '@hooks/use-custom-cursor'
 import { useBreakpointUntil } from '@hooks/use-breakpoint'
 import { useOnScroll } from '@hooks/use-on-scroll'
 import * as Select from '@components/select'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, useInView } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { useGlobalStateStore } from '@store'
 import { LoadMore } from '@components/load-more'
+import { useCaseArchiveListAnimation } from './CaseArchive.hooks'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -65,12 +65,13 @@ interface CaseArchiveItemProps extends CaseArchiveItemData {
 const IMAGE_POOL = ['dummy/case-thumb-fallback.webp', 'dummy/temp-left-riot-img.jpg', 'dummy/temp-right-riot-img.jpg']
 
 const CaseArchiveItem = (props: CaseArchiveItemProps) => {
+  const ref = useRef<HTMLDivElement>(null)
   const projectYear = new Date(props.date).getFullYear()
   const { setSrc } = React.useContext(CustomCursorImageContext)
   const src = IMAGE_POOL[props.index % IMAGE_POOL.length]
 
   return (
-    <div className={bemItem()} onMouseOver={() => setSrc(src)}>
+    <div ref={ref} className={bemItem()} onMouseOver={() => setSrc(src)}>
       <p className={bemItem('year')}>{projectYear}</p>
 
       {props.mobile ? (
@@ -98,10 +99,12 @@ const CaseArchiveItem = (props: CaseArchiveItemProps) => {
  * Case archive component.
  */
 export const CaseArchive = () => {
+  const listRef = useRef<HTMLUListElement>(null)
   const lenis = useGlobalStateStore((state) => state.lenis)
   const cursorRef = useRef<HTMLDivElement>(null)
   const isTouchDevice = useIsTouchDevice()
   const isMobileBreakpoint = useBreakpointUntil('tablet')
+  const { animateAllItems, animateNewItems } = useCaseArchiveListAnimation(listRef)
 
   const [{ filter, previousFilter }, setFilter] = useReducer(
     (state: { filter: string; previousFilter: string }, newFilter: string) => ({
@@ -147,14 +150,7 @@ export const CaseArchive = () => {
     enabled: !isTouchDevice,
   })
 
-  useResize(
-    (e) => {
-      cursor.setLimit(cursorEffect?.id, {
-        x: window.innerWidth * 0.5,
-      })
-    },
-    { wait: 100 }
-  )
+  useResize(() => cursor.setLimit(cursorEffect?.id, { x: window.innerWidth * 0.5 }), { wait: 100 })
 
   const caseArchiveHeaderRef = useRef<HTMLDivElement>(null)
   const filtersContainerRef = useRef<HTMLDivElement>(null)
@@ -187,6 +183,34 @@ export const CaseArchive = () => {
       lenis.scrollTo(caseArchiveHeaderRef.current, { onComplete: () => (autoScrolling.current = false) })
     }, 50)
   }, [filter, lenis, previousFilter])
+
+  /**
+   * List Animations
+   */
+
+  const isInView = useInView(listRef, { margin: '0px 0px -100px 0px', once: true })
+
+  useEffect(() => {
+    if (!isInView) return
+    animateNewItems()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isInView])
+
+  const hasFilterChangedDirty = useRef(false)
+  useEffect(() => {
+    if (filter !== previousFilter) hasFilterChangedDirty.current = true
+  }, [filter, previousFilter])
+
+  useEffect(() => {
+    if (!isInView) return
+    if (hasFilterChangedDirty.current) {
+      animateAllItems()
+      hasFilterChangedDirty.current = false
+    } else {
+      animateNewItems()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [caseArchiveData.items])
 
   return (
     <ContentWrapper className={bem()} data-can-fetch-more={canFetchMore}>
@@ -222,7 +246,7 @@ export const CaseArchive = () => {
             </motion.div>
           )}
           {filtersDisplayMode === 'dropdown' && (
-            <motion.div key="dropdown" variants={DROPDOWN_ANIMATION} className={bem('filtersDropdownContainer')}>
+            <motion.div key="dropdown" variants={DROPDOWN_ANIMATION}>
               <Select.Root defaultValue={filter} onValueChange={setFilter} className={bem('filtersDropdown')}>
                 {FILTERS_DROPDOWN_ITEMS.map((f) => (
                   <Select.Item
@@ -242,19 +266,18 @@ export const CaseArchive = () => {
       </div>
 
       <CustomCursorImageContext.Provider value={{ setSrc }}>
-        <List
-          items={caseArchiveData.items.map((item: any, i: number) => ({ ...item, index: i }))}
-          id={(item) => item.sys.id}
-          renderItem={(props) => <CaseArchiveItem mobile={isMobileBreakpoint} {...props} />}
-          onMouseEnter={() => {
-            if (isTouchDevice) return
-            setSectionHovered(true)
-          }}
-          onMouseLeave={() => {
-            if (isTouchDevice) return
-            setSectionHovered(false)
-          }}
-        />
+        <ul
+          ref={listRef}
+          className={bem('list')}
+          onMouseEnter={() => !isTouchDevice && setSectionHovered(true)}
+          onMouseLeave={() => !isTouchDevice && setSectionHovered(false)}
+        >
+          {caseArchiveData.items.map((item: any, i: number) => (
+            <li key={`${filter}-${item.sys.id}`} data-revealed="false">
+              <CaseArchiveItem key={`${filter}-${item.sys.id}`} mobile={isMobileBreakpoint} index={i} {...item} />
+            </li>
+          ))}
+        </ul>
       </CustomCursorImageContext.Provider>
 
       {canFetchMore && <LoadMore disabled={loading} onClick={_fetchMore} />}
