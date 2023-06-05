@@ -46,7 +46,7 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
     )
   }, [loaded])
 
-  const videoPlayerProps = pick(['autoPlay', 'muted', 'playsinline'], props)
+  const videoPlayerProps = pick(['autoPlay', 'muted', 'playsInline'], props)
   const imageProps = pick(['width', 'height'], props)
 
   return (

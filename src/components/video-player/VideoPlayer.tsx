@@ -40,7 +40,7 @@ interface VideoPlayerProps extends Omit<ComponentPropsWithoutRef<'video'>, 'src'
   src: Video
   className?: string
   poster: string
-  playsinline?: boolean
+  playsInline?: boolean
   controls?: boolean
   muted?: boolean
   autoPlay?: boolean
@@ -51,7 +51,7 @@ export const VideoPlayer = ({
   className,
   src,
   poster,
-  playsinline = false,
+  playsInline = false,
   controls = false,
   muted = true,
   loop = false,
@@ -66,19 +66,19 @@ export const VideoPlayer = ({
       controls: controls ? _plyrControls : [],
       muted: muted,
       autoplay: autoPlay,
-      clickToPlay: !playsinline,
+      clickToPlay: !playsInline,
       loop: {
         active: loop,
       },
       fullscreen: {
-        enabled: !playsinline,
+        enabled: !playsInline,
         fallback: true,
         iosNative: true,
         container: undefined,
       },
     })
 
-    if (autoPlay) {
+    if (autoPlay && playsInline) {
       p.play()
     }
   }, [])
@@ -86,7 +86,7 @@ export const VideoPlayer = ({
   return (
     // <AspectRatio ratio={16 / 10} style={{ width: '400px' }}>
     <div className={`${styles['videoPlayer']} ${className}`}>
-      <video id={id} poster={autoPlay ? '' : poster} muted={muted} {...props}>
+      <video id={id} poster={autoPlay ? '' : poster} playsInline={playsInline} muted={muted} {...props}>
         {[...(bpFromDesktopSmall ? src.desktopVideoCollection.items : src.mobileVideoCollection.items)]
           .sort((a, b) => sortVideoFormats(a.url, b.url))
           .map((s, i: number) => (
