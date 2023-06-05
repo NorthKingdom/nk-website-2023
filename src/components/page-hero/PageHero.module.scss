@@ -3,6 +3,7 @@
   height: 100%;
   min-height: 100%;
   --nav-height: 80px;
+  position: relative;
 
   &__titleContainer {
     height: calc(66vh - var(--nav-height));
@@ -24,12 +25,8 @@
   }
 
   &__imageContainer {
-    height: 66vh;
+    height: calc(66vh - var(--nav-height));
     position: relative;
-
-    @include mq($until: desktop) {
-      height: 47vh;
-    }
   }
 
   &__image {
