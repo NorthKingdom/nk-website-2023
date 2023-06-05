@@ -67,7 +67,7 @@ export const CaseHero = ({ client, caseName, src }: CaseHeroProps) => {
         </div>
         <div className={styles['caseHero__description']}>
           <AnimatePresence>
-            {!isIn ? (
+            {!isIn && isComingFromACasePage ? (
               <motion.p
                 key={'up-next-text-name'}
                 initial={{ opacity: 1, y: 0 }}
