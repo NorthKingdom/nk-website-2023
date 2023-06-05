@@ -5,19 +5,11 @@
 
   h2 {
     text-transform: capitalize;
-    color: var(--color-black);
+    color: var(--color-white);
     margin: 8px 0;
     padding: 0;
     transition: opacity 0.4s;
-  }
-
-  @include mq($until: desktop-small) {
-    h2 {
-      font-size: 72px;
-      line-height: 76px;
-      letter-spacing: -2%;
-      margin: 4px 0;
-    }
+    @include Heading1;
   }
 
   &__inner {

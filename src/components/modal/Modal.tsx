@@ -4,6 +4,7 @@ import styles from './Modal.module.scss'
 import { noop } from '@utils/noop'
 import { AnimatePresence, HTMLMotionProps, motion } from 'framer-motion'
 import { useIsSSR } from '@hooks/use-is-ssr'
+import cx from 'clsx'
 
 interface ModalProps extends HTMLMotionProps<'div'> {
   visible: boolean
@@ -12,7 +13,7 @@ interface ModalProps extends HTMLMotionProps<'div'> {
   children: React.ReactNode
 }
 
-export const Modal = ({ visible, onOpen = noop, onClose = noop, children, ...props }: ModalProps) => {
+export const Modal = ({ visible, onOpen = noop, onClose = noop, className = '', children, ...props }: ModalProps) => {
   const visiblePrev = React.useRef(visible)
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export const Modal = ({ visible, onOpen = noop, onClose = noop, children, ...pro
     <AnimatePresence>
       {visible && (
         <motion.div
-          className={styles['modal']}
+          className={cx(styles['modal'], className)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
