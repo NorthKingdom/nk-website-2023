@@ -6,6 +6,11 @@
   overflow: hidden;
   height: fit-content;
   min-height: 47vh;
+  transform: translate3d(0px, 0px, 0px);
+
+  @include mq($until: desktop-small) {
+    max-height: 100svh;
+  }
 
   @include mq($from: desktop-small) {
     min-height: 100vh;
@@ -47,8 +52,11 @@
   &__description {
     position: absolute;
     z-index: 1;
-    bottom: 20px;
-    left: 20px;
-    // color: red;
+    // bottom: 20px;
+    // left: 20px;
+    bottom: 0;
+    padding: 0 20px 20px 20px;
+    width: 100%;
+    color: red;
   }
 }

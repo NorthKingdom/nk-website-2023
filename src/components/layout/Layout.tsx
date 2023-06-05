@@ -109,6 +109,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
     if (lenis && variant === 'animate') {
       // lenis.scrollTo(0, { immediate: true })
       // setTimeout(() => {
+      lenis.stop()
       console.log(`scroll to immediate `)
       lenis.scrollTo(0, { immediate: true })
       lenis.stop()

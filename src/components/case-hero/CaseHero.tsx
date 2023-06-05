@@ -8,6 +8,8 @@ import { useBreakpointUntil } from '@hooks/use-breakpoint'
 import { useGlobalStateStore } from '@store/global-state-store'
 const bem = bemify(styles, 'caseHero')
 import Lenis from '@studio-freight/lenis'
+
+const CASE_HERO_IN_ANIMATION_DURATION = 0.7
 interface CaseHeroProps {
   client: string
   caseName: string
@@ -15,14 +17,9 @@ interface CaseHeroProps {
 }
 
 export const CaseHero = ({ client, caseName, src }: CaseHeroProps) => {
-  const bpBeforeDesktopSmall = useBreakpointUntil('desktopSmall')
   const [isIn, setIsIn] = useState(false)
   const isComingFromACasePage = useGlobalStateStore((state) => state.isComingFromACasePage)
   const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
-
-  useEffect(() => {
-    console.log(`receiving`, isComingFromACasePage)
-  }, [isComingFromACasePage])
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,51 +28,37 @@ export const CaseHero = ({ client, caseName, src }: CaseHeroProps) => {
   }, [])
 
   const allowScroll = () => {
-    console.log(`animationend`)
     lenis.start()
   }
 
   const start = () => {
-    console.log(`srtart going`)
+    lenis.scrollTo(0, { immediate: true })
   }
 
   return (
     <>
       <AnimatePresence initial={isComingFromACasePage}>
-        {/* {!hasRouted.current && ( */}
-
-        {/* // )} */}
-        {/* </AnimatePresence> */}
         <motion.section
           className={styles['caseHero']}
           initial={{ height: `100vh` }}
-          animate={{ height: `100%`, transition: { duration: 1 } }}
+          animate={{ height: `100%`, transition: { duration: CASE_HERO_IN_ANIMATION_DURATION } }}
           onAnimationComplete={allowScroll}
           onAnimationStart={start}
-          // exit={{height: `100vh`}}
         >
           <motion.img
             key="shield-img"
             src="/images/shield-mask-local2.png"
-            // src="/images/shield-mask-local2-orange.png"
             style={{
-              // scale: 2,
-              // y,
               position: `absolute`,
               top: 0,
               left: 0,
-              // width: `100%`,
-              // height: `100vh`,
               width: `100%`,
               height: `100%`,
               zIndex: 1,
               objectFit: `cover`,
             }}
             initial={{ scale: 2 }}
-            animate={{ scale: 14, transition: { duration: 1 } }} //, delay: 0.5 } }}
-
-            // animate={{ height: `100%` }}
-            // exit={{ scale: 14, transition: { duration: 0 } }}
+            animate={{ scale: 14, transition: { duration: CASE_HERO_IN_ANIMATION_DURATION } }}
           />
           <div className={bem('some')}>
             <Media
@@ -86,7 +69,7 @@ export const CaseHero = ({ client, caseName, src }: CaseHeroProps) => {
               muted={true}
               autoPlay={true}
               loop={true}
-              playsinline={true}
+              playsInline={true}
             />
           </div>
           <div className={styles['caseHero__description']}>

@@ -83,11 +83,18 @@ export const VideoPlayer = ({
     }
   }, [])
 
+  const hasMobileVideo = src.mobileVideoCollection.items.length > 0
+
   return (
+    // <div />
     // <AspectRatio ratio={16 / 10} style={{ width: '400px' }}>
     <div className={`${styles['videoPlayer']} ${className}`}>
-      <video id={id} poster={autoPlay ? '' : poster} playsInline={playsInline} muted={muted} {...props}>
-        {[...(bpFromDesktopSmall ? src.desktopVideoCollection.items : src.mobileVideoCollection.items)]
+      <video id={id} poster={poster} playsInline={playsInline} muted={muted}>
+        {[
+          ...(!bpFromDesktopSmall && hasMobileVideo
+            ? src.mobileVideoCollection.items
+            : src.desktopVideoCollection.items),
+        ]
           .sort((a, b) => sortVideoFormats(a.url, b.url))
           .map((s, i: number) => (
             <source key={`video-src-${i}`} src={s.url} type={s.contentType} />
