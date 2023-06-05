@@ -14,7 +14,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const ContentWrapper = React.forwardRef<HTMLDivElement, Props>(
-  ({ children, debug = true, className = '', style = {}, as = 'div', fullscreen = false, ...props }: Props, ref) => {
+  ({ children, debug = false, className = '', style = {}, as = 'div', fullscreen = false, ...props }: Props, ref) => {
     const Tag = as
 
     return (
