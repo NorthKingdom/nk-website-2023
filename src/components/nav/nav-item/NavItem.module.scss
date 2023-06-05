@@ -1,4 +1,5 @@
 .navItem {
+  position: relative;
   opacity: 1;
   transition: opacity 0.1s cubic-bezier(0, 0, 0.6, 1);
   @include BodyRegular;
@@ -7,7 +8,7 @@
     opacity: 0.4;
   }
 
-  @include hover {
-    opacity: 0.4;
+  &[data-active='false'] {
+    @include text-underline-hover(var(--color-white));
   }
 }
