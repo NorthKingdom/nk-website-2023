@@ -5,7 +5,7 @@ import { HeaderLogo } from './header-logo'
 import { Nav } from '@components/nav'
 import { useGlobalStateStore } from '@store'
 import { useRouter } from 'next/router'
-import { AnimatePresence } from 'framer-motion'
+import { useIsScrollingDown } from '@hooks/use-is-scrolling-down'
 
 const bem = bemify(styles, 'header')
 
@@ -16,21 +16,16 @@ export const Header = (props: HeaderProps) => {
   const lenis = useGlobalStateStore((state) => state.lenis)
   const setIsMenuOpen = useGlobalStateStore((state) => state.setIsMenuOpen)
   const isHomePage = router.pathname === '/'
+  const isScrollingDown = useIsScrollingDown()
 
   return (
-    <header className={bem('')}>
-      <AnimatePresence>
-        {!isHomePage && (
-          <HeaderLogo
-            onClick={() => {
-              if (router.pathname === '/') {
-                lenis?.scrollTo(0)
-              }
-              setIsMenuOpen(false)
-            }}
-          />
-        )}
-      </AnimatePresence>
+    <header className={bem('')} data-is-scrolling-down={isScrollingDown}>
+      <HeaderLogo
+        onClick={() => {
+          if (isHomePage) lenis?.scrollTo(0)
+          setIsMenuOpen(false)
+        }}
+      />
       <Nav />
     </header>
   )

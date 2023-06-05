@@ -12,7 +12,18 @@
   @include notch(var(--color-white));
 
   &__title {
+    position: relative;
     @include Heading1;
+  }
+
+  &__scrollToAnchor {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    pointer-events: none;
+    visibility: hidden;
   }
 
   &__fetchMoreTrigger {
@@ -51,7 +62,7 @@
     margin-bottom: 16px;
     width: 100%;
     position: sticky;
-    top: 85px;
+    top: 100px;
     z-index: 10;
     height: var(--height);
 

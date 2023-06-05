@@ -154,6 +154,7 @@ export const CaseArchive = () => {
 
   const caseArchiveHeaderRef = useRef<HTMLDivElement>(null)
   const filtersContainerRef = useRef<HTMLDivElement>(null)
+  const scrollToTopRef = useRef<HTMLDivElement>(null)
   const autoScrolling = useRef(false)
   const [filtersDisplayMode, setFilterDisplayMode] = useState('list')
 
@@ -174,13 +175,13 @@ export const CaseArchive = () => {
   const FILTERS_DROPDOWN_ITEMS = [...FILTERS].filter((f) => f !== filter).sort((a, b) => a.length - b.length)
 
   useEffect(() => {
-    if (!lenis || !caseArchiveHeaderRef.current || filter === previousFilter) return
+    if (!lenis || !scrollToTopRef.current || filter === previousFilter) return
 
     autoScrolling.current = true
 
     setTimeout(() => {
       setFilterDisplayMode('list')
-      lenis.scrollTo(caseArchiveHeaderRef.current, { onComplete: () => (autoScrolling.current = false) })
+      lenis.scrollTo(scrollToTopRef.current, { onComplete: () => (autoScrolling.current = false) })
     }, 50)
   }, [filter, lenis, previousFilter])
 
@@ -222,6 +223,7 @@ export const CaseArchive = () => {
       </AspectRatio>
 
       <h2 className={bem('title')} ref={caseArchiveHeaderRef}>
+        <span aria-hidden="true" className={bem('scrollToAnchor')} ref={scrollToTopRef}></span>
         Archive
       </h2>
       <div ref={filtersContainerRef} className={bem('filtersContainer')}>
