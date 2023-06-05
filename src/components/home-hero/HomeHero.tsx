@@ -100,7 +100,7 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProp
             <VideoPlayer
               className={videoModalBem('videoPlayer')}
               autoPlay={true}
-              playsinline={true}
+              playsInline={true}
               src={showreelVideo}
               controls={true}
               poster=""
