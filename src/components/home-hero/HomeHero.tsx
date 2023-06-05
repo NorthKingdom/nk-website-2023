@@ -109,7 +109,7 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProp
         </Modal>
       </div>
       <ContentWrapper className={bem('statement')}>
-        <Description copyLeft={statement} theme="dark" />
+        <Description copyLeft={statement} theme="dark" notch={false} />
       </ContentWrapper>
     </>
   )

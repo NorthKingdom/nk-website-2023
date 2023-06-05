@@ -7,7 +7,7 @@ type Srcset = {
   type: string
 }[]
 
-interface ContentfulMediaSrcImageOptions {
+export interface ContentfulMediaSrcImageOptions {
   format?: 'webp' | 'jpg' | 'png' | 'gif' | 'svg' | 'avif'
   width?: number
   height?: number
@@ -62,13 +62,8 @@ export const useContentfulMediaSrc = (
       fm: options.format ?? 'webp',
     }
 
-    if (!!options.width) {
-      imageParams.w = options.width
-    }
-
-    if (!!options.height) {
-      imageParams.h = options.height
-    }
+    if (!!options.width) imageParams.w = options.width
+    if (!!options.height) imageParams.h = options.height
 
     const imageParamsString = new URLSearchParams(imageParams).toString()
 
