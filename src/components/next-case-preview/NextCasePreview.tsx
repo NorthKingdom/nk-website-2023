@@ -133,7 +133,7 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
             />
           </motion.div>
 
-          {/* <Media {...src} controls={false} muted={true} autoPlay={true} loop={true} playsinline={true} /> */}
+          {/* <Media {...src} controls={false} muted={true} autoPlay={true} loop={true} playsInline={true} /> */}
           <div className={bem('description')}>
             <p>Next up</p>
             <div className={bem('m')}>
