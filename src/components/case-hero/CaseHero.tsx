@@ -32,7 +32,9 @@ export const CaseHero = ({ client, caseName, src }: CaseHeroProps) => {
   }
 
   const start = () => {
-    lenis.scrollTo(0, { immediate: true })
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true })
+    }
   }
 
   return (
