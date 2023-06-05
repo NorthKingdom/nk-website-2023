@@ -117,7 +117,6 @@ export const CASE_PAGE_QUERY = (caseSlug: string, draftMode: boolean) => gql`
         title
         client
         slug
-        backgroundColor
         componentsCollection(limit: 10) {
           items {
             ...heroData
