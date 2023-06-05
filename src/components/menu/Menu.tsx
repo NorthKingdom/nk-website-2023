@@ -39,37 +39,18 @@ export const Menu = ({
     <menu className={bem()} style={{ height: heigh100vh }} data-is-menu-open={isOpen}>
       <div className={bem('overlay')} onClick={onClickOutside} />
       <div className={bem('content')}>
-        <div className={bem('navScrollSafeArea')} />
-        <div className={bem('scrollContainer')}>
-          <div className={bem('main')}>
-            {navItems.map((item) => (
-              <MenuNavItem
-                isActive={isRouteActive(item.href, router.route)}
-                key={item.href}
-                onClick={onClose}
-                route={router.route}
-                href={item.href}
-              >
-                {item.label}
-              </MenuNavItem>
-            ))}
-          </div>
-          <div className={bem('footer')}>
-            <div>
-              {socialLinkItems.map((item) => (
-                <a key={item.href} href={item.href} target="_blank" rel="noopener">
-                  {item.label}
-                </a>
-              ))}
-            </div>
-            <div className={bem('contactMenu')}>
-              {contactItems.map((item) => (
-                <MenuContactItem key={item.label} {...item}>
-                  {item.label}
-                </MenuContactItem>
-              ))}
-            </div>
-          </div>
+        <div className={bem('main')}>
+          {navItems.map((item) => (
+            <MenuNavItem
+              isActive={isRouteActive(item.href, router.route)}
+              key={item.href}
+              onClick={onClose}
+              route={router.route}
+              href={item.href}
+            >
+              {item.label}
+            </MenuNavItem>
+          ))}
         </div>
       </div>
     </menu>

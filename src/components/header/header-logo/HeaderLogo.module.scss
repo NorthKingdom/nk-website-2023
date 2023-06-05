@@ -19,7 +19,7 @@
     fill: var(--color-bg-inverted);
 
     html[data-is-menu-open='true'] & {
-      fill: var(--color-black);
+      fill: var(--color-white);
     }
   }
 
@@ -28,7 +28,7 @@
     fill: var(--color-fg-inverted);
 
     html[data-is-menu-open='true'] & {
-      fill: var(--color-white);
+      fill: var(--color-black);
     }
   }
 }

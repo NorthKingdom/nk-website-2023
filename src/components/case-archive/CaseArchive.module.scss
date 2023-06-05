@@ -62,7 +62,8 @@
     margin-bottom: 16px;
     width: 100%;
     position: sticky;
-    top: 100px;
+    // TODO: revisit
+    top: 80px;
     z-index: 10;
     height: var(--height);
 
@@ -75,6 +76,7 @@
 
     @include mq($from: tablet) {
       justify-content: flex-end;
+      top: 100px;
       --margin-top: calc(var(--height) * -1 - var(--case-archive-title-size) * 0.2);
       margin-top: var(--margin-top);
       margin-bottom: calc(var(--margin-top) * -1);
