@@ -1,7 +1,7 @@
 .contentWrapper {
   width: 100%;
-  padding: 0 var(--page-margin);
-  margin: 0 auto;
+  padding-left: var(--page-margin);
+  padding-right: var(--page-margin);
   position: relative;
 
   &--fullscreen {
@@ -10,6 +10,6 @@
   }
 
   &[data-debug='true'] {
-    border: 2px solid white;
+    border: 1px solid red;
   }
 }

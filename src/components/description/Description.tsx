@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './Description.module.scss'
 import { bemify } from '@utils/bemify'
+import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 const bem = bemify(styles, 'description')
 
 interface DescriptionProps {
@@ -13,6 +14,7 @@ interface DescriptionProps {
   }
   theme?: 'light' | 'dark'
   notch?: boolean
+  children?: React.ReactNode
 }
 
 export const Description = ({
@@ -22,14 +24,16 @@ export const Description = ({
   link,
   theme = 'light',
   notch = true,
+  children = null,
 }: DescriptionProps) => {
   return (
-    <section className={styles['description']} data-theme={theme} data-use-notch={notch}>
+    <ContentWrapper as="section" className={styles['description']} data-theme={theme} data-use-notch={notch}>
       <div className={bem('left')}>{copyLeft && <h2 data-size={headerSize}>{copyLeft}</h2>}</div>
       <div className={bem('right')}>
         <p>{copyRight}</p>
         {link && <a href={link.url}>{link.copy}</a>}
       </div>
-    </section>
+      {children}
+    </ContentWrapper>
   )
 }

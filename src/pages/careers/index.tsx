@@ -37,15 +37,14 @@ const Careers = ({ hero, introduction, openings }: JobsPageProp) => {
       </Head>
       <main className={styles['careers']}>
         <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
-        <ContentWrapper style={{ position: 'relative', background: 'white' }}>
+        <Description
+          theme="light"
+          copyLeft={introduction.copyLeft}
+          copyRight={introduction.copyRight}
+          link={introduction.link}
+        >
           <ThemeChangeTrigger theme="light" />
-          <Description
-            theme="light"
-            copyLeft={introduction.copyLeft}
-            copyRight={introduction.copyRight}
-            link={introduction.link}
-          />
-        </ContentWrapper>
+        </Description>
         <ContentWrapper style={{ position: 'relative', background: 'black' }}>
           <ThemeChangeTrigger theme="dark" />
           <h2 className={bem('openings')}>Openings</h2>
