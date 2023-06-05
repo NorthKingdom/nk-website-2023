@@ -155,14 +155,13 @@ export const CaseArchive = () => {
   const caseArchiveHeaderRef = useRef<HTMLDivElement>(null)
   const filtersContainerRef = useRef<HTMLDivElement>(null)
   const scrollToTopRef = useRef<HTMLDivElement>(null)
-  const autoScrolling = useRef(false)
+  const [autoScrolling, setAutoScrolling] = useState(false)
   const [filtersDisplayMode, setFilterDisplayMode] = useState('list')
-
   const FILTERS_STICKY_THRESHOLD = 0.93
 
   useOnScroll(
     ({ progress }) => {
-      if (autoScrolling.current) return
+      if (autoScrolling) return
       if (progress >= FILTERS_STICKY_THRESHOLD && filtersDisplayMode === 'list') {
         setFilterDisplayMode('dropdown')
       } else if (progress < FILTERS_STICKY_THRESHOLD && filtersDisplayMode === 'dropdown') {
@@ -177,12 +176,22 @@ export const CaseArchive = () => {
   useEffect(() => {
     if (!lenis || !scrollToTopRef.current || filter === previousFilter) return
 
-    autoScrolling.current = true
+    const AUTO_SCROLL_DURATION = 1500
+
+    setAutoScrolling(true)
 
     setTimeout(() => {
       setFilterDisplayMode('list')
-      lenis.scrollTo(scrollToTopRef.current, { onComplete: () => (autoScrolling.current = false) })
+      lenis.scrollTo(scrollToTopRef.current, {
+        // onComplete: () => setAutoScrolling(false),
+        lock: false,
+        duration: AUTO_SCROLL_DURATION * 0.001,
+      })
     }, 50)
+
+    setTimeout(() => {
+      setAutoScrolling(false)
+    }, AUTO_SCROLL_DURATION * 0.8)
   }, [filter, lenis, previousFilter])
 
   /**
@@ -218,7 +227,12 @@ export const CaseArchive = () => {
       <ThemeChangeTrigger theme="light" />
 
       {/** Custom cursor */}
-      <AspectRatio ratio={4 / 3} className={bem('cursor')} ref={cursorRef} data-active={sectionHovered}>
+      <AspectRatio
+        ratio={4 / 3}
+        className={bem('cursor')}
+        ref={cursorRef}
+        data-active={sectionHovered && !autoScrolling}
+      >
         <Image src={src} alt="" width={200} height={150} aria-hidden="true" />
       </AspectRatio>
 

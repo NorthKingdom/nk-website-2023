@@ -2,6 +2,8 @@ import styles from './Select.module.scss'
 import { noop } from '@utils/noop'
 import cx from 'clsx'
 import { ForwardedRef, createContext, forwardRef, useContext, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface SelectRootProps {
   style?: React.CSSProperties
@@ -36,9 +38,19 @@ export const Root = forwardRef(
     return (
       <SelectContext.Provider value={{ value, setValue, isOpen, setIsOpen, onValueChange }}>
         <div className={cx(styles['select'], className)} style={style} ref={ref} {...props} data-is-open={isOpen}>
-          <div onClick={() => setIsOpen((s) => !s)} className={styles['select__currentValue']}>
-            <span>{value}</span> <span className={styles['select__currentValueIcon']}>{isOpen ? '–' : '+'}</span>
-          </div>
+          <AnimatePresence initial={false} mode="wait">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { delay: 0.1 } }}
+              key={value}
+              onClick={() => setIsOpen((s) => !s)}
+              className={styles['select__currentValue']}
+            >
+              <span>{value}</span> <span className={styles['select__currentValueIcon']}>{isOpen ? '–' : '+'}</span>
+            </motion.div>
+          </AnimatePresence>
+
           {isOpen && <>{children}</>}
         </div>
       </SelectContext.Provider>
