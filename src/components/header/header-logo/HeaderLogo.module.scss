@@ -6,6 +6,9 @@
   min-width: 33px;
   max-width: 66px;
   max-height: 86px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   @include hover {
     transform: scale(1.05);
