@@ -86,7 +86,7 @@ export const VideoPlayer = ({
   const hasMobileVideo = src.mobileVideoCollection.items.length > 0
 
   return (
-    <div className={`${styles['videoPlayer']} ${className}`}>
+    <div className={`${styles['videoPlayer']} ${className}`} style={props.style}>
       <video id={id} poster={poster} playsInline={playsInline} muted={muted} {...props}>
         {[
           ...(!bpFromDesktopSmall && hasMobileVideo
