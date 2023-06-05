@@ -72,7 +72,7 @@ export const Video: Story = {
   },
   render: (args) => (
     <AspectRatio ratio={16 / 10} style={{ width: '400px' }}>
-      <Media {...args} autoPlay={true} controls={false} playsinline />
+      <Media {...args} autoPlay={true} controls={false} playsInline />
     </AspectRatio>
   ),
 }

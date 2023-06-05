@@ -38,7 +38,7 @@ export const CaseListItem = ({
   const mediaProps =
     thumbnail?.__typename === 'Video'
       ? {
-          playsinline: true,
+          playsInline: true,
           autoPlay: true,
           muted: true,
         }
