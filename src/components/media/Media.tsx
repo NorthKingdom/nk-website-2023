@@ -46,8 +46,10 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
     )
   }, [loaded])
 
-  const videoPlayerProps = pick(['autoPlay', 'muted', 'playsInline'], props)
-  const imageProps = pick(['width', 'height'], props)
+  const videoPlayerProps = pick(['autoPlay', 'muted', 'playsInline', 'style'], props)
+  const imageProps = pick(['width', 'height', 'style'], props)
+
+  // console.log(props)
 
   return (
     <>
@@ -58,10 +60,13 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
           onError={() => setLoaded(false)}
           onCanPlay={() => setLoaded(true)}
           {...videoPlayerProps}
+          // poster={props.caseHeroImage ? undefined : (props as VideoMediaProps).posterImage.url}
+          {...props}
         />
       ) : props?.__typename === 'ResponsiveImage' ? (
         <Image
-          fetchPriority={props?.index === 0 ? 'high' : 'auto'}
+          fetchPriority={props?.index === 0 || props.caseHeroImage ? 'high' : 'auto'}
+          loading={props.caseHeroImage ? 'eager' : 'lazy'}
           src={getContentfulImageSrc(src)}
           alt={(props as ImageMediaProps).altText}
           aria-hidden={Boolean((props as ImageMediaProps).altText)}

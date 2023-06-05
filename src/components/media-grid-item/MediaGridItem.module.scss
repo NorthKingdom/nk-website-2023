@@ -5,7 +5,11 @@
   position: relative;
 
   width: 25%;
-  height: var(--maxHeight) !important;
+  // height: var(--maxHeight) !important;
+
+  @include mq($until: tablet) {
+    // height: 100% !important;
+  }
 
   &[data-offset='25%'] {
     --offset: 0.25;
@@ -47,10 +51,11 @@
   video,
   img {
     width: 100%;
-    height: var(--maxHeight);
+    height: var(--maxHeight) !important;
     max-height: 67vh;
     // min-height: 100%;
     object-fit: cover;
+    position: relative !important;
   }
 
   &__videoPlayerContainer {
