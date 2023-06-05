@@ -12,11 +12,19 @@ interface DescriptionProps {
     url: string
   }
   theme?: 'light' | 'dark'
+  notch?: boolean
 }
 
-export const Description = ({ copyLeft, headerSize, copyRight, link, theme = 'light' }: DescriptionProps) => {
+export const Description = ({
+  copyLeft,
+  headerSize,
+  copyRight,
+  link,
+  theme = 'light',
+  notch = true,
+}: DescriptionProps) => {
   return (
-    <section className={styles['description']} data-theme={theme}>
+    <section className={styles['description']} data-theme={theme} data-use-notch={notch}>
       <div className={bem('left')}>{copyLeft && <h2 data-size={headerSize}>{copyLeft}</h2>}</div>
       <div className={bem('right')}>
         <p>{copyRight}</p>
