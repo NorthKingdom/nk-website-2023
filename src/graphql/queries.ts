@@ -175,7 +175,7 @@ export const CAREERS_PAGE_QUERY = (draftMode: boolean) => gql`
 
   query {
     careersPage(preview: ${draftMode}, id: "1biZZL9Xnhz09yjM8cF1uF") {
-      careersPageTitle
+      title
       hero {
         ...pageHero
       }
