@@ -106,10 +106,10 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
   return (
     <>
       <Header />
-      <main ref={wrapperRef} className={styles.main}>
+      <div ref={wrapperRef} className={styles.main}>
         <div ref={contentRef}>
           <AnimatePresence mode="wait" initial={false}>
-            <motion.main
+            <motion.div
               key={router.asPath}
               variants={variants}
               initial="initial"
@@ -121,10 +121,10 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
             >
               <div className={styles.content}>{children}</div>
               {!hideFooter && <Footer theme={footerTheme} />}
-            </motion.main>
+            </motion.div>
           </AnimatePresence>
         </div>
-      </main>
+      </div>
     </>
   )
 }
