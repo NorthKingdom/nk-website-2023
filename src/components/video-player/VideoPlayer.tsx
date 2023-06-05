@@ -86,10 +86,8 @@ export const VideoPlayer = ({
   const hasMobileVideo = src.mobileVideoCollection.items.length > 0
 
   return (
-    // <div />
-    // <AspectRatio ratio={16 / 10} style={{ width: '400px' }}>
     <div className={`${styles['videoPlayer']} ${className}`}>
-      <video id={id} poster={poster} playsInline={playsInline} muted={muted}>
+      <video id={id} poster={poster} playsInline={playsInline} muted={muted} {...props}>
         {[
           ...(!bpFromDesktopSmall && hasMobileVideo
             ? src.mobileVideoCollection.items
@@ -103,6 +101,5 @@ export const VideoPlayer = ({
         {controls && <div>controls</div>}
       </video>
     </div>
-    // </AspectRatio>
   )
 }

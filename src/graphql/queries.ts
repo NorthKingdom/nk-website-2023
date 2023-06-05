@@ -60,6 +60,7 @@ fragment newF on FeaturedCasesComponent {
     items {
       title
       client
+      slug
       componentsCollection(limit: 10) {
         items {
           ...heroData

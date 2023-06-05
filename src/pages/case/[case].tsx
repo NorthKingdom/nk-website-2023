@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
 import { CaseHero as CaseHeroType, Case as CasePageProps } from '@customTypes/cms'
@@ -18,8 +18,7 @@ const Case = (props: CasePageProps) => {
   const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
   const featuredCases = useGlobalStateStore((state) => state.featuredCases)
   const setFeaturedCases = useGlobalStateStore((state) => state.setFeaturedCases)
-  const isComingFromACasePage = useGlobalStateStore((state) => state.isComingFromACasePage)
-  // const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
+  const [nextIndex, setNextIndex] = useState(-1)
 
   useEffect(() => {
     console.log(`featuedcases: `, featuredCases)
@@ -37,8 +36,18 @@ const Case = (props: CasePageProps) => {
     }
     if (featuredCases.length === 0) {
       a()
+    } else {
+      console.log(props.title)
+      const index = featuredCases.findIndex((c) => c.title === props.title)
+      console.log(index)
+      setNextIndex(index + 1 === featuredCases.length ? 0 : index + 1)
+      console.log(
+        featuredCases[index + 1],
+        featuredCases[index + 1].componentsCollection,
+        featuredCases[index + 1].componentsCollection.items
+      )
     }
-  }, [featuredCases])
+  }, [featuredCases, props.title])
 
   useLayoutEffect(() => {
     if (lenis) {
@@ -113,13 +122,14 @@ const Case = (props: CasePageProps) => {
           <ContentWrapper>
             <ComponentResolver components={props.componentsCollection?.items || []} />
           </ContentWrapper>
-          {featuredCases.length > 0 && (
+          {featuredCases.length > 0 && nextIndex !== -1 && (
             <NextCasePreview
-              caseName={props.title === '[EXAMPLE] Masterclash' ? '[EXAMPLE] RiotX Arcane' : '[EXAMPLE] Masterclash'}
+              caseName={featuredCases[nextIndex].title}
+              nextSlug={featuredCases[nextIndex].slug}
               src={
-                props.title === '[EXAMPLE] Masterclash'
-                  ? featuredCases[0].componentsCollection.items[0].heroMedia
-                  : featuredCases[1].componentsCollection.items[0].heroMedia
+                featuredCases[nextIndex].componentsCollection.items.length > 0
+                  ? featuredCases[nextIndex].componentsCollection.items[0].heroMedia
+                  : `/dummy/grid/grid-image-11.jpg`
               }
             />
           )}

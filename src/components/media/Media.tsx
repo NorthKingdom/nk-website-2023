@@ -46,10 +46,10 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
     )
   }, [loaded])
 
-  const videoPlayerProps = pick(['autoPlay', 'muted', 'playsInline'], props)
-  const imageProps = pick(['width', 'height'], props)
+  const videoPlayerProps = pick(['autoPlay', 'muted', 'playsInline', 'style'], props)
+  const imageProps = pick(['width', 'height', 'style'], props)
 
-  // console.log(props.caseHeroImage)
+  // console.log(props)
 
   return (
     <>

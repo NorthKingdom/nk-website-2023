@@ -15,12 +15,14 @@ import Head from 'next/head'
 interface CaseHeroProps {
   caseName: string
   src: Video | ResponsiveImage
+  caseCheck?: any
+  nextSlug: string
 }
 
 const range = (val: number, in_min: number, in_max: number, out_min: number, out_max: number) =>
   ((val - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min
 
-export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
+export const NextCasePreview = ({ caseName, src, caseCheck, nextSlug }: CaseHeroProps) => {
   const router = useRouter()
   const ref = useRef(null)
   const ref2 = useRef(null)
@@ -32,14 +34,14 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
   const bpBeforeDesktopSmall = useBreakpointUntil('desktopSmall')
 
   useEffect(() => {
-    const newHref = router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
-    router.prefetch(newHref)
-  }, [router])
+    // const newHref = router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
+    router.prefetch(`/case/${nextSlug}`)
+  }, [router, nextSlug])
 
-  const preload_image = (im_url: string) => {
-    let img = new Image()
-    img.src = im_url
-  }
+  // const preload_image = (im_url: string) => {
+  //   let img = new Image()
+  //   img.src = im_url
+  // }
 
   // const [leaving, setLeaving] = useState(false)
 
@@ -47,18 +49,29 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
   //   console.log(`leaving`, leaving)
   // }, [leaving])
 
-  useEffect(() => {
-    // preload_image((src as ResponsiveImage).desktopImage?.url || (src as Video).posterImage?.url)
-    // return () => {
-    //   if (lenis) {
-    //     console.log(`destroy !!`)
-    //     lenis.destroy()
-    //   }
-    // }
-  }, [lenis])
+  // useEffect(() => {
+  //   // preload_image((src as ResponsiveImage).desktopImage?.url || (src as Video).posterImage?.url)
+  //   // return () => {
+  //   //   if (lenis) {
+  //   //     console.log(`destroy !!`)
+  //   //     lenis.destroy()
+  //   //   }
+  //   // }
+  // }, [lenis])
+
+  // const [going, setGoing] = useState(false)
+
+  // useEffect(() => {
+  //   console.log(hasRouted)
+  //   if (hasRouted.current) {
+  //     // setTimeout(() => {
+
+  //   }
+  //   // }, 5000)
+  // }, [hasRouted, going])
 
   useOnScroll(
-    async ({ progress: _progress }) => {
+    ({ progress: _progress }) => {
       progress.set(_progress)
 
       const loadingPercentage = Math.min(Math.max(0, Math.round(range(_progress * 100, 33, 65, 0, 100))), 100)
@@ -71,13 +84,9 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
         }
 
         if (loadingPercentage >= 97) {
-          console.log(`loading >= 97!`)
-          router.push(
-            '/case/[case]',
-            router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
-          )
+          router.push('/case/[case]', `/case/${nextSlug}`)
+
           hasRouted.current = true
-          // setGoing(true)
         }
       }
     },
@@ -92,61 +101,51 @@ export const NextCasePreview = ({ caseName, src }: CaseHeroProps) => {
   const y = useTransform(progress, [0.0, 0.5], [`10%`, `0%`])
 
   return (
-    <>
-      <Head>
-        <link
-          rel="preload"
-          as="image"
-          href={(src as ResponsiveImage).desktopImage?.url || (src as Video).posterImage?.url}
+    <section ref={ref} className={styles['nextCasePreview']}>
+      <div className={bem('stickyInner')}>
+        <motion.img
+          key="shield-img"
+          className={bem('shieldMask')}
+          src="/images/shield-mask-local2.png"
+          style={{
+            scale,
+            y,
+            objectFit: bpBeforeDesktopSmall ? `cover` : `none`,
+          }}
         />
-        <link rel="prefetch" href={(src as ResponsiveImage).desktopImage?.url || (src as Video).posterImage?.url} />
-      </Head>
-      <section ref={ref} className={styles['nextCasePreview']}>
-        <div className={bem('stickyInner')}>
-          <motion.img
-            key="shield-img"
-            className={bem('shieldMask')}
-            src="/images/shield-mask-local2.png"
-            style={{
-              scale,
-              y,
-              objectFit: bpBeforeDesktopSmall ? `cover` : `none`,
-            }}
+
+        <motion.div
+          className={bem('mediaContainer')}
+          style={{
+            scale: s,
+            y,
+          }}
+        >
+          <Media
+            {...src}
+            index={0}
+            caseHeroImage
+            controls={false}
+            muted={true}
+            autoPlay={true}
+            loop={true}
+            playsInline={true}
           />
+        </motion.div>
 
-          <motion.div
-            className={bem('mediaContainer')}
-            style={{
-              scale: s,
-              y,
-            }}
-          >
-            <Media
-              {...src}
-              index={0}
-              caseHeroImage
-              controls={false}
-              muted={true}
-              autoPlay={true}
-              loop={true}
-              playsInline={true}
-            />
-          </motion.div>
-
-          {/* <Media {...src} controls={false} muted={true} autoPlay={true} loop={true} playsInline={true} /> */}
-          <div className={bem('description')}>
-            <p>Next up</p>
-            <div className={bem('m')}>
-              <span>
-                <h1>{caseName}</h1>
-              </span>
-              <span>
-                <p className={bem('percent')} ref={ref2}></p>
-              </span>
-            </div>
+        {/* <Media {...src} controls={false} muted={true} autoPlay={true} loop={true} playsInline={true} /> */}
+        <div className={bem('description')}>
+          <p>Next up</p>
+          <div className={bem('m')}>
+            <span>
+              <h1>{caseName}</h1>
+            </span>
+            <span>
+              <p className={bem('percent')} ref={ref2}></p>
+            </span>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }
