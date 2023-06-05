@@ -23,7 +23,7 @@ export const Description = ({
   copyRight,
   link,
   theme = 'light',
-  notch = true,
+  notch = false,
   children = null,
 }: DescriptionProps) => {
   return (

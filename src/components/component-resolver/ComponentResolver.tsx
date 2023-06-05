@@ -31,18 +31,21 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
           case 'Video':
             return (
               <VideoPlayer
+                key={`case-video-${i}`}
                 src={c}
                 controls={true}
                 poster={c.posterImage.url}
                 loop={c.loop}
                 muted={c.muted}
                 autoPlay={c.autoPlay}
-                key={`case-video-${i}`}
               />
             )
           case 'ResponsiveImage':
             return (
-              <div style={{ width: `100%`, height: `100vh`, position: `relative` }}>
+              <div
+                key={`responive-image-containeri${i}`}
+                style={{ width: `100%`, height: `100vh`, position: `relative` }}
+              >
                 <Media key={`case-image-${i}`} style={{ objectFit: `cover` }} {...c} />
               </div>
             )

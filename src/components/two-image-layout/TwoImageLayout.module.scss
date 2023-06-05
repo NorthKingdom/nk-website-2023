@@ -14,6 +14,10 @@
     width: 50%;
     position: relative;
 
+    img {
+      object-fit: cover;
+    }
+
     @include mq($until: tablet) {
       width: 100%;
     }

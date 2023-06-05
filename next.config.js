@@ -31,7 +31,7 @@ const nextConfig = {
       },
     ],
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
 }
 
 module.exports = withBundleAnalyzer(nextConfig)

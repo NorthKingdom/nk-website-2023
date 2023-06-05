@@ -1,15 +1,61 @@
-import React from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
 import { CaseHero as CaseHeroType, Case as CasePageProps } from '@customTypes/cms'
-import { CASE_PAGE_QUERY } from '../../graphql/queries'
+import { CASE_PAGE_QUERY, WORK_PAGE_QUERY, NEXT_CASES_QUERY } from '../../graphql/queries'
 import { CaseHero } from '@components/case-hero'
 import { ComponentResolver } from '@components/component-resolver'
+import { useGlobalStateStore } from '@store/global-state-store'
 import styles from './Case.module.scss'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
+import Lenis from '@studio-freight/lenis'
+import { useQuery } from '@apollo/client'
 import { NextCasePreview } from '@components/next-case-preview'
+import { useRouter } from 'next/router'
 
 const Case = (props: CasePageProps) => {
+  const router = useRouter()
+  const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
+  const featuredCases = useGlobalStateStore((state) => state.featuredCases)
+  const setFeaturedCases = useGlobalStateStore((state) => state.setFeaturedCases)
+  const [nextIndex, setNextIndex] = useState(-1)
+
+  useEffect(() => {
+    console.log(`featuedcases: `, featuredCases)
+    const a = async () => {
+      return client(false)
+        .query({
+          query: NEXT_CASES_QUERY(false),
+        })
+        .then((res: any) => res.data)
+        .then((data: any) => {
+          console.log(data)
+
+          setFeaturedCases(data.workPage.featuredCases.cases.items)
+        })
+    }
+    if (featuredCases.length === 0) {
+      a()
+    } else {
+      console.log(props.title)
+      const index = featuredCases.findIndex((c) => c.title === props.title)
+      console.log(index)
+      setNextIndex(index + 1 === featuredCases.length ? 0 : index + 1)
+      console.log(
+        featuredCases[index + 1],
+        featuredCases[index + 1].componentsCollection,
+        featuredCases[index + 1].componentsCollection.items
+      )
+    }
+  }, [featuredCases, props.title])
+
+  useLayoutEffect(() => {
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true })
+      lenis.stop()
+    }
+  }, [lenis])
+
   return (
     props.componentsCollection?.items.length > 0 && (
       <>
@@ -76,7 +122,17 @@ const Case = (props: CasePageProps) => {
           <ContentWrapper>
             <ComponentResolver components={props.componentsCollection?.items || []} />
           </ContentWrapper>
-          <NextCasePreview caseTitle="title" client="client" src="/dummy/landscape-media.jpg" />
+          {featuredCases.length > 0 && nextIndex !== -1 && (
+            <NextCasePreview
+              caseName={featuredCases[nextIndex].title}
+              nextSlug={featuredCases[nextIndex].slug}
+              src={
+                featuredCases[nextIndex].componentsCollection.items.length > 0
+                  ? featuredCases[nextIndex].componentsCollection.items[0].heroMedia
+                  : `/dummy/grid/grid-image-11.jpg`
+              }
+            />
+          )}
         </main>
       </>
     )

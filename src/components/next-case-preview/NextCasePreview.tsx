@@ -1,87 +1,151 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './NextCasePreview.module.scss'
-import { motion, useInView, useMotionValue, useTransform } from 'framer-motion'
 import { bemify } from '@utils/bemify'
-const bem = bemify(styles, 'nextCasePreview')
+import { Video, ResponsiveImage } from '@customTypes/cms'
+import { Media } from '@components/media'
 import { useRouter } from 'next/router'
+const bem = bemify(styles, 'nextCasePreview')
+import { useBreakpointUntil } from '@hooks/use-breakpoint'
 import { useOnScroll } from '@hooks/use-on-scroll'
+import { useGlobalStateStore } from '@store/global-state-store'
+import { motion, useInView, useMotionValue, useTransform } from 'framer-motion'
+import Lenis from '@studio-freight/lenis'
+import Head from 'next/head'
 
-interface NextCasePreviewProps {
-  caseTitle: string
-  client: string
-  src: string
+interface CaseHeroProps {
+  caseName: string
+  src: Video | ResponsiveImage
+  caseCheck?: any
+  nextSlug: string
 }
 
-export const NextCasePreview = ({ src, caseTitle, client }: NextCasePreviewProps) => {
+const range = (val: number, in_min: number, in_max: number, out_min: number, out_max: number) =>
+  ((val - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min
+
+export const NextCasePreview = ({ caseName, src, caseCheck, nextSlug }: CaseHeroProps) => {
   const router = useRouter()
   const ref = useRef(null)
-
-  const isInView = useInView(ref)
+  const ref2 = useRef(null)
+  const progress = useMotionValue(0)
+  const isInView = useInView(ref, { once: true })
   const hasRouted = useRef(false)
-  const showText = useRef(false)
+  const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
+
+  const bpBeforeDesktopSmall = useBreakpointUntil('desktopSmall')
+
+  useEffect(() => {
+    // const newHref = router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case'
+    router.prefetch(`/case/${nextSlug}`)
+  }, [router, nextSlug])
+
+  // const preload_image = (im_url: string) => {
+  //   let img = new Image()
+  //   img.src = im_url
+  // }
+
+  // const [leaving, setLeaving] = useState(false)
+
+  // useEffect(() => {
+  //   console.log(`leaving`, leaving)
+  // }, [leaving])
+
+  // useEffect(() => {
+  //   // preload_image((src as ResponsiveImage).desktopImage?.url || (src as Video).posterImage?.url)
+  //   // return () => {
+  //   //   if (lenis) {
+  //   //     console.log(`destroy !!`)
+  //   //     lenis.destroy()
+  //   //   }
+  //   // }
+  // }, [lenis])
+
+  // const [going, setGoing] = useState(false)
+
+  // useEffect(() => {
+  //   console.log(hasRouted)
+  //   if (hasRouted.current) {
+  //     // setTimeout(() => {
+
+  //   }
+  //   // }, 5000)
+  // }, [hasRouted, going])
 
   useOnScroll(
     ({ progress: _progress }) => {
-      console.log(_progress)
       progress.set(_progress)
-      if (_progress >= 0.3 && !showText.current) {
-        opacity.set(1)
-        showText.current = true
-      }
-      if (_progress >= 0.55 && !hasRouted.current) {
-        console.log(`push new route`, router.asPath)
-        hasRouted.current = true
-        // router.push(router.asPath === '/case/fake-riot-case' ? '/case/fake-masterclash-case' : '/case/fake-riot-case')
+
+      const loadingPercentage = Math.min(Math.max(0, Math.round(range(_progress * 100, 33, 65, 0, 100))), 100)
+
+      if (!hasRouted.current) {
+        console.log(`havent routed!`)
+        if (ref2.current) {
+          const a = ref2.current as HTMLParagraphElement
+          a.innerText = loadingPercentage.toString()
+        }
+
+        if (loadingPercentage >= 97) {
+          router.push('/case/[case]', `/case/${nextSlug}`)
+
+          hasRouted.current = true
+        }
       }
     },
     {
       target: ref,
-      enabled: isInView,
+      enabled: isInView && !hasRouted.current, // && !leaving,
     }
   )
 
-  const progress = useMotionValue(0)
-  const scale = useTransform(progress, [0.0, 0.5], [0.6, 1])
+  const scale = useTransform(progress, [0.0, 0.5, 0.5, 0.67], [0.6, 1, 1, 2]) //, 0.67, 1] , 2, 14
+  const s = useTransform(progress, [0.0, 0.5], [0.6, 1])
   const y = useTransform(progress, [0.0, 0.5], [`10%`, `0%`])
-  const opacity = useMotionValue(0) //useTransform(progress, [0.0, 0.5], [0, 0.5])
 
   return (
-    <div ref={ref} className={styles['nextCasePreview']}>
-      <div className={bem('s')}>
+    <section ref={ref} className={styles['nextCasePreview']}>
+      <div className={bem('stickyInner')}>
         <motion.img
+          key="shield-img"
+          className={bem('shieldMask')}
           src="/images/shield-mask-local2.png"
           style={{
             scale,
             y,
-            position: `absolute`,
-            top: 0,
-            left: 0,
-            width: `100%`,
-            height: `100vh`,
-            zIndex: 1,
-            // transformOrigin: `center`,
+            objectFit: bpBeforeDesktopSmall ? `cover` : `none`,
           }}
         />
-        <motion.img
-          src={src}
-          alt={'temp alt'}
+
+        <motion.div
+          className={bem('mediaContainer')}
           style={{
-            scale,
+            scale: s,
             y,
-            position: `absolute`,
-            top: 0,
-            left: 0,
-            width: `100%`,
-            height: `100vh`,
-            zIndex: 0,
           }}
-        />
-        {/* </motion.div> */}
-        <motion.div style={{ opacity }} className={bem('inner')}>
-          <p>Next up</p>
-          <h2>{caseTitle}</h2>
+        >
+          <Media
+            {...src}
+            index={0}
+            caseHeroImage
+            controls={false}
+            muted={true}
+            autoPlay={true}
+            loop={true}
+            playsInline={true}
+          />
         </motion.div>
+
+        {/* <Media {...src} controls={false} muted={true} autoPlay={true} loop={true} playsInline={true} /> */}
+        <div className={bem('description')}>
+          <p>Next up</p>
+          <div className={bem('m')}>
+            <span>
+              <h1>{caseName}</h1>
+            </span>
+            <span>
+              <p className={bem('percent')} ref={ref2}></p>
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }

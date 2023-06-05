@@ -22,14 +22,17 @@ interface LayoutProps {
 
 const variants = {
   initial: {
-    opacity: 0,
+    opacity: 1,
+    x: 0,
   },
   animate: {
     opacity: 1,
+    x: 0,
     transition: { ease: 'circOut' },
   },
   exit: {
-    opacity: 0,
+    opacity: 1,
+    x: 0,
     transition: { ease: 'circOut' },
   },
 }
@@ -43,6 +46,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
   const lenis = useGlobalStateStore((state) => state.lenis)
   const setLenis = useGlobalStateStore((state) => state.setLenis)
+  const setIsComingFromACasePage = useGlobalStateStore((state) => state.setIsComingFromACasePage)
   const removeExpiredStyles = useNextCssRemovalPrevention()
 
   /*
@@ -90,12 +94,26 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
     }
   }, [lenis, isMenuOpen])
 
+  useEffect(() => {
+    console.log(`mount`)
+    return () => {
+      console.log(`setting`, router.route === '/case/[case]')
+      setIsComingFromACasePage(router.route === '/case/[case]')
+    }
+  }, [router])
+
   /*
    * Scroll to top when page transition starts
    */
   const onPageTransitionStart = (variant: 'animate' | 'exit') => {
     if (lenis && variant === 'animate') {
+      // lenis.scrollTo(0, { immediate: true })
+      // setTimeout(() => {
+      lenis.stop()
+      console.log(`scroll to immediate `)
       lenis.scrollTo(0, { immediate: true })
+      lenis.stop()
+      // }, 500)
     }
   }
 
@@ -109,7 +127,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
       <div ref={wrapperRef} className={styles.main}>
         <div ref={contentRef}>
           <AnimatePresence mode="wait" initial={false}>
-            <motion.div
+            <motion.main
               key={router.asPath}
               variants={variants}
               initial="initial"
@@ -121,7 +139,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
             >
               <div className={styles.content}>{children}</div>
               {!hideFooter && <Footer theme={footerTheme} />}
-            </motion.div>
+            </motion.main>
           </AnimatePresence>
         </div>
       </div>

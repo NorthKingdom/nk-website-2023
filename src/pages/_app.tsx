@@ -19,6 +19,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
   const setTheme = useGlobalStateStore((state) => state.setTheme)
   const theme = useGlobalStateStore((state) => state.theme)
+  const setIsComingFromACasePage = useGlobalStateStore((state) => state.setIsComingFromACasePage)
 
   useRouteChangeSpinner()
 
