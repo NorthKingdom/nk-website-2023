@@ -61,7 +61,6 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
           onCanPlay={() => setLoaded(true)}
           {...videoPlayerProps}
           // poster={props.caseHeroImage ? undefined : (props as VideoMediaProps).posterImage.url}
-          {...props}
         />
       ) : props?.__typename === 'ResponsiveImage' ? (
         <Image
