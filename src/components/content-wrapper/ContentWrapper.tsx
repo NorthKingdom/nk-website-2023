@@ -10,12 +10,15 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   style?: React.CSSProperties
   className?: string
   fullscreen?: boolean
+  as?: React.ElementType
 }
 
 export const ContentWrapper = React.forwardRef<HTMLDivElement, Props>(
-  ({ children, debug = false, className = '', style = {}, fullscreen = false, ...props }: Props, ref) => {
+  ({ children, debug = true, className = '', style = {}, as = 'div', fullscreen = false, ...props }: Props, ref) => {
+    const Tag = as
+
     return (
-      <div
+      <Tag
         ref={ref}
         aria-hidden={true}
         className={cx(styles.contentWrapper, className, bem('', { fullscreen }))}
@@ -24,7 +27,7 @@ export const ContentWrapper = React.forwardRef<HTMLDivElement, Props>(
         {...props}
       >
         {children}
-      </div>
+      </Tag>
     )
   }
 )
