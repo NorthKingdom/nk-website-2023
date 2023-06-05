@@ -44,7 +44,7 @@ export const CaseListItem = ({
       : {}
 
   return (
-    <div ref={$container} className={cx(bem(), className)} style={style}>
+    <div ref={$container} className={cx(className)} style={style}>
       <Link href="/case/[case]" as={`/case/${slug ?? title}`}>
         <AspectRatio ratio={16 / 10} className={bem('thumbnailContainer')}>
           <Media className={bem('thumbnail')} {...thumbnail} {...mediaProps} index={index} alt={alt} />
