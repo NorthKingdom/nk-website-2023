@@ -29,7 +29,8 @@ interface WebglSceneProps {
 }
 
 export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...props }: WebglSceneProps) => {
-  const debug = useGlobalStateStore((state) => state.debug)
+  // const debug = useGlobalStateStore((state) => state.debug)
+  const debug = true
   const shieldState = useWebglSceneStore((state) => state.shieldState)
   const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
@@ -52,7 +53,17 @@ export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...pr
   }, [shieldState])
 
   return (
-    <Canvas className={styles['webglCanvas']} camera={{ position: [0, 0, 5] }} frameloop={frameloop} {...props}>
+    <Canvas
+      className={styles['webglCanvas']}
+      camera={{ position: [0, 0, 5] }}
+      frameloop={frameloop}
+      gl={{
+        powerPreference: 'high-performance',
+        antialias: false,
+        stencil: false,
+      }}
+      {...props}
+    >
       {debug && <Perf position="top-left" />}
       <Suspense fallback={null}>
         <Effects />
