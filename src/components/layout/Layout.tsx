@@ -112,7 +112,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
       lenis.stop()
       console.log(`scroll to immediate `)
       lenis.scrollTo(0, { immediate: true })
-      lenis.stop()
+      lenis.start()
       // }, 500)
     }
   }
