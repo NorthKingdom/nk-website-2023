@@ -118,7 +118,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
   }
 
   const onPageTransitionEnd = (variant: 'animate' | 'exit') => {
-    if (variant === 'exit') removeExpiredStyles()
+    if (variant === 'animate') removeExpiredStyles()
   }
 
   return (
