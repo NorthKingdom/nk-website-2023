@@ -29,8 +29,7 @@ interface WebglSceneProps {
 }
 
 export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...props }: WebglSceneProps) => {
-  // const debug = useGlobalStateStore((state) => state.debug)
-  const debug = true
+  const debug = useGlobalStateStore((state) => state.debug)
   const shieldState = useWebglSceneStore((state) => state.shieldState)
   const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
