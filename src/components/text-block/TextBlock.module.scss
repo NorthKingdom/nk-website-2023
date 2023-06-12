@@ -1,5 +1,6 @@
-.description {
+.textBlock {
   @include flex-center($direction: row);
+  flex-wrap: wrap;
   width: 100%;
   align-items: flex-start;
   padding-top: 80px;
@@ -7,6 +8,7 @@
 
   @include mq($until: tablet) {
     @include flex-center($direction: column);
+    flex-wrap: none;
   }
 
   &[data-theme='light'] {
@@ -27,6 +29,15 @@
     @include notch($black);
   }
 
+  &__heading {
+    width: 100%;
+    @include Heading1;
+    margin-bottom: 20px;
+    @include mq($from: tablet) {
+      margin-bottom: 40px;
+    }
+  }
+
   &__left {
     width: 50%;
     height: 100%;
@@ -39,15 +50,15 @@
       width: 100%;
     }
 
-    h2 {
-      &[data-size='large'] {
-        @include Heading1;
-      }
+    // h2 {
+    //   &[data-size='large'] {
+    //     @include Heading1;
+    //   }
 
-      &[data-size='small'] {
-        @include BodyRegular;
-      }
-    }
+    //   &[data-size='small'] {
+    //     @include BodyRegular;
+    //   }
+    // }
   }
 
   &__right {

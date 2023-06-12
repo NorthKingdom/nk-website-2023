@@ -1,12 +1,12 @@
 import React from 'react'
-import { Description } from '@components/description'
+import { TextBlock } from '@components/text-block'
 import { VideoPlayer } from '@components/video-player'
 import { TwoImageLayout } from '@components/two-image-layout'
 import { CaseMediaGrid } from '@components/case-media-grid'
 import { Media } from '@components/media'
 import {
   CaseHero,
-  DescriptionComponent,
+  TextBlock as TextBlockType,
   ResponsiveImage,
   Video,
   TwoImageComponent,
@@ -14,7 +14,7 @@ import {
 } from '@customTypes/cms'
 
 interface ComponentResolverProps {
-  components: (CaseHero | DescriptionComponent | ResponsiveImage | Video | TwoImageComponent | CaseMediaGridType)[]
+  components: (CaseHero | TextBlockType | ResponsiveImage | Video | TwoImageComponent | CaseMediaGridType)[]
 }
 
 export const ComponentResolver = ({ components }: ComponentResolverProps) => {
@@ -25,9 +25,7 @@ export const ComponentResolver = ({ components }: ComponentResolverProps) => {
           case 'CaseHero':
             return
           case 'DescriptionComponent':
-            return (
-              <Description key={`case-description-${i}`} copyLeft={c.copyLeft} copyRight={c.copyRight} link={c.link} />
-            )
+            return <TextBlock key={`case-description-${i}`} {...c} />
           case 'Video':
             return (
               <VideoPlayer

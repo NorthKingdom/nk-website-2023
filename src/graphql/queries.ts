@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 import { RESPONSIVE_IMAGE } from './fragments/ResponsiveImage.fragment'
 import { VIDEO } from './fragments/Video.fragment'
 import { CASE_HERO } from './fragments/CaseHero.fragment'
-import { DESCRIPTION } from './fragments/DescriptionComponent.fragment'
+import { TEXT_BLOCK } from './fragments/TextBlock.fragment'
 import { TWO_IMAGE_COMPONENT } from './fragments/TwoImageComponent.fragment'
 import { FEATURED_CASES } from './fragments/FeaturedCases.fragment'
 import { HOME_HERO } from '@graphql/fragments/HomeHero.fragment'
@@ -15,7 +15,7 @@ export const HOME_PAGE_QUERY = (draftMode: boolean) => gql`
     ${HOME_HERO}
     ${FEATURED_CASES}
     ${FEATURED_VIDEO}
-    ${DESCRIPTION}
+    ${TEXT_BLOCK}
     ${IMAGE_MARQUEE}
 
 
@@ -28,7 +28,7 @@ export const HOME_PAGE_QUERY = (draftMode: boolean) => gql`
           ...featuredCases
           ...featuredVideo
           ...imageMarquee
-          ...desc
+          ...textBlock
         }
       }
     }
@@ -139,7 +139,7 @@ export const CASE_PAGE_QUERY = (caseSlug: string, draftMode: boolean) => gql`
   ${VIDEO}
   ${RESPONSIVE_IMAGE}
   ${CASE_HERO}
-  ${DESCRIPTION}
+  ${TEXT_BLOCK}
   ${TWO_IMAGE_COMPONENT}
   ${CASE_MEDIA_GRID}
 
@@ -152,7 +152,7 @@ export const CASE_PAGE_QUERY = (caseSlug: string, draftMode: boolean) => gql`
         componentsCollection(limit: 10) {
           items {
             ...heroData
-            ...desc
+            ...textBlock
             ...responsiveImage
             ...video
             ...twoImageData
@@ -202,7 +202,7 @@ export const CONTACT_PAGE_QUERY = (draftMode: boolean) => gql`
 
 export const CAREERS_PAGE_QUERY = (draftMode: boolean) => gql`
   ${RESPONSIVE_IMAGE}
-  ${DESCRIPTION}
+  ${TEXT_BLOCK}
   ${PAGE_HERO}
 
   query {
@@ -212,7 +212,7 @@ export const CAREERS_PAGE_QUERY = (draftMode: boolean) => gql`
         ...pageHero
       }
       introduction {
-        ...desc
+        ...textBlock
       }
     }
   }

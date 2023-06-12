@@ -2,11 +2,11 @@ import React from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
 import { CAREERS_PAGE_QUERY } from '@graphql/queries'
-import { JobPage, PageHero as PageHeroType, DescriptionComponent } from '@customTypes/cms'
+import { JobPage, PageHero as PageHeroType, TextBlock as TextBlockType } from '@customTypes/cms'
 import { List } from '@components/list'
 import { JobListItem } from '@components/job-list-item'
 import { PageHero } from '@components/page-hero'
-import { Description } from '@components/description'
+import { TextBlock } from '@components/text-block'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import styles from './Careers.module.scss'
@@ -17,7 +17,7 @@ const bem = bemify(styles, 'careers')
 interface JobsPageProp extends JobPage {
   footerTheme: 'light' | 'dark'
   hero: PageHeroType
-  introduction: DescriptionComponent
+  introduction: TextBlockType
   openings: any[]
 }
 
@@ -37,14 +37,14 @@ const Careers = ({ hero, introduction, openings }: JobsPageProp) => {
       </Head>
       <main className={styles['careers']}>
         <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
-        <Description
+        <TextBlock
           theme="light"
           copyLeft={introduction.copyLeft}
           copyRight={introduction.copyRight}
           link={introduction.link}
         >
           <ThemeChangeTrigger theme="light" />
-        </Description>
+        </TextBlock>
         <ContentWrapper style={{ position: 'relative', background: 'black' }}>
           <ThemeChangeTrigger theme="dark" />
           <h2 className={bem('openings')}>Openings</h2>

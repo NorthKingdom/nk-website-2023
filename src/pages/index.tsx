@@ -8,11 +8,11 @@ import { CaseList } from '@components/case-list'
 import type {
   HomeHero as HomeHeroData,
   ImageMarquee as ImageMarqueeData,
-  DescriptionComponent as DescriptionData,
+  TextBlock as TextBlockData,
 } from '@customTypes/cms'
 import { ImageMarquee } from '@components/image-marquee'
 
-const Description = dynamic(() => import('@/components/description/Description').then((Mod) => Mod.Description), {
+const TextBlock = dynamic(() => import('@/components/text-block/TextBlock').then((Mod) => Mod.TextBlock), {
   ssr: false,
 })
 
@@ -63,7 +63,7 @@ const HomePageSectionResolver = ({ __typename, ...props }: { __typename: string;
         />
       )
     case 'DescriptionComponent':
-      return <Description key={props.sys.id} {...(props as DescriptionData)} />
+      return <TextBlock key={props.sys.id} {...(props as TextBlockData)} />
     case 'ImageMarquee':
       return <ImageMarquee key={props.sys.id} {...(props as ImageMarqueeData)} />
     default:

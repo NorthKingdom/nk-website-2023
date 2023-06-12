@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Description } from './Description'
+import { TextBlock } from './TextBlock'
 
-const meta: Meta<typeof Description> = {
-  title: 'UI/Description',
-  component: Description,
+const meta: Meta<typeof TextBlock> = {
+  title: 'UI/TextBlock',
+  component: TextBlock,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
@@ -11,7 +11,7 @@ const meta: Meta<typeof Description> = {
 }
 
 export default meta
-type Story = StoryObj<typeof Description>
+type Story = StoryObj<typeof TextBlock>
 
 export const Default: Story = {
   args: {
@@ -20,19 +20,10 @@ export const Default: Story = {
   },
 }
 
-export const WithLargeHeader: Story = {
+export const WithHeading: Story = {
   args: {
+    heading: 'This is a heading',
     copyLeft: 'About us',
-    headerSize: 'large',
-    copyRight:
-      'From concept to execution, we design experiences, products and services that help our international clients create emotional and meaningful connections between their brand and people.',
-  },
-}
-
-export const WithSmallHeader: Story = {
-  args: {
-    copyLeft: 'About us',
-    headerSize: 'small',
     copyRight:
       'From concept to execution, we design experiences, products and services that help our international clients create emotional and meaningful connections between their brand and people.',
   },
@@ -43,33 +34,20 @@ export const WithLink: Story = {
     copyRight:
       'From concept to execution, we design experiences, products and services that help our international clients create emotional and meaningful connections between their brand and people.',
     link: {
-      copy: 'Learn More',
-      url: '',
+      copy: 'Click me ↗',
+      url: '#',
     },
   },
 }
 
-export const WithLargeHeaderAndLink: Story = {
+export const WithHeadingAndLink: Story = {
   args: {
     copyLeft: 'About us',
-    headerSize: 'large',
+    heading: 'Large Heading',
     copyRight:
       'From concept to execution, we design experiences, products and services that help our international clients create emotional and meaningful connections between their brand and people.',
     link: {
-      copy: 'Learn More',
-      url: '',
-    },
-  },
-}
-
-export const WithSmallHeaderAndLink: Story = {
-  args: {
-    copyLeft: 'About us',
-    headerSize: 'small',
-    copyRight:
-      'From concept to execution, we design experiences, products and services that help our international clients create emotional and meaningful connections between their brand and people.',
-    link: {
-      copy: 'Learn More',
+      copy: 'Click me ↗',
       url: '',
     },
   },
