@@ -10,7 +10,7 @@ import { CloseButton } from '@components/close-button'
 import { useInView } from 'framer-motion'
 import { useWebglSceneStore } from './webgl-scene/WebglScene.store'
 import type { HomeHero as HomeHeroProps } from '@customTypes/cms'
-import { Description } from '@components/description'
+import { TextBlock } from '@components/text-block'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 const bem = bemify(styles, 'homeHero')
 const videoModalBem = bemify(styles, 'videoPlayerModal')
@@ -108,7 +108,7 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProp
           )}
         </Modal>
       </div>
-      <Description copyLeft={statement} theme="dark" notch={false} />
+      <TextBlock copyLeft={statement} theme="dark" notch={false} />
     </>
   )
 }

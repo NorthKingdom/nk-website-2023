@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
-export const DESCRIPTION = gql`
-  fragment desc on DescriptionComponent {
+export const TEXT_BLOCK = gql`
+  fragment textBlock on DescriptionComponent {
     sys {
       id
     }

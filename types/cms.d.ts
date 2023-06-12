@@ -10,9 +10,10 @@ export interface PageHero {
   image: ResponsiveImage
 }
 
-export interface DescriptionComponent {
+export interface TextBlock {
   __typename: 'DescriptionComponent'
   sys: { id: string }
+  heading?: string
   copyLeft?: string
   copyRight?: string
   link?: Link
