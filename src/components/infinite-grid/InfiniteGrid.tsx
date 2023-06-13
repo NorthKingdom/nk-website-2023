@@ -1,10 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import cx from 'clsx'
 import { motion, useMotionValue } from 'framer-motion'
 import styles from './InfiniteGrid.module.scss'
 import { bemify } from '@utils/bemify'
+import type { ResponsiveImage } from '@customTypes/cms'
+import Image from 'next/image'
+import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
 const bem = bemify(styles, 'infiniteGrid')
 
-interface InfiniteGridProps {}
+interface InfiniteGridProps {
+  images: ResponsiveImage[]
+}
 
 const num_cols = 9
 const num_rows = 9
@@ -12,7 +18,7 @@ const col_size = 240
 const row_size = 240
 const square_size = 240
 
-const IS_DEBUG = true
+const IS_DEBUG = false
 
 const Square = ({
   i,
@@ -21,6 +27,7 @@ const Square = ({
   row,
   col,
   debug,
+  image,
   onClick,
 }: {
   i: number
@@ -30,11 +37,15 @@ const Square = ({
   col: number
   debug: boolean
   onClick: any
+  image: ResponsiveImage
 }) => {
   const x = (i % num_cols) * col_size
   const y = Math.floor(i / num_rows) * row_size
 
   const scale = useMotionValue(1) as any
+  const { src } = useContentfulMediaSrc(image, {
+    width: 300,
+  })
 
   return (
     <motion.div
@@ -42,26 +53,53 @@ const Square = ({
         // scale.set(scale.current === 2 ? 1 : 2)
         onClick(i)
       }}
-      className={`${bem('square')} ${`row-${row}`} ${`col-${col}`} item`}
+      className={cx(bem('square'), `row-${row}`, `col-${col}`)}
+      data-debug={debug}
       style={{
         x,
         y,
         scale,
-        border: debug ? `2px solid black` : 'none',
         transform: `translateX(${x}px) tranlateY(${y}px) translateZ(0px)`,
         width: w,
         height: h,
       }}
     >
-      <img src={`/dummy/grid/grid-image-${i % 31}.jpg`} alt={'temp alt'} draggable="false" />
+      <div aria-hidden="true">
+        <Image aria-hidden="false" src={src} alt={image.altText} draggable="false" fill />
+      </div>
     </motion.div>
   )
 }
 
-export const InfiniteGrid = (props: InfiniteGridProps) => {
+export const InfiniteGrid = ({ images = [] }: InfiniteGridProps) => {
   const infiniteGridRef = useRef<HTMLDivElement>(null)
   const [w, setW] = useState(col_size)
   const [h, setH] = useState(row_size)
+
+  const gridItems = useMemo(() => {
+    const originalItems = images
+    let finalItems = [...images]
+
+    if (!originalItems.length) return []
+
+    const NUM_OF_ITEMS = num_cols * num_rows
+
+    const isItemsListTooShort = originalItems.length < NUM_OF_ITEMS
+    const isItemsListTooLong = originalItems.length > NUM_OF_ITEMS
+
+    if (isItemsListTooShort) {
+      let i = 0
+      while (finalItems.length < NUM_OF_ITEMS) {
+        finalItems.push(originalItems[i])
+        i++
+        i = i % originalItems.length
+      }
+    } else if (isItemsListTooLong) {
+      finalItems = finalItems.slice(0, NUM_OF_ITEMS)
+    }
+
+    return finalItems
+  }, [images])
 
   let isMouseDown = false
 
@@ -212,7 +250,6 @@ export const InfiniteGrid = (props: InfiniteGridProps) => {
 
   useEffect(() => {
     if (infiniteGridRef.current) {
-      console.log(`adding`)
       infiniteGridRef.current.addEventListener('mousedown', mouseDown)
       infiniteGridRef.current.addEventListener('mouseup', mouseUp)
       infiniteGridRef.current.addEventListener('mousemove', mouseMove)
@@ -255,7 +292,7 @@ export const InfiniteGrid = (props: InfiniteGridProps) => {
           scale,
         }}
       >
-        {Array.from(Array(num_cols * num_rows)).map((a, i) => {
+        {gridItems.map((item, i) => {
           return (
             <Square
               onClick={clickEvent}
@@ -266,6 +303,7 @@ export const InfiniteGrid = (props: InfiniteGridProps) => {
               h={h}
               key={`sq-${i}`}
               i={i}
+              image={item}
             />
           )
         })}
