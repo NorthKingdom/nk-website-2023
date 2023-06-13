@@ -71,6 +71,24 @@ export interface ResponsiveImage {
 
 export type Media = ResponsiveImage | Video
 
+export interface StickyList {
+  __typename: 'StickyList'
+  sys: { id: string }
+  itemsCollection: {
+    items: {
+      header: string
+      description: string
+      mediaCollection: {
+        items: (ResponsiveImage | Video)[]
+      }
+      link: {
+        copy: string
+        url: string
+      }
+    }[]
+  }
+}
+
 export interface Award {
   awardName: string
   count: number
@@ -125,9 +143,7 @@ export interface Case {
 }
 
 export interface CaseArchiveItem extends Pick<Case, 'title' | 'date' | 'client' | 'projectLink' | 'vertical'> {
-  sys: {
-    id: string
-  }
+  sys: { id: string }
 }
 
 export interface CaseArchive {
@@ -198,6 +214,13 @@ export interface WorkPage {
   caseArchive: CaseArchive
 }
 
+export interface CareersPage {
+  hero: PageHero
+  sections: {
+    items: (TextBlock | IrregularGrid | StickyList)[]
+  }
+}
+
 export interface FooterData {
   footerHeroText: string
   changingFooterWords: string[]
@@ -227,6 +250,7 @@ export interface FooterData {
 
 export interface InfiniteGrid {
   __typename: 'InfiniteGrid'
+  sys: { id: string }
   itemsCollection: {
     items: ResponsiveImage[]
   }
@@ -234,18 +258,19 @@ export interface InfiniteGrid {
 
 export interface IrregularGrid {
   __typename: 'IrregularGrid'
+  sys: { id: string }
   itemsCollection: {
     items: [Media, Media, Media, Media]
   }
 }
 
-export interface JobPage {
-  header: string
-  generalApplicationCopy: string
-  generalApplicationCta: string
-  otherOpportunitiesHeader: string
-  otherOpportunitiesCopy: string
-}
+// export interface JobPage {
+//   header: string
+//   generalApplicationCopy: string
+//   generalApplicationCta: string
+//   otherOpportunitiesHeader: string
+//   otherOpportunitiesCopy: string
+// }
 
 export interface JournalEntry {
   author: string

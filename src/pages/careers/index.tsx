@@ -2,7 +2,11 @@ import React from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
 import { CAREERS_PAGE_QUERY } from '@graphql/queries'
-import { JobPage, PageHero as PageHeroType, TextBlock as TextBlockType } from '@customTypes/cms'
+import type {
+  CareersPage as CareersPageData,
+  IrregularGrid as IrregularGridProps,
+  TextBlock as TextBlockProps,
+} from '@customTypes/cms'
 import { List } from '@components/list'
 import { JobListItem } from '@components/job-list-item'
 import { PageHero } from '@components/page-hero'
@@ -12,16 +16,16 @@ import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import styles from './Careers.module.scss'
 import { bemify } from '@utils/bemify'
 import { LOCATION_ID } from '@constants'
+import { FourImageLayout } from '@components/four-image-layout'
+import { StickyListItem } from '@components/sticky-list-item'
 const bem = bemify(styles, 'careers')
 
-interface JobsPageProp extends JobPage {
+interface CareersPageProps extends CareersPageData {
   footerTheme: 'light' | 'dark'
-  hero: PageHeroType
-  introduction: TextBlockType
   openings: any[]
 }
 
-const Careers = ({ hero, introduction, openings }: JobsPageProp) => {
+const Careers = ({ hero, sections, openings }: CareersPageProps) => {
   return (
     <>
       <Head>
@@ -37,14 +41,9 @@ const Careers = ({ hero, introduction, openings }: JobsPageProp) => {
       </Head>
       <main className={styles['careers']}>
         <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
-        <TextBlock
-          theme="light"
-          copyLeft={introduction.copyLeft}
-          copyRight={introduction.copyRight}
-          link={introduction.link}
-        >
-          <ThemeChangeTrigger theme="light" />
-        </TextBlock>
+        {(sections.items ?? []).map((section) => (
+          <CareersPageSectionResolver key={section.sys.id} {...section} />
+        ))}
         <ContentWrapper style={{ position: 'relative', background: 'black' }}>
           <ThemeChangeTrigger theme="dark" />
           <h2 className={bem('openings')}>Openings</h2>
@@ -119,3 +118,20 @@ export async function getServerSideProps({ draftMode = false }) {
 }
 
 export default Careers
+
+const CareersPageSectionResolver = ({ __typename, ...props }: { __typename: string; [key: string]: any }) => {
+  switch (__typename) {
+    case 'StickyList':
+      return (
+        <ContentWrapper style={{ background: 'white' }}>
+          <List key={props.sys.id} items={props.itemsCollection.items} renderItem={StickyListItem} />
+        </ContentWrapper>
+      )
+    case 'DescriptionComponent':
+      return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} />
+    case 'IrregularGrid':
+      return <FourImageLayout key={props.sys.id} media={(props as IrregularGridProps).itemsCollection.items} />
+    default:
+      return <></>
+  }
+}
