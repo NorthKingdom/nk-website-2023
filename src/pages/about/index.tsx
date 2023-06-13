@@ -2,7 +2,12 @@ import React from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
 import { ABOUT_PAGE_QUERY } from '@graphql/queries'
-import { About as AboutPageProps } from '@customTypes/cms'
+import type {
+  About as AboutPageProps,
+  InfiniteGrid as InfiniteGridProps,
+  IrregularGrid as IrregularGridProps,
+  TextBlock as TextBlockProps,
+} from '@customTypes/cms'
 import { PageHero } from '@components/page-hero'
 import { List } from '@components/list'
 import { StickyListItem } from '@components/sticky-list-item'
@@ -11,9 +16,11 @@ import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import styles from './About.module.scss'
 import { bemify } from '@utils/bemify'
 import { InfiniteGrid } from '@components/infinite-grid'
+import { TextBlock } from '@components/text-block'
+import { FourImageLayout } from '@components/four-image-layout'
 const bem = bemify(styles, 'about')
 
-const About = ({ hero, list, gridImagesCollection }: AboutPageProps) => {
+const About = ({ hero, ...props }: AboutPageProps) => {
   return (
     <>
       <Head>
@@ -31,9 +38,9 @@ const About = ({ hero, list, gridImagesCollection }: AboutPageProps) => {
         <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
         <ContentWrapper style={{ position: 'relative', background: 'white' }}>
           <ThemeChangeTrigger theme="light" />
-          <List hideBottomBar items={list.itemsCollection.items} renderItem={StickyListItem} />
-          {/* TODO :: Add in props here for grid images */}
-          {/* <InfiniteGrid images={gridImagesCollection.items}/> */}
+          {(props.sections.items ?? []).map((section) => (
+            <AboutPageSectionResolver key={section.sys.id} {...section} />
+          ))}
         </ContentWrapper>
       </main>
     </>
@@ -51,3 +58,19 @@ export async function getStaticProps({ draftMode = false }) {
     })
 }
 export default About
+
+const AboutPageSectionResolver = ({ __typename, ...props }: { __typename: string; [key: string]: any }) => {
+  switch (__typename) {
+    case 'StickyList':
+      return <List key={props.sys.id} items={props.itemsCollection.items} renderItem={StickyListItem} />
+    case 'DescriptionComponent':
+      return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} />
+    case 'InfiniteGrid':
+      return <InfiniteGrid key={props.sys.id} />
+    // return <InfiniteGrid key={props.sys.id} images={(props as InfiniteGridProps).itemsCollection.items} />
+    case 'IrregularGrid':
+      return <FourImageLayout key={props.sys.id} media={(props as IrregularGridProps).itemsCollection.items} />
+    default:
+      return <></>
+  }
+}
