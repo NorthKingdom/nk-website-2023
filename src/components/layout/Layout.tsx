@@ -95,7 +95,6 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
   }, [lenis, isMenuOpen])
 
   useEffect(() => {
-    console.log(`mount`)
     return () => {
       console.log(`setting`, router.route === '/case/[case]')
       setIsComingFromACasePage(router.route === '/case/[case]')

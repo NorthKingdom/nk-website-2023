@@ -33,7 +33,6 @@ export const StickyListItem = ({
   showArrows = false,
   link,
 }: StickyListItemProps) => {
-  console.log(mediaCollection.items[0])
   return (
     <div className={styles['stickyListItem']}>
       <div className={bem('leftContainer')}>

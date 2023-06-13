@@ -66,8 +66,7 @@ const AboutPageSectionResolver = ({ __typename, ...props }: { __typename: string
     case 'DescriptionComponent':
       return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} />
     case 'InfiniteGrid':
-      return <InfiniteGrid key={props.sys.id} />
-    // return <InfiniteGrid key={props.sys.id} images={(props as InfiniteGridProps).itemsCollection.items} />
+      return <InfiniteGrid key={props.sys.id} images={(props as InfiniteGridProps).itemsCollection.items} />
     case 'IrregularGrid':
       return <FourImageLayout key={props.sys.id} media={(props as IrregularGridProps).itemsCollection.items} />
     default:
