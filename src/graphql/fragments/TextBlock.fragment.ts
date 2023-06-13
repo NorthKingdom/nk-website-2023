@@ -5,6 +5,7 @@ export const TEXT_BLOCK = gql`
     sys {
       id
     }
+    heading
     copyLeft
     copyRight
     link {

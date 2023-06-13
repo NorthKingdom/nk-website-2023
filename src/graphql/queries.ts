@@ -10,6 +10,9 @@ import { FEATURED_VIDEO } from '@graphql/fragments/FeaturedVideo.fragment'
 import { IMAGE_MARQUEE } from '@graphql/fragments/ImageMarquee.fragment'
 import { PAGE_HERO } from './fragments/PageHero.fragment'
 import { CASE_MEDIA_GRID } from './fragments/CaseMediaGrid.fragment'
+import { INFINITE_GRID } from './fragments/InfiniteGrid.fragment'
+import { IRREGULAR_GRID } from './fragments/IrregularGrid.fragment'
+import { STICKY_LIST } from './fragments/StickyList.fragment'
 
 export const HOME_PAGE_QUERY = (draftMode: boolean) => gql`
     ${HOME_HERO}
@@ -102,33 +105,23 @@ export const ABOUT_PAGE_QUERY = (draftMode: boolean) => gql`
   ${RESPONSIVE_IMAGE}
   ${VIDEO}
   ${PAGE_HERO}
+  ${TEXT_BLOCK}
+  ${INFINITE_GRID}
+  ${IRREGULAR_GRID}
+  ${STICKY_LIST}
 
   query {
     about(preview: ${draftMode}, id: "4UezmZj7umAjZ51VwvkU9x") {
       hero {
         ...pageHero
       }
-      list {
-        itemsCollection(limit: 5) {
-          items {
-            header
-            description
-            mediaCollection {
-              items {
-                ...responsiveImage
-                ...video
-              }
-            }
-            link {
-              copy
-              url
-            }
-          }
-        }
-      }
-      gridImagesCollection {
+      sections: sectionsCollection(limit: 10) {
         items {
-          ...responsiveImage
+          __typename
+          ...textBlock
+          ...infiniteGrid
+          ...irregularGrid
+          ...stickyList
         }
       }
     }

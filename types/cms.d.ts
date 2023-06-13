@@ -26,9 +26,8 @@ export interface MediaGridItem {
 
 export interface About {
   hero: PageHero
-  list: StickyList
-  gridImagesCollection: {
-    items: ResponsiveImage[]
+  sections: {
+    items: (TextBlock | InfiniteGrid | IrregularGrid | StickyList)[]
   }
 }
 
@@ -69,6 +68,8 @@ export interface ResponsiveImage {
   altText: string
   __typename: 'ResponsiveImage'
 }
+
+export type Media = ResponsiveImage | Video
 
 export interface Award {
   awardName: string
@@ -224,8 +225,18 @@ export interface FooterData {
   noaText: string
 }
 
-export interface ImageGallery {
-  galleryImage: image[]
+export interface InfiniteGrid {
+  __typename: 'InfiniteGrid'
+  itemsCollection: {
+    items: ResponsiveImage[]
+  }
+}
+
+export interface IrregularGrid {
+  __typename: 'IrregularGrid'
+  itemsCollection: {
+    items: [Media, Media, Media, Media]
+  }
 }
 
 export interface JobPage {
