@@ -6,6 +6,12 @@
   --plyr-video-control-color: #fff;
   --plyr-video-control-color-hover: #ffffff60;
   --plyr-range-fill-background: #fff;
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .customIcon {
