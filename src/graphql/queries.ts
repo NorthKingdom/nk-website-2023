@@ -194,9 +194,10 @@ export const CONTACT_PAGE_QUERY = (draftMode: boolean) => gql`
 `
 
 export const CAREERS_PAGE_QUERY = (draftMode: boolean) => gql`
-  ${RESPONSIVE_IMAGE}
-  ${TEXT_BLOCK}
   ${PAGE_HERO}
+  ${TEXT_BLOCK}
+  ${IRREGULAR_GRID}
+  ${STICKY_LIST}
 
   query {
     careersPage(preview: ${draftMode}, id: "1biZZL9Xnhz09yjM8cF1uF") {
@@ -204,8 +205,13 @@ export const CAREERS_PAGE_QUERY = (draftMode: boolean) => gql`
       hero {
         ...pageHero
       }
-      introduction {
-        ...textBlock
+      sections: sectionsCollection(limit: 10) {
+        items {
+          __typename
+          ...textBlock
+          ...irregularGrid
+          ...stickyList
+        }
       }
     }
   }
