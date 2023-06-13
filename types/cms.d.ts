@@ -203,9 +203,10 @@ export interface ImageMarquee {
   }
 }
 
-export type HomePageSection = HomeHero | FeaturedCases | FeaturedVideo | ImageMarquee | Description
+export type HomePageSection = FeaturedCases | FeaturedVideo | ImageMarquee | Description
 
 export interface HomePage {
+  hero: HomeHero
   sections: { items: HomePageSection[] }
 }
 

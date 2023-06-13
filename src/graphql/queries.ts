@@ -24,10 +24,12 @@ export const HOME_PAGE_QUERY = (draftMode: boolean) => gql`
 
   query HomePageQuery {
     home(preview: ${draftMode}, id: "1adP5ve54HEOfoZthZju8A") {
+      hero {
+        ...homeHero
+      }
       sections: sectionsCollection (limit: 10) {
         items {
           __typename
-          ...homeHero
           ...featuredCases
           ...featuredVideo
           ...imageMarquee

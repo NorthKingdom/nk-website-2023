@@ -5,11 +5,7 @@ import client from '@graphql/client'
 import { HomePage, FeaturedCases } from '@customTypes/cms'
 import { HomeHero } from '@components/home-hero'
 import { CaseList } from '@components/case-list'
-import type {
-  HomeHero as HomeHeroData,
-  ImageMarquee as ImageMarqueeData,
-  TextBlock as TextBlockData,
-} from '@customTypes/cms'
+import type { ImageMarquee as ImageMarqueeData, TextBlock as TextBlockData } from '@customTypes/cms'
 import { ImageMarquee } from '@components/image-marquee'
 
 const TextBlock = dynamic(() => import('@/components/text-block/TextBlock').then((Mod) => Mod.TextBlock), {
@@ -24,6 +20,7 @@ const Home = (props: HomePage) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/shield.ico" />
       </Head>
+      <HomeHero key={props.hero.sys.id} {...props.hero} />
       {(props.sections.items ?? []).map((section) => (
         <HomePageSectionResolver key={section.sys.id} {...section} />
       ))}
@@ -52,8 +49,6 @@ export default Home
 
 const HomePageSectionResolver = ({ __typename, ...props }: { __typename: string; [key: string]: any }) => {
   switch (__typename) {
-    case 'HomeHeroComponent':
-      return <HomeHero key={props.sys.id} {...(props as HomeHeroData)} />
     case 'FeaturedCasesComponent':
       return (
         <CaseList
