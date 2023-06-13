@@ -64,14 +64,12 @@ export const VideoPlayer = ({
 
   useEffect(() => {
     if (muted && autoPlay) {
-      console.log('dont instantiate plyr')
       return
     }
 
     let _plyr: any
 
     async function instantiatePlyr() {
-      console.log('instantiate plyr!')
       const Plyr = (await import('plyr')).default
       _plyr = new Plyr(`#${CSS.escape(id)}`, {
         controls: controls ? _plyrControls : [],
