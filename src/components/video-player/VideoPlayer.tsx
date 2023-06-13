@@ -1,9 +1,8 @@
-import React, { useEffect, useId, type ComponentPropsWithoutRef } from 'react'
+import React, { useEffect, useId, type ComponentPropsWithoutRef, useMemo } from 'react'
 import styles from './VideoPlayer.module.scss'
 import { Video } from '@customTypes/cms'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
-import { sortVideoFormats } from '@utils/video-format-sorting'
-import Plyr from 'plyr'
+import { noop } from '@utils/noop'
 import 'plyr/dist/plyr.css'
 
 const _plyrControls = `
@@ -56,49 +55,91 @@ export const VideoPlayer = ({
   muted = true,
   loop = false,
   autoPlay = false,
+  onCanPlay = noop,
   ...props
 }: VideoPlayerProps) => {
   const id = useId()
+  const videoRef = React.useRef<HTMLVideoElement>(null)
   const bpFromDesktopSmall = useBreakpointFrom('desktopSmall')
 
   useEffect(() => {
-    const p = new Plyr(`#${CSS.escape(id)}`, {
-      controls: controls ? _plyrControls : [],
-      muted: muted,
-      autoplay: autoPlay,
-      clickToPlay: !playsInline,
-      loop: {
-        active: loop,
-      },
-      fullscreen: {
-        enabled: !playsInline,
-        fallback: true,
-        iosNative: true,
-        container: undefined,
-      },
-    })
-
-    if (autoPlay && playsInline) {
-      p.play()
+    if (muted && autoPlay) {
+      console.log('dont instantiate plyr')
+      return
     }
+
+    let _plyr: any
+
+    async function instantiatePlyr() {
+      console.log('instantiate plyr!')
+      const Plyr = (await import('plyr')).default
+      _plyr = new Plyr(`#${CSS.escape(id)}`, {
+        controls: controls ? _plyrControls : [],
+        muted: muted,
+        autoplay: autoPlay,
+        clickToPlay: !playsInline,
+        loop: {
+          active: loop,
+        },
+        fullscreen: {
+          enabled: !playsInline,
+          fallback: true,
+          iosNative: true,
+          container: undefined,
+        },
+      })
+
+      if (autoPlay && playsInline) {
+        _plyr.play()
+      }
+    }
+
+    instantiatePlyr()
+
+    return () => {
+      _plyr?.destroy()
+    }
+  }, [])
+
+  /**
+   * Fix for onCanPlay event not firing when an autoplaying video is already loaded.
+   */
+  useEffect(() => {
+    if (!videoRef.current) return
+    // @ts-ignore
+    if (videoRef.current.readyState >= 3) onCanPlay()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const hasMobileVideo = src.mobileVideoCollection.items.length > 0
 
+  const srcset = useMemo(() => {
+    const sources = [
+      ...(!bpFromDesktopSmall && hasMobileVideo ? src.mobileVideoCollection.items : src.desktopVideoCollection.items),
+    ]
+
+    return sources.sort((_, filenameB) => {
+      const fileExtensionB = filenameB.url.split('.').pop()
+      return fileExtensionB === 'webm' ? 1 : -1
+    })
+  }, [src, bpFromDesktopSmall, hasMobileVideo])
+
   return (
     <div className={`${styles['videoPlayer']} ${className}`} style={props.style}>
-      <video id={id} poster={poster} playsInline={playsInline} muted={muted} {...props}>
-        {[
-          ...(!bpFromDesktopSmall && hasMobileVideo
-            ? src.mobileVideoCollection.items
-            : src.desktopVideoCollection.items),
-        ]
-          .sort((a, b) => sortVideoFormats(a.url, b.url))
-          .map((s, i: number) => (
-            <source key={`video-src-${i}`} src={s.url} type={s.contentType} />
-          ))}
-
-        {controls && <div>controls</div>}
+      <video
+        ref={videoRef}
+        data-id={id}
+        poster={poster}
+        playsInline={playsInline}
+        muted={muted}
+        autoPlay={autoPlay}
+        loop={loop}
+        onCanPlay={onCanPlay}
+        {...props}
+      >
+        {srcset.map((s) => (
+          <source key={s.url} src={s.url} type={s.contentType} />
+        ))}
       </video>
     </div>
   )
