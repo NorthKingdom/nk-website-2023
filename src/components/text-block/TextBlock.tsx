@@ -4,6 +4,7 @@ import { bemify } from '@utils/bemify'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import type { TextBlock as TextBlockDataType } from '@customTypes/cms'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
+import Link from 'next/link'
 const bem = bemify(styles, 'textBlock')
 
 interface TextBlockProps extends Omit<TextBlockDataType, '__typename' | 'sys'> {
@@ -28,7 +29,11 @@ export const TextBlock = ({
       <div className={bem('left')}>{copyLeft}</div>
       <div className={bem('right')}>
         <p>{copyRight}</p>
-        {link && <a href={link.url}>{link.copy}</a>}
+        {link && (
+          <Link className={bem('link')} href={link.url}>
+            {link.copy}
+          </Link>
+        )}
       </div>
       {children}
     </ContentWrapper>

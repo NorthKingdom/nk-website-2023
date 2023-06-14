@@ -83,4 +83,10 @@
     cursor: pointer;
     color: var(--_footer-color-fg-60);
   }
+
+  &__noaCta,
+  &__scrollTopCta {
+    position: relative;
+    @include text-underline-hover(var(--_footer-color-fg-60));
+  }
 }

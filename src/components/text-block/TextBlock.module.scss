@@ -31,16 +31,6 @@
     @include mq($until: tablet) {
       width: 100%;
     }
-
-    // h2 {
-    //   &[data-size='large'] {
-    //     @include Heading1;
-    //   }
-
-    //   &[data-size='small'] {
-    //     @include BodyRegular;
-    //   }
-    // }
   }
 
   &__right {
@@ -60,5 +50,10 @@
       text-decoration: none;
       margin-top: 40px;
     }
+  }
+
+  &__link {
+    position: relative;
+    @include text-underline-hover(var(--color-black));
   }
 }
