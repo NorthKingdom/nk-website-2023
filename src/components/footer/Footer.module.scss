@@ -63,7 +63,6 @@
 
     @include mq($until: tablet) {
       position: relative;
-      flex-direction: row-reverse;
     }
 
     #{$block}[data-theme='dark'] & {
