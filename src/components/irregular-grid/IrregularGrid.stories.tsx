@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { FourImageLayout } from './FourImageLayout'
+import { IrregularGrid } from './IrregularGrid'
 
-const meta: Meta<typeof FourImageLayout> = {
-  title: 'UI/FourImageLayout',
-  component: FourImageLayout,
+const meta: Meta<typeof IrregularGrid> = {
+  title: 'UI/IrregularGrid',
+  component: IrregularGrid,
   tags: ['autodocs'],
   parameters: {},
 }
 
 export default meta
-type Story = StoryObj<typeof FourImageLayout>
+type Story = StoryObj<typeof IrregularGrid>
 
 export const Default: Story = {
   args: {

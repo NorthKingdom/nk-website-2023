@@ -6,6 +6,11 @@
   // Page margins
   --page-margin: 20px;
   --grid-gap: 20px;
+  --grid-columns: 4;
+
+  @include mq($from: tablet) {
+    --grid-columns: 12;
+  }
 
   // Eases
   --ease: ease-in-out;
@@ -90,7 +95,7 @@ html[data-theme='light'] {
 }
 
 /*
-* Foter
+* Footer
 */
 :root {
   --footer-height: 375px;
@@ -179,7 +184,9 @@ video {
   border-radius: 4px;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 

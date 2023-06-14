@@ -16,7 +16,7 @@ import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import styles from './Careers.module.scss'
 import { bemify } from '@utils/bemify'
 import { LOCATION_ID } from '@constants'
-import { FourImageLayout } from '@components/four-image-layout'
+import { IrregularGrid } from '@components/irregular-grid'
 import { StickyListItem } from '@components/sticky-list-item'
 const bem = bemify(styles, 'careers')
 
@@ -160,7 +160,7 @@ const CareersPageSectionResolver = ({
         return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} />
       }
     case 'IrregularGrid':
-      return <FourImageLayout key={props.sys.id} media={(props as IrregularGridProps).itemsCollection.items} />
+      return <IrregularGrid key={props.sys.id} media={(props as IrregularGridProps).itemsCollection.items} />
     default:
       return <></>
   }

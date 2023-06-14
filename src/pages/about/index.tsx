@@ -15,7 +15,7 @@ import styles from './About.module.scss'
 import { bemify } from '@utils/bemify'
 import { InfiniteGrid } from '@components/infinite-grid'
 import { TextBlock } from '@components/text-block'
-import { FourImageLayout } from '@components/four-image-layout'
+import { IrregularGrid } from '@components/irregular-grid'
 const bem = bemify(styles, 'about')
 
 const About = ({ hero, ...props }: AboutPageProps) => {
@@ -63,7 +63,7 @@ const AboutPageSectionResolver = ({ __typename, ...props }: { __typename: string
     case 'InfiniteGrid':
       return <InfiniteGrid key={props.sys.id} images={(props as InfiniteGridProps).itemsCollection.items} />
     case 'IrregularGrid':
-      return <FourImageLayout key={props.sys.id} media={(props as IrregularGridProps).itemsCollection.items} />
+      return <IrregularGrid key={props.sys.id} media={(props as IrregularGridProps).itemsCollection.items} />
     default:
       return <></>
   }
