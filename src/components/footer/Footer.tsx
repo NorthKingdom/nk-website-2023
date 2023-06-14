@@ -34,7 +34,7 @@ export const Footer = ({ theme = 'dark' }: FooterProps) => {
   const { data } = useQuery(FOOTER_QUERY)
 
   const Wordmark = bpFromTablet ? WordmarkOneLine : WordmarkTwoLines
-  const scrollToTopCopy = bpFromTablet ? '↗ Back to north' : '↗'
+  const scrollToTopCopy = bpFromTablet ? '↑ Back to north' : '↑'
 
   const onScrollToTop = () => {
     if (!lenis) return
@@ -45,10 +45,12 @@ export const Footer = ({ theme = 'dark' }: FooterProps) => {
     <footer className={bem()} ref={$footer} data-theme={theme}>
       <Wordmark>
         <div className={bem('content')}>
+          <Link className={bem('noaCta')} href="https://www.thenorthalliance.com/">
+            {data?.footer?.statement}
+          </Link>
           <button className={bem('scrollTopCta')} onClick={onScrollToTop}>
             {scrollToTopCopy}
           </button>
-          <Link href="https://www.thenorthalliance.com/">{data?.footer?.statement}</Link>
         </div>
       </Wordmark>
     </footer>

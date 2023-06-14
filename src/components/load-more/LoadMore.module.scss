@@ -8,10 +8,10 @@
 
   button {
     display: block;
+    position: relative;
     @include BodyRegular;
     background: none;
     border: none;
-    text-decoration: underline;
     margin-left: auto;
     margin-right: auto;
 
@@ -19,6 +19,8 @@
     --color-hover: var(--color-black-60);
 
     color: var(--color-text);
+
+    @include text-underline-hover(var(--color-text));
 
     &[data-theme='light'] {
       --color-text: var(--color-black);
@@ -28,10 +30,6 @@
     &[data-theme='dark'] {
       --color-text: var(--color-white);
       --color-hover: var(--color-white-60);
-    }
-
-    @include hover {
-      color: var(--color-hover);
     }
   }
 }
