@@ -23,9 +23,11 @@ const bem = bemify(styles, 'careers')
 interface CareersPageProps extends CareersPageData {
   footerTheme: 'light' | 'dark'
   openings: any[]
+  numOfOpenings: number
 }
 
-const Careers = ({ hero, sections, openings }: CareersPageProps) => {
+const Careers = (pageProps: CareersPageProps) => {
+  const { hero, sections, openings } = pageProps
   return (
     <>
       <Head>
@@ -41,8 +43,8 @@ const Careers = ({ hero, sections, openings }: CareersPageProps) => {
       </Head>
       <main className={styles['careers']}>
         <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
-        {(sections.items ?? []).map((section) => (
-          <CareersPageSectionResolver key={section.sys.id} {...section} />
+        {(sections.items ?? []).map((section, index) => (
+          <CareersPageSectionResolver key={section.sys.id} index={index} pageProps={pageProps} {...section} />
         ))}
         <ContentWrapper theme={'dark'} notch>
           <ThemeChangeTrigger theme="dark" />
@@ -97,6 +99,7 @@ export async function getServerSideProps({ draftMode = false }) {
             props: {
               footerTheme: 'light',
               ...CMSData.careersPage,
+              numOfOpenings: openings.length ?? 0,
               openings:
                 openings.length > 0
                   ? openings
@@ -119,11 +122,19 @@ export async function getServerSideProps({ draftMode = false }) {
 
 export default Careers
 
-const CareersPageSectionResolver = ({ __typename, ...props }: { __typename: string; [key: string]: any }) => {
+const CareersPageSectionResolver = ({
+  __typename,
+  index,
+  pageProps,
+  ...props
+}: {
+  __typename: string
+  [key: string]: any
+}) => {
   switch (__typename) {
     case 'StickyList':
       return (
-        <ContentWrapper style={{ background: 'white' }} data-use-notch={true}>
+        <ContentWrapper theme="light" data-use-notch={true}>
           <List
             key={props.sys.id}
             items={props.itemsCollection.items}
@@ -133,7 +144,21 @@ const CareersPageSectionResolver = ({ __typename, ...props }: { __typename: stri
         </ContentWrapper>
       )
     case 'DescriptionComponent':
-      return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} />
+      if (index === 0) {
+        return (
+          <TextBlock key={props.sys.id} {...(props as TextBlockProps)} className={bem('intro')}>
+            <ContentWrapper theme="transparent" className={bem('introOpeningsTeaser')}>
+              <p className="t-label">
+                {pageProps.numOfOpenings === '1'
+                  ? '(↓) 1 current opening'
+                  : `(↓) ${pageProps.numOfOpenings ?? 0} current openings`}
+              </p>
+            </ContentWrapper>
+          </TextBlock>
+        )
+      } else {
+        return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} />
+      }
     case 'IrregularGrid':
       return <FourImageLayout key={props.sys.id} media={(props as IrregularGridProps).itemsCollection.items} />
     default:

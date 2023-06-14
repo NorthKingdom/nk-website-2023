@@ -5,9 +5,10 @@ import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import type { TextBlock as TextBlockDataType } from '@customTypes/cms'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import Link from 'next/link'
+import cx from 'clsx'
 const bem = bemify(styles, 'textBlock')
 
-interface TextBlockProps extends Omit<TextBlockDataType, '__typename' | 'sys'> {
+interface TextBlockProps extends Omit<TextBlockDataType, '__typename' | 'sys'>, React.HTMLAttributes<HTMLDivElement> {
   theme?: 'light' | 'dark'
   notch?: boolean
   children?: React.ReactNode
@@ -21,9 +22,11 @@ export const TextBlock = ({
   theme = 'light',
   notch = false,
   children = null,
+  className = '',
+  ...props
 }: TextBlockProps) => {
   return (
-    <ContentWrapper as="section" className={bem()} theme={theme} notch={notch}>
+    <ContentWrapper as="section" className={cx(bem(), className)} theme={theme} notch={notch} {...props}>
       <ThemeChangeTrigger theme={theme} />
       {!!heading && <h2 className={bem('heading')}>{heading}</h2>}
       <div className={bem('left')}>{copyLeft}</div>
