@@ -3,6 +3,7 @@ import styles from './PageHero.module.scss'
 import { bemify } from '@utils/bemify'
 import { ResponsiveImage } from '@customTypes/cms'
 import { Media } from '@components/media'
+import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 const bem = bemify(styles, 'pageHero')
 
 interface PageHeroProps {
@@ -14,9 +15,9 @@ interface PageHeroProps {
 export const PageHero = ({ title, srcSet, className }: PageHeroProps) => {
   return (
     <div className={`${styles['pageHero']} ${className}`}>
-      <div className={bem('titleContainer')}>
+      <ContentWrapper className={bem('titleContainer')} theme="dark">
         <h1 className={bem('title')}>{title}</h1>
-      </div>
+      </ContentWrapper>
       {srcSet && (
         <div className={bem('imageContainer')}>
           <Media {...srcSet} className={bem('image')} />

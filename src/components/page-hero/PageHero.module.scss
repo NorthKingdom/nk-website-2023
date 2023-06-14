@@ -7,10 +7,8 @@
   margin-top: calc(var(--nav-height) * -1);
 
   &__titleContainer {
-    height: calc(66vh - var(--nav-height));
+    height: calc(66vh);
     width: 100%;
-    background: $black;
-
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
@@ -18,7 +16,6 @@
 
   &__title {
     margin-bottom: 54px;
-    color: white;
 
     @include mq($until: desktop) {
       margin-bottom: 17px;
@@ -26,7 +23,7 @@
   }
 
   &__imageContainer {
-    height: calc(66vh - var(--nav-height));
+    height: calc(66vh);
     position: relative;
   }
 
