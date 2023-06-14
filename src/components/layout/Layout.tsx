@@ -106,13 +106,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
    */
   const onPageTransitionStart = (variant: 'animate' | 'exit') => {
     if (lenis && variant === 'animate') {
-      // lenis.scrollTo(0, { immediate: true })
-      // setTimeout(() => {
-      lenis.stop()
-      console.log(`scroll to immediate `)
-      lenis.scrollTo(0, { immediate: true })
-      lenis.start()
-      // }, 500)
+      lenis.scrollTo(0, { immediate: true, force: true })
     }
   }
 
