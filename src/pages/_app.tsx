@@ -10,6 +10,7 @@ import { Layout } from '@components/layout'
 import { ApolloProvider } from '@apollo/client'
 import client from '@graphql/client'
 import { useRouteChangeSpinner } from '@hooks/use-route-change-spinner'
+// import { DebugGrid } from '@components/debug-grid'
 const apolloClient = client(false)
 
 export default function App({ Component, pageProps, router }: AppProps) {

@@ -1,0 +1,27 @@
+.container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
+  background: none !important;
+}
+
+.debugGrid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  grid-gap: var(--grid-gap);
+  grid-auto-rows: minmax(100vh, max-content);
+  width: 100%;
+  height: 100%;
+
+  &__column {
+    min-height: 100vh;
+    background: #fd7eaf87;
+    opacity: 0.7;
+    grid-row: span 1;
+    grid-column: span 1;
+  }
+}
