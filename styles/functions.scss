@@ -1,3 +1,3 @@
 @function grid-columns($numOfColumns, $gap: var(--grid-gap)) {
-  @return calc(100% * (#{$numOfColumns} / 12) - $gap * 0.5);
+  @return calc(100vw * (#{$numOfColumns} / var(--grid-columns)) - $gap * 0.5);
 }

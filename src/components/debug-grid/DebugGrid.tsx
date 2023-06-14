@@ -4,8 +4,8 @@ import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import mousetrap from 'mousetrap'
 import { useEffect, useState } from 'react'
 
-export const DebugGrid = ({ showInstructions = false }) => {
-  const [show, setShow] = useState(false)
+export const DebugGrid = ({ showInstructions = false, ...props }) => {
+  const [show, setShow] = useState(true)
 
   useEffect(() => {
     mousetrap.bind(['command+g', 'ctrl+g'], (e: any) => {
@@ -21,7 +21,7 @@ export const DebugGrid = ({ showInstructions = false }) => {
   return (
     <>
       {show && (
-        <ContentWrapper className={styles.container}>
+        <ContentWrapper className={styles.container} {...props}>
           {showInstructions && <div className={styles.instructions}>Press COMMAND+G to toggle the debug grid</div>}
           <div className={styles.debugGrid}>
             {Array.from({ length: 12 }).map((_, i) => (
