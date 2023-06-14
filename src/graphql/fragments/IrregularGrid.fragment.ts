@@ -12,8 +12,12 @@ export const IRREGULAR_GRID = gql`
     }
     itemsCollection(limit: 4) {
       items {
-        ...responsiveImage
-        ...video
+        media {
+          __typename
+          ...responsiveImage
+          ...video
+        }
+        caption
       }
     }
   }

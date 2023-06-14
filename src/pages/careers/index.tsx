@@ -160,7 +160,7 @@ const CareersPageSectionResolver = ({
         return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} />
       }
     case 'IrregularGrid':
-      return <IrregularGrid key={props.sys.id} media={(props as IrregularGridProps).itemsCollection.items} />
+      return <IrregularGrid key={props.sys.id} items={(props as IrregularGridProps).itemsCollection.items} />
     default:
       return <></>
   }

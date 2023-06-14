@@ -257,11 +257,16 @@ export interface InfiniteGrid {
   }
 }
 
+export interface IrregularGridItem {
+  media: Media
+  caption: any
+}
+
 export interface IrregularGrid {
   __typename: 'IrregularGrid'
   sys: { id: string }
   itemsCollection: {
-    items: [Media, Media, Media, Media]
+    items: [IrregularGridItem, IrregularGridItem, IrregularGridItem, IrregularGridItem]
   }
 }
 

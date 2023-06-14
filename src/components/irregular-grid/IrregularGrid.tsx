@@ -8,7 +8,10 @@ import { useBreakpointUntil } from '@hooks/use-breakpoint'
 const bem = bemify(styles, 'irregularGrid')
 
 interface IrregularGridProps {
-  media: (ResponsiveImage | Video)[]
+  items: {
+    caption?: string
+    media: ResponsiveImage | Video
+  }[]
 }
 
 const MEDIA_ASPECT = {
@@ -16,28 +19,41 @@ const MEDIA_ASPECT = {
   desktop: [571 / 390, 452 / 316, 452 / 316, 217 / 230],
 }
 
-export const IrregularGrid = ({ media }: IrregularGridProps) => {
+export const IrregularGrid = ({ items }: IrregularGridProps) => {
   const isUntilTablet = useBreakpointUntil('tablet')
   const mediaAspectRatios = isUntilTablet ? MEDIA_ASPECT.mobile : MEDIA_ASPECT.desktop
 
   return (
     <div className={bem()}>
       <div className={bem('left')}>
-        <AspectRatio ratio={mediaAspectRatios[0]} className={bem('left__mediaContainer')}>
-          <Media {...media[0]} className={bem('media')} />
-        </AspectRatio>
-        <AspectRatio ratio={mediaAspectRatios[1]} className={bem('left__mediaContainer')}>
-          <Media {...media[1]} className={bem('media')} />
-        </AspectRatio>
+        <div className={bem('left__mediaContainer')}>
+          <AspectRatio ratio={mediaAspectRatios[0]}>
+            <Media {...items[0].media} />
+          </AspectRatio>
+          {!!items[0].caption && <p className={bem('caption')}>{items[0].caption}</p>}
+        </div>
+        <div className={bem('left__mediaContainer')}>
+          <AspectRatio ratio={mediaAspectRatios[1]}>
+            <Media {...items[1].media} />
+          </AspectRatio>
+          {!!items[1].caption && <p className={bem('caption')}>{items[1].caption}</p>}
+        </div>
       </div>
 
       <div className={bem('right')}>
-        <AspectRatio ratio={mediaAspectRatios[3]} className={bem('right__mediaContainer')}>
-          <Media {...media[2]} className={bem('media')} />
-        </AspectRatio>
-        <AspectRatio ratio={mediaAspectRatios[3]} className={bem('right__mediaContainer')}>
-          <Media {...media[3]} className={bem('media')} />
-        </AspectRatio>
+        <div className={bem('right__mediaContainer')}>
+          <AspectRatio ratio={mediaAspectRatios[2]}>
+            <Media {...items[2].media} />
+          </AspectRatio>
+          {!!items[2].caption && <p className={bem('caption')}>{items[2].caption}</p>}
+        </div>
+
+        <div className={bem('right__mediaContainer')}>
+          <AspectRatio ratio={mediaAspectRatios[3]}>
+            <Media {...items[3].media} />
+          </AspectRatio>
+          {!!items[3].caption && <p className={bem('caption')}>{items[3].caption}</p>}
+        </div>
       </div>
     </div>
   )
