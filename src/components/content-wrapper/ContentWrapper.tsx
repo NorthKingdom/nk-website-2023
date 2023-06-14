@@ -11,7 +11,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className?: string
   fullscreen?: boolean
   notch?: boolean
-  theme?: 'light' | 'dark'
+  theme?: 'light' | 'dark' | 'transparent'
   as?: React.ElementType
 }
 
@@ -35,7 +35,7 @@ export const ContentWrapper = React.forwardRef<HTMLDivElement, Props>(
     return (
       <Tag
         ref={ref}
-        aria-hidden={true}
+        role="presentation"
         className={cx(styles.contentWrapper, className, bem('', { fullscreen }))}
         style={style}
         data-debug={debug}

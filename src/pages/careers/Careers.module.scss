@@ -1,6 +1,25 @@
 .careers {
   padding-top: 80px;
 
+  &__intro {
+    @include mq($until: tablet) {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+  }
+
+  &__introOpeningsTeaser {
+    position: absolute;
+    left: 0;
+    text-transform: uppercase;
+
+    @include mq($until: tablet) {
+      position: relative;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+
   &__pageHeroTitle {
     h1 {
       max-width: 875px;

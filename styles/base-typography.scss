@@ -12,3 +12,19 @@ h5 {
 p {
   @include BodyRegular;
 }
+
+.t-heading-1 {
+  @include Heading1;
+}
+
+.t-heading-2 {
+  @include BodyRegular;
+}
+
+.t-body-regular {
+  @include BodyRegular;
+}
+
+.t-label {
+  @include Label;
+}
