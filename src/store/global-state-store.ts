@@ -7,6 +7,12 @@ interface GlobalState {
   theme: 'dark' | 'light'
   setTheme: (theme: 'dark' | 'light') => void
   toggleTheme: () => void
+  themeTriggers: {
+    id: string
+    theme: 'dark' | 'light'
+    top: number
+  }[]
+  registerThemeTrigger: (trigger: { id: string; theme: 'dark' | 'light'; top: number }) => void
   showShield: boolean
   setShowShield: (showShield: boolean) => void
   isMenuOpen: boolean
@@ -30,10 +36,13 @@ export const useGlobalStateStore = create<GlobalState>()((set, get) => ({
     set((state) => ({
       theme: state.theme === 'dark' ? 'light' : 'dark',
     })),
-
+  themeTriggers: [],
+  registerThemeTrigger: (trigger) =>
+    set((state) => ({
+      themeTriggers: [...state.themeTriggers, trigger].sort((a, b) => a.top - b.top),
+    })),
   showShield: false,
   setShowShield: (showShield) => set({ showShield }),
-
   isMenuOpen: false,
   setIsMenuOpen: (isMenuOpen) => set({ isMenuOpen }),
   toggleMenu: () =>

@@ -11,8 +11,6 @@ import type {
 import { PageHero } from '@components/page-hero'
 import { List } from '@components/list'
 import { StickyListItem } from '@components/sticky-list-item'
-import { ThemeChangeTrigger } from '@components/theme-change-trigger'
-import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import styles from './About.module.scss'
 import { bemify } from '@utils/bemify'
 import { InfiniteGrid } from '@components/infinite-grid'
@@ -36,12 +34,9 @@ const About = ({ hero, ...props }: AboutPageProps) => {
       </Head>
       <main className={styles['about']}>
         <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
-        <ContentWrapper style={{ position: 'relative', background: 'white' }}>
-          <ThemeChangeTrigger theme="light" />
-          {(props.sections.items ?? []).map((section) => (
-            <AboutPageSectionResolver key={section.sys.id} {...section} />
-          ))}
-        </ContentWrapper>
+        {(props.sections.items ?? []).map((section) => (
+          <AboutPageSectionResolver key={section.sys.id} {...section} />
+        ))}
       </main>
     </>
   )
