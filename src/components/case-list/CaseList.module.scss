@@ -2,12 +2,9 @@
   width: 100%;
   padding-top: 20px;
 
-  @include notch(var(--color-black));
-
   &__cases {
     display: flex;
     flex-direction: column;
-    background: var(--color-black);
     position: relative;
 
     & > * {

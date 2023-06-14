@@ -25,7 +25,8 @@ export const ThemeChangeTrigger = ({
   const setPageTheme = useGlobalStateStore((state) => state.setTheme)
   const themeTriggers = useGlobalStateStore((state) => state.themeTriggers)
   const registerThemeTrigger = useGlobalStateStore((state) => state.registerThemeTrigger)
-  const previousSectionTheme = useRef(get().theme)
+  const unregisterThemeTrigger = useGlobalStateStore((state) => state.unregisterThemeTrigger)
+  const previousSectionTheme = useRef<'light' | 'dark' | ''>('')
 
   /**
    * Store the theme of the previous section (or the page theme if there is no previous section)
@@ -36,6 +37,11 @@ export const ThemeChangeTrigger = ({
     previousSectionTheme.current = previousTriggerTheme ?? get().theme
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [themeTriggers])
+
+  useEffect(() => {
+    return () => unregisterThemeTrigger(refId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const ref = useInViewEffect(
     ([entry]) => {
@@ -58,7 +64,9 @@ export const ThemeChangeTrigger = ({
         setPageTheme(theme)
         // when the trigger is entering from the top of the screen, it means we are leaving a section, so we set the page theme to the previous theme
       } else if (isTriggerEnteringFromTopOfScreen) {
-        setPageTheme(previousSectionTheme.current)
+        if (!!previousSectionTheme.current) {
+          setPageTheme(previousSectionTheme.current)
+        }
       }
     },
     { threshold: 0.5 }

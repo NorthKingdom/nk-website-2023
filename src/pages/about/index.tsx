@@ -59,7 +59,7 @@ const AboutPageSectionResolver = ({ __typename, ...props }: { __typename: string
     case 'StickyList':
       return <List key={props.sys.id} items={props.itemsCollection.items} renderItem={StickyListItem} />
     case 'DescriptionComponent':
-      return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} />
+      return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} notch />
     case 'InfiniteGrid':
       return <InfiniteGrid key={props.sys.id} images={(props as InfiniteGridProps).itemsCollection.items} />
     case 'IrregularGrid':
