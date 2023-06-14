@@ -16,6 +16,7 @@ import { bemify } from '@utils/bemify'
 import { InfiniteGrid } from '@components/infinite-grid'
 import { TextBlock } from '@components/text-block'
 import { IrregularGrid } from '@components/irregular-grid'
+import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 const bem = bemify(styles, 'about')
 
 const About = ({ hero, ...props }: AboutPageProps) => {
@@ -57,7 +58,11 @@ export default About
 const AboutPageSectionResolver = ({ __typename, ...props }: { __typename: string; [key: string]: any }) => {
   switch (__typename) {
     case 'StickyList':
-      return <List key={props.sys.id} items={props.itemsCollection.items} renderItem={StickyListItem} />
+      return (
+        <ContentWrapper theme="light">
+          <List key={props.sys.id} items={props.itemsCollection.items} renderItem={StickyListItem} hideBottomBar />
+        </ContentWrapper>
+      )
     case 'DescriptionComponent':
       return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} notch />
     case 'InfiniteGrid':
