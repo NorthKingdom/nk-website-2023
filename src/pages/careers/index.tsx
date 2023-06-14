@@ -44,7 +44,7 @@ const Careers = ({ hero, sections, openings }: CareersPageProps) => {
         {(sections.items ?? []).map((section) => (
           <CareersPageSectionResolver key={section.sys.id} {...section} />
         ))}
-        <ContentWrapper style={{ position: 'relative', background: 'black' }}>
+        <ContentWrapper theme={'dark'} notch>
           <ThemeChangeTrigger theme="dark" />
           <h2 className={bem('openings')}>Openings</h2>
           <List
@@ -123,8 +123,13 @@ const CareersPageSectionResolver = ({ __typename, ...props }: { __typename: stri
   switch (__typename) {
     case 'StickyList':
       return (
-        <ContentWrapper style={{ background: 'white' }}>
-          <List key={props.sys.id} items={props.itemsCollection.items} renderItem={StickyListItem} />
+        <ContentWrapper style={{ background: 'white' }} data-use-notch={true}>
+          <List
+            key={props.sys.id}
+            items={props.itemsCollection.items}
+            renderItem={StickyListItem}
+            hideBottomBar={true}
+          />
         </ContentWrapper>
       )
     case 'DescriptionComponent':

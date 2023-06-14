@@ -27,7 +27,7 @@ const Contact = ({ hero, contactSectionCollection, officeSectionCollection }: an
       </Head>
       <main className={styles['contact']}>
         <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
-        <ContentWrapper style={{ position: 'relative', background: 'black', paddingTop: `45px` }}>
+        <ContentWrapper theme="dark" notch style={{ paddingTop: `45px` }}>
           <ThemeChangeTrigger theme="dark" />
           <List
             hideAllBars
@@ -39,7 +39,7 @@ const Contact = ({ hero, contactSectionCollection, officeSectionCollection }: an
           />
         </ContentWrapper>
 
-        <ContentWrapper style={{ position: 'relative', background: 'white', paddingTop: `120px` }}>
+        <ContentWrapper theme="light" notch style={{ paddingTop: `120px` }}>
           <ThemeChangeTrigger theme="light" />
           <List hideBottomBar items={officeSectionCollection.items} renderItem={OfficeListItem} />
         </ContentWrapper>

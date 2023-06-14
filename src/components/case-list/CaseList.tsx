@@ -42,7 +42,7 @@ export const CaseList = ({ cases = [], initial = 6, enableBatching = true, batch
   )
 
   return (
-    <ContentWrapper className={bem()}>
+    <ContentWrapper className={bem()} theme="dark" notch>
       <div className={bem('cases')} data-can-show-more-cases={canShowMore}>
         {cases
           .filter((_, i) => i < itemsLength)

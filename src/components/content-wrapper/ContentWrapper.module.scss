@@ -4,6 +4,24 @@
   padding-right: var(--page-margin);
   position: relative;
 
+  &[data-theme='light'] {
+    background-color: $white;
+    color: $black;
+  }
+
+  &[data-theme='light'][data-use-notch='true'] {
+    @include notch($white);
+  }
+
+  &[data-theme='dark'] {
+    background-color: $black;
+    color: $white;
+  }
+
+  &[data-theme='dark'][data-use-notch='true'] {
+    @include notch($black);
+  }
+
   &--fullscreen {
     padding: 0;
     max-width: none;

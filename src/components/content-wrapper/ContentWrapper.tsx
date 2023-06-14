@@ -10,11 +10,26 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   style?: React.CSSProperties
   className?: string
   fullscreen?: boolean
+  notch?: boolean
+  theme?: 'light' | 'dark'
   as?: React.ElementType
 }
 
 export const ContentWrapper = React.forwardRef<HTMLDivElement, Props>(
-  ({ children, debug = false, className = '', style = {}, as = 'div', fullscreen = false, ...props }: Props, ref) => {
+  (
+    {
+      children,
+      debug = false,
+      className = '',
+      style = {},
+      as = 'div',
+      fullscreen = false,
+      notch = false,
+      theme = 'light',
+      ...props
+    }: Props,
+    ref
+  ) => {
     const Tag = as
 
     return (
@@ -24,6 +39,8 @@ export const ContentWrapper = React.forwardRef<HTMLDivElement, Props>(
         className={cx(styles.contentWrapper, className, bem('', { fullscreen }))}
         style={style}
         data-debug={debug}
+        data-theme={theme}
+        data-use-notch={notch}
         {...props}
       >
         {children}

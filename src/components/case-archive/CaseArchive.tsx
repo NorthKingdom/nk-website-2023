@@ -223,7 +223,7 @@ export const CaseArchive = () => {
   }, [caseArchiveData.items])
 
   return (
-    <ContentWrapper className={bem()} data-can-fetch-more={canFetchMore}>
+    <ContentWrapper className={bem()} notch={true} data-can-fetch-more={canFetchMore}>
       <ThemeChangeTrigger theme="light" />
 
       {/** Custom cursor */}

@@ -58,7 +58,7 @@ const HomePageSectionResolver = ({ __typename, ...props }: { __typename: string;
         />
       )
     case 'DescriptionComponent':
-      return <TextBlock key={props.sys.id} {...(props as TextBlockData)} />
+      return <TextBlock key={props.sys.id} {...(props as TextBlockData)} notch />
     case 'ImageMarquee':
       return <ImageMarquee key={props.sys.id} {...(props as ImageMarqueeData)} />
     default:

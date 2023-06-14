@@ -22,7 +22,7 @@ export const TextBlock = ({
   children = null,
 }: TextBlockProps) => {
   return (
-    <ContentWrapper as="section" className={bem()} data-theme={theme} data-use-notch={notch}>
+    <ContentWrapper as="section" className={bem()} theme={theme} notch={notch}>
       <ThemeChangeTrigger theme={theme} />
       {!!heading && <h2 className={bem('heading')}>{heading}</h2>}
       <div className={bem('left')}>{copyLeft}</div>
