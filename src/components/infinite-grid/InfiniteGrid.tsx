@@ -6,6 +6,7 @@ import { bemify } from '@utils/bemify'
 import type { ResponsiveImage } from '@customTypes/cms'
 import Image from 'next/image'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
+import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 const bem = bemify(styles, 'infiniteGrid')
 
 interface InfiniteGridProps {
@@ -284,6 +285,7 @@ export const InfiniteGrid = ({ images = [] }: InfiniteGridProps) => {
 
   return (
     <div className={styles['infiniteGrid']} ref={infiniteGridRef}>
+      <ThemeChangeTrigger id="infinite-grid" theme="dark" />
       <motion.div
         className={bem('grid')}
         style={{

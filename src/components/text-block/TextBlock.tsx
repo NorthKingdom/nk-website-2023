@@ -3,6 +3,7 @@ import styles from './TextBlock.module.scss'
 import { bemify } from '@utils/bemify'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import type { TextBlock as TextBlockDataType } from '@customTypes/cms'
+import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 const bem = bemify(styles, 'textBlock')
 
 interface TextBlockProps extends Omit<TextBlockDataType, '__typename' | 'sys'> {
@@ -22,6 +23,7 @@ export const TextBlock = ({
 }: TextBlockProps) => {
   return (
     <ContentWrapper as="section" className={bem()} data-theme={theme} data-use-notch={notch}>
+      <ThemeChangeTrigger theme={theme} />
       {!!heading && <h2 className={bem('heading')}>{heading}</h2>}
       <div className={bem('left')}>{copyLeft}</div>
       <div className={bem('right')}>

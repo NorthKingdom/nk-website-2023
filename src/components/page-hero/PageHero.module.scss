@@ -4,6 +4,7 @@
   min-height: 100%;
   --nav-height: 80px;
   position: relative;
+  margin-top: calc(var(--nav-height) * -1);
 
   &__titleContainer {
     height: calc(66vh - var(--nav-height));
