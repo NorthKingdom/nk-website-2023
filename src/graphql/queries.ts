@@ -200,6 +200,7 @@ export const CAREERS_PAGE_QUERY = (draftMode: boolean) => gql`
   ${TEXT_BLOCK}
   ${IRREGULAR_GRID}
   ${STICKY_LIST}
+  ${RESPONSIVE_IMAGE}
 
   query {
     careersPage(preview: ${draftMode}, id: "1biZZL9Xnhz09yjM8cF1uF") {
@@ -210,6 +211,7 @@ export const CAREERS_PAGE_QUERY = (draftMode: boolean) => gql`
       sections: sectionsCollection(limit: 10) {
         items {
           __typename
+          ...responsiveImage
           ...textBlock
           ...irregularGrid
           ...stickyList

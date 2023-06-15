@@ -6,16 +6,20 @@ export const VIDEO = gql`
     sys {
       id
     }
-    desktopVideoCollection(limit: 5) {
+    desktopVideoCollection(limit: 3) {
       items {
         url
         contentType
+        width
+        height
       }
     }
-    mobileVideoCollection(limit: 5) {
+    mobileVideoCollection(limit: 3) {
       items {
         url
         contentType
+        width
+        height
       }
     }
     posterImage {
