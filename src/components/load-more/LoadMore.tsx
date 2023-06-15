@@ -13,7 +13,7 @@ interface LoadMoreProps {
 
 export const LoadMore = ({ onClick = noop, theme, disabled = false, style = {}, className = '' }: LoadMoreProps) => {
   return (
-    <div className={cx(styles['loadMore'], className)} aria-hidden="true" style={style}>
+    <div className={cx(styles['loadMore'], className)} role="presentation" style={style}>
       <button disabled={disabled} onClick={onClick} data-theme={theme}>
         Load more
       </button>

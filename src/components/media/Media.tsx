@@ -70,7 +70,6 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
           loading={props.caseHeroImage ? 'eager' : 'lazy'}
           src={getContentfulImageSrc(src)}
           alt={(props as ImageMediaProps).altText}
-          aria-hidden={Boolean((props as ImageMediaProps).altText)}
           fill={true}
           onError={() => setLoaded(false)}
           onLoadingComplete={() => setLoaded(true)}

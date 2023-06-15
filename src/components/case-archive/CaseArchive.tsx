@@ -233,7 +233,7 @@ export const CaseArchive = () => {
         ref={cursorRef}
         data-active={sectionHovered && !autoScrolling}
       >
-        <Image src={src} alt="" width={200} height={150} aria-hidden="true" />
+        <Image src={src} alt="" width={200} height={150} role="presentation" />
       </AspectRatio>
 
       <h2 className={bem('title')} ref={caseArchiveHeaderRef}>
