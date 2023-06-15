@@ -4,6 +4,7 @@ import { StickyListItem } from '@components/sticky-list-item'
 import { JobListItem } from '@components/job-list-item'
 import { ResponsiveImage, Video } from '@customTypes/cms'
 import { AwardItem } from '@components/award-item'
+import { DUMMY_IMAGE, DUMMY_VIDEO } from '@stories/dummy-data'
 
 const meta: Meta<typeof List> = {
   title: 'UI/List',
@@ -82,18 +83,7 @@ with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web
 native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,
 mobile web, mobile apps and native solutions.`,
     mediaCollection: {
-      items: [
-        {
-          __typename: 'ResponsiveImage',
-          desktopImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          mobileImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          altText: '[EXAMPLE] riot image',
-        },
-      ] as ResponsiveImage[],
+      items: [DUMMY_IMAGE],
     },
     link: {
       url: '/about',
@@ -112,22 +102,7 @@ mobile web, mobile apps and native solutions.`,
     mediaCollection: {
       items: [
         {
-          __typename: 'Video',
-
-          desktopVideoCollection: {
-            items: [
-              {
-                url: 'https://videos.ctfassets.net/vwfx2n1hr26h/3zwFhCKXIUlzPlzSaTGxO8/1ad6725f1c0344b6a65a6ecb364270a1/MasterClash-Cover.mp4',
-                contentType: 'video/mp4',
-              },
-            ],
-          },
-          mobileVideoCollection: {
-            items: [],
-          },
-          posterImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/JKz0VPSPjmlmBWemMJEYL/099bec4f033daa34a345fa77afd561f4/masterclash_thumbnail_mobile.jpg',
-          },
+          ...DUMMY_VIDEO,
           autoPlay: true,
           loop: false,
           muted: true,
@@ -145,38 +120,7 @@ mobile web, mobile apps and native solutions.`,
   native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,
   mobile web, mobile apps and native solutions.`,
     mediaCollection: {
-      items: [
-        {
-          __typename: 'ResponsiveImage',
-          desktopImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          mobileImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          altText: '[EXAMPLE] riot image',
-        },
-        {
-          __typename: 'ResponsiveImage',
-          desktopImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          mobileImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          altText: '[EXAMPLE] riot image',
-        },
-        {
-          __typename: 'ResponsiveImage',
-          desktopImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          mobileImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          altText: '[EXAMPLE] riot image',
-        },
-      ] as ResponsiveImage[],
+      items: [DUMMY_IMAGE, DUMMY_IMAGE],
     },
   },
 ]
@@ -223,38 +167,7 @@ const stickyItemsWithListInLastOne = [
     native solutions.We've worked with Google, HBO, Disney, McDonalds and more to create cutting edge AR/VR on web,
     mobile web, mobile apps and native solutions.`,
     mediaCollection: {
-      items: [
-        {
-          __typename: 'ResponsiveImage',
-          desktopImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          mobileImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          altText: '[EXAMPLE] riot image',
-        },
-        {
-          __typename: 'ResponsiveImage',
-          desktopImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          mobileImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          altText: '[EXAMPLE] riot image',
-        },
-        {
-          __typename: 'ResponsiveImage',
-          desktopImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          mobileImage: {
-            url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-          },
-          altText: '[EXAMPLE] riot image',
-        },
-      ] as ResponsiveImage[],
+      items: [DUMMY_IMAGE],
     },
     subList: awardItems,
     renderItem: AwardItem,

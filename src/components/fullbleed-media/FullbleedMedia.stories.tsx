@@ -1,14 +1,15 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { FullbleedMedia } from './FullbleedMedia';
+import type { Meta, StoryObj } from '@storybook/react'
+import { FullbleedMedia } from './FullbleedMedia'
+import { DUMMY_IMAGE } from '@stories/dummy-data'
 
 const meta: Meta<typeof FullbleedMedia> = {
   title: 'UI/FullbleedMedia',
   component: FullbleedMedia,
   tags: ['autodocs'],
-  parameters: {}
-};
+  parameters: {},
+}
 
-export default meta;
-type Story = StoryObj<typeof FullbleedMedia>;
+export default meta
+type Story = StoryObj<typeof FullbleedMedia>
 
-export const Default: Story = { args: {} };
+export const Default: Story = { args: DUMMY_IMAGE }

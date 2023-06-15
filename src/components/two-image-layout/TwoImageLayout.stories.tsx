@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { TwoImageLayout } from './TwoImageLayout'
+import { DUMMY_IMAGE } from '@stories/dummy-data'
 
 const meta: Meta<typeof TwoImageLayout> = {
   title: 'UI/TwoImageLayout',
@@ -13,28 +14,9 @@ type Story = StoryObj<typeof TwoImageLayout>
 
 export const Default: Story = {
   args: {
-    leftSrcSet: {
-      __typename: 'ResponsiveImage',
-      desktopImage: {
-        url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-      },
-      mobileImage: {
-        url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-      },
-      altText: '[EXAMPLE] riot image',
-    },
+    leftSrcSet: DUMMY_IMAGE,
     leftCaption: 'RiotX Arcane Map',
-    rightSrcSet: {
-      __typename: 'ResponsiveImage',
-      desktopImage: {
-        url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-      },
-      mobileImage: {
-        url: 'https://images.ctfassets.net/vwfx2n1hr26h/67sMVkJnjGprntMS5xD6ru/daff5bfdad6546d3a12b6281a627e6a6/riot_thumbnail_mobile.jpg',
-      },
-      altText: '[EXAMPLE] riot image',
-    },
-
+    rightSrcSet: DUMMY_IMAGE,
     rightCaption: 'Gameplay Screens',
     leftAlt: 'Map from RiotX Arcane',
     rightAlt: 'Temp Alt',

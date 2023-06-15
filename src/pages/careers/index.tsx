@@ -5,7 +5,6 @@ import { CAREERS_PAGE_QUERY } from '@graphql/queries'
 import type {
   CareersPage as CareersPageData,
   IrregularGrid as IrregularGridProps,
-  ResponsiveImage as ResponsiveImageProps,
   TextBlock as TextBlockProps,
 } from '@customTypes/cms'
 import { List } from '@components/list'
@@ -19,8 +18,6 @@ import { bemify } from '@utils/bemify'
 import { LOCATION_ID } from '@constants'
 import { IrregularGrid } from '@components/irregular-grid'
 import { StickyListItem } from '@components/sticky-list-item'
-import { Media } from '@components/media'
-import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 import { FullbleedMedia } from '@components/fullbleed-media'
 const bem = bemify(styles, 'careers')
 
