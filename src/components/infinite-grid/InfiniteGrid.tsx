@@ -65,7 +65,7 @@ const Square = ({
         height: h,
       }}
     >
-      <div aria-hidden="true">
+      <div role="presentation">
         <Image aria-hidden="false" src={src} alt={image.altText} draggable="false" fill />
       </div>
     </motion.div>
