@@ -53,7 +53,6 @@ export async function getStaticProps({ draftMode = false }) {
 export default Home
 
 const HomePageSectionResolver = ({ __typename, ...props }: { __typename: string; [key: string]: any }) => {
-  console.log(__typename, props)
   switch (__typename) {
     case 'FeaturedCasesComponent':
       return (
