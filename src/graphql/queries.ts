@@ -13,6 +13,8 @@ import { CASE_MEDIA_GRID } from './fragments/CaseMediaGrid.fragment'
 import { INFINITE_GRID } from './fragments/InfiniteGrid.fragment'
 import { IRREGULAR_GRID } from './fragments/IrregularGrid.fragment'
 import { STICKY_LIST } from './fragments/StickyList.fragment'
+import { LINK } from './fragments/Link.fragment'
+import { CLIPBOARD_COPY_ITEM } from './fragments/ClipboardCopyItem.fragment'
 
 export const HOME_PAGE_QUERY = (draftMode: boolean) => gql`
     ${HOME_HERO}
@@ -162,6 +164,8 @@ export const CASE_PAGE_QUERY = (caseSlug: string, draftMode: boolean) => gql`
 export const CONTACT_PAGE_QUERY = (draftMode: boolean) => gql`
   ${RESPONSIVE_IMAGE}
   ${PAGE_HERO}
+  ${LINK}
+  ${CLIPBOARD_COPY_ITEM}
 
   query {
     contactPage(preview: ${draftMode}, id: "6G3HwVWkI0Asw2dCdLlKng") {
@@ -173,8 +177,8 @@ export const CONTACT_PAGE_QUERY = (draftMode: boolean) => gql`
           title
           linksCollection {
             items {
-              copy
-              url
+              ...link
+              ...clipboardCopyItem
             }
           }
         }
@@ -186,8 +190,7 @@ export const CONTACT_PAGE_QUERY = (draftMode: boolean) => gql`
           addressLineTwo
           country
           directions {
-            copy
-            url
+            ...link
           }
         }
       }

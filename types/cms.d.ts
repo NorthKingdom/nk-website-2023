@@ -32,8 +32,17 @@ export interface About {
 }
 
 export interface Link {
+  __typename: 'Link'
   copy: string
   url: string
+}
+
+export interface ClipboardCopyItem {
+  __typename: 'ClipboardCopyItem'
+  label: string
+  content: string
+  hoverLabel?: string
+  confirmationLabel?: string
 }
 
 export interface Video {
@@ -89,10 +98,7 @@ export interface StickyList {
       mediaCollection: {
         items: (ResponsiveImage | Video)[]
       }
-      link: {
-        copy: string
-        url: string
-      }
+      link: Link
     }[]
   }
 }

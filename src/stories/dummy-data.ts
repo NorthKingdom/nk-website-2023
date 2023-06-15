@@ -1,4 +1,4 @@
-import { Video, ResponsiveImage } from '@customTypes/cms'
+import type { Video, ResponsiveImage, Link, ClipboardCopyItem } from '@customTypes/cms'
 
 export const DUMMY_VIDEO: Video = {
   __typename: 'Video',
@@ -73,4 +73,24 @@ export const DUMMY_IMAGE_ALT_2: ResponsiveImage = {
     height: 517,
   },
   altText: 'temp alt',
+}
+
+export const DUMMY_LINK: Link = {
+  __typename: 'Link',
+  url: '#',
+  copy: 'Click me ↗',
+}
+
+export const DUMMY_CONTACT_LINK: Link = {
+  __typename: 'Link',
+  copy: '+46 8 14 11 11',
+  url: '+46 8 14 11 11',
+}
+
+export const DUMMY_CONTACT_CLIPBOARD_ITEM: ClipboardCopyItem = {
+  __typename: 'ClipboardCopyItem',
+  label: 'business@northkingdom.com',
+  content: 'business@northkingdom.com',
+  hoverLabel: 'Copy email address',
+  confirmationLabel: 'Copied!',
 }

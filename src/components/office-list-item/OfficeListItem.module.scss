@@ -35,6 +35,8 @@
   }
 
   &__directionsLink {
+    position: relative;
+    @include text-underline-hover(var(--color-black));
     @include mq($until: tablet) {
       margin-top: 24px;
     }
