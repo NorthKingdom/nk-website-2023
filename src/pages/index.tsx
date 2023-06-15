@@ -7,6 +7,7 @@ import { HomeHero } from '@components/home-hero'
 import { CaseList } from '@components/case-list'
 import type { ImageMarquee as ImageMarqueeData, TextBlock as TextBlockData } from '@customTypes/cms'
 import { ImageMarquee } from '@components/image-marquee'
+import { FeaturedVideo } from '@components/featured-video'
 
 const TextBlock = dynamic(() => import('@/components/text-block/TextBlock').then((Mod) => Mod.TextBlock), {
   ssr: false,
@@ -48,6 +49,7 @@ export async function getStaticProps({ draftMode = false }) {
 export default Home
 
 const HomePageSectionResolver = ({ __typename, ...props }: { __typename: string; [key: string]: any }) => {
+  console.log(__typename, props)
   switch (__typename) {
     case 'FeaturedCasesComponent':
       return (
@@ -59,6 +61,8 @@ const HomePageSectionResolver = ({ __typename, ...props }: { __typename: string;
       )
     case 'DescriptionComponent':
       return <TextBlock key={props.sys.id} {...(props as TextBlockData)} notch />
+    case 'FeaturedVideo':
+      return <FeaturedVideo key={props.sys.id} {...props} />
     case 'ImageMarquee':
       return <ImageMarquee key={props.sys.id} {...(props as ImageMarqueeData)} />
     default:
