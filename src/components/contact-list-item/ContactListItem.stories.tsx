@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { ContactListItem } from './ContactListItem'
+import { DUMMY_CONTACT_LINK, DUMMY_CONTACT_CLIPBOARD_ITEM } from '@stories/dummy-data'
 
 const meta: Meta<typeof ContactListItem> = {
   title: 'UI/ContactListItem',
@@ -11,70 +12,11 @@ const meta: Meta<typeof ContactListItem> = {
 export default meta
 type Story = StoryObj<typeof ContactListItem>
 
-export const GeneralEnquiries: Story = {
+export const Default: Story = {
   args: {
     title: 'General enquiries',
     linksCollection: {
-      items: [
-        {
-          copy: '+46 8 14 11 11',
-          url: '+46 8 14 11 11',
-        },
-        {
-          copy: 'info@northkingdom.com',
-          url: 'info@northkingdom.com',
-        },
-      ],
-    },
-  },
-}
-
-export const NewBusiness: Story = {
-  args: {
-    title: 'New business',
-    linksCollection: {
-      items: [
-        {
-          copy: 'business@northkingdom.com',
-          url: 'business@northkingdom.com',
-        },
-      ],
-    },
-  },
-}
-
-export const Jobs: Story = {
-  args: {
-    title: 'Jobs',
-    linksCollection: {
-      items: [
-        {
-          copy: 'info@northkingdom.com',
-          url: 'info@northkingdom.com',
-        },
-      ],
-    },
-  },
-}
-
-export const Social: Story = {
-  args: {
-    title: 'Social',
-    linksCollection: {
-      items: [
-        {
-          copy: 'LinkedIn',
-          url: 'www.example.com',
-        },
-        {
-          copy: 'Twitter',
-          url: 'www.example.com',
-        },
-        {
-          copy: 'Instagram',
-          url: 'www.example.com',
-        },
-      ],
+      items: [DUMMY_CONTACT_LINK, DUMMY_CONTACT_CLIPBOARD_ITEM],
     },
   },
 }

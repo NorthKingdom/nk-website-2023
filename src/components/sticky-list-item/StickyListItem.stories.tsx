@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { StickyListItem } from './StickyListItem'
-import { DUMMY_IMAGE, DUMMY_VIDEO } from '@stories/dummy-data'
+import { DUMMY_IMAGE, DUMMY_LINK, DUMMY_VIDEO } from '@stories/dummy-data'
 
 const meta: Meta<typeof StickyListItem> = {
   title: 'UI/StickyListItem',
@@ -41,10 +41,7 @@ mobile web, mobile apps and native solutions.`,
     mediaCollection: {
       items: [DUMMY_IMAGE],
     },
-    link: {
-      url: '/about',
-      copy: 'Sem mattis View case',
-    },
+    link: DUMMY_LINK,
   },
 }
 

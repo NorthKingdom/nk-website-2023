@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { TextBlock } from './TextBlock'
+import { DUMMY_LINK } from '@stories/dummy-data'
 
 const meta: Meta<typeof TextBlock> = {
   title: 'UI/TextBlock',
@@ -33,10 +34,7 @@ export const WithLink: Story = {
   args: {
     copyRight:
       'From concept to execution, we design experiences, products and services that help our international clients create emotional and meaningful connections between their brand and people.',
-    link: {
-      copy: 'Click me ↗',
-      url: '#',
-    },
+    link: DUMMY_LINK,
   },
 }
 
@@ -46,10 +44,7 @@ export const WithHeadingAndLink: Story = {
     heading: 'Large Heading',
     copyRight:
       'From concept to execution, we design experiences, products and services that help our international clients create emotional and meaningful connections between their brand and people.',
-    link: {
-      copy: 'Click me ↗',
-      url: '',
-    },
+    link: DUMMY_LINK,
   },
 }
 

@@ -98,10 +98,7 @@ export interface StickyList {
       mediaCollection: {
         items: (ResponsiveImage | Video)[]
       }
-      link: {
-        copy: string
-        url: string
-      }
+      link: Link
     }[]
   }
 }
