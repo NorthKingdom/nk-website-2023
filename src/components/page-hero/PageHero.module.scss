@@ -10,15 +10,25 @@
     height: calc(66vh);
     width: 100%;
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    margin-bottom: 50px;
+
+    @include mq($until: desktop-small) {
+      margin-bottom: 32px;
+    }
   }
 
-  &__title {
-    margin-bottom: 54px;
+  &__cta {
+    margin-top: 40px;
+    position: relative;
+    color: var(--color-white-60);
+    @include text-underline-hover(var(--color-white-60));
 
-    @include mq($until: desktop) {
-      margin-bottom: 17px;
+    @include mq($until: desktop-small) {
+      margin-top: 20px;
     }
   }
 
@@ -29,5 +39,6 @@
 
   &__image {
     object-fit: cover;
+    border-radius: 0;
   }
 }

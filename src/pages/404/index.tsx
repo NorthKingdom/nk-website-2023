@@ -30,7 +30,16 @@ const Custom404 = ({ title, image }: FourOhFourProps) => {
       <Head>
         <link rel="canonical" href="https://www.northkingdom.com/404" />
       </Head>
-      <PageHero title={title} srcSet={image} />
+      <PageHero
+        title={title}
+        srcSet={image}
+        notch
+        link={{
+          __typename: 'Link',
+          url: '/',
+          copy: '← Back to homepage',
+        }}
+      />
     </>
   )
 }
@@ -40,10 +49,10 @@ export async function getStaticProps({ draftMode = false }) {
       query: ERROR_PAGE_QUERY(draftMode),
     })
 
-    return { props: res.data.errorPage }
+    return { props: { ...res.data.errorPage, footerTheme: 'light' } }
   } catch (error) {
     console.error(error)
-    return { props: { title: '404', image: null } }
+    return { props: { title: '404', footerTheme: 'light', image: null } }
   }
 }
 
