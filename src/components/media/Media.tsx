@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { getContentfulImageSrc } from '@utils/contentful'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
 import pick from 'ramda/src/pick'
+import cx from 'clsx'
 import styles from './Media.module.scss'
 
 // @TODO: add support for light background loader animation
@@ -55,7 +56,7 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
     <>
       {props?.__typename === 'Video' || props?.desktopVideoCollection ? (
         <VideoPlayer
-          className={styles['media']}
+          className={cx(styles['media'], props.className)}
           poster={(props as VideoMediaProps).posterImage.url}
           src={props as VideoMediaProps}
           onError={() => setLoaded(false)}
@@ -65,7 +66,7 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
         />
       ) : props?.__typename === 'ResponsiveImage' ? (
         <Image
-          className={styles['media']}
+          className={cx(styles['media'], props.className)}
           fetchPriority={props?.index === 0 || props.caseHeroImage ? 'high' : 'auto'}
           loading={props.caseHeroImage ? 'eager' : 'lazy'}
           src={getContentfulImageSrc(src)}
