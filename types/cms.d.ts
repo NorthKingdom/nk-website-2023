@@ -32,8 +32,17 @@ export interface About {
 }
 
 export interface Link {
+  __typename: 'Link'
   copy: string
   url: string
+}
+
+export interface ClipboardCopyItem {
+  __typename: 'ClipboardCopyItem'
+  label: string
+  content: string
+  hoverLabel?: string
+  confirmationLabel?: string
 }
 
 export interface Video {
