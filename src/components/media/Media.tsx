@@ -9,14 +9,14 @@ import styles from './Media.module.scss'
 
 // @TODO: add support for light background loader animation
 
-interface VideoMediaProps extends Video {
+export interface VideoMediaProps extends Video {
   index?: number
   className?: string
   style?: React.CSSProperties
   [key: string]: any
 }
 
-interface ImageMediaProps extends ResponsiveImage {
+export interface ImageMediaProps extends ResponsiveImage {
   index?: number
   className?: string
   style?: React.CSSProperties

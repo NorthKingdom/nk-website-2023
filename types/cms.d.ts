@@ -47,12 +47,16 @@ export interface Video {
     items: {
       url: string
       contentType: string
+      width: number
+      height: number
     }[]
   }
   mobileVideoCollection: {
     items: {
       url: string
       contentType: string
+      width: number
+      height: number
     }[]
   }
   __typename: 'Video'
@@ -61,9 +65,13 @@ export interface Video {
 export interface ResponsiveImage {
   desktopImage: {
     url: string
+    width: number
+    height: number
   }
   mobileImage: {
     url: string
+    width: number
+    height: number
   }
   altText: string
   __typename: 'ResponsiveImage'
@@ -257,11 +265,16 @@ export interface InfiniteGrid {
   }
 }
 
+export interface IrregularGridItem {
+  media: Media
+  caption: any
+}
+
 export interface IrregularGrid {
   __typename: 'IrregularGrid'
   sys: { id: string }
   itemsCollection: {
-    items: [Media, Media, Media, Media]
+    items: [IrregularGridItem, IrregularGridItem, IrregularGridItem, IrregularGridItem]
   }
 }
 

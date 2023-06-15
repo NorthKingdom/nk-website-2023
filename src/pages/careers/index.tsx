@@ -18,6 +18,7 @@ import { bemify } from '@utils/bemify'
 import { LOCATION_ID } from '@constants'
 import { IrregularGrid } from '@components/irregular-grid'
 import { StickyListItem } from '@components/sticky-list-item'
+import { FullbleedMedia } from '@components/fullbleed-media'
 const bem = bemify(styles, 'careers')
 
 interface CareersPageProps extends CareersPageData {
@@ -160,7 +161,10 @@ const CareersPageSectionResolver = ({
         return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} />
       }
     case 'IrregularGrid':
-      return <IrregularGrid key={props.sys.id} media={(props as IrregularGridProps).itemsCollection.items} />
+      return <IrregularGrid key={props.sys.id} items={(props as IrregularGridProps).itemsCollection.items} />
+    case 'ResponsiveImage':
+    case 'Video':
+      return <FullbleedMedia key={props.sys.id} {...(props as any)} __typename={__typename} />
     default:
       return <></>
   }

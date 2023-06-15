@@ -68,7 +68,7 @@ const AboutPageSectionResolver = ({ __typename, ...props }: { __typename: string
     case 'InfiniteGrid':
       return <InfiniteGrid key={props.sys.id} images={(props as InfiniteGridProps).itemsCollection.items} />
     case 'IrregularGrid':
-      return <IrregularGrid key={props.sys.id} media={(props as IrregularGridProps).itemsCollection.items} />
+      return <IrregularGrid key={props.sys.id} items={(props as IrregularGridProps).itemsCollection.items} />
     default:
       return <></>
   }

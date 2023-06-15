@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Slideshow } from './Slideshow'
+import { DUMMY_IMAGE, DUMMY_IMAGE_ALT_1, DUMMY_IMAGE_ALT_2 } from '@stories/dummy-data'
 
 const meta: Meta<typeof Slideshow> = {
   title: 'UI/Slideshow',
@@ -11,38 +12,7 @@ const meta: Meta<typeof Slideshow> = {
 export default meta
 type Story = StoryObj<typeof Slideshow>
 
-const srcSet = [
-  {
-    __typename: 'ResponsiveImage' as const,
-    desktopImage: {
-      url: '/dummy/temp-left-riot-img.jpg',
-    },
-    mobileImage: {
-      url: '/dummy/temp-left-riot-img.jpg',
-    },
-    altText: 'temp alt',
-  },
-  {
-    __typename: 'ResponsiveImage' as const,
-    desktopImage: {
-      url: '/dummy/temp-right-riot-img.jpg',
-    },
-    mobileImage: {
-      url: '/dummy/temp-right-riot-img.jpg',
-    },
-    altText: 'temp alt',
-  },
-  {
-    __typename: 'ResponsiveImage' as const,
-    desktopImage: {
-      url: '/dummy/temp-riot-right-image-2.jpg',
-    },
-    mobileImage: {
-      url: '/dummy/temp-riot-right-image-2.jpg',
-    },
-    altText: 'temp alt',
-  },
-]
+const srcSet = [DUMMY_IMAGE, DUMMY_IMAGE_ALT_1, DUMMY_IMAGE_ALT_2]
 
 export const Default: Story = {
   args: {

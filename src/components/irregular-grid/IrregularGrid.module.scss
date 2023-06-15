@@ -62,9 +62,6 @@
     &__mediaContainer {
       position: relative;
 
-      display: flex;
-      align-items: flex-end;
-
       &:first-child {
         margin-top: 150px;
         margin-bottom: 60px;
@@ -83,6 +80,13 @@
         }
       }
     }
+  }
+
+  &__caption {
+    white-space: pre-line;
+    @include Label;
+    margin-top: 12px;
+    text-transform: uppercase;
   }
 
   &__media {

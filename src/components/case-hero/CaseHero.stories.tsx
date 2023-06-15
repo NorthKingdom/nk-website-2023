@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { DUMMY_VIDEO } from '@stories/dummy-data'
 import { CaseHero } from './CaseHero'
 
 const meta: Meta<typeof CaseHero> = {
@@ -17,30 +18,6 @@ export const Default: Story = {
   args: {
     client: 'Riot',
     caseName: 'RiotX Arcane',
-    src: {
-      __typename: 'Video',
-      muted: true,
-      autoPlay: true,
-      loop: true,
-      posterImage: {
-        url: '/dummy/showreelposter.jpg',
-      },
-      desktopVideoCollection: {
-        items: [
-          {
-            url: '/dummy/showreel23.mp4',
-            contentType: 'video/mp4',
-          },
-        ],
-      },
-      mobileVideoCollection: {
-        items: [
-          {
-            url: '/dummy/showreel23.mp4',
-            contentType: 'video/mp4',
-          },
-        ],
-      },
-    },
+    src: DUMMY_VIDEO,
   },
 }
