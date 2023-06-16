@@ -1,14 +1,16 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { PlayButton } from './PlayButton';
+import type { Meta, StoryObj } from '@storybook/react'
+import { PlayButton } from './PlayButton'
 
 const meta: Meta<typeof PlayButton> = {
   title: 'UI/PlayButton',
   component: PlayButton,
   tags: ['autodocs'],
-  parameters: {}
-};
+  parameters: {
+    theme: 'dark',
+  },
+}
 
-export default meta;
-type Story = StoryObj<typeof PlayButton>;
+export default meta
+type Story = StoryObj<typeof PlayButton>
 
-export const Default: Story = { args: {} };
+export const Default: Story = { args: {} }

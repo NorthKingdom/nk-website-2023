@@ -16,6 +16,7 @@
     flex-direction: row;
     align-items: flex-start;
     padding-bottom: 48px;
+    transition: opacity 0.3s;
 
     @include mq($until: tablet) {
       flex-direction: column;
