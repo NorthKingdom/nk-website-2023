@@ -1,9 +1,11 @@
-import React, { useEffect, useId, type ComponentPropsWithoutRef, useMemo } from 'react'
+import React, { useEffect, useId, type ComponentPropsWithoutRef, useMemo, useRef } from 'react'
 import styles from './VideoPlayer.module.scss'
 import { Video } from '@customTypes/cms'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
 import { noop } from '@utils/noop'
 import 'plyr/dist/plyr.css'
+import { AnimatePresence, motion } from 'framer-motion'
+import { PlayButton } from '@components/play-button'
 
 const _plyrControls = `
 <div class="plyr__controls">
@@ -56,25 +58,30 @@ export const VideoPlayer = ({
   loop = false,
   autoPlay = false,
   onCanPlay = noop,
+  onPlay = noop,
   ...props
 }: VideoPlayerProps) => {
   const id = useId()
   const videoRef = React.useRef<HTMLVideoElement>(null)
   const bpFromDesktopSmall = useBreakpointFrom('desktopSmall')
+  const [hasStartedPlayback, setHasStartedPlayback] = React.useState(false)
+  const [plyrInstance, setPlyrInstance] = React.useState<any>(null)
+
+  const usePlyr = !autoPlay
+  const showPlayButton = usePlyr && !hasStartedPlayback
 
   useEffect(() => {
-    if (muted && autoPlay) {
-      return
-    }
+    if (!usePlyr) return
 
-    let _plyr: any
+    let plyr: any
 
     async function instantiatePlyr() {
       const Plyr = (await import('plyr')).default
-      _plyr = new Plyr(`#${CSS.escape(id)}`, {
+      plyr = new Plyr(`#${CSS.escape(id)}`, {
         controls: controls ? _plyrControls : [],
         muted: muted,
         autoplay: autoPlay,
+        hideControls: false,
         clickToPlay: !playsInline,
         loop: {
           active: loop,
@@ -88,16 +95,23 @@ export const VideoPlayer = ({
       })
 
       if (autoPlay && playsInline) {
-        _plyr.play()
+        plyr.play()
       }
+
+      setPlyrInstance(plyr)
     }
 
     instantiatePlyr()
 
     return () => {
-      _plyr?.destroy()
+      plyr.destroy()
     }
-  }, [])
+  }, [usePlyr])
+
+  useEffect(() => {
+    if (!plyrInstance) return
+    plyrInstance.toggleControls(hasStartedPlayback)
+  }, [plyrInstance, hasStartedPlayback])
 
   /**
    * Fix for onCanPlay event not firing when an autoplaying video is already loaded.
@@ -126,19 +140,41 @@ export const VideoPlayer = ({
     <div className={`${styles['videoPlayer']} ${className}`} style={props.style}>
       <video
         ref={videoRef}
+        id={id}
         data-id={id}
         poster={poster}
+        data-poster={poster}
         playsInline={playsInline}
         muted={muted}
         autoPlay={autoPlay}
         loop={loop}
         onCanPlay={onCanPlay}
+        onPlay={(event) => {
+          setHasStartedPlayback(true)
+          onPlay(event)
+        }}
         {...props}
       >
         {srcset.map((s) => (
           <source key={s.url} src={s.url} type={s.contentType} />
         ))}
       </video>
+      <AnimatePresence>
+        {showPlayButton && (
+          <div role="presentation" className={styles['playBtnContainer']}>
+            <PlayButton
+              as={motion.button}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              type="button"
+              aria-label="Play video"
+              data-show={true}
+              onClick={() => plyrInstance?.play()}
+            />
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

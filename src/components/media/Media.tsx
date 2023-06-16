@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { getContentfulImageSrc } from '@utils/contentful'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
 import pick from 'ramda/src/pick'
+import omit from 'ramda/src/omit'
 import cx from 'clsx'
 import styles from './Media.module.scss'
 
@@ -47,7 +48,7 @@ export const Media = (props: VideoMediaProps | ImageMediaProps) => {
     )
   }, [loaded])
 
-  const videoPlayerProps = pick(['autoPlay', 'muted', 'playsInline', 'style'], props)
+  const videoPlayerProps = omit(['__typename', 'desktopVideoCollection', 'mobileVideoCollection', 'posterImage'], props)
   const imageProps = pick(['width', 'height', 'style'], props)
 
   // console.log(props)
