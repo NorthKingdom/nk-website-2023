@@ -12,6 +12,10 @@ export const HOME_HERO = gql`
     shieldVideo {
       ...video
     }
+    shieldLightLeakColorVtt {
+      url
+      contentType
+    }
     showreelVideo {
       ...video
     }

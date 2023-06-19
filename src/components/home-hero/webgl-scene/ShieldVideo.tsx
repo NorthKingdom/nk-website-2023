@@ -11,6 +11,7 @@ import { Color, Uniform } from 'three'
 import { useWebglSceneStore } from './WebglScene.store'
 import shieldVideoFS from './shaders/shield-video-fs.glsl'
 import shieldVideoVS from './shaders/shield-video-vs.glsl'
+import type { HomeHero as HomeHeroPayload } from '@customTypes/cms'
 
 interface ShieldVideoProps {
   src: string
@@ -20,6 +21,7 @@ interface ShieldVideoProps {
   fullscreen?: boolean
   onTransitionStart?: (shieldState: string) => void
   onTransitionEnd?: (shieldState: string) => void
+  shieldLightLeakColorVtt: HomeHeroPayload['shieldLightLeakColorVtt']
   [key: string]: any
 }
 
@@ -51,6 +53,7 @@ export const ShieldVideo = forwardRef(
       scale = 1,
       z = 0,
       fullscreen = false,
+      shieldLightLeakColorVtt,
       onTransitionStart = noop,
       onTransitionEnd = noop,
       ...props
@@ -114,8 +117,8 @@ export const ShieldVideo = forwardRef(
 
       track.kind = 'subtitles'
       track.srclang = 'en'
-      // TODO: Add real VTT file
-      track.src = '/dummy/test.vtt'
+      track.src = shieldLightLeakColorVtt?.url ?? ''
+      // track.src = '/dummy/test2.vtt'
       track.default = true
 
       video.appendChild(track)

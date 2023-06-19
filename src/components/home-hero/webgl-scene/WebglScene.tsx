@@ -1,11 +1,11 @@
-import type { Video } from '@customTypes/cms'
+import type { HomeHero as HomeHeroPayload, Video } from '@customTypes/cms'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
 import { Preload } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { useGlobalStateStore } from '@store'
 import { noop } from '@utils/noop'
 import dynamic from 'next/dynamic'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { Color } from 'three'
 import { Lensflare } from './Lensflare'
 import { PlayButton } from './PlayButton'
@@ -13,7 +13,6 @@ import { ShieldContainer } from './ShieldContainer'
 import styles from './WebglScene.module.scss'
 import { useWebglSceneStore } from './WebglScene.store'
 import { Wordmark } from './Wordmark'
-
 import { useControls } from 'leva'
 import { useOnSceneLightColorChange } from './WebglScene.hooks'
 
@@ -25,14 +24,19 @@ const ShieldBackgroundLight = dynamic(
   { ssr: false }
 )
 
-interface WebglSceneProps {
-  shieldVideo: Video
+interface WebglSceneProps extends Pick<HomeHeroPayload, 'shieldVideo' | 'shieldLightLeakColorVtt'> {
   visible?: boolean
   onLoaded?: () => void
   [key: string]: any
 }
 
-export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...props }: WebglSceneProps) => {
+export const WebglScene = ({
+  visible = true,
+  shieldVideo,
+  shieldLightLeakColorVtt,
+  onLoaded = noop,
+  ...props
+}: WebglSceneProps) => {
   const debug = useGlobalStateStore((state) => state.debug)
   const getWebglSceneState = useWebglSceneStore((state) => state.get)
   const setWebglSceneState = useWebglSceneStore((state) => state.set)
@@ -98,6 +102,7 @@ export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...pr
             src={videoSrc}
             visible={true}
             onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })}
+            shieldLightLeakColorVtt={shieldLightLeakColorVtt}
           />
           <ShieldBackgroundLight scale={2.2} position-z={-0.1} visible={true} debug={false} />
           <PlayButton onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })} />

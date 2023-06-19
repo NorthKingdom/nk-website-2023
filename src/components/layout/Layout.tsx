@@ -8,6 +8,7 @@ import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 import { useRouter } from 'next/router'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNextCssRemovalPrevention } from '@hooks/use-next-css-removal-prevention'
+import { Leva } from 'leva'
 
 const Footer = dynamic(() => import('@components/footer').then((Mod) => Mod.Footer), {
   ssr: false,
@@ -48,6 +49,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
   const setLenis = useGlobalStateStore((state) => state.setLenis)
   const setIsComingFromACasePage = useGlobalStateStore((state) => state.setIsComingFromACasePage)
   const removeExpiredStyles = useNextCssRemovalPrevention()
+  const showDebugGUI = router.query.hasOwnProperty('debug')
 
   /*
    * Initialize lenis
@@ -117,6 +119,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
   return (
     <>
       <Header />
+      <Leva hidden={!showDebugGUI} />
       <div ref={wrapperRef} className={styles.main}>
         <div ref={contentRef}>
           <AnimatePresence mode="wait" initial={false}>

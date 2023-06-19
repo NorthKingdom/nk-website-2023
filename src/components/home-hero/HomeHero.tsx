@@ -1,17 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
-import styles from './HomeHero.module.scss'
-import { bemify } from '@utils/bemify'
-import { use100vh } from 'react-div-100vh'
-import dynamic from 'next/dynamic'
-import { Loader } from '@components/loader'
-import { useGlobalStateStore } from '@store'
-import { Modal } from '@components/modal'
 import { CloseButton } from '@components/close-button'
-import { useInView } from 'framer-motion'
-import { useWebglSceneStore } from './webgl-scene/WebglScene.store'
-import type { HomeHero as HomeHeroProps } from '@customTypes/cms'
+import { Loader } from '@components/loader'
+import { Modal } from '@components/modal'
 import { TextBlock } from '@components/text-block'
-import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
+import type { HomeHero as HomeHeroProps } from '@customTypes/cms'
+import { useGlobalStateStore } from '@store'
+import { bemify } from '@utils/bemify'
+import { useInView } from 'framer-motion'
+import dynamic from 'next/dynamic'
+import { useEffect, useRef, useState } from 'react'
+import { use100vh } from 'react-div-100vh'
+import styles from './HomeHero.module.scss'
+import { useWebglSceneStore } from './webgl-scene/WebglScene.store'
 const bem = bemify(styles, 'homeHero')
 const videoModalBem = bemify(styles, 'videoPlayerModal')
 
@@ -23,7 +22,7 @@ const VideoPlayer = dynamic(() => import('@components/video-player').then((Mod) 
   ssr: false,
 })
 
-export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProps) => {
+export const HomeHero = ({ statement, showreelVideo, shieldVideo, shieldLightLeakColorVtt }: HomeHeroProps) => {
   const [loaded, setLoaded] = useState(false)
   const $container = useRef<HTMLDivElement>(null)
   const height100vh = use100vh() as number
@@ -68,6 +67,7 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo }: HomeHeroProp
             pointerEvents: 'none',
           }}
           shieldVideo={shieldVideo}
+          shieldLightLeakColorVtt={shieldLightLeakColorVtt}
           eventSource={$container}
           eventPrefix="client"
         />
