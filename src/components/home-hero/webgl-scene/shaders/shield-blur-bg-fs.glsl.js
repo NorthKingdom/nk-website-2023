@@ -7,9 +7,10 @@ uniform float uTime;
 
 // COLORS
 // https://airtightinteractive.com/util/hex-to-glsl/
-vec3 layer_1_color = vec3(0.231,0.471,0.608);
-vec3 layer_2_color = vec3(0.231,0.471,0.608);
-vec3 layer_3_color = vec3(0.686,0.776,0.827);
+// vec3 layer_1_color = vec3(0.231,0.471,0.608);
+// vec3 layer_2_color = vec3(0.231,0.471,0.608);
+// vec3 layer_3_color = vec3(0.686,0.776,0.827);
+
 
 // OPACITIES 
 float layer_1_color_opacity = 0.2;
@@ -70,6 +71,13 @@ void main() {
   vec2 uv1 = vUv;
   vec2 uv2 = vUv;
   vec2 uv3 = vUv;
+
+  vec3 layer_1_color = uColor;
+  vec3 layer_2_color = uColor;
+  vec3 layer_3_color = uColor;
+  layer_3_color.r += 0.4;
+  layer_3_color.g += 0.3;
+  layer_3_color.b += 0.2;
 
   // scale UV
   // uv -= vec2(0.5);

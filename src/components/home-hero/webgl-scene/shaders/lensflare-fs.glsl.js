@@ -3,9 +3,8 @@ varying vec2 vUv;
 uniform vec3 uColor; // { value: "#8c94ff" }
 uniform sampler2D uMask; 
 
-
-vec3 flare_top_color = vec3(0.231,0.471,0.608);
-vec3 flare_bottom_color = vec3(0.231,0.471,0.608);
+// vec3 flare_top_color = vec3(0.231,0.471,0.608);
+// vec3 flare_bottom_color = vec3(0.231,0.471,0.608);
 
 float flare_top_color_opacity = 0.1;
 float flare_bottom_color_opacity = 0.14;
@@ -28,10 +27,12 @@ mat2 scaleAndRotate(vec2 scale, float rotation) {
 
 void main() {
 
+  vec3 flare_top_color = uColor;
+  vec3 flare_bottom_color = uColor;
+
   vec2 uv1 = vUv;
   vec2 uv2 = vUv;
   
-
   // FLARE TOP
   uv1 -= vec2(0.5);
   uv1.y += -0.15;

@@ -1,13 +1,15 @@
 import { extend, useFrame, useThree } from '@react-three/fiber'
 import { lerp, rubberbandIfOutOfBounds } from '@utils/math'
 import { useWebglSceneStore } from './WebglScene.store'
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useEffect, use } from 'react'
 import { Vector3, Uniform } from 'three'
 import { shaderMaterial, useTexture } from '@react-three/drei'
 import lensflareVS from './shaders/lensflare-vs.glsl'
 import lensflareFS from './shaders/lensflare-fs.glsl'
 import type { ReactThreeFiber } from '@react-three/fiber'
 import { closestAngle } from '@utils/math'
+import { animate } from 'framer-motion'
+import { useOnSceneLightColorChange } from './WebglScene.hooks'
 
 const DIMENSIONS = [9, 12] as [number, number]
 const SCALE_FACTOR = 3
@@ -34,18 +36,26 @@ interface LensflareProps {
 
 export const Lensflare: React.FC = ({ debug = false, ...props }: LensflareProps) => {
   const ref = useRef<THREE.Group>(null!)
+  const meshRef = useRef<THREE.Mesh>(null!)
   const shieldAnchor = useWebglSceneStore((state) => state.shieldAnchor)
   const shieldScaleIdle = useWebglSceneStore((state) => state.shieldScaleIdle)
   const viewport = useThree((state) => state.viewport)
   const maskTexture = useTexture('/images/shield-feather-mask-01.png')
   const scale = (viewport.height / DIMENSIONS[1] / shieldScaleIdle) * SCALE_FACTOR
+  const lightColor = useWebglSceneStore((state) => state.lightColor)
 
   const uniforms = useMemo(
     () => ({
       uMask: new Uniform(maskTexture),
+      uColor: new Uniform(lightColor),
     }),
     []
   )
+
+  useOnSceneLightColorChange((color) => {
+    if (!meshRef.current) return
+    ;(meshRef.current.material as any).uniforms.uColor.value = color
+  })
 
   const normalizedShieldAnchor = useMemo(
     () => new Vector3(shieldAnchor[0] / viewport.width, shieldAnchor[1] / viewport.height, 0),
@@ -80,7 +90,7 @@ export const Lensflare: React.FC = ({ debug = false, ...props }: LensflareProps)
 
   return (
     <group ref={ref} {...props} scale={scale}>
-      <mesh>
+      <mesh ref={meshRef}>
         <planeGeometry attach="geometry" args={[...DIMENSIONS, 1, 1]} />
         <lensflareMaterial
           attach="material"

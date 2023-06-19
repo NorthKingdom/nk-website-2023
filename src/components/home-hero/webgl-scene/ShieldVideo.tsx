@@ -1,15 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { forwardRef, use, useEffect, useMemo, useRef } from 'react'
-import { useVideoTexture, useTexture } from '@react-three/drei'
-import { Uniform } from 'three'
+import { useTexture, useVideoTexture } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { mergeRefs } from 'react-merge-refs'
-import shieldVideoVS from './shaders/shield-video-vs.glsl'
-import shieldVideoFS from './shaders/shield-video-fs.glsl'
-import { animate, useMotionValue } from 'framer-motion'
-import type { AnimationPlaybackControls } from 'framer-motion'
 import { noop } from '@utils/noop'
+import type { AnimationPlaybackControls } from 'framer-motion'
+import { animate, useMotionValue } from 'framer-motion'
+import { button, useControls } from 'leva'
+import { forwardRef, useEffect, useMemo, useRef } from 'react'
+import { mergeRefs } from 'react-merge-refs'
+import { Color, Uniform } from 'three'
 import { useWebglSceneStore } from './WebglScene.store'
+import shieldVideoFS from './shaders/shield-video-fs.glsl'
+import shieldVideoVS from './shaders/shield-video-vs.glsl'
+import type { HomeHero as HomeHeroPayload } from '@customTypes/cms'
 
 interface ShieldVideoProps {
   src: string
@@ -19,10 +21,13 @@ interface ShieldVideoProps {
   fullscreen?: boolean
   onTransitionStart?: (shieldState: string) => void
   onTransitionEnd?: (shieldState: string) => void
+  shieldLightLeakColorVtt: HomeHeroPayload['shieldLightLeakColorVtt']
   [key: string]: any
 }
 
 const SHIELD_VIDEO_DIMENTIONS = [9, 5]
+
+const isValidHexColor = (color: string) => /^#([0-9A-F]{3}){1,2}$/i.test(color)
 
 const MOTION_CONFIG = {
   HOVER: {
@@ -48,6 +53,7 @@ export const ShieldVideo = forwardRef(
       scale = 1,
       z = 0,
       fullscreen = false,
+      shieldLightLeakColorVtt,
       onTransitionStart = noop,
       onTransitionEnd = noop,
       ...props
@@ -59,8 +65,80 @@ export const ShieldVideo = forwardRef(
     const shieldState = useWebglSceneStore((state) => state.shieldState)
     const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
     const shieldScaleFullscreen = useWebglSceneStore((state) => state.shieldScaleFullscreen)
+    const isShieldVideoPlaying = useWebglSceneStore((state) => state.isShieldVideoPlaying)
 
-    const videoTexture = useVideoTexture(src, { start: true })
+    const [_, setControls] = useControls('Shield video', () => ({
+      timestamp: {
+        value: 0,
+        editable: false,
+      },
+    }))
+
+    const videoTexture = useVideoTexture(src, {
+      start: true,
+      ontimeupdate: (e) => setControls({ timestamp: (e.target as HTMLVideoElement).currentTime }),
+    })
+
+    useControls(
+      'Shield video',
+      {
+        pause: button(
+          () => {
+            set({ isShieldVideoPlaying: false })
+          },
+          { disabled: !isShieldVideoPlaying }
+        ),
+        play: button(
+          () => {
+            set({ isShieldVideoPlaying: true })
+          },
+          { disabled: isShieldVideoPlaying }
+        ),
+      },
+      [isShieldVideoPlaying]
+    )
+
+    useEffect(() => {
+      if (!videoTexture) return
+      const video = videoTexture.image as HTMLVideoElement
+      if (isShieldVideoPlaying) {
+        video.play()
+      } else {
+        video.pause()
+      }
+    }, [videoTexture, isShieldVideoPlaying])
+
+    useEffect(() => {
+      if (!videoTexture) return
+      const video = videoTexture.image as HTMLVideoElement
+
+      // Add color cue track
+      const track = document.createElement('track')
+
+      track.kind = 'subtitles'
+      track.srclang = 'en'
+      track.src = shieldLightLeakColorVtt?.url ?? ''
+      // track.src = '/dummy/test2.vtt'
+      track.default = true
+
+      video.appendChild(track)
+
+      const textTrack = video.textTracks[0]
+
+      textTrack.oncuechange = () => {
+        // @ts-ignore
+        const colorCue = textTrack.activeCues[0]?.text ?? ''
+
+        if (!colorCue) return
+
+        if (isValidHexColor(colorCue.trim())) {
+          set({ lightColor: new Color(colorCue) })
+        } else {
+          console.warn(`Color cue ${colorCue} is not in valid HEX format`)
+        }
+      }
+    }, [videoTexture])
+
     const maskTexture = useTexture('/images/shield-mask-sharp.png')
 
     const uniforms = useMemo(
