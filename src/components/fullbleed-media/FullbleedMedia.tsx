@@ -4,6 +4,7 @@ import { Media } from '@components/media'
 import type { ImageMediaProps, VideoMediaProps } from '@components/media'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
+import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 
 function getMediaAspect(media: ImageMediaProps | VideoMediaProps, isDesktopBp: boolean) {
   if (!media) return 0
@@ -26,6 +27,7 @@ export const FullbleedMedia = (props: ImageMediaProps | VideoMediaProps) => {
 
   return (
     <AspectRatio ratio={mediaAspectRatio} className={styles['fullbleedMedia']}>
+      <ThemeChangeTrigger theme="dark" style={{ top: 0 }} />
       <Media {...props} />
     </AspectRatio>
   )

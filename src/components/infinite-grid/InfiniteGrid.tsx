@@ -285,7 +285,7 @@ export const InfiniteGrid = ({ images = [] }: InfiniteGridProps) => {
 
   return (
     <div className={styles['infiniteGrid']} ref={infiniteGridRef}>
-      <ThemeChangeTrigger id="infinite-grid" theme="dark" />
+      <ThemeChangeTrigger theme="dark" style={{ top: 0 }} />
       <motion.div
         className={bem('grid')}
         style={{

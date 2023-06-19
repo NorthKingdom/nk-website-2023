@@ -10,17 +10,18 @@
   height: 80px;
   padding: 24px;
 
-  // &[data-is-scrolling-down='false'] {
-  //   html[data-theme='dark'] & {
-  //     background-color: var(--color-bg);
-  //     border-bottom: 1px solid var(--color-bg);
-  //   }
+  &[data-is-scrolling-down='false'] {
+    html[data-theme='dark'] & {
+      background-color: transparent;
+      border-bottom-color: transparent;
+      // border-bottom: 1px solid none;
+    }
 
-  //   html[data-theme='light'] & {
-  //     background-color: var(--color-bg);
-  //     border-bottom: 1px solid var(--color-bg-inverted);
-  //   }
-  // }
+    html[data-theme='light'] & {
+      background-color: var(--color-bg);
+      border-bottom: 1px solid var(--color-bg-inverted);
+    }
+  }
 
   @include mq($until: tablet) {
     padding: 16px;
@@ -37,8 +38,8 @@
     pointer-events: auto;
   }
 
-  transition: background-color 0.2s var(--ease-in-out-cubic), opacity 0.4s var(--ease-in-out-cubic),
-    transform 0.4s var(--ease-in-out-cubic);
+  transition: background-color 0.3s var(--ease-in-out-cubic), opacity 0.4s var(--ease-in-out-cubic),
+    transform 0.4s var(--ease-in-out-cubic) 0.1s;
 
   &[data-is-scrolling-down='true'] {
     pointer-events: none;
