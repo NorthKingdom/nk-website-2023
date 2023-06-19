@@ -74,7 +74,10 @@ void main() {
 
   vec3 layer_1_color = uColor;
   vec3 layer_2_color = uColor;
-  vec3 layer_3_color = uColor += 0.25;
+  vec3 layer_3_color = uColor;
+  layer_3_color.r += 0.4;
+  layer_3_color.g += 0.3;
+  layer_3_color.b += 0.2;
 
   // scale UV
   // uv -= vec2(0.5);
