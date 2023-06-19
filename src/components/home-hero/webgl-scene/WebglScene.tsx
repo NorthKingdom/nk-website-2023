@@ -1,20 +1,21 @@
-import { Canvas } from '@react-three/fiber'
-import { Preload } from '@react-three/drei'
-import dynamic from 'next/dynamic'
-import { Suspense, useEffect, useState } from 'react'
-import { useGlobalStateStore } from '@store'
-import { ShieldContainer } from './ShieldContainer'
-import { PlayButton } from './PlayButton'
-import { noop } from '@utils/noop'
-import { Wordmark } from './Wordmark'
-import { useWebglSceneStore } from './WebglScene.store'
 import type { Video } from '@customTypes/cms'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
-import { Lensflare } from './Lensflare'
+import { Preload } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
+import { useGlobalStateStore } from '@store'
+import { noop } from '@utils/noop'
+import dynamic from 'next/dynamic'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { Color } from 'three'
+import { Lensflare } from './Lensflare'
+import { PlayButton } from './PlayButton'
+import { ShieldContainer } from './ShieldContainer'
 import styles from './WebglScene.module.scss'
+import { useWebglSceneStore } from './WebglScene.store'
+import { Wordmark } from './Wordmark'
 
-import { button, useControls } from 'leva'
+import { useControls } from 'leva'
+import { useOnSceneLightColorChange } from './WebglScene.hooks'
 
 const Perf = dynamic(() => import('r3f-perf').then((Mod) => Mod.Perf), { ssr: false })
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
@@ -33,6 +34,7 @@ interface WebglSceneProps {
 
 export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...props }: WebglSceneProps) => {
   const debug = useGlobalStateStore((state) => state.debug)
+  const getWebglSceneState = useWebglSceneStore((state) => state.get)
   const setWebglSceneState = useWebglSceneStore((state) => state.set)
   const shieldState = useWebglSceneStore((state) => state.shieldState)
   const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
@@ -55,12 +57,24 @@ export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...pr
     setFrameloop(shieldState === 'expanded' ? 'never' : 'always')
   }, [shieldState])
 
-  useControls('WebglScene', {
-    'Light Color': {
+  const [_, setControls] = useControls('WebglScene', () => ({
+    lightColor: {
+      name: 'Light Color',
       value: '#31B5FF',
-      onChange: (v) => setWebglSceneState({ lightColor: new Color(v) }),
+      onEditStart: () => {
+        setWebglSceneState({ isEditing: true, isShieldVideoPlaying: false })
+      },
+      onEditEnd: () => {
+        setWebglSceneState({ isEditing: false })
+      },
+      onChange: (v) => {
+        if (getWebglSceneState().isEditing) setWebglSceneState({ lightColor: new Color(v) })
+      },
     },
-    // 'Switch to red': button(() => setWebglSceneState({ lightColor: new Color(0xff0000) })),
+  }))
+
+  useOnSceneLightColorChange((color) => {
+    setControls({ lightColor: `#${color.getHexString()}` })
   })
 
   return (

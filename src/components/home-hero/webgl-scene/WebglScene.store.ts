@@ -27,6 +27,8 @@ interface WebglSceneStore {
   stiffness: number
   damping: number
   lightColor: Color
+  isEditing: boolean
+  isShieldVideoPlaying: boolean
 }
 
 export const useWebglSceneStore = create<WebglSceneStore>()((set, get) => ({
@@ -76,4 +78,6 @@ export const useWebglSceneStore = create<WebglSceneStore>()((set, get) => ({
   stiffness: 1000,
   damping: 100,
   lightColor: new Color('#31B5FF'),
+  isEditing: false,
+  isShieldVideoPlaying: true,
 }))

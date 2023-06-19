@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { forwardRef, use, useEffect, useMemo, useRef } from 'react'
-import { useVideoTexture, useTexture } from '@react-three/drei'
-import { Uniform } from 'three'
+import { useTexture, useVideoTexture } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { mergeRefs } from 'react-merge-refs'
-import shieldVideoVS from './shaders/shield-video-vs.glsl'
-import shieldVideoFS from './shaders/shield-video-fs.glsl'
-import { animate, useMotionValue } from 'framer-motion'
-import type { AnimationPlaybackControls } from 'framer-motion'
 import { noop } from '@utils/noop'
+import type { AnimationPlaybackControls } from 'framer-motion'
+import { animate, useMotionValue } from 'framer-motion'
+import { button, useControls } from 'leva'
+import { forwardRef, useEffect, useMemo, useRef } from 'react'
+import { mergeRefs } from 'react-merge-refs'
+import { Color, Uniform } from 'three'
 import { useWebglSceneStore } from './WebglScene.store'
-import { Color } from 'three'
+import shieldVideoFS from './shaders/shield-video-fs.glsl'
+import shieldVideoVS from './shaders/shield-video-vs.glsl'
 
 interface ShieldVideoProps {
   src: string
@@ -62,12 +62,54 @@ export const ShieldVideo = forwardRef(
     const shieldState = useWebglSceneStore((state) => state.shieldState)
     const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
     const shieldScaleFullscreen = useWebglSceneStore((state) => state.shieldScaleFullscreen)
+    const isShieldVideoPlaying = useWebglSceneStore((state) => state.isShieldVideoPlaying)
 
-    const videoTexture = useVideoTexture(src, { start: true })
+    const [_, setControls] = useControls('Shield video', () => ({
+      timestamp: {
+        value: 0,
+        editable: false,
+      },
+    }))
+
+    const videoTexture = useVideoTexture(src, {
+      start: true,
+      ontimeupdate: (e) => setControls({ timestamp: (e.target as HTMLVideoElement).currentTime }),
+    })
+
+    useControls(
+      'Shield video',
+      {
+        pause: button(
+          () => {
+            set({ isShieldVideoPlaying: false })
+          },
+          { disabled: !isShieldVideoPlaying }
+        ),
+        play: button(
+          () => {
+            set({ isShieldVideoPlaying: true })
+          },
+          { disabled: isShieldVideoPlaying }
+        ),
+      },
+      [isShieldVideoPlaying]
+    )
 
     useEffect(() => {
       if (!videoTexture) return
       const video = videoTexture.image as HTMLVideoElement
+      if (isShieldVideoPlaying) {
+        video.play()
+      } else {
+        video.pause()
+      }
+    }, [videoTexture, isShieldVideoPlaying])
+
+    useEffect(() => {
+      if (!videoTexture) return
+      const video = videoTexture.image as HTMLVideoElement
+
+      // Add color cue track
       const track = document.createElement('track')
 
       track.kind = 'subtitles'

@@ -15,6 +15,7 @@ export function useOnSceneLightColorChange(callback: (color: Color) => void = no
 
   useEffect(() => {
     const currentColor = previousColor.current.clone()
+    previousColor.current = lightColor.clone()
 
     const controls = animate(0, 1, {
       duration: 2,
