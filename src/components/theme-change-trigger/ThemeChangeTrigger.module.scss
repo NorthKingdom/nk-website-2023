@@ -1,6 +1,6 @@
 .themeChangeTrigger {
   position: absolute;
-  top: 0;
+  top: -80px; // header height
   height: 10px;
   width: 100%;
   pointer-events: none;
