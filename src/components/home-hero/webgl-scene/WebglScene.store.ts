@@ -1,5 +1,6 @@
 import type { MotionValue } from 'framer-motion'
 import { create } from 'zustand'
+import { Color } from 'three'
 
 interface ShieldStateEvent {
   type: 'POINTER_OVER' | 'POINTER_OUT' | 'EXPAND' | 'COLLAPSE' | 'TRANSITION_START' | 'TRANSITION_END'
@@ -25,6 +26,9 @@ interface WebglSceneStore {
   hovered: boolean
   stiffness: number
   damping: number
+  lightColor: Color
+  isEditing: boolean
+  isShieldVideoPlaying: boolean
 }
 
 export const useWebglSceneStore = create<WebglSceneStore>()((set, get) => ({
@@ -73,4 +77,7 @@ export const useWebglSceneStore = create<WebglSceneStore>()((set, get) => ({
   hovered: false,
   stiffness: 1000,
   damping: 100,
+  lightColor: new Color('#31B5FF'),
+  isEditing: false,
+  isShieldVideoPlaying: true,
 }))

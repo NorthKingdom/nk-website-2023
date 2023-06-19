@@ -184,6 +184,10 @@ export interface HomeHero {
   statement: string
   shieldVideo: Video
   showreelVideo: Video
+  shieldLightLeakColorVtt: {
+    url: string
+    contentType: string
+  }
 }
 
 export interface FeaturedCases {
