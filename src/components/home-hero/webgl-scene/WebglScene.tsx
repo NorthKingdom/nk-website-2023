@@ -11,7 +11,10 @@ import { useWebglSceneStore } from './WebglScene.store'
 import type { Video } from '@customTypes/cms'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
 import { Lensflare } from './Lensflare'
+import { Color } from 'three'
 import styles from './WebglScene.module.scss'
+
+import { button, useControls } from 'leva'
 
 const Perf = dynamic(() => import('r3f-perf').then((Mod) => Mod.Perf), { ssr: false })
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
@@ -30,6 +33,7 @@ interface WebglSceneProps {
 
 export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...props }: WebglSceneProps) => {
   const debug = useGlobalStateStore((state) => state.debug)
+  const setWebglSceneState = useWebglSceneStore((state) => state.set)
   const shieldState = useWebglSceneStore((state) => state.shieldState)
   const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
   const isMenuOpen = useGlobalStateStore((state) => state.isMenuOpen)
@@ -50,6 +54,14 @@ export const WebglScene = ({ visible = true, shieldVideo, onLoaded = noop, ...pr
   useEffect(() => {
     setFrameloop(shieldState === 'expanded' ? 'never' : 'always')
   }, [shieldState])
+
+  useControls('WebglScene', {
+    'Light Color': {
+      value: '#31B5FF',
+      onChange: (v) => setWebglSceneState({ lightColor: new Color(v) }),
+    },
+    // 'Switch to red': button(() => setWebglSceneState({ lightColor: new Color(0xff0000) })),
+  })
 
   return (
     <Canvas

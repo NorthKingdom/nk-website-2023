@@ -8,6 +8,7 @@ import { mergeRefs } from 'react-merge-refs'
 import shieldBlurVS from './shaders/shield-blur-bg-vs.glsl'
 import shieldBlurFS from './shaders/shield-blur-bg-fs.glsl'
 import { useWebglSceneStore } from './WebglScene.store'
+import { useOnSceneLightColorChange } from './WebglScene.hooks'
 
 const ShieldBackgroundLightMaterial = shaderMaterial(
   {
@@ -48,6 +49,11 @@ export const ShieldBackgroundLight = forwardRef((props: any, ref: React.Ref<THRE
     }),
     []
   )
+
+  useOnSceneLightColorChange((color) => {
+    if (!$mesh.current) return
+    ;($mesh.current.material as any).uniforms.uColor.value = color
+  })
 
   useEffect(() => {
     if (!shieldScaleMotionValue) return

@@ -10,6 +10,7 @@ import { animate, useMotionValue } from 'framer-motion'
 import type { AnimationPlaybackControls } from 'framer-motion'
 import { noop } from '@utils/noop'
 import { useWebglSceneStore } from './WebglScene.store'
+import { Color } from 'three'
 
 interface ShieldVideoProps {
   src: string
@@ -23,6 +24,8 @@ interface ShieldVideoProps {
 }
 
 const SHIELD_VIDEO_DIMENTIONS = [9, 5]
+
+const isValidHexColor = (color: string) => /^#([0-9A-F]{3}){1,2}$/i.test(color)
 
 const MOTION_CONFIG = {
   HOVER: {
@@ -61,6 +64,36 @@ export const ShieldVideo = forwardRef(
     const shieldScaleFullscreen = useWebglSceneStore((state) => state.shieldScaleFullscreen)
 
     const videoTexture = useVideoTexture(src, { start: true })
+
+    useEffect(() => {
+      if (!videoTexture) return
+      const video = videoTexture.image as HTMLVideoElement
+      const track = document.createElement('track')
+
+      track.kind = 'subtitles'
+      track.srclang = 'en'
+      // TODO: Add real VTT file
+      track.src = '/dummy/test.vtt'
+      track.default = true
+
+      video.appendChild(track)
+
+      const textTrack = video.textTracks[0]
+
+      textTrack.oncuechange = () => {
+        // @ts-ignore
+        const colorCue = textTrack.activeCues[0]?.text ?? ''
+
+        if (!colorCue) return
+
+        if (isValidHexColor(colorCue.trim())) {
+          set({ lightColor: new Color(colorCue) })
+        } else {
+          console.warn(`Color cue ${colorCue} is not in valid HEX format`)
+        }
+      }
+    }, [videoTexture])
+
     const maskTexture = useTexture('/images/shield-mask-sharp.png')
 
     const uniforms = useMemo(
