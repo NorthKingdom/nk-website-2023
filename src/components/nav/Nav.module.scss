@@ -22,7 +22,7 @@
     }
 
     &[data-active='false'] {
-      @include text-underline-hover(var(--color-white));
+      @include text-underline-hover(var(--color-fg));
     }
   }
 }

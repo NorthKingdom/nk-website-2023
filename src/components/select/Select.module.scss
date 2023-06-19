@@ -1,12 +1,10 @@
 .select {
   $block: &;
-  --color-fg: var(--color-black);
-  --color-bg: var(--color-white);
-  --color-fg-inverted: var(--color-white);
-  --color-bg-inverted: var(--color-black);
 
   &__currentValue,
   &__item {
+    --color-fg: var(--color-black);
+    --color-bg: var(--color-white);
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -18,14 +16,20 @@
     border: 1px solid var(--color-fg);
     border-radius: 32px;
     transition: color 0.2s, background-color 0.2s;
+    user-select: none;
+
+    @include hover {
+      --color-fg: var(--color-white);
+      --color-bg: var(--color-black);
+    }
   }
 
   &__currentValue {
     text-transform: capitalize;
 
     #{$block}[data-is-open='true'] & {
-      color: var(--color-fg-inverted);
-      background-color: var(--color-bg-inverted);
+      --color-fg: var(--color-white);
+      --color-bg: var(--color-black);
     }
   }
 

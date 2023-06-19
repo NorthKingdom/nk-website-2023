@@ -1,3 +1,11 @@
 .filterItem {
   cursor: pointer;
+  position: relative;
+  @include text-underline-hover(var(--color-black));
+
+  &[data-active='true'] {
+    &:after {
+      transform: scaleX(1);
+    }
+  }
 }
