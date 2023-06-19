@@ -120,9 +120,6 @@
 
   &__filtersListItem {
     text-transform: capitalize;
-    &[data-active='false'] {
-      text-decoration: underline;
-    }
   }
 
   &__filtersDropdown {
