@@ -6,6 +6,8 @@ import { noop } from '@utils/noop'
 import 'plyr/dist/plyr.css'
 import { AnimatePresence, motion } from 'framer-motion'
 import { PlayButton } from '@components/play-button'
+import { set } from 'lodash'
+import { CloseButton } from '@components/close-button'
 
 const _plyrControls = `
 <div class="plyr__controls">
@@ -62,9 +64,11 @@ export const VideoPlayer = ({
   ...props
 }: VideoPlayerProps) => {
   const id = useId()
+  const videoPlayerRef = React.useRef<HTMLDivElement>(null)
   const videoRef = React.useRef<HTMLVideoElement>(null)
   const bpFromDesktopSmall = useBreakpointFrom('desktopSmall')
   const [hasStartedPlayback, setHasStartedPlayback] = React.useState(false)
+  const [isFullscreen, setIsFullscreen] = React.useState(false)
   const [plyrInstance, setPlyrInstance] = React.useState<any>(null)
 
   const usePlyr = !autoPlay
@@ -90,10 +94,15 @@ export const VideoPlayer = ({
           enabled: !playsInline,
           fallback: true,
           iosNative: true,
-          container: undefined,
+          container: `#video-player-${CSS.escape(id)}`,
         },
       })
 
+      // event listeners
+      plyr.on('enterfullscreen', () => setIsFullscreen(true))
+      plyr.on('exitfullscreen', () => setIsFullscreen(false))
+
+      // autoplay fix
       if (autoPlay && playsInline) {
         plyr.play()
       }
@@ -137,7 +146,7 @@ export const VideoPlayer = ({
   }, [src, bpFromDesktopSmall, hasMobileVideo])
 
   return (
-    <div className={`${styles['videoPlayer']} ${className}`} style={props.style}>
+    <div id={`video-player-${id}`} className={`${styles['videoPlayer']} ${className}`} style={props.style}>
       <video
         ref={videoRef}
         id={id}
@@ -175,6 +184,17 @@ export const VideoPlayer = ({
           </div>
         )}
       </AnimatePresence>
+
+      {isFullscreen && (
+        <div role="presentation" className={styles['exitFullscreenBtnContainer']}>
+          <CloseButton
+            type="button"
+            aria-label="Exit fullscreen"
+            data-show={true}
+            onClick={() => plyrInstance?.fullscreen.exit()}
+          />
+        </div>
+      )}
     </div>
   )
 }
