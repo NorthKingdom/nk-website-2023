@@ -64,14 +64,13 @@ export const VideoPlayer = ({
   ...props
 }: VideoPlayerProps) => {
   const id = useId()
-  const videoPlayerRef = React.useRef<HTMLDivElement>(null)
   const videoRef = React.useRef<HTMLVideoElement>(null)
   const bpFromDesktopSmall = useBreakpointFrom('desktopSmall')
   const [hasStartedPlayback, setHasStartedPlayback] = React.useState(false)
   const [isFullscreen, setIsFullscreen] = React.useState(false)
   const [plyrInstance, setPlyrInstance] = React.useState<any>(null)
 
-  const usePlyr = !autoPlay
+  const usePlyr = !autoPlay || controls
   const showPlayButton = usePlyr && !hasStartedPlayback
 
   useEffect(() => {
