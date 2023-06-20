@@ -1,17 +1,18 @@
 .playButton {
+  --size: 88px;
+
+  @include mq($until: tablet) {
+    --size: 56px;
+  }
+
   pointer-events: auto;
   background: white;
-  height: 56px;
-  width: 56px;
+  height: var(--size);
+  width: var(--size);
   border-radius: 50%;
   border: none;
   z-index: 1;
   transition: transform var(--transition-duration-medium) var(--ease-standard);
-
-  @include mq($from: tablet) {
-    height: 88px;
-    width: 88px;
-  }
 
   @include hover {
     transform: scale(1.1);
