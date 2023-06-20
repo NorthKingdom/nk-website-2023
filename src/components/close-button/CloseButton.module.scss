@@ -1,22 +1,31 @@
 .closeButton {
-  width: 44px;
-  height: 44px;
+  --size: 48px;
+
+  @include mq($until: tablet) {
+    --size: 40px;
+  }
+
+  width: var(--size);
+  height: var(--size);
   overflow: hidden;
   border-radius: 50%;
-  background-color: grey;
-  // background-color: var(--color-black-40);
-  // backdrop-filter: blur(20px);
+  background: white;
+  color: var(--color-black);
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.2s ease-in-out;
+  transition: transform var(--transition-duration-medium) var(--ease-standard);
+
+  svg {
+    fill: black;
+  }
 
   @include hover {
     transform: scale(1.1);
   }
 
   @include active {
-    transform: scale(0.9);
+    transform: scale(0.93);
   }
 }
