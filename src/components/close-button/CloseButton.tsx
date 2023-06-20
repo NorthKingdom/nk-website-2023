@@ -4,15 +4,24 @@ import cx from 'clsx'
 import { noop } from '@utils/noop'
 
 interface CloseButtonProps {
+  as?: React.ElementType
   className?: string
   style?: React.CSSProperties
   disabled?: boolean
   onClick: () => void
+  [key: string]: any
 }
 
-export const CloseButton = ({ className = '', style = {}, disabled = false, onClick = noop }: CloseButtonProps) => {
+export const CloseButton = ({
+  className = '',
+  style = {},
+  disabled = false,
+  onClick = noop,
+  as = 'button',
+}: CloseButtonProps) => {
+  const Tag = as
   return (
-    <button
+    <Tag
       className={cx(styles['closeButton'], className)}
       style={style}
       data-disabled={disabled}
@@ -23,6 +32,6 @@ export const CloseButton = ({ className = '', style = {}, disabled = false, onCl
         <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" />
         <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" />
       </svg>
-    </button>
+    </Tag>
   )
 }
