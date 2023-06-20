@@ -84,7 +84,7 @@ export const WebglScene = ({
   return (
     <Canvas
       className={styles['webglCanvas']}
-      camera={{ position: [0, 0, 5] }}
+      camera={{ position: [0, 0, 10] }}
       frameloop={frameloop}
       gl={{
         powerPreference: 'high-performance',
@@ -100,17 +100,18 @@ export const WebglScene = ({
           <ShieldVideo
             position-z={0.02}
             src={videoSrc}
-            visible={true}
+            visible={shieldState !== 'loading'}
             onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })}
             shieldLightLeakColorVtt={shieldLightLeakColorVtt}
           />
-          <ShieldBackgroundLight scale={2.2} position-z={-0.1} visible={true} debug={false} />
+          {/* <ShieldBackgroundLight scale={2.2} position-z={-0.1} visible={true} debug={false} /> */}
           <PlayButton
             onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })}
-            data-visible={!['expanded', 'expanding', 'collapsing'].includes(shieldState)}
+            data-visible={['idle', 'hovered'].includes(shieldState)}
           />
           <Lensflare />
         </ShieldContainer>
+
         <Wordmark />
         <Preload all />
       </Suspense>

@@ -7,7 +7,7 @@ import { animate, useMotionValue } from 'framer-motion'
 import { button, useControls } from 'leva'
 import { forwardRef, useEffect, useMemo, useRef } from 'react'
 import { mergeRefs } from 'react-merge-refs'
-import { Color, Uniform } from 'three'
+import { Color, Vector3, Uniform, DoubleSide } from 'three'
 import { useWebglSceneStore } from './WebglScene.store'
 import shieldVideoFS from './shaders/shield-video-fs.glsl'
 import shieldVideoVS from './shaders/shield-video-vs.glsl'
@@ -29,11 +29,15 @@ const SHIELD_VIDEO_DIMENTIONS = [9, 5]
 
 const isValidHexColor = (color: string) => /^#([0-9A-F]{3}){1,2}$/i.test(color)
 
-const MOTION_CONFIG = {
+export const MOTION_CONFIG = {
   HOVER: {
     type: 'spring',
     stiffness: 1500,
     damping: 100,
+  },
+  TRANSITION_IN: {
+    duration: 0.6,
+    ease: [0, 0.55, 0.45, 1], // ease out circ
   },
   COLLAPSE: {
     duration: 0.9,
@@ -61,8 +65,10 @@ export const ShieldVideo = forwardRef(
     ref: React.Ref<THREE.Mesh>
   ) => {
     const $mesh = useRef<THREE.Mesh>(null!)
+    const $rotationContainer = useRef<THREE.Group>(null!)
     const set = useWebglSceneStore((state) => state.set)
     const shieldState = useWebglSceneStore((state) => state.shieldState)
+    const isSceneLoaded = useWebglSceneStore((state) => state.isSceneLoaded)
     const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
     const shieldScaleFullscreen = useWebglSceneStore((state) => state.shieldScaleFullscreen)
     const isShieldVideoPlaying = useWebglSceneStore((state) => state.isShieldVideoPlaying)
@@ -78,6 +84,10 @@ export const ShieldVideo = forwardRef(
       start: true,
       ontimeupdate: (e) => setControls({ timestamp: (e.target as HTMLVideoElement).currentTime }),
     })
+
+    useEffect(() => {
+      console.log($mesh.current)
+    }, [])
 
     useControls(
       'Shield video',
@@ -149,7 +159,10 @@ export const ShieldVideo = forwardRef(
       }),
       []
     )
-    const scaleMotionValue = useMotionValue(scale)
+    const scaleMotionValue = useMotionValue(scale * 0.1)
+    useEffect(() => {
+      $mesh.current.scale.setScalar(scaleMotionValue.get())
+    }, [])
     useEffect(() => {
       set({ shieldScaleMotionValue: scaleMotionValue })
     }, [scaleMotionValue])
@@ -162,6 +175,13 @@ export const ShieldVideo = forwardRef(
       let motionData = {}
 
       switch (shieldState) {
+        case 'loading':
+          videoScale = scale * 0.1
+          break
+        case 'transition-in':
+          videoScale = scale
+          motionData = MOTION_CONFIG.TRANSITION_IN
+          break
         case 'expanding':
         case 'expanded':
           videoScale = shieldScaleFullscreen
@@ -206,7 +226,7 @@ export const ShieldVideo = forwardRef(
       return () => {
         animationControls?.stop()
       }
-    }, [shieldState])
+    }, [shieldState, isSceneLoaded])
 
     useFrame(({ clock }) => {
       if (!$mesh.current) return
@@ -214,11 +234,33 @@ export const ShieldVideo = forwardRef(
       $mesh.current.material.uniforms.uTime.value = clock.getElapsedTime()
     })
 
+    useEffect(() => {
+      let ctrls
+      if (shieldState === 'transition-in') {
+        ctrls = animate(-Math.PI, 0, {
+          ...(MOTION_CONFIG.TRANSITION_IN as Partial<AnimationPlaybackControls>),
+          duration: MOTION_CONFIG.TRANSITION_IN.duration * 0.7,
+          onUpdate: (v) => {
+            if (!$rotationContainer.current) return
+            $rotationContainer.current.rotation.y = v
+          },
+        })
+      }
+    }, [shieldState])
+
+    useEffect(() => {
+      return () => {
+        set({ shieldState: 'idle' })
+      }
+    }, [])
+
     return (
-      <>
+      <group ref={$rotationContainer}>
         <mesh ref={mergeRefs([ref, $mesh])} position-z={z} {...props}>
           <planeGeometry attach="geometry" args={[SHIELD_VIDEO_DIMENTIONS[0], SHIELD_VIDEO_DIMENTIONS[1], 32, 32]} />
           <shaderMaterial
+            depthTest={false}
+            // side={DoubleSide}
             vertexShader={shieldVideoVS}
             fragmentShader={shieldVideoFS}
             uniforms={uniforms}
@@ -233,7 +275,7 @@ export const ShieldVideo = forwardRef(
             <meshBasicMaterial attach="material" color="white" transparent wireframe opacity={0.2} />
           </mesh>
         )}
-      </>
+      </group>
     )
   }
 )

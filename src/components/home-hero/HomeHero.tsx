@@ -5,7 +5,7 @@ import { TextBlock } from '@components/text-block'
 import type { HomeHero as HomeHeroProps } from '@customTypes/cms'
 import { useGlobalStateStore } from '@store'
 import { bemify } from '@utils/bemify'
-import { useInView } from 'framer-motion'
+import { AnimatePresence, motion, useInView } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 import { use100vh } from 'react-div-100vh'
@@ -23,9 +23,10 @@ const VideoPlayer = dynamic(() => import('@components/video-player').then((Mod) 
 })
 
 export const HomeHero = ({ statement, showreelVideo, shieldVideo, shieldLightLeakColorVtt }: HomeHeroProps) => {
-  const [loaded, setLoaded] = useState(false)
   const $container = useRef<HTMLDivElement>(null)
   const height100vh = use100vh() as number
+  const set = useWebglSceneStore((state) => state.set)
+  const isSceneLoaded = useWebglSceneStore((state) => state.isSceneLoaded)
   const shieldState = useWebglSceneStore((state) => state.shieldState)
   const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
   const lenis = useGlobalStateStore((state) => state.lenis)
@@ -56,7 +57,8 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo, shieldLightLea
         }}
       >
         <WebglScene
-          onLoaded={() => setLoaded(true)}
+          onLoaded={() => set({ isSceneLoaded: true })}
+          // onLoaded={() => set({ isSceneLoaded: true })}
           visible={isInView}
           style={{
             position: 'relative',
@@ -83,9 +85,27 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo, shieldLightLea
           src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTk5OTlweCIgaGVpZ2h0PSI5OTk5OXB4IiB2aWV3Qm94PSIwIDAgOTk5OTkgOTk5OTkiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIGZpbGwtb3BhY2l0eT0iMCI+CiAgICAgICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9Ijk5OTk5IiBoZWlnaHQ9Ijk5OTk5Ij48L3JlY3Q+CiAgICA8L2c+Cjwvc3ZnPg=="
         />
 
-        <div aria-hidden="true" className={bem('overlay')} data-visible={!loaded}>
-          <Loader className={bem('loader')} />
-        </div>
+        <AnimatePresence initial={false}>
+          {!isSceneLoaded && (
+            <motion.div
+              key="loader"
+              style={{ x: '-50%', y: '-50%' }}
+              className={bem('loader')}
+              exit={{
+                scale: 0.05,
+                transition: {
+                  delay: 0.2,
+                  duration: 0.7,
+                  ease: [0.55, 0, 1, 0.45],
+                }, // ease in circ
+              }}
+              onAnimationComplete={() => dispatchShieldStateEvent({ type: 'LOADER_TRANSITION_OUT_END' })}
+            >
+              <Loader />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <div aria-hidden="true" className={bem('overlay')} data-visible={!isSceneLoaded} />
 
         <h1 className={bem('title')} aria-label="North Kingdom">
           North Kingdom
@@ -96,7 +116,7 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo, shieldLightLea
             className={videoModalBem('closeButton')}
             onClick={() => dispatchShieldStateEvent({ type: 'COLLAPSE' })}
           />
-          {loaded && (
+          {isSceneLoaded && (
             <VideoPlayer
               className={videoModalBem('videoPlayer')}
               autoPlay={true}
