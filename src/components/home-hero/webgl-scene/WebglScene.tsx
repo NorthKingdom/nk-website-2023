@@ -1,6 +1,6 @@
 import type { HomeHero as HomeHeroPayload, Video } from '@customTypes/cms'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
-import { Preload } from '@react-three/drei'
+import { Preload, Html } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { useGlobalStateStore } from '@store'
 import { noop } from '@utils/noop'
@@ -105,7 +105,10 @@ export const WebglScene = ({
             shieldLightLeakColorVtt={shieldLightLeakColorVtt}
           />
           <ShieldBackgroundLight scale={2.2} position-z={-0.1} visible={true} debug={false} />
-          <PlayButton onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })} />
+          <PlayButton
+            onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })}
+            data-visible={!['expanded', 'expanding', 'collapsing'].includes(shieldState)}
+          />
           <Lensflare />
         </ShieldContainer>
         <Wordmark />
