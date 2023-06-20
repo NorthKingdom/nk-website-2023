@@ -18,7 +18,7 @@ export interface CursorChild {
   el: HTMLElement
   bounds: DOMRect
   renderedStyles: RenderedStyles
-  limit: { x?: number; y?: number }
+  limit: { x?: (pointerX: number) => number; y?: (pointerY: number) => number }
 }
 
 class Cursor {
@@ -64,8 +64,10 @@ class Cursor {
     for (let i = 0; i < this.children.length; i++) {
       const child = this.children[i]
 
-      child.renderedStyles['tx'].current = (child.limit.x ?? this.pointer.x) - child.bounds.width / 2
-      child.renderedStyles['ty'].current = (child.limit.y ?? this.pointer.y) - child.bounds.height / 2
+      child.renderedStyles['tx'].current =
+        (child.limit.x ? child.limit.x(this.pointer.x) : this.pointer.x) - child.bounds.width / 2
+      child.renderedStyles['ty'].current =
+        (child.limit.y ? child.limit.y(this.pointer.y) : this.pointer.y) - child.bounds.height / 2
       let key: keyof typeof child.renderedStyles
       for (key in child.renderedStyles) {
         child.renderedStyles[key].previous = lerp(
@@ -113,7 +115,7 @@ class Cursor {
     }
   }
 
-  setLimit(id: string | undefined, { x, y }: { x?: number; y?: number }) {
+  setLimit(id: string | undefined, { x, y }: { x?: (pointerX: number) => number; y?: (pointerY: number) => number }) {
     const child = this.children.find((child) => child.id === id)
     if (!child) return
     child.limit.x = x

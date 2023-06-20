@@ -21,6 +21,7 @@ import { motion } from 'framer-motion'
 import { useGlobalStateStore } from '@store'
 import { LoadMore } from '@components/load-more'
 import { useCaseArchiveListAnimation } from './CaseArchive.hooks'
+import { clamp, rubberbandIfOutOfBounds } from '@utils/math'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -150,7 +151,13 @@ export const CaseArchive = () => {
     enabled: !isTouchDevice,
   })
 
-  useResize(() => cursor.setLimit(cursorEffect?.id, { x: window.innerWidth * 0.5 }), { wait: 100 })
+  useResize(
+    () =>
+      cursor.setLimit(cursorEffect?.id, {
+        x: (x) => rubberbandIfOutOfBounds(x, window.innerWidth * 0.4, window.innerWidth * 0.55, 0.3),
+      }),
+    { wait: 100 }
+  )
 
   const caseArchiveHeaderRef = useRef<HTMLDivElement>(null)
   const filtersContainerRef = useRef<HTMLDivElement>(null)
