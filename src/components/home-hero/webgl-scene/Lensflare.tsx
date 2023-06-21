@@ -110,7 +110,7 @@ export const Lensflare: React.FC = ({ debug = false, ...props }: LensflareProps)
     <group ref={ref} {...props} scale={scale}>
       <mesh ref={blockoutOverlayRef} position-z={0.01} scale={viewport.height}>
         <planeGeometry attach="geometry" args={[10, 10, 1]} />
-        <meshBasicMaterial attach="material" color="black" transparent={true} />
+        <meshBasicMaterial attach="material" color="black" transparent={true} depthWrite={false} />
       </mesh>
       <mesh ref={meshRef}>
         <planeGeometry attach="geometry" args={[...DIMENSIONS, 1, 1]} />

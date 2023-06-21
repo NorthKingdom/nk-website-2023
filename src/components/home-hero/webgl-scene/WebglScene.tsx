@@ -89,7 +89,6 @@ export const WebglScene = ({
       gl={{
         powerPreference: 'high-performance',
         antialias: false,
-        stencil: false,
       }}
       {...props}
     >
@@ -104,7 +103,7 @@ export const WebglScene = ({
             onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })}
             shieldLightLeakColorVtt={shieldLightLeakColorVtt}
           />
-          {/* <ShieldBackgroundLight scale={2.2} position-z={-0.1} visible={true} debug={false} /> */}
+          <ShieldBackgroundLight scale={2.2} position-z={-0.1} visible={true} debug={false} />
           <PlayButton
             onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })}
             data-visible={['idle', 'hovered'].includes(shieldState)}
