@@ -205,13 +205,18 @@ export const Word = ({ children, loaded = false, ...props }: WordProps) => {
 
   useEffect(() => {
     if (!ref.current) return
+    let ctrls: any
     if (loaded) {
-      animate((ref.current.material as any).opacity, 1, {
+      ctrls = animate((ref.current.material as any).opacity, 1, {
         ...(MOTION_CONFIG.TRANSITION_IN as Partial<AnimationPlaybackControls>),
         ease: 'linear',
         delay: MOTION_CONFIG.TRANSITION_IN.delay ?? 0 + 0.1,
         onUpdate: (v) => ((ref.current.material as any).opacity = v),
       })
+    }
+
+    return () => {
+      ctrls?.stop()
     }
   }, [loaded])
 
