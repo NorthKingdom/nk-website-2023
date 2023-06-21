@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
+import { useDebouncedCallback } from './use-debounced-callback'
 
 export const useNextCssRemovalPrevention = () => {
   const { events } = useRouter()
@@ -39,14 +40,18 @@ export const useNextCssRemovalPrevention = () => {
     return [...currentHashes, ...previousHashes]
   }, [])
 
-  const removeExpiredStyles = React.useCallback(() => {
-    const activeCssHashes = getActiveCssHashes()
-    getActiveStyleNodes().forEach(({ node, hash }) => {
-      if (!activeCssHashes.includes(hash)) {
-        node.parentNode?.removeChild(node)
-      }
-    })
-  }, [getActiveStyleNodes, getActiveCssHashes])
+  const removeExpiredStyles = useDebouncedCallback(
+    () => {
+      const activeCssHashes = getActiveCssHashes()
+      getActiveStyleNodes().forEach(({ node, hash }) => {
+        if (!activeCssHashes.includes(hash)) {
+          node.parentNode?.removeChild(node)
+        }
+      })
+    },
+    [getActiveStyleNodes, getActiveCssHashes],
+    1000
+  )
 
   React.useEffect(() => {
     if (fullAsPath && !currentUrl.current) {
