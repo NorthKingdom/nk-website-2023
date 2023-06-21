@@ -1,6 +1,6 @@
-import type { HomeHero as HomeHeroPayload, Video } from '@customTypes/cms'
+import type { HomeHero as HomeHeroPayload } from '@customTypes/cms'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
-import { Preload, Html } from '@react-three/drei'
+import { Preload } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { useGlobalStateStore } from '@store'
 import { noop } from '@utils/noop'
@@ -38,6 +38,7 @@ export const WebglScene = ({
   ...props
 }: WebglSceneProps) => {
   const debug = useGlobalStateStore((state) => state.debug)
+  const set = useWebglSceneStore((state) => state.set)
   const getWebglSceneState = useWebglSceneStore((state) => state.get)
   const setWebglSceneState = useWebglSceneStore((state) => state.set)
   const shieldState = useWebglSceneStore((state) => state.shieldState)
@@ -49,17 +50,9 @@ export const WebglScene = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(onLoaded, [])
 
-  useEffect(() => {
-    setFrameloop(isMenuOpen ? 'never' : 'always')
-  }, [isMenuOpen])
-
-  useEffect(() => {
-    setFrameloop(visible ? 'always' : 'never')
-  }, [visible])
-
-  useEffect(() => {
-    setFrameloop(shieldState === 'expanded' ? 'never' : 'always')
-  }, [shieldState])
+  useEffect(() => setFrameloop(isMenuOpen ? 'never' : 'always'), [isMenuOpen])
+  useEffect(() => setFrameloop(visible ? 'always' : 'never'), [visible])
+  useEffect(() => setFrameloop(shieldState === 'expanded' ? 'never' : 'always'), [shieldState])
 
   const [_, setControls] = useControls('WebglScene', () => ({
     lightColor: {
@@ -77,9 +70,11 @@ export const WebglScene = ({
     },
   }))
 
-  useOnSceneLightColorChange((color) => {
-    setControls({ lightColor: `#${color.getHexString()}` })
-  })
+  useOnSceneLightColorChange((color) => setControls({ lightColor: `#${color.getHexString()}` }))
+
+  // cleanup
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => () => set({ isSceneLoaded: false, shieldState: 'loading' }), [])
 
   return (
     <Canvas

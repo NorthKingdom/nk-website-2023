@@ -248,12 +248,6 @@ export const ShieldVideo = forwardRef(
       }
     }, [shieldState])
 
-    useEffect(() => {
-      return () => {
-        set({ shieldState: 'idle' })
-      }
-    }, [])
-
     return (
       <group ref={$rotationContainer}>
         <mesh ref={mergeRefs([ref, $mesh])} position-z={z} {...props}>
