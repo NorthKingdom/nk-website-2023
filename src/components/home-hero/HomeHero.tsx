@@ -1,71 +1,63 @@
 import { CloseButton } from '@components/close-button'
-import { Loader } from '@components/loader'
+import { Loader as LoaderSVG } from '@components/loader'
 import { Modal } from '@components/modal'
 import { TextBlock } from '@components/text-block'
 import type { HomeHero as HomeHeroProps } from '@customTypes/cms'
 import { useGlobalStateStore } from '@store'
 import { bemify } from '@utils/bemify'
-import { useInView } from 'framer-motion'
+import { AnimatePresence, motion, useInView } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { use100vh } from 'react-div-100vh'
 import styles from './HomeHero.module.scss'
+import includes from 'ramda/es/includes'
 import { useWebglSceneStore } from './webgl-scene/WebglScene.store'
+import { EASINGS } from '@utils/motion-guidelines'
+
 const bem = bemify(styles, 'homeHero')
 const videoModalBem = bemify(styles, 'videoPlayerModal')
 
-const WebglScene = dynamic(() => import('./webgl-scene/WebglScene').then((Mod) => Mod.WebglScene), {
-  ssr: false,
-})
+const WebglScene = dynamic(() => import('./webgl-scene/WebglScene').then((Mod) => Mod.WebglScene), { ssr: false })
+const VideoPlayer = dynamic(() => import('@components/video-player').then((Mod) => Mod.VideoPlayer), { ssr: false })
 
-const VideoPlayer = dynamic(() => import('@components/video-player').then((Mod) => Mod.VideoPlayer), {
-  ssr: false,
-})
+const MOTION_CONFIG = {
+  LOADER_EXIT: {
+    scale: 0.05,
+    transition: {
+      delay: 0.2,
+      duration: 0.7,
+      ease: EASINGS.EASE_IN_CIRC,
+    },
+  },
+  MODAL_SHOW: {
+    opacity: 1,
+    transition: { delay: 0.5, duration: 0.4 },
+  },
+}
 
 export const HomeHero = ({ statement, showreelVideo, shieldVideo, shieldLightLeakColorVtt }: HomeHeroProps) => {
-  const [loaded, setLoaded] = useState(false)
   const $container = useRef<HTMLDivElement>(null)
   const height100vh = use100vh() as number
+  const set = useWebglSceneStore((state) => state.set)
+  const isSceneLoaded = useWebglSceneStore((state) => state.isSceneLoaded)
   const shieldState = useWebglSceneStore((state) => state.shieldState)
   const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
   const lenis = useGlobalStateStore((state) => state.lenis)
   const isInView = useInView($container)
 
-  useEffect(() => {
-    if (!lenis) return
-    if (['expanding', 'expanded', 'collapsing'].includes(shieldState)) {
-      lenis.stop()
-    } else {
-      lenis.start()
-    }
-  }, [shieldState, lenis])
+  const showVideoPlayer = includes(shieldState, ['expanding', 'expanded'])
+  const preventScroll = includes(shieldState, ['expanding', 'expanded', 'collapsing'])
 
-  const showVideoPlayer = shieldState === 'expanding' || shieldState === 'expanded'
+  // prevent scroll when shield is expanded
+  useEffect(() => (preventScroll ? lenis?.stop() : lenis?.start()), [preventScroll, lenis])
 
   return (
     <>
-      <div
-        className={bem()}
-        ref={$container}
-        style={{
-          position: 'relative',
-          height: height100vh,
-          width: ' 100%',
-          backgroundColor: 'var(--color-black)',
-          touchAction: 'auto',
-        }}
-      >
+      <div ref={$container} className={bem()} style={{ height: height100vh }}>
         <WebglScene
-          onLoaded={() => setLoaded(true)}
+          className={bem('webglScene')}
+          onLoaded={() => set({ isSceneLoaded: true })}
           visible={isInView}
-          style={{
-            position: 'relative',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            pointerEvents: 'none',
-          }}
           shieldVideo={shieldVideo}
           shieldLightLeakColorVtt={shieldLightLeakColorVtt}
           eventSource={$container}
@@ -73,30 +65,25 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo, shieldLightLea
         />
 
         {/* image to improve LCP */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          aria-hidden={true}
-          alt=""
-          className={bem('lcp')}
-          width={99999}
-          height={99999}
-          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTk5OTlweCIgaGVpZ2h0PSI5OTk5OXB4IiB2aWV3Qm94PSIwIDAgOTk5OTkgOTk5OTkiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIGZpbGwtb3BhY2l0eT0iMCI+CiAgICAgICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9Ijk5OTk5IiBoZWlnaHQ9Ijk5OTk5Ij48L3JlY3Q+CiAgICA8L2c+Cjwvc3ZnPg=="
+        <LCPimage />
+
+        <Loader
+          show={!isSceneLoaded}
+          onAnimateOut={() => dispatchShieldStateEvent({ type: 'LOADER_TRANSITION_OUT_END' })}
         />
 
-        <div aria-hidden="true" className={bem('overlay')} data-visible={!loaded}>
-          <Loader className={bem('loader')} />
-        </div>
+        <div aria-hidden="true" className={bem('overlay')} data-visible={!isSceneLoaded} />
 
         <h1 className={bem('title')} aria-label="North Kingdom">
           North Kingdom
         </h1>
 
-        <Modal visible={showVideoPlayer} animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.4 } }}>
+        <Modal visible={showVideoPlayer} animate={MOTION_CONFIG.MODAL_SHOW}>
           <CloseButton
             className={videoModalBem('closeButton')}
             onClick={() => dispatchShieldStateEvent({ type: 'COLLAPSE' })}
           />
-          {loaded && (
+          {isSceneLoaded && (
             <VideoPlayer
               className={videoModalBem('videoPlayer')}
               autoPlay={true}
@@ -108,7 +95,35 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo, shieldLightLea
           )}
         </Modal>
       </div>
+
       <TextBlock copyLeft={statement} theme="dark" notch={false} />
     </>
   )
 }
+
+const Loader = ({ show, onAnimateOut }: { show: boolean; onAnimateOut: () => void }) => (
+  <AnimatePresence initial={false}>
+    {show && (
+      <motion.div
+        className={bem('loader')}
+        style={{ x: '-50%', y: '-50%' }}
+        exit={MOTION_CONFIG.LOADER_EXIT}
+        onAnimationComplete={onAnimateOut}
+      >
+        <LoaderSVG />
+      </motion.div>
+    )}
+  </AnimatePresence>
+)
+
+const LCPimage = () => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img
+    aria-hidden={true}
+    alt=""
+    className={bem('lcp')}
+    width={99999}
+    height={99999}
+    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTk5OTlweCIgaGVpZ2h0PSI5OTk5OXB4IiB2aWV3Qm94PSIwIDAgOTk5OTkgOTk5OTkiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIGZpbGwtb3BhY2l0eT0iMCI+CiAgICAgICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9Ijk5OTk5IiBoZWlnaHQ9Ijk5OTk5Ij48L3JlY3Q+CiAgICA8L2c+Cjwvc3ZnPg=="
+  />
+)
