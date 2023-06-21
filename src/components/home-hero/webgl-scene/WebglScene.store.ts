@@ -3,12 +3,21 @@ import { create } from 'zustand'
 import { Color } from 'three'
 
 interface ShieldStateEvent {
-  type: 'POINTER_OVER' | 'POINTER_OUT' | 'EXPAND' | 'COLLAPSE' | 'TRANSITION_START' | 'TRANSITION_END'
+  type:
+    | 'LOADER_TRANSITION_OUT_END'
+    | 'POINTER_OVER'
+    | 'POINTER_OUT'
+    | 'EXPAND'
+    | 'COLLAPSE'
+    | 'TRANSITION_START'
+    | 'TRANSITION_END'
+    | 'RESET'
   payload?: any
 }
 
 interface WebglSceneStore {
-  shieldState: 'idle' | 'hovered' | 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
+  isSceneLoaded: boolean
+  shieldState: 'loading' | 'transition-in' | 'idle' | 'hovered' | 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
   dispatchShieldStateEvent: (event: ShieldStateEvent) => void
   config: {
     SHIELD_INNER_SIZE: [number, number]
@@ -23,7 +32,6 @@ interface WebglSceneStore {
   shieldScaleIdle: number
   shieldScaleFullscreen: number
   shieldScaleMotionValue: MotionValue | null
-  hovered: boolean
   stiffness: number
   damping: number
   lightColor: Color
@@ -32,31 +40,54 @@ interface WebglSceneStore {
 }
 
 export const useWebglSceneStore = create<WebglSceneStore>()((set, get) => ({
-  shieldState: 'idle',
+  isSceneLoaded: false,
+  shieldState: 'loading',
   dispatchShieldStateEvent: (event: ShieldStateEvent) => {
     // console.log('dispatchShieldStateEvent', event, 'current shield state', get().shieldState)
     const { shieldState: currentShieldState } = get()
-    switch (event.type) {
-      case 'POINTER_OVER':
-        set({ shieldState: 'hovered', hovered: true })
+
+    if (event.type === 'RESET') {
+      set({ shieldState: 'loading', isSceneLoaded: false })
+      return
+    }
+
+    switch (currentShieldState) {
+      case 'loading':
+        if (event.type === 'LOADER_TRANSITION_OUT_END') {
+          set({ shieldState: 'transition-in' })
+        }
         break
-      case 'POINTER_OUT':
-        if (currentShieldState === 'hovered') {
+      case 'transition-in':
+        if (event.type === 'TRANSITION_END') {
           set({ shieldState: 'idle' })
         }
-        set({ hovered: false })
         break
-      case 'EXPAND':
-        set({ shieldState: 'expanding' })
+      case 'idle':
+        if (event.type === 'POINTER_OVER') {
+          set({ shieldState: 'hovered' })
+        }
         break
-      case 'COLLAPSE':
-        set({ shieldState: 'collapsing' })
+      case 'hovered':
+        if (event.type === 'POINTER_OUT') {
+          set({ shieldState: 'idle' })
+        }
+        if (event.type === 'EXPAND') {
+          set({ shieldState: 'expanding' })
+        }
         break
-      case 'TRANSITION_END':
-        if (currentShieldState === 'expanding') {
+      case 'expanding':
+        if (event.type === 'TRANSITION_END') {
           set({ shieldState: 'expanded' })
-        } else if (currentShieldState === 'collapsing') {
-          set({ shieldState: 'collapsed' })
+        }
+        break
+      case 'expanded':
+        if (event.type === 'COLLAPSE') {
+          set({ shieldState: 'collapsing' })
+        }
+        break
+      case 'collapsing':
+        if (event.type === 'TRANSITION_END') {
+          set({ shieldState: 'idle' })
         }
         break
     }

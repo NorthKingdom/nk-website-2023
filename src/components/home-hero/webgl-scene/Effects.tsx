@@ -7,6 +7,7 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { distortionEffect } from './DistortionEffect'
 import { usePointer } from '@hooks/use-pointer'
 import { lerp } from '@utils/math'
+import { useFBO } from '@react-three/drei'
 
 extend({
   EffectComposer,
@@ -47,6 +48,7 @@ export const Effects = React.forwardRef<EffectComposer>((props, ref) => {
   }, [width, height])
 
   const intensity = useRef(1)
+  const target = useFBO({ stencilBuffer: true })
 
   useFrame(() => {
     velocity.current *= CONFIG.VELOCITY_RESTITUTION
@@ -75,7 +77,7 @@ export const Effects = React.forwardRef<EffectComposer>((props, ref) => {
   })
 
   return (
-    <effectComposer ref={mergeRefs([ref, composer])} args={[gl]}>
+    <effectComposer ref={mergeRefs([ref, composer])} args={[gl, target]}>
       <renderPass attach="passes-0" scene={scene} camera={camera} />
       <shaderPass ref={distortionPass} attach="passes-1" args={[distortionEffect]} />
       {/* <unrealBloomPass attach="passes-2" args={[aspect, 0.8, 0.2, 0.11]} /> */}

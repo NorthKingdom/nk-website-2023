@@ -70,7 +70,7 @@ export const ShieldBackgroundLight = forwardRef((props: any, ref: React.Ref<THRE
   })
 
   return (
-    <group>
+    <>
       <mesh ref={mergeRefs([ref, $mesh])} {...props}>
         <planeGeometry attach="geometry" args={[3, 4, 32, 32]} />
         <shieldBackgroundLightMaterial
@@ -79,13 +79,6 @@ export const ShieldBackgroundLight = forwardRef((props: any, ref: React.Ref<THRE
           transparent={true}
           key={ShieldBackgroundLightMaterial.key}
         />
-        {/* <shaderMaterial
-          vertexShader={shieldBlurVS}
-          fragmentShader={shieldBlurFS}
-          uniforms={uniforms}
-          toneMapped={false}
-          transparent={true}
-        /> */}
       </mesh>
       {props.debug && (
         <mesh {...props}>
@@ -93,7 +86,7 @@ export const ShieldBackgroundLight = forwardRef((props: any, ref: React.Ref<THRE
           <meshBasicMaterial color="red" wireframe />
         </mesh>
       )}
-    </group>
+    </>
   )
 })
 ShieldBackgroundLight.displayName = 'ShieldBackgroundLight'

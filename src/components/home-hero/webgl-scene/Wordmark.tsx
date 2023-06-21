@@ -1,7 +1,7 @@
 /* eslint-disable react/no-children-prop */
-import { useEffect, useRef } from 'react'
+import { use, useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import { Text } from '@react-three/drei'
+import { Mask, Text, useMask } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
 import { useWebglSceneStore } from './WebglScene.store'
@@ -17,6 +17,11 @@ const MOTION_CONFIG = {
     stiffness: 1500,
     damping: 100,
   },
+  TRANSITION_IN: {
+    duration: 0.6,
+    delay: 0.22,
+    ease: [0, 0.55, 0.45, 1], // ease out circ
+  },
   COLLAPSE: {
     duration: 0.9,
     ease: [0.87, 0, 0.13, 1],
@@ -25,6 +30,11 @@ const MOTION_CONFIG = {
     duration: 1.2,
     ease: [1, 0, 0.1, 1],
   },
+}
+
+const WORD_MASK_ID = {
+  LEFT: 1,
+  RIGHT: 2,
 }
 
 export const Wordmark = () => {
@@ -43,7 +53,13 @@ export const Wordmark = () => {
   //   fontSize: { value: 0.125, min: 0.01, max: 3, step: 0.01 },
   // })
 
-  const offsetAbsMotionValue = useMotionValue(0)
+  const offsetAbsMotionValue = useMotionValue(-width * 0.25)
+
+  useEffect(() => {
+    if (!leftWordRef.current || !rightWordRef.current) return
+    leftWordRef.current.position.x = -offsetAbsMotionValue.get()
+    rightWordRef.current.position.x = offsetAbsMotionValue.get()
+  }, [])
 
   useEffect(() => {
     /*
@@ -52,7 +68,18 @@ export const Wordmark = () => {
     let offsetAbs = 0
     let motionData = {}
 
+    if (!leftWordRef.current || !rightWordRef.current) return
+
     switch (shieldState) {
+      case 'loading':
+        offsetAbs = -width * 0.5
+      case 'idle':
+        offsetAbs = 0
+        break
+      case 'transition-in':
+        offsetAbs = 0
+        motionData = MOTION_CONFIG.TRANSITION_IN
+        break
       case 'expanding':
       case 'expanded':
         offsetAbs = width * 0.5
@@ -74,8 +101,8 @@ export const Wordmark = () => {
      * If the video is already at the desired scale
      * No mesh is available
      */
-    if (offsetAbsMotionValue.get() === offsetAbs) return
     if (!leftWordRef.current || !rightWordRef.current) return
+    if (offsetAbsMotionValue.get() === offsetAbs) return
 
     let animationControls: AnimationPlaybackControls
 
@@ -94,23 +121,47 @@ export const Wordmark = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shieldState])
 
+  const stencilPropsWordLeft = useMask(WORD_MASK_ID.LEFT, true)
+  const stencilPropsWordRight = useMask(WORD_MASK_ID.RIGHT, true)
+
+  const transformMaterialStencilProps = (props: { [key: string]: any }) => {
+    return Object.entries(props).reduce((acc, [key, value]) => {
+      const newKey = `material-${key}`
+      return { ...acc, [newKey]: value }
+    }, {} as any)
+  }
+
   return (
     <>
       {isDesktopBp ? (
         <>
+          <Mask id={WORD_MASK_ID.LEFT} colorWrite={false} position-x={width * 0.5}>
+            <planeBufferGeometry args={[width, height]} />
+          </Mask>
           <group ref={leftWordRef}>
             <Word
               position-z={0.01}
               position-x={-(SHIELD_INNER_SIZE[0] * 0.5 * shieldScaleIdle) + shieldAnchor[0]}
               anchorX="right"
               fontSize={fontSize * width}
+              loaded={shieldState !== 'loading'}
+              {...transformMaterialStencilProps(stencilPropsWordLeft)}
             >
               North
             </Word>
           </group>
 
+          <Mask id={WORD_MASK_ID.RIGHT} colorWrite={false} position-x={-width * 0.5 + SHIELD_INNER_SIZE[0]}>
+            <planeBufferGeometry args={[width, height]} />
+          </Mask>
           <group ref={rightWordRef}>
-            <Word position-z={0.01} anchorX="left" fontSize={fontSize * width}>
+            <Word
+              position-z={0.01}
+              anchorX="left"
+              fontSize={fontSize * width}
+              loaded={shieldState !== 'loading'}
+              {...transformMaterialStencilProps(stencilPropsWordRight)}
+            >
               Kingdom
             </Word>
           </group>
@@ -138,7 +189,7 @@ interface WordProps {
   [key: string]: any
 }
 
-export const Word = ({ children, ...props }: WordProps) => {
+export const Word = ({ children, loaded = false, ...props }: WordProps) => {
   const color = new THREE.Color(0xffffff)
   const fontProps = {
     font: '/fonts/FKGroteskNeue/woff/FKGroteskNeue-Regular.woff',
@@ -146,6 +197,23 @@ export const Word = ({ children, ...props }: WordProps) => {
     letterSpacing: -0.05,
     lineHeight: 1,
     'material-toneMapped': false,
+    'material-transparent': true,
+    'material-opacity': 0,
   }
-  return <Text {...fontProps} {...props} material-color={color} children={children} />
+
+  const ref = useRef<THREE.Mesh>(null!)
+
+  useEffect(() => {
+    if (!ref.current) return
+    if (loaded) {
+      animate((ref.current.material as any).opacity, 1, {
+        ...(MOTION_CONFIG.TRANSITION_IN as Partial<AnimationPlaybackControls>),
+        ease: 'linear',
+        delay: MOTION_CONFIG.TRANSITION_IN.delay ?? 0 + 0.1,
+        onUpdate: (v) => ((ref.current.material as any).opacity = v),
+      })
+    }
+  }, [loaded])
+
+  return <Text ref={ref} {...fontProps} {...props} material-color={color} children={children} />
 }
