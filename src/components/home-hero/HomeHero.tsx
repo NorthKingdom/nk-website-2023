@@ -69,7 +69,7 @@ export const HomeHero = ({ statement, showreelVideo, shieldVideo, shieldLightLea
 
         <Loader
           show={!isSceneLoaded}
-          onAnimateOut={() => dispatchShieldStateEvent({ type: 'LOADER_TRANSITION_OUT_END' })}
+          onAnimateOut={() => dispatchShieldStateEvent({ type: 'LOADER_OUT_TRANSITION_END' })}
         />
 
         <div aria-hidden="true" className={bem('overlay')} data-visible={!isSceneLoaded} />

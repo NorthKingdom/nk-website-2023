@@ -135,15 +135,18 @@ export const ShieldVideo = forwardRef(
     /*
      * Set/animate video scale based on shield state
      */
-    const scaleMotionValue = useMotionValue(scale)
+    const scaleMotionValue = useMotionValue(scale * 0.1)
     useEffect(() => set({ shieldScaleMotionValue: scaleMotionValue }), [scaleMotionValue])
+    useEffect(() => {
+      $mesh.current.scale.setScalar(scaleMotionValue.get())
+    }, [])
 
     useEffect(() => {
       let videoScale = scale
       let motionData = {}
 
       switch (shieldState) {
-        case 'loading':
+        case 'initial':
           videoScale = scale * 0.1
           break
         case 'transition-in':

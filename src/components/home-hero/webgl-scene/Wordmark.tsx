@@ -71,7 +71,7 @@ export const Wordmark = () => {
     if (!leftWordRef.current || !rightWordRef.current) return
 
     switch (shieldState) {
-      case 'loading':
+      case 'initial':
         offsetAbs = -width * 0.5
       case 'idle':
         offsetAbs = 0
@@ -98,7 +98,7 @@ export const Wordmark = () => {
 
     /*
      * Short circuit if:
-     * If the video is already at the desired scale
+     * If the video already at the desired scale
      * No mesh is available
      */
     if (!leftWordRef.current || !rightWordRef.current) return
@@ -136,7 +136,7 @@ export const Wordmark = () => {
       {isDesktopBp ? (
         <>
           <Mask id={WORD_MASK_ID.LEFT} colorWrite={false} position-x={width * 0.5}>
-            <planeBufferGeometry args={[width, height]} />
+            <planeGeometry args={[width, height]} />
           </Mask>
           <group ref={leftWordRef}>
             <Word
@@ -144,7 +144,7 @@ export const Wordmark = () => {
               position-x={-(SHIELD_INNER_SIZE[0] * 0.5 * shieldScaleIdle) + shieldAnchor[0]}
               anchorX="right"
               fontSize={fontSize * width}
-              loaded={shieldState !== 'loading'}
+              show={shieldState !== 'initial'}
               {...transformMaterialStencilProps(stencilPropsWordLeft)}
             >
               North
@@ -152,14 +152,14 @@ export const Wordmark = () => {
           </group>
 
           <Mask id={WORD_MASK_ID.RIGHT} colorWrite={false} position-x={-width * 0.5 + SHIELD_INNER_SIZE[0]}>
-            <planeBufferGeometry args={[width, height]} />
+            <planeGeometry args={[width, height]} />
           </Mask>
           <group ref={rightWordRef}>
             <Word
               position-z={0.01}
               anchorX="left"
               fontSize={fontSize * width}
-              loaded={shieldState !== 'loading'}
+              show={shieldState !== 'initial'}
               {...transformMaterialStencilProps(stencilPropsWordRight)}
             >
               Kingdom
@@ -189,7 +189,7 @@ interface WordProps {
   [key: string]: any
 }
 
-export const Word = ({ children, loaded = false, ...props }: WordProps) => {
+export const Word = ({ children, show = false, ...props }: WordProps) => {
   const color = new THREE.Color(0xffffff)
   const fontProps = {
     font: '/fonts/FKGroteskNeue/woff/FKGroteskNeue-Regular.woff',
@@ -205,7 +205,7 @@ export const Word = ({ children, loaded = false, ...props }: WordProps) => {
 
   useEffect(() => {
     if (!ref.current) return
-    if (loaded) {
+    if (show) {
       animate((ref.current.material as any).opacity, 1, {
         ...(MOTION_CONFIG.TRANSITION_IN as Partial<AnimationPlaybackControls>),
         ease: 'linear',
@@ -213,7 +213,7 @@ export const Word = ({ children, loaded = false, ...props }: WordProps) => {
         onUpdate: (v) => ((ref.current.material as any).opacity = v),
       })
     }
-  }, [loaded])
+  }, [show])
 
   return <Text ref={ref} {...fontProps} {...props} material-color={color} children={children} />
 }

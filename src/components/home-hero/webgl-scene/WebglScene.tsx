@@ -95,21 +95,21 @@ export const WebglScene = ({
       <Suspense fallback={null}>
         <Effects />
 
-        <BlackOverlay show={shieldState === 'loading'} />
+        <BlackOverlay show={shieldState === 'initial'} />
 
         <ShieldContainer>
           <ShieldVideo
             position-z={0.02}
             src={videoSrc}
-            visible={shieldState !== 'loading'}
-            onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })}
+            visible={shieldState !== 'initial'}
+            onClick={() => dispatchShieldStateEvent({ type: 'CLICKED_SHIELD_VIDEO' })}
             shieldLightLeakColorVtt={shieldLightLeakColorVtt}
           />
 
           <ShieldBackgroundLight scale={2.2} position-z={-0.1} />
 
           <PlayButton
-            onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })}
+            onClick={() => dispatchShieldStateEvent({ type: 'CLICKED_SHIELD_VIDEO' })}
             data-visible={includes(shieldState, ['idle', 'hovered'])}
           />
 

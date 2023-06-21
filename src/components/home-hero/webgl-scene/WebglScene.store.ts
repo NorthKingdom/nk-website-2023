@@ -4,10 +4,10 @@ import { Color } from 'three'
 
 interface ShieldStateEvent {
   type:
-    | 'LOADER_TRANSITION_OUT_END'
+    | 'LOADER_OUT_TRANSITION_END'
     | 'POINTER_OVER'
     | 'POINTER_OUT'
-    | 'EXPAND'
+    | 'CLICKED_SHIELD_VIDEO'
     | 'COLLAPSE'
     | 'TRANSITION_START'
     | 'TRANSITION_END'
@@ -17,7 +17,7 @@ interface ShieldStateEvent {
 
 interface WebglSceneStore {
   isSceneLoaded: boolean
-  shieldState: 'loading' | 'transition-in' | 'idle' | 'hovered' | 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
+  shieldState: 'initial' | 'transition-in' | 'idle' | 'hovered' | 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
   dispatchShieldStateEvent: (event: ShieldStateEvent) => void
   config: {
     SHIELD_INNER_SIZE: [number, number]
@@ -41,19 +41,19 @@ interface WebglSceneStore {
 
 export const useWebglSceneStore = create<WebglSceneStore>()((set, get) => ({
   isSceneLoaded: false,
-  shieldState: 'loading',
+  shieldState: 'initial',
   dispatchShieldStateEvent: (event: ShieldStateEvent) => {
     // console.log('dispatchShieldStateEvent', event, 'current shield state', get().shieldState)
     const { shieldState: currentShieldState } = get()
 
     if (event.type === 'RESET') {
-      set({ shieldState: 'loading', isSceneLoaded: false })
+      set({ shieldState: 'initial', isSceneLoaded: false })
       return
     }
 
     switch (currentShieldState) {
-      case 'loading':
-        if (event.type === 'LOADER_TRANSITION_OUT_END') {
+      case 'initial':
+        if (event.type === 'LOADER_OUT_TRANSITION_END') {
           set({ shieldState: 'transition-in' })
         }
         break
@@ -66,12 +66,15 @@ export const useWebglSceneStore = create<WebglSceneStore>()((set, get) => ({
         if (event.type === 'POINTER_OVER') {
           set({ shieldState: 'hovered' })
         }
+        if (event.type === 'CLICKED_SHIELD_VIDEO') {
+          set({ shieldState: 'expanding' })
+        }
         break
       case 'hovered':
         if (event.type === 'POINTER_OUT') {
           set({ shieldState: 'idle' })
         }
-        if (event.type === 'EXPAND') {
+        if (event.type === 'CLICKED_SHIELD_VIDEO') {
           set({ shieldState: 'expanding' })
         }
         break
