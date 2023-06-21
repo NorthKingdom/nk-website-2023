@@ -11,6 +11,7 @@ interface ShieldStateEvent {
     | 'COLLAPSE'
     | 'TRANSITION_START'
     | 'TRANSITION_END'
+    | 'RESET'
   payload?: any
 }
 
@@ -44,6 +45,12 @@ export const useWebglSceneStore = create<WebglSceneStore>()((set, get) => ({
   dispatchShieldStateEvent: (event: ShieldStateEvent) => {
     // console.log('dispatchShieldStateEvent', event, 'current shield state', get().shieldState)
     const { shieldState: currentShieldState } = get()
+
+    if (event.type === 'RESET') {
+      set({ shieldState: 'loading', isSceneLoaded: false })
+      return
+    }
+
     switch (currentShieldState) {
       case 'loading':
         if (event.type === 'LOADER_TRANSITION_OUT_END') {
@@ -83,28 +90,6 @@ export const useWebglSceneStore = create<WebglSceneStore>()((set, get) => ({
           set({ shieldState: 'idle' })
         }
         break
-      // case 'POINTER_OVER':
-      //   set({ shieldState: 'hovered', hovered: true })
-      //   break
-      // case 'POINTER_OUT':
-      //   if (currentShieldState === 'hovered') {
-      //     set({ shieldState: 'idle' })
-      //   }
-      //   set({ hovered: false })
-      //   break
-      // case 'EXPAND':
-      //   set({ shieldState: 'expanding' })
-      //   break
-      // case 'COLLAPSE':
-      //   set({ shieldState: 'collapsing' })
-      //   break
-      // case 'TRANSITION_END':
-      //   if (currentShieldState === 'expanding') {
-      //     set({ shieldState: 'expanded' })
-      //   } else if (currentShieldState === 'collapsing') {
-      //     set({ shieldState: 'collapsed' })
-      //   }
-      //   break
     }
   },
   config: {

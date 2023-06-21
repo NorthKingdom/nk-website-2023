@@ -4,17 +4,20 @@ import { Preload } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { useGlobalStateStore } from '@store'
 import { noop } from '@utils/noop'
+import cx from 'clsx'
+import { useControls } from 'leva'
 import dynamic from 'next/dynamic'
 import { Suspense, useEffect, useState } from 'react'
 import { Color } from 'three'
 import { Lensflare } from './Lensflare'
 import { PlayButton } from './PlayButton'
 import { ShieldContainer } from './ShieldContainer'
+import { useOnSceneLightColorChange } from './WebglScene.hooks'
 import styles from './WebglScene.module.scss'
 import { useWebglSceneStore } from './WebglScene.store'
 import { Wordmark } from './Wordmark'
-import { useControls } from 'leva'
-import { useOnSceneLightColorChange } from './WebglScene.hooks'
+import includes from 'ramda/es/includes'
+import { BlackOverlay } from './BlackOverlay'
 
 const Perf = dynamic(() => import('r3f-perf').then((Mod) => Mod.Perf), { ssr: false })
 const Effects = dynamic(() => import('./Effects').then((Mod) => Mod.Effects), { ssr: false })
@@ -34,6 +37,7 @@ export const WebglScene = ({
   visible = true,
   shieldVideo,
   shieldLightLeakColorVtt,
+  className = '',
   onLoaded = noop,
   ...props
 }: WebglSceneProps) => {
@@ -54,6 +58,7 @@ export const WebglScene = ({
   useEffect(() => setFrameloop(visible ? 'always' : 'never'), [visible])
   useEffect(() => setFrameloop(shieldState === 'expanded' ? 'never' : 'always'), [shieldState])
 
+  // TODO: remove in production
   const [_, setControls] = useControls('WebglScene', () => ({
     lightColor: {
       name: 'Light Color',
@@ -73,24 +78,26 @@ export const WebglScene = ({
   useOnSceneLightColorChange((color) => setControls({ lightColor: `#${color.getHexString()}` }))
 
   // cleanup
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => set({ isSceneLoaded: false, shieldState: 'loading' }), [])
+  useEffect(() => {
+    return () => dispatchShieldStateEvent({ type: 'RESET' })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Canvas
-      className={styles['webglCanvas']}
+      className={cx(styles['webglCanvas'], className)}
       camera={{ position: [0, 0, 10] }}
       frameloop={frameloop}
-      gl={{
-        powerPreference: 'high-performance',
-        antialias: false,
-      }}
+      gl={{ powerPreference: 'high-performance', antialias: false }}
       {...props}
     >
       {debug && <Perf position="top-left" />}
       <Suspense fallback={null}>
         <Effects />
-        <ShieldContainer debug={false}>
+
+        <BlackOverlay show={shieldState === 'loading'} />
+
+        <ShieldContainer>
           <ShieldVideo
             position-z={0.02}
             src={videoSrc}
@@ -98,11 +105,14 @@ export const WebglScene = ({
             onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })}
             shieldLightLeakColorVtt={shieldLightLeakColorVtt}
           />
-          <ShieldBackgroundLight scale={2.2} position-z={-0.1} visible={true} debug={false} />
+
+          <ShieldBackgroundLight scale={2.2} position-z={-0.1} />
+
           <PlayButton
             onClick={() => dispatchShieldStateEvent({ type: 'EXPAND' })}
-            data-visible={['idle', 'hovered'].includes(shieldState)}
+            data-visible={includes(shieldState, ['idle', 'hovered'])}
           />
+
           <Lensflare />
         </ShieldContainer>
 

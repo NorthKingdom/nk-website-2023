@@ -1,14 +1,13 @@
 import { extend, useFrame, useThree } from '@react-three/fiber'
 import { lerp, rubberbandIfOutOfBounds } from '@utils/math'
 import { useWebglSceneStore } from './WebglScene.store'
-import { useRef, useMemo, useEffect, use } from 'react'
-import { Vector3, Uniform, type Material } from 'three'
+import { useRef, useMemo } from 'react'
+import { Vector3, Uniform } from 'three'
 import { shaderMaterial, useTexture } from '@react-three/drei'
 import lensflareVS from './shaders/lensflare-vs.glsl'
 import lensflareFS from './shaders/lensflare-fs.glsl'
 import type { ReactThreeFiber } from '@react-three/fiber'
 import { closestAngle } from '@utils/math'
-import { animate, useMotionValue } from 'framer-motion'
 import { useOnSceneLightColorChange } from './WebglScene.hooks'
 
 const DIMENSIONS = [9, 12] as [number, number]
@@ -36,9 +35,7 @@ interface LensflareProps {
 
 export const Lensflare: React.FC = ({ debug = false, ...props }: LensflareProps) => {
   const ref = useRef<THREE.Group>(null!)
-  const blockoutOverlayRef = useRef<THREE.Mesh>(null!)
   const meshRef = useRef<THREE.Mesh>(null!)
-  const shieldState = useWebglSceneStore((state) => state.shieldState)
   const shieldAnchor = useWebglSceneStore((state) => state.shieldAnchor)
   const shieldScaleIdle = useWebglSceneStore((state) => state.shieldScaleIdle)
   const viewport = useThree((state) => state.viewport)
@@ -90,28 +87,8 @@ export const Lensflare: React.FC = ({ debug = false, ...props }: LensflareProps)
     ref.current.scale.y = dist.current * scale
   })
 
-  const blockoutOverlayOpacity = useMotionValue(1)
-  useEffect(() => {
-    let ctrls
-    if (shieldState === 'transition-in') {
-      animate(blockoutOverlayOpacity, 0, {
-        duration: 1,
-        onUpdate: (v) => {
-          if (blockoutOverlayRef.current) {
-            ;(blockoutOverlayRef.current.material as Material).opacity = v
-          }
-        },
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shieldState])
-
   return (
     <group ref={ref} {...props} scale={scale}>
-      <mesh ref={blockoutOverlayRef} position-z={0.01} scale={viewport.height}>
-        <planeGeometry attach="geometry" args={[10, 10, 1]} />
-        <meshBasicMaterial attach="material" color="black" transparent={true} depthWrite={false} />
-      </mesh>
       <mesh ref={meshRef}>
         <planeGeometry attach="geometry" args={[...DIMENSIONS, 1, 1]} />
         <lensflareMaterial

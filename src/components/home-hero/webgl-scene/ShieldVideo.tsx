@@ -7,27 +7,15 @@ import { animate, useMotionValue } from 'framer-motion'
 import { button, useControls } from 'leva'
 import { forwardRef, useEffect, useMemo, useRef } from 'react'
 import { mergeRefs } from 'react-merge-refs'
-import { Color, Vector3, Uniform, DoubleSide } from 'three'
+import { Uniform } from 'three'
 import { useWebglSceneStore } from './WebglScene.store'
 import shieldVideoFS from './shaders/shield-video-fs.glsl'
 import shieldVideoVS from './shaders/shield-video-vs.glsl'
 import type { HomeHero as HomeHeroPayload } from '@customTypes/cms'
-
-interface ShieldVideoProps {
-  src: string
-  debug?: boolean
-  scale?: number
-  z?: number
-  fullscreen?: boolean
-  onTransitionStart?: (shieldState: string) => void
-  onTransitionEnd?: (shieldState: string) => void
-  shieldLightLeakColorVtt: HomeHeroPayload['shieldLightLeakColorVtt']
-  [key: string]: any
-}
+import { useShieldLightLeakColorTextTrack } from './ShieldVideo.hooks'
+import isEmpty from 'ramda/es/isEmpty'
 
 const SHIELD_VIDEO_DIMENTIONS = [9, 5]
-
-const isValidHexColor = (color: string) => /^#([0-9A-F]{3}){1,2}$/i.test(color)
 
 export const MOTION_CONFIG = {
   HOVER: {
@@ -49,6 +37,21 @@ export const MOTION_CONFIG = {
   },
 }
 
+interface ShieldVideoProps {
+  src: string
+  debug?: boolean
+  scale?: number
+  z?: number
+  fullscreen?: boolean
+  onTransitionStart?: (shieldState: string) => void
+  onTransitionEnd?: (shieldState: string) => void
+  shieldLightLeakColorVtt: HomeHeroPayload['shieldLightLeakColorVtt']
+  [key: string]: any
+}
+
+/**
+ * Shield video texture
+ */
 export const ShieldVideo = forwardRef(
   (
     {
@@ -73,6 +76,9 @@ export const ShieldVideo = forwardRef(
     const shieldScaleFullscreen = useWebglSceneStore((state) => state.shieldScaleFullscreen)
     const isShieldVideoPlaying = useWebglSceneStore((state) => state.isShieldVideoPlaying)
 
+    /**
+     * TODO: remove in production ====================================================
+     */
     const [_, setControls] = useControls('Shield video', () => ({
       timestamp: {
         value: 0,
@@ -84,10 +90,6 @@ export const ShieldVideo = forwardRef(
       start: true,
       ontimeupdate: (e) => setControls({ timestamp: (e.target as HTMLVideoElement).currentTime }),
     })
-
-    useEffect(() => {
-      console.log($mesh.current)
-    }, [])
 
     useControls(
       'Shield video',
@@ -111,46 +113,14 @@ export const ShieldVideo = forwardRef(
     useEffect(() => {
       if (!videoTexture) return
       const video = videoTexture.image as HTMLVideoElement
-      if (isShieldVideoPlaying) {
-        video.play()
-      } else {
-        video.pause()
-      }
+      isShieldVideoPlaying ? video.play() : video.pause()
     }, [videoTexture, isShieldVideoPlaying])
 
-    useEffect(() => {
-      if (!videoTexture) return
-      const video = videoTexture.image as HTMLVideoElement
-
-      // Add color cue track
-      const track = document.createElement('track')
-
-      track.kind = 'subtitles'
-      track.srclang = 'en'
-      track.src = shieldLightLeakColorVtt?.url ?? ''
-      // track.src = '/dummy/test2.vtt'
-      track.default = true
-
-      video.appendChild(track)
-
-      const textTrack = video.textTracks[0]
-
-      textTrack.oncuechange = () => {
-        // @ts-ignore
-        const colorCue = textTrack.activeCues[0]?.text ?? ''
-
-        if (!colorCue) return
-
-        if (isValidHexColor(colorCue.trim())) {
-          set({ lightColor: new Color(colorCue) })
-        } else {
-          console.warn(`Color cue ${colorCue} is not in valid HEX format`)
-        }
-      }
-    }, [videoTexture])
+    /**
+     * =============================================================================
+     */
 
     const maskTexture = useTexture('/images/shield-mask-sharp.png')
-
     const uniforms = useMemo(
       () => ({
         uTime: new Uniform(0),
@@ -159,18 +129,16 @@ export const ShieldVideo = forwardRef(
       }),
       []
     )
-    const scaleMotionValue = useMotionValue(scale * 0.1)
-    useEffect(() => {
-      $mesh.current.scale.setScalar(scaleMotionValue.get())
-    }, [])
-    useEffect(() => {
-      set({ shieldScaleMotionValue: scaleMotionValue })
-    }, [scaleMotionValue])
+
+    useShieldLightLeakColorTextTrack(videoTexture?.image, shieldLightLeakColorVtt)
+
+    /*
+     * Set/animate video scale based on shield state
+     */
+    const scaleMotionValue = useMotionValue(scale)
+    useEffect(() => set({ shieldScaleMotionValue: scaleMotionValue }), [scaleMotionValue])
 
     useEffect(() => {
-      /*
-       * Set video scale based on shield state
-       */
       let videoScale = scale
       let motionData = {}
 
@@ -186,6 +154,10 @@ export const ShieldVideo = forwardRef(
         case 'expanded':
           videoScale = shieldScaleFullscreen
           motionData = MOTION_CONFIG.EXPAND
+          break
+        case 'idle':
+          videoScale = scale
+          motionData = MOTION_CONFIG.HOVER
           break
         case 'hovered':
           videoScale = scale * 1.3
@@ -205,6 +177,12 @@ export const ShieldVideo = forwardRef(
        */
       if (scaleMotionValue.get() === videoScale) return
       if (!$mesh.current) return
+
+      if (isEmpty(motionData)) {
+        scaleMotionValue.set(videoScale)
+        $mesh.current.scale.setScalar(videoScale)
+        return
+      }
 
       let animationControls: AnimationPlaybackControls
 
@@ -234,6 +212,7 @@ export const ShieldVideo = forwardRef(
       $mesh.current.material.uniforms.uTime.value = clock.getElapsedTime()
     })
 
+    // rotate shield video on transition in
     useEffect(() => {
       let ctrls
       if (shieldState === 'transition-in') {
@@ -254,7 +233,6 @@ export const ShieldVideo = forwardRef(
           <planeGeometry attach="geometry" args={[SHIELD_VIDEO_DIMENTIONS[0], SHIELD_VIDEO_DIMENTIONS[1], 32, 32]} />
           <shaderMaterial
             depthTest={false}
-            // side={DoubleSide}
             vertexShader={shieldVideoVS}
             fragmentShader={shieldVideoFS}
             uniforms={uniforms}
@@ -262,7 +240,6 @@ export const ShieldVideo = forwardRef(
             transparent={true}
           />
         </mesh>
-        <mesh></mesh>
         {debug && (
           <mesh scale={scale} position-z={z + 0.1} {...props}>
             <planeGeometry attach="geometry" args={[SHIELD_VIDEO_DIMENTIONS[0], SHIELD_VIDEO_DIMENTIONS[1], 32, 32]} />
