@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { InfiniteGrid } from './InfiniteGrid'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof InfiniteGrid> = {
   title: 'UI/InfiniteGrid',

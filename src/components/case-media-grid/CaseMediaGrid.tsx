@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import styles from './CaseMediaGrid.module.scss'
-import { MediaGridItemPayload } from '@customTypes/cms'
 import { MediaGridItem } from '@components/media-grid-item'
+import styles from './CaseMediaGrid.module.scss'
+import type { MediaGridItemPayload } from '@customTypes/cms'
 
 interface CaseMediaGridProps {
   slotOne?: MediaGridItemPayload

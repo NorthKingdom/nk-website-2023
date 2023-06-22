@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { NextCasePreview } from './NextCasePreview';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof NextCasePreview> = {
   title: 'UI/NextCasePreview',

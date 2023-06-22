@@ -1,9 +1,9 @@
 import React from 'react'
-import styles from './TwoImageLayout.module.scss'
 import { bemify } from '@utils/bemify'
-import type { ResponsiveImagePayload } from '@customTypes/cms'
 import { Media } from '@components/media'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
+import styles from './TwoImageLayout.module.scss'
+import type { ResponsiveImagePayload } from '@customTypes/cms'
 const bem = bemify(styles, 'twoImageLayout')
 
 interface TwoImageLayoutProps {

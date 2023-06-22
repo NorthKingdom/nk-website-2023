@@ -1,16 +1,16 @@
 import React, { useEffect, useRef } from 'react'
-import styles from './NextCasePreview.module.scss'
-import { bemify } from '@utils/bemify'
-import type { VideoPayload, ResponsiveImagePayload } from '@customTypes/cms'
-import { Media } from '@components/media'
 import { useRouter } from 'next/router'
-const bem = bemify(styles, 'nextCasePreview')
-import { useBreakpointUntil } from '@hooks/use-breakpoint'
-import { useOnScroll } from '@hooks/use-on-scroll'
-import { useGlobalStateStore } from '@store/global-state-store'
 import { motion, useInView, useMotionValue, useTransform } from 'framer-motion'
 import Lenis from '@studio-freight/lenis'
 import Head from 'next/head'
+import { useGlobalStateStore } from '@store/global-state-store'
+import { useOnScroll } from '@hooks/use-on-scroll'
+import { useBreakpointUntil } from '@hooks/use-breakpoint'
+import { Media } from '@components/media'
+import { bemify } from '@utils/bemify'
+import styles from './NextCasePreview.module.scss'
+import type { VideoPayload, ResponsiveImagePayload } from '@customTypes/cms'
+const bem = bemify(styles, 'nextCasePreview')
 
 interface CaseHeroProps {
   caseName: string

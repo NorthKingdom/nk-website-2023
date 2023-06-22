@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { PlayButton } from './PlayButton'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof PlayButton> = {
   title: 'UI/PlayButton',

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { OfficeListItem } from './OfficeListItem'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof OfficeListItem> = {
   title: 'UI/OfficeListItem',

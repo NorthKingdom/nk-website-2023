@@ -1,16 +1,16 @@
 import React from 'react'
-import styles from './CaseListItem.module.scss'
-import { bemify } from '@utils/bemify'
-import type { CasePayload } from '@customTypes/cms'
-import type { ContentfulMediaSrcImageOptions } from '@hooks/use-contentful-media-src'
-import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
-import { useInViewAnimation } from '@hooks/use-inview-animation'
-const bem = bemify(styles, 'caseListItem')
-import { Media } from '@components/media/Media'
-import cx from 'clsx'
 import Link from 'next/link'
-import { useIsTouchDevice } from '@hooks/use-is-touch-device'
+import cx from 'clsx'
 import Image from 'next/image'
+import { useInViewAnimation } from '@hooks/use-inview-animation'
+import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
+import { useIsTouchDevice } from '@hooks/use-is-touch-device'
+import { Media } from '@components/media/Media'
+import { bemify } from '@utils/bemify'
+import styles from './CaseListItem.module.scss'
+import type { ContentfulMediaSrcImageOptions } from '@hooks/use-contentful-media-src'
+import type { CasePayload } from '@customTypes/cms'
+const bem = bemify(styles, 'caseListItem')
 
 interface CaseListItemProps extends CasePayload {
   className?: string

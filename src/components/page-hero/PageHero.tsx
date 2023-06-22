@@ -1,10 +1,10 @@
 import React from 'react'
-import styles from './PageHero.module.scss'
+import Link from 'next/link'
 import { bemify } from '@utils/bemify'
-import type { PageHeroPayload } from '@customTypes/cms'
 import { Media } from '@components/media'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
-import Link from 'next/link'
+import styles from './PageHero.module.scss'
+import type { PageHeroPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'pageHero')
 
 interface PageHeroProps extends Omit<PageHeroPayload, '__typename'> {

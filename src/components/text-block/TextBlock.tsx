@@ -1,11 +1,11 @@
 import React from 'react'
-import styles from './TextBlock.module.scss'
-import { bemify } from '@utils/bemify'
-import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
-import type { TextBlockPayload } from '@customTypes/cms'
-import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import Link from 'next/link'
 import cx from 'clsx'
+import { bemify } from '@utils/bemify'
+import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
+import { ThemeChangeTrigger } from '@components/theme-change-trigger'
+import styles from './TextBlock.module.scss'
+import type { TextBlockPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'textBlock')
 
 interface TextBlockProps extends Omit<TextBlockPayload, '__typename' | 'sys'>, React.HTMLAttributes<HTMLDivElement> {

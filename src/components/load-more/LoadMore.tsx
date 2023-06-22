@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './LoadMore.module.scss'
-import { noop } from '@utils/noop'
 import cx from 'clsx'
+import { noop } from '@utils/noop'
+import styles from './LoadMore.module.scss'
 
 interface LoadMoreProps {
   onClick: () => void

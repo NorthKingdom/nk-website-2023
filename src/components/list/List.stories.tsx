@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { List } from './List'
 import { StickyListItem } from '@components/sticky-list-item'
 import { JobListItem } from '@components/job-list-item'
-import type { AwardListPayload, VideoPayload } from '@customTypes/cms'
 import { AwardItem } from '@components/award-item'
 import { DUMMY_IMAGE, DUMMY_VIDEO, DUMMY_LINK } from '@stories/dummy-data'
+import { List } from './List'
+import type { AwardListPayload, VideoPayload } from '@customTypes/cms'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof List> = {
   title: 'UI/List',

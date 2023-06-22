@@ -1,15 +1,15 @@
+import { useRouter } from 'next/router'
+import { use100vh } from 'react-div-100vh'
 import React from 'react'
-import styles from './Menu.module.scss'
 import { bemify } from '@utils/bemify'
 import { noop } from '@utils/noop'
-import { use100vh } from 'react-div-100vh'
 import { NavItemData } from '@components/nav/Nav.types'
-import type { MenuContactItem as MenuContactItemData } from './Menu.types'
 import { NAV_ITEMS, CONTACT_ITEMS, SOCIAL_LINK_ITEMS } from '@constants'
-import { MenuNavItem } from './menu-nav-item'
-import { MenuContactItem } from './menu-contact-item'
-import { useRouter } from 'next/router'
 import { isRouteActive } from '@utils/is-route-active'
+import { MenuContactItem } from './menu-contact-item'
+import { MenuNavItem } from './menu-nav-item'
+import styles from './Menu.module.scss'
+import type { MenuContactItem as MenuContactItemData } from './Menu.types'
 
 const bem = bemify(styles, 'menu')
 

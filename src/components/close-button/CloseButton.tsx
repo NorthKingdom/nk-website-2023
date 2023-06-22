@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './CloseButton.module.scss'
 import cx from 'clsx'
 import { noop } from '@utils/noop'
+import styles from './CloseButton.module.scss'
 
 interface CloseButtonProps {
   as?: React.ElementType

@@ -1,8 +1,8 @@
-import React from 'react'
 import cx from 'clsx'
-import styles from './MenuHamburgerButton.module.scss'
+import React from 'react'
 import { bemify } from '@utils/bemify'
 import { noop } from '@utils/noop'
+import styles from './MenuHamburgerButton.module.scss'
 const bem = bemify(styles, 'menuHamburgerButton')
 
 interface MenuHamburgerButtonProps {

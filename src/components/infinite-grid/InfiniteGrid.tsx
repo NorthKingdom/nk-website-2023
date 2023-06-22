@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import cx from 'clsx'
 import { motion, useMotionValue } from 'framer-motion'
-import styles from './InfiniteGrid.module.scss'
-import { bemify } from '@utils/bemify'
-import type { ResponsiveImagePayload } from '@customTypes/cms'
 import Image from 'next/image'
-import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
+import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
+import { bemify } from '@utils/bemify'
+import styles from './InfiniteGrid.module.scss'
+import type { ResponsiveImagePayload } from '@customTypes/cms'
 const bem = bemify(styles, 'infiniteGrid')
 
 interface InfiniteGridProps {

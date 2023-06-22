@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import styles from './CaseHero.module.scss'
-import { bemify } from '@utils/bemify'
 import { motion, AnimatePresence } from 'framer-motion'
+import React, { useEffect, useState } from 'react'
+import Lenis from '@studio-freight/lenis'
+import { bemify } from '@utils/bemify'
 import { Media } from '@components/media'
 import { useGlobalStateStore } from '@store/global-state-store'
+import styles from './CaseHero.module.scss'
 import type { CaseHeroPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'caseHero')
-import Lenis from '@studio-freight/lenis'
 
 const CASE_HERO_IN_ANIMATION_DURATION = 0.7
 interface CaseHeroProps {

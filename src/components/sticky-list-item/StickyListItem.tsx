@@ -1,13 +1,13 @@
 import React from 'react'
-import styles from './StickyListItem.module.scss'
+import Link from 'next/link'
 import { bemify } from '@utils/bemify'
 import { Slideshow } from '@components/slideshow'
 import { AwardItem } from '@components/award-item'
-import type { StickyListItemPayload, AwardListPayload } from '@customTypes/cms'
 import { List } from '@components/list'
 import { Media } from '@components/media'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
-import Link from 'next/link'
+import styles from './StickyListItem.module.scss'
+import type { StickyListItemPayload, AwardListPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'stickyListItem')
 
 interface StickyListItemProps extends Omit<StickyListItemPayload, '__typename'> {

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { ImageMarquee } from './ImageMarquee';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof ImageMarquee> = {
   title: 'UI/ImageMarquee',

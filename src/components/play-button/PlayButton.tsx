@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from './PlayButton.module.scss'
 import cx from 'clsx'
+import styles from './PlayButton.module.scss'
 
 interface PlayButtonProps {
   as?: React.ElementType

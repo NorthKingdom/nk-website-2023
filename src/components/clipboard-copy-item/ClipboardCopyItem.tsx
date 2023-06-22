@@ -1,9 +1,8 @@
-import React from 'react'
-import styles from './ClipboardCopyItem.module.scss'
+import React, { useState, useRef } from 'react'
 import cx from 'clsx'
-import type { ClipboardCopyItemPayload } from '@customTypes/cms'
-import { useState, useRef } from 'react'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
+import styles from './ClipboardCopyItem.module.scss'
+import type { ClipboardCopyItemPayload } from '@customTypes/cms'
 
 interface ClipboardCopyItemProps
   extends ClipboardCopyItemPayload,

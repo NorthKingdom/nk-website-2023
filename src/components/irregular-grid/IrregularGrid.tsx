@@ -1,10 +1,10 @@
 import React from 'react'
-import styles from './IrregularGrid.module.scss'
 import { bemify } from '@utils/bemify'
-import type { IrregularGridPayload } from '@customTypes/cms'
 import { Media } from '@components/media'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 import { useBreakpointUntil } from '@hooks/use-breakpoint'
+import styles from './IrregularGrid.module.scss'
+import type { IrregularGridPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'irregularGrid')
 
 type IrregularGridProps = IrregularGridPayload['itemsCollection']

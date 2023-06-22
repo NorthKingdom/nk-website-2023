@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { DUMMY_VIDEO, DUMMY_IMAGE } from '@stories/dummy-data'
 import { CaseMediaGrid } from './CaseMediaGrid'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof CaseMediaGrid> = {
   title: 'UI/CaseMediaGrid',

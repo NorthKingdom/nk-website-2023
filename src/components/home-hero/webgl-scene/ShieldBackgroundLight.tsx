@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { forwardRef, useEffect, useMemo, useRef } from 'react'
-import { shaderMaterial, useTexture } from '@react-three/drei'
-import type { ReactThreeFiber } from '@react-three/fiber'
-import { Uniform, Color } from 'three'
-import { extend, useFrame } from '@react-three/fiber'
 import { mergeRefs } from 'react-merge-refs'
-import shieldBlurVS from './shaders/shield-blur-bg-vs.glsl'
-import shieldBlurFS from './shaders/shield-blur-bg-fs.glsl'
-import { useWebglSceneStore } from './WebglScene.store'
+import { extend, useFrame } from '@react-three/fiber'
+import { Uniform, Color } from 'three'
+import { shaderMaterial, useTexture } from '@react-three/drei'
+import { forwardRef, useEffect, useMemo, useRef } from 'react'
 import { useOnSceneLightColorChange } from './WebglScene.hooks'
+import { useWebglSceneStore } from './WebglScene.store'
+import shieldBlurFS from './shaders/shield-blur-bg-fs.glsl'
+import shieldBlurVS from './shaders/shield-blur-bg-vs.glsl'
+import type { ReactThreeFiber } from '@react-three/fiber'
 
 const ShieldBackgroundLightMaterial = shaderMaterial(
   {

@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { Media } from './Media'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 import { DUMMY_VIDEO, DUMMY_IMAGE } from '@stories/dummy-data'
+import { Media } from './Media'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Media> = {
   title: 'UI/Media',

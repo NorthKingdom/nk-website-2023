@@ -1,7 +1,11 @@
-import Head from 'next/head'
 import dynamic from 'next/dynamic'
+import Head from 'next/head'
 import { HOME_PAGE_QUERY } from '@graphql/queries'
 import client from '@graphql/client'
+import { HomeHero } from '@components/home-hero'
+import { CaseList } from '@components/case-list'
+import { ImageMarquee } from '@components/image-marquee'
+import { FeaturedVideo } from '@components/featured-video'
 import type {
   HomePagePayload,
   FeaturedCasesPayload,
@@ -9,10 +13,6 @@ import type {
   TextBlockPayload,
   FeaturedVideoPayload,
 } from '@customTypes/cms'
-import { HomeHero } from '@components/home-hero'
-import { CaseList } from '@components/case-list'
-import { ImageMarquee } from '@components/image-marquee'
-import { FeaturedVideo } from '@components/featured-video'
 
 const TextBlock = dynamic(() => import('@/components/text-block/TextBlock').then((Mod) => Mod.TextBlock), {
   ssr: false,

@@ -1,15 +1,15 @@
-import { useRef, useState, useMemo, useEffect } from 'react'
-import styles from './ImageMarquee.module.scss'
-import { bemify } from '@utils/bemify'
-import cx from 'clsx'
+import { useRef, useState, useMemo } from 'react'
+import Image from 'next/image'
 import { useInView, useMotionValue, useMotionValueEvent } from 'framer-motion'
+import cx from 'clsx'
 import { useOnScroll } from '@hooks/use-on-scroll'
 import { clamp, map } from '@utils/math'
-import type { ImageMarqueePayload, ImageMarqueeItemPayload } from '@customTypes/cms'
 import { useBreakpointUntil } from '@hooks/use-breakpoint'
-const bem = bemify(styles, 'imageMarquee')
-import Image from 'next/image'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
+import { bemify } from '@utils/bemify'
+import styles from './ImageMarquee.module.scss'
+import type { ImageMarqueePayload, ImageMarqueeItemPayload } from '@customTypes/cms'
+const bem = bemify(styles, 'imageMarquee')
 
 interface ImageMarqueeProps extends ImageMarqueePayload {
   height?: number

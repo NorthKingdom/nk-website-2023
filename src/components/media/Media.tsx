@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { VideoPlayer } from '@components/video-player'
-import type { VideoPayload, ResponsiveImagePayload } from '@customTypes/cms'
 import Image from 'next/image'
-import { getContentfulImageSrc } from '@utils/contentful'
-import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
+import React, { useEffect, useRef, useState } from 'react'
 import pick from 'ramda/src/pick'
 import omit from 'ramda/src/omit'
 import cx from 'clsx'
+import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
+import { getContentfulImageSrc } from '@utils/contentful'
+import { VideoPlayer } from '@components/video-player'
 import styles from './Media.module.scss'
+import type { VideoPayload, ResponsiveImagePayload } from '@customTypes/cms'
 
 // @TODO: add support for light background loader animation
 // @TODO: check that the source is from contentful before adding Image query params

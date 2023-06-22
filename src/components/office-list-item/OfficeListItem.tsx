@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from './OfficeListItem.module.scss'
 import { bemify } from '@utils/bemify'
+import styles from './OfficeListItem.module.scss'
 const bem = bemify(styles, 'officeListItem')
 
 interface OfficeListItemProps {

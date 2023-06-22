@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { VideoPlayer } from './VideoPlayer'
 import { DUMMY_VIDEO } from '@stories/dummy-data'
+import { VideoPlayer } from './VideoPlayer'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof VideoPlayer> = {
   title: 'UI/VideoPlayer',

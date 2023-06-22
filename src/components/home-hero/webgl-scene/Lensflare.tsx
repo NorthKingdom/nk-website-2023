@@ -1,14 +1,13 @@
 import { extend, useFrame, useThree } from '@react-three/fiber'
-import { lerp, rubberbandIfOutOfBounds } from '@utils/math'
-import { useWebglSceneStore } from './WebglScene.store'
 import { useRef, useMemo } from 'react'
 import { Vector3, Uniform } from 'three'
 import { shaderMaterial, useTexture } from '@react-three/drei'
+import { lerp, rubberbandIfOutOfBounds , closestAngle } from '@utils/math'
+import { useWebglSceneStore } from './WebglScene.store'
 import lensflareVS from './shaders/lensflare-vs.glsl'
 import lensflareFS from './shaders/lensflare-fs.glsl'
-import type { ReactThreeFiber } from '@react-three/fiber'
-import { closestAngle } from '@utils/math'
 import { useOnSceneLightColorChange } from './WebglScene.hooks'
+import type { ReactThreeFiber } from '@react-three/fiber'
 
 const DIMENSIONS = [9, 12] as [number, number]
 const SCALE_FACTOR = 3

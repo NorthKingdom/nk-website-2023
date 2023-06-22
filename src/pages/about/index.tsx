@@ -1,17 +1,17 @@
-import React from 'react'
 import Head from 'next/head'
-import client from '@graphql/client'
-import { ABOUT_PAGE_QUERY } from '@graphql/queries'
-import type { AboutPagePayload, InfiniteGridPayload, IrregularGridPayload, TextBlockPayload } from '@customTypes/cms'
+import React from 'react'
 import { PageHero } from '@components/page-hero'
 import { List } from '@components/list'
 import { StickyListItem } from '@components/sticky-list-item'
-import styles from './About.module.scss'
+import { ABOUT_PAGE_QUERY } from '@graphql/queries'
+import client from '@graphql/client'
 import { bemify } from '@utils/bemify'
 import { InfiniteGrid } from '@components/infinite-grid'
 import { TextBlock } from '@components/text-block'
 import { IrregularGrid } from '@components/irregular-grid'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
+import styles from './About.module.scss'
+import type { AboutPagePayload, InfiniteGridPayload, IrregularGridPayload, TextBlockPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'about')
 
 const About = ({ hero, ...props }: AboutPagePayload) => {

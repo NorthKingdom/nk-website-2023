@@ -1,7 +1,7 @@
-import type { HomeHeroPayload } from '@customTypes/cms'
 import { useEffect } from 'react'
-import { useWebglSceneStore } from './WebglScene.store'
 import { Color } from 'three'
+import { useWebglSceneStore } from './WebglScene.store'
+import type { HomeHeroPayload } from '@customTypes/cms'
 
 /**
  * Syncs the light leak color subtitle file with the video

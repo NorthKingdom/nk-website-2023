@@ -1,6 +1,6 @@
-import type { VideoPayload, ResponsiveImagePayload, AssetPayload } from '@customTypes/cms'
-import { useBreakpointUntil } from './use-breakpoint'
 import { getMimeTypeFromFilename } from '@utils/media-mime-types'
+import { useBreakpointUntil } from './use-breakpoint'
+import type { VideoPayload, ResponsiveImagePayload, AssetPayload } from '@customTypes/cms'
 
 type Srcset = {
   url: string

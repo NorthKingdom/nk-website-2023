@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { MediaGridItem } from './MediaGridItem'
 import { DUMMY_IMAGE, DUMMY_VIDEO } from '@stories/dummy-data'
+import { MediaGridItem } from './MediaGridItem'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof MediaGridItem> = {
   title: 'UI/MediaGridItem',

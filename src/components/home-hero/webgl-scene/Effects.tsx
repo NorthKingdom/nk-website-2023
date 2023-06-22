@@ -4,10 +4,10 @@ import { mergeRefs } from 'react-merge-refs'
 import { extend, useThree, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
-import { distortionEffect } from './DistortionEffect'
-import { usePointer } from '@hooks/use-pointer'
-import { lerp } from '@utils/math'
 import { useFBO } from '@react-three/drei'
+import { lerp } from '@utils/math'
+import { usePointer } from '@hooks/use-pointer'
+import { distortionEffect } from './DistortionEffect'
 
 extend({
   EffectComposer,

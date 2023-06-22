@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { FeaturedVideo } from './FeaturedVideo'
 import { DUMMY_VIDEO } from '@stories/dummy-data'
+import { FeaturedVideo } from './FeaturedVideo'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof FeaturedVideo> = {
   title: 'UI/FeaturedVideo',

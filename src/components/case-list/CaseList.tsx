@@ -1,10 +1,10 @@
 import React, { useReducer } from 'react'
-import styles from './CaseList.module.scss'
 import { bemify } from '@utils/bemify'
-import type { CasePayload } from '@customTypes/cms'
 import { CaseListItem } from '@components/case-list-item'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import { LoadMore } from '@components/load-more'
+import styles from './CaseList.module.scss'
+import type { CasePayload } from '@customTypes/cms'
 
 const bem = bemify(styles, 'caseList')
 

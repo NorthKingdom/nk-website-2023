@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { IrregularGrid } from './IrregularGrid'
 import { DUMMY_IMAGE } from '@stories/dummy-data'
+import { IrregularGrid } from './IrregularGrid'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof IrregularGrid> = {
   title: 'UI/IrregularGrid',
