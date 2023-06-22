@@ -72,7 +72,7 @@ const CaseArchiveItem = (props: CaseArchiveItemProps) => {
   const src = IMAGE_POOL[props.index % IMAGE_POOL.length]
 
   return (
-    <div ref={ref} className={bemItem()} onMouseOver={() => setSrc(src)}>
+    <div ref={ref} className={bemItem()} onMouseOver={() => setSrc(src)} data-interactable={!!props.projectLink}>
       <p className={bemItem('year')}>{projectYear}</p>
 
       {props.mobile ? (
@@ -88,9 +88,12 @@ const CaseArchiveItem = (props: CaseArchiveItemProps) => {
       )}
 
       {!!props.projectLink && (
-        <a className={bemItem('link')} href={props.projectLink} target="_blank" rel="noopener">
-          ↗
-        </a>
+        <div role="presentation" className={bemItem('projectLink')}>
+          <p>Learn more</p>
+          <a href={props.projectLink} target="_blank" rel="noopener">
+            ↗
+          </a>
+        </div>
       )}
     </div>
   )
