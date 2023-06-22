@@ -215,6 +215,7 @@ div.caseArchive__cursor {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
+  z-index: 10;
 
   &[data-active='true'] {
     opacity: 1;
@@ -228,8 +229,13 @@ div.caseArchive__cursor {
 }
 
 .caseArchiveItem {
+  $block: &;
   display: flex;
   width: 100%;
+
+  &[data-interactable='true'] {
+    @include hover;
+  }
 
   &__year {
     width: 60px;
@@ -268,7 +274,31 @@ div.caseArchive__cursor {
     }
   }
 
-  &__link {
+  &__projectLink {
     margin-left: auto;
+    display: inline-flex;
+
+    p {
+      user-select: none;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.25s var(--ease-out-cubic);
+
+      @media (hover: hover) {
+        #{$block}[data-interactable='true']:hover & {
+          opacity: 1;
+          transform: none;
+        }
+
+        #{$block}[data-interactable='true']:not(:hover) & {
+          transition: all 0.8s var(--ease-in-out-cubic);
+        }
+      }
+    }
+
+    a {
+      margin-left: 20px;
+    }
   }
 }
