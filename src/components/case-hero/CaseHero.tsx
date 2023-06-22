@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styles from './CaseHero.module.scss'
 import { bemify } from '@utils/bemify'
-import { Video, ResponsiveImage } from '@customTypes/cms'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Media } from '@components/media'
 import { useGlobalStateStore } from '@store/global-state-store'
+import type { CaseHeroPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'caseHero')
 import Lenis from '@studio-freight/lenis'
 
@@ -12,10 +12,10 @@ const CASE_HERO_IN_ANIMATION_DURATION = 0.7
 interface CaseHeroProps {
   client: string
   caseName: string
-  src: Video | ResponsiveImage
+  media: CaseHeroPayload['heroMedia']
 }
 
-export const CaseHero = ({ client, caseName, src }: CaseHeroProps) => {
+export const CaseHero = ({ client, caseName, media }: CaseHeroProps) => {
   const [isIn, setIsIn] = useState(false)
   const isComingFromACasePage = useGlobalStateStore((state) => state.isComingFromACasePage)
   const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
@@ -55,7 +55,7 @@ export const CaseHero = ({ client, caseName, src }: CaseHeroProps) => {
         />
         <div className={bem('some')}>
           <Media
-            {...src}
+            {...media}
             index={0}
             caseHeroImage
             controls={false}

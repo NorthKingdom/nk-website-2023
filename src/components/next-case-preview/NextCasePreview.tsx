@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styles from './NextCasePreview.module.scss'
 import { bemify } from '@utils/bemify'
-import { Video, ResponsiveImage } from '@customTypes/cms'
+import type { VideoPayload, ResponsiveImagePayload } from '@customTypes/cms'
 import { Media } from '@components/media'
 import { useRouter } from 'next/router'
 const bem = bemify(styles, 'nextCasePreview')
@@ -14,7 +14,7 @@ import Head from 'next/head'
 
 interface CaseHeroProps {
   caseName: string
-  src: Video | ResponsiveImage
+  src: VideoPayload | ResponsiveImagePayload
   caseCheck?: any
   nextSlug: string
 }
@@ -50,7 +50,7 @@ export const NextCasePreview = ({ caseName, src, caseCheck, nextSlug }: CaseHero
   // }, [leaving])
 
   // useEffect(() => {
-  //   // preload_image((src as ResponsiveImage).desktopImage?.url || (src as Video).posterImage?.url)
+  //   // preload_image((src as ResponsiveImagePayload).desktopImage?.url || (src as VideoPayload).posterImage?.url)
   //   // return () => {
   //   //   if (lenis) {
   //   //     console.log(`destroy !!`)

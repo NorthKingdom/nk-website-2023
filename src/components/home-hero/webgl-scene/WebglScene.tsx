@@ -1,4 +1,4 @@
-import type { HomeHero as HomeHeroPayload } from '@customTypes/cms'
+import type { HomeHeroPayload } from '@customTypes/cms'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
 import { Preload } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'

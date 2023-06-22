@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { VideoPlayer } from '@components/video-player'
-import type { Video, ResponsiveImage } from '@customTypes/cms'
+import type { VideoPayload, ResponsiveImagePayload } from '@customTypes/cms'
 import Image from 'next/image'
 import { getContentfulImageSrc } from '@utils/contentful'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
@@ -10,15 +10,16 @@ import cx from 'clsx'
 import styles from './Media.module.scss'
 
 // @TODO: add support for light background loader animation
+// @TODO: check that the source is from contentful before adding Image query params
 
-export interface VideoMediaProps extends Video {
+export interface VideoMediaProps extends VideoPayload {
   index?: number
   className?: string
   style?: React.CSSProperties
   [key: string]: any
 }
 
-export interface ImageMediaProps extends ResponsiveImage {
+export interface ImageMediaProps extends ResponsiveImagePayload {
   index?: number
   className?: string
   style?: React.CSSProperties

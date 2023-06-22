@@ -1,4 +1,4 @@
-import type { HomeHero } from '@customTypes/cms'
+import type { HomeHeroPayload } from '@customTypes/cms'
 import { useEffect } from 'react'
 import { useWebglSceneStore } from './WebglScene.store'
 import { Color } from 'three'
@@ -13,7 +13,7 @@ const isValidHexColor = (color: string) => /^#([0-9A-F]{3}){1,2}$/i.test(color)
 
 export function useShieldLightLeakColorTextTrack(
   video: HTMLVideoElement,
-  shieldLightLeakColorVtt: HomeHero['shieldLightLeakColorVtt']
+  shieldLightLeakColorVtt: HomeHeroPayload['shieldLightLeakColorVtt']
 ) {
   const set = useWebglSceneStore((state) => state.set)
 

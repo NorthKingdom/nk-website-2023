@@ -2,13 +2,13 @@ import React from 'react'
 import styles from './TextBlock.module.scss'
 import { bemify } from '@utils/bemify'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
-import type { TextBlock as TextBlockDataType } from '@customTypes/cms'
+import type { TextBlockPayload } from '@customTypes/cms'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import Link from 'next/link'
 import cx from 'clsx'
 const bem = bemify(styles, 'textBlock')
 
-interface TextBlockProps extends Omit<TextBlockDataType, '__typename' | 'sys'>, React.HTMLAttributes<HTMLDivElement> {
+interface TextBlockProps extends Omit<TextBlockPayload, '__typename' | 'sys'>, React.HTMLAttributes<HTMLDivElement> {
   theme?: 'light' | 'dark'
   notch?: boolean
   children?: React.ReactNode

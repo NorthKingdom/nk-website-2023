@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styles from './CaseListItem.module.scss'
 import { bemify } from '@utils/bemify'
-import type { Case, ResponsiveImage } from '@customTypes/cms'
+import type { CasePayload } from '@customTypes/cms'
 import type { ContentfulMediaSrcImageOptions } from '@hooks/use-contentful-media-src'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 import { useInViewAnimation } from '@hooks/use-inview-animation'
@@ -11,9 +11,8 @@ import cx from 'clsx'
 import Link from 'next/link'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 import Image from 'next/image'
-import { useIsHovered } from '@hooks/use-is-hovered'
 
-interface CaseListItemProps extends Case {
+interface CaseListItemProps extends CasePayload {
   className?: string
   style?: React.CSSProperties
   aspectRatio?: number
@@ -80,7 +79,7 @@ export const CaseListItem = ({
   )
 }
 
-function getBlurredThumbBgSrc(thumbnail: Case['thumbnail'], options: ContentfulMediaSrcImageOptions = {}) {
+function getBlurredThumbBgSrc(thumbnail: CasePayload['thumbnail'], options: ContentfulMediaSrcImageOptions = {}) {
   if (!thumbnail) return null
 
   const thumbSrc =

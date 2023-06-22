@@ -15,6 +15,7 @@ type Story = StoryObj<typeof MediaGridItem>
 export const Video: Story = {
   args: {
     item: {
+      __typename: 'MediaGridItem',
       media: {
         ...DUMMY_VIDEO,
         autoPlay: false,
@@ -29,6 +30,7 @@ export const Video: Story = {
 export const Image: Story = {
   args: {
     item: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '0%',
     },
@@ -38,6 +40,7 @@ export const Image: Story = {
 export const LandscapeImage: Story = {
   args: {
     item: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '0%',
     },

@@ -1,6 +1,6 @@
-import type { Video, ResponsiveImage, Link, ClipboardCopyItem } from '@customTypes/cms'
+import type { VideoPayload, ResponsiveImagePayload, LinkPayload, ClipboardCopyItemPayload } from '@customTypes/cms'
 
-export const DUMMY_VIDEO: Video = {
+export const DUMMY_VIDEO: VideoPayload = {
   __typename: 'Video',
   muted: true,
   autoPlay: true,
@@ -30,7 +30,7 @@ export const DUMMY_VIDEO: Video = {
   },
 }
 
-export const DUMMY_IMAGE: ResponsiveImage = {
+export const DUMMY_IMAGE: ResponsiveImagePayload = {
   __typename: 'ResponsiveImage',
   desktopImage: {
     url: '/dummy/landscape-media.jpg',
@@ -45,7 +45,7 @@ export const DUMMY_IMAGE: ResponsiveImage = {
   altText: '[EXAMPLE] riot image',
 }
 
-export const DUMMY_IMAGE_ALT_1: ResponsiveImage = {
+export const DUMMY_IMAGE_ALT_1: ResponsiveImagePayload = {
   __typename: 'ResponsiveImage',
   desktopImage: {
     url: '/dummy/temp-right-riot-img.jpg',
@@ -60,7 +60,7 @@ export const DUMMY_IMAGE_ALT_1: ResponsiveImage = {
   altText: 'temp alt',
 }
 
-export const DUMMY_IMAGE_ALT_2: ResponsiveImage = {
+export const DUMMY_IMAGE_ALT_2: ResponsiveImagePayload = {
   __typename: 'ResponsiveImage',
   desktopImage: {
     url: '/dummy/temp-riot-right-image-2.jpg',
@@ -75,19 +75,19 @@ export const DUMMY_IMAGE_ALT_2: ResponsiveImage = {
   altText: 'temp alt',
 }
 
-export const DUMMY_LINK: Link = {
+export const DUMMY_LINK: LinkPayload = {
   __typename: 'Link',
   url: '#',
   copy: 'Click me ↗',
 }
 
-export const DUMMY_CONTACT_LINK: Link = {
+export const DUMMY_CONTACT_LINK: LinkPayload = {
   __typename: 'Link',
   copy: '+46 8 14 11 11',
   url: '+46 8 14 11 11',
 }
 
-export const DUMMY_CONTACT_CLIPBOARD_ITEM: ClipboardCopyItem = {
+export const DUMMY_CONTACT_CLIPBOARD_ITEM: ClipboardCopyItemPayload = {
   __typename: 'ClipboardCopyItem',
   label: 'business@northkingdom.com',
   content: 'business@northkingdom.com',

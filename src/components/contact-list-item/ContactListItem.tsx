@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './ContactListItem.module.scss'
 import { bemify } from '@utils/bemify'
-import type { Link as LinkType, ClipboardCopyItem as ClipboardCopyItemType } from '@customTypes/cms'
+import type { LinkPayload, ClipboardCopyItemPayload } from '@customTypes/cms'
 import Link from 'next/link'
 import { ClipboardCopyItem } from '@components/clipboard-copy-item'
 const bem = bemify(styles, 'contactListItem')
@@ -9,7 +9,7 @@ const bem = bemify(styles, 'contactListItem')
 interface ContactListItemProps {
   title: string
   linksCollection: {
-    items: (LinkType | ClipboardCopyItemType)[]
+    items: (LinkPayload | ClipboardCopyItemPayload)[]
   }
 }
 

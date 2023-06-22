@@ -2,11 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
 import { CAREERS_PAGE_QUERY } from '@graphql/queries'
-import type {
-  CareersPage as CareersPageData,
-  IrregularGrid as IrregularGridProps,
-  TextBlock as TextBlockProps,
-} from '@customTypes/cms'
+import type { CareersPagePayload, IrregularGridPayload, TextBlockPayload } from '@customTypes/cms'
 import { List } from '@components/list'
 import { JobListItem } from '@components/job-list-item'
 import { PageHero } from '@components/page-hero'
@@ -21,7 +17,7 @@ import { StickyListItem } from '@components/sticky-list-item'
 import { FullbleedMedia } from '@components/fullbleed-media'
 const bem = bemify(styles, 'careers')
 
-interface CareersPageProps extends CareersPageData {
+interface CareersPageProps extends CareersPagePayload {
   footerTheme: 'light' | 'dark'
   openings: any[]
   numOfOpenings: number
@@ -43,7 +39,7 @@ const Careers = (pageProps: CareersPageProps) => {
         <link rel="canonical" href="https://www.northkingdom.com/jobs" />
       </Head>
       <main className={styles['careers']}>
-        <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
+        <PageHero className={bem('pageHeroTitle')} {...hero} />
         {(sections.items ?? []).map((section, index) => (
           <CareersPageSectionResolver key={section.sys.id} index={index} pageProps={pageProps} {...section} />
         ))}
@@ -147,7 +143,7 @@ const CareersPageSectionResolver = ({
     case 'DescriptionComponent':
       if (index === 0) {
         return (
-          <TextBlock key={props.sys.id} {...(props as TextBlockProps)} className={bem('intro')}>
+          <TextBlock key={props.sys.id} {...(props as TextBlockPayload)} className={bem('intro')}>
             <ContentWrapper theme="transparent" className={bem('introOpeningsTeaser')}>
               <p className="t-label">
                 {pageProps.numOfOpenings === '1'
@@ -158,10 +154,10 @@ const CareersPageSectionResolver = ({
           </TextBlock>
         )
       } else {
-        return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} />
+        return <TextBlock key={props.sys.id} {...(props as TextBlockPayload)} />
       }
     case 'IrregularGrid':
-      return <IrregularGrid key={props.sys.id} items={(props as IrregularGridProps).itemsCollection.items} />
+      return <IrregularGrid key={props.sys.id} items={(props as IrregularGridPayload).itemsCollection.items} />
     case 'ResponsiveImage':
     case 'Video':
       return <FullbleedMedia key={props.sys.id} {...(props as any)} __typename={__typename} />

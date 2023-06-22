@@ -26,7 +26,7 @@ const Contact = ({ hero, contactSectionCollection, officeSectionCollection }: an
         <link rel="canonical" href="https://www.northkingdom.com/contact" />
       </Head>
       <main className={styles['contact']}>
-        <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
+        <PageHero className={bem('pageHeroTitle')} {...hero} />
         <ContentWrapper theme="dark" notch style={{ paddingTop: `45px` }}>
           <ThemeChangeTrigger theme="dark" />
           <List

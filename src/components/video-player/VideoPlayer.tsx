@@ -1,6 +1,6 @@
 import React, { useEffect, useId, type ComponentPropsWithoutRef, useMemo, useRef } from 'react'
 import styles from './VideoPlayer.module.scss'
-import { Video } from '@customTypes/cms'
+import type { VideoPayload } from '@customTypes/cms'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
 import { noop } from '@utils/noop'
 import 'plyr/dist/plyr.css'
@@ -40,7 +40,7 @@ const _plyrControls = `
 `
 
 interface VideoPlayerProps extends Omit<ComponentPropsWithoutRef<'video'>, 'src'> {
-  src: Video
+  src: VideoPayload
   className?: string
   poster?: string
   playsInline?: boolean

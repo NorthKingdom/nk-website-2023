@@ -17,6 +17,6 @@ type Story = StoryObj<typeof PageHero>
 export const Default: Story = {
   args: {
     title: 'Be apart of our kingdom',
-    srcSet: DUMMY_IMAGE,
+    image: DUMMY_IMAGE,
   },
 }

@@ -2,11 +2,11 @@ import React from 'react'
 import Head from 'next/head'
 import client from '@graphql/client'
 import { WORK_PAGE_QUERY } from '@graphql/queries'
-import type { WorkPage, FeaturedCases } from '@customTypes/cms'
+import type { WorkPagePayload, FeaturedCasesPayload } from '@customTypes/cms'
 import { CaseList } from '@components/case-list'
 import { CaseArchive } from '@components/case-archive'
 
-function Work(props: WorkPage) {
+function Work(props: WorkPagePayload) {
   return (
     <>
       <Head>
@@ -21,7 +21,7 @@ function Work(props: WorkPage) {
       </Head>
       <main style={{ paddingTop: '80px' }}>
         <CaseList
-          {...(props.featuredCases as Pick<FeaturedCases, 'initial' | 'batchSize' | 'enableBatching'>)}
+          {...(props.featuredCases as Pick<FeaturedCasesPayload, 'initial' | 'batchSize' | 'enableBatching'>)}
           cases={props.featuredCases.cases.items}
         />
         <CaseArchive />

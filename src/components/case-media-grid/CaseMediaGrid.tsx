@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './CaseMediaGrid.module.scss'
-import { bemify } from '@utils/bemify'
-import { MediaGridItem as MediaGridItemType } from '@customTypes/cms'
+import { MediaGridItemPayload } from '@customTypes/cms'
 import { MediaGridItem } from '@components/media-grid-item'
-const bem = bemify(styles, 'caseMediaGrid')
 
 interface CaseMediaGridProps {
-  slotOne?: MediaGridItemType
-  slotTwo?: MediaGridItemType
-  slotThree?: MediaGridItemType
-  slotFour?: MediaGridItemType
+  slotOne?: MediaGridItemPayload
+  slotTwo?: MediaGridItemPayload
+  slotThree?: MediaGridItemPayload
+  slotFour?: MediaGridItemPayload
 }
 
 export const CaseMediaGrid = ({ slotOne, slotTwo, slotThree, slotFour }: CaseMediaGridProps) => {

@@ -18,6 +18,6 @@ export const Default: Story = {
   args: {
     client: 'Riot',
     caseName: 'RiotX Arcane',
-    src: DUMMY_VIDEO,
+    media: DUMMY_VIDEO,
   },
 }

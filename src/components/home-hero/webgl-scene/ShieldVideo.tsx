@@ -11,7 +11,7 @@ import { Uniform } from 'three'
 import { useWebglSceneStore } from './WebglScene.store'
 import shieldVideoFS from './shaders/shield-video-fs.glsl'
 import shieldVideoVS from './shaders/shield-video-vs.glsl'
-import type { HomeHero as HomeHeroPayload } from '@customTypes/cms'
+import type { HomeHeroPayload } from '@customTypes/cms'
 import { useShieldLightLeakColorTextTrack } from './ShieldVideo.hooks'
 import isEmpty from 'ramda/es/isEmpty'
 

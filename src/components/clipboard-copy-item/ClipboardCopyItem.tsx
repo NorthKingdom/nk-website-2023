@@ -1,12 +1,12 @@
 import React from 'react'
 import styles from './ClipboardCopyItem.module.scss'
 import cx from 'clsx'
-import type { ClipboardCopyItem as ClipboardCopyItemData } from '@customTypes/cms'
+import type { ClipboardCopyItemPayload } from '@customTypes/cms'
 import { useState, useRef } from 'react'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 
 interface ClipboardCopyItemProps
-  extends ClipboardCopyItemData,
+  extends ClipboardCopyItemPayload,
     Omit<React.HTMLAttributes<HTMLAnchorElement>, 'content'> {}
 
 export const ClipboardCopyItem = ({
