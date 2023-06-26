@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Uniform } from 'three'
+import { Uniform, Vector3 } from 'three'
 import { mergeRefs } from 'react-merge-refs'
 import { forwardRef, useEffect, useMemo, useRef } from 'react'
 import { button, useControls } from 'leva'
 import { animate, useMotionValue } from 'framer-motion'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useTexture, useVideoTexture } from '@react-three/drei'
 import isEmpty from 'ramda/es/isEmpty'
+import { damp } from 'maath/easing'
 import { noop } from '@utils/noop'
+import { lerp, rubberbandIfOutOfBounds } from '@utils/math'
 import { useShieldLightLeakColorTextTrack } from './ShieldVideo.hooks'
 import shieldVideoVS from './shaders/shield-video-vs.glsl'
 import shieldVideoFS from './shaders/shield-video-fs.glsl'
@@ -69,9 +71,11 @@ export const ShieldVideo = forwardRef(
   ) => {
     const $mesh = useRef<THREE.Mesh>(null!)
     const $rotationContainer = useRef<THREE.Group>(null!)
+    const viewport = useThree((state) => state.viewport)
     const set = useWebglSceneStore((state) => state.set)
     const shieldState = useWebglSceneStore((state) => state.shieldState)
     const isSceneLoaded = useWebglSceneStore((state) => state.isSceneLoaded)
+    const shieldAnchor = useWebglSceneStore((state) => state.shieldAnchor)
     const dispatchShieldStateEvent = useWebglSceneStore((state) => state.dispatchShieldStateEvent)
     const shieldScaleFullscreen = useWebglSceneStore((state) => state.shieldScaleFullscreen)
     const isShieldVideoPlaying = useWebglSceneStore((state) => state.isShieldVideoPlaying)
@@ -206,13 +210,40 @@ export const ShieldVideo = forwardRef(
       }
     }, [shieldState, isSceneLoaded])
 
-    useFrame(({ clock }) => {
+    const normalizedShieldAnchor = useMemo(
+      () => new Vector3(shieldAnchor[0] / viewport.width, shieldAnchor[1] / viewport.height, 0),
+      [shieldAnchor, viewport.width, viewport.height]
+    )
+
+    const shieldRotationY = useRef({
+      current: 0,
+      target: 0,
+    }).current
+
+    const shieldRotationX = useRef({
+      current: 0,
+      target: 0,
+    }).current
+
+    useFrame(({ clock, pointer }, delta) => {
       if (!$mesh.current) return
       // @ts-ignore
       $mesh.current.material.uniforms.uTime.value = clock.getElapsedTime()
+
+      // rotate shield video
+      shieldRotationY.target = rubberbandIfOutOfBounds(pointer.x - normalizedShieldAnchor.x, -0.3, 0.3, 0.3)
+      shieldRotationX.target = rubberbandIfOutOfBounds(pointer.y - normalizedShieldAnchor.y, -0.1, 0.1, 0.2)
+      damp(shieldRotationY, 'current', shieldRotationY.target, 0.1, delta)
+      damp(shieldRotationX, 'current', shieldRotationX.target, 0.1, delta)
+
+      if (shieldState !== 'transition-in') {
+        $rotationContainer.current.rotation.y = shieldRotationY.current
+        $rotationContainer.current.rotation.x = shieldRotationX.current
+      }
     })
 
     // rotate shield video on transition in
+
     useEffect(() => {
       let ctrls
       if (shieldState === 'transition-in') {
@@ -221,7 +252,7 @@ export const ShieldVideo = forwardRef(
           duration: MOTION_CONFIG.TRANSITION_IN.duration * 0.7,
           onUpdate: (v) => {
             if (!$rotationContainer.current) return
-            $rotationContainer.current.rotation.y = v
+            $rotationContainer.current.rotation.y = v + shieldRotationY.current
           },
         })
       }

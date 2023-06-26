@@ -136,7 +136,7 @@ export const Wordmark = () => {
       {isDesktopBp ? (
         <>
           <Mask id={WORD_MASK_ID.LEFT} colorWrite={false} position-x={width * 0.5}>
-            <planeBufferGeometry args={[width, height]} />
+            <planeGeometry args={[width, height]} />
           </Mask>
           <group ref={leftWordRef}>
             <Word
@@ -152,7 +152,7 @@ export const Wordmark = () => {
           </group>
 
           <Mask id={WORD_MASK_ID.RIGHT} colorWrite={false} position-x={-width * 0.5 + SHIELD_INNER_SIZE[0]}>
-            <planeBufferGeometry args={[width, height]} />
+            <planeGeometry args={[width, height]} />
           </Mask>
           <group ref={rightWordRef}>
             <Word
