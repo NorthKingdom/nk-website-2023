@@ -223,3 +223,11 @@ export const CAREERS_PAGE_QUERY = (draftMode: boolean) => gql`
     }
   }
 `
+
+export const FOOTER_QUERY = (draftMode: boolean) => gql`
+  query FooterQuery {
+    footer(id: "6sB0eIDYQXM5x0g8VE0JwE") {
+      statement
+    }
+  }
+`

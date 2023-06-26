@@ -6,7 +6,7 @@ import { PageHero } from '@components/page-hero'
 import { TextBlock } from '@components/text-block'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
-import { CAREERS_PAGE_QUERY } from '@graphql/queries'
+import { CAREERS_PAGE_QUERY, FOOTER_QUERY } from '@graphql/queries'
 import client from '@graphql/client'
 import { bemify } from '@utils/bemify'
 import { LOCATION_ID } from '@constants'
@@ -18,7 +18,6 @@ import type { CareersPagePayload, IrregularGridPayload, TextBlockPayload } from 
 const bem = bemify(styles, 'careers')
 
 interface CareersPageProps extends CareersPagePayload {
-  footerTheme: 'light' | 'dark'
   openings: any[]
   numOfOpenings: number
 }
@@ -71,6 +70,9 @@ export async function getServerSideProps({ draftMode = false }) {
     headers: myHeaders,
     redirect: 'follow',
   }
+
+  const footerRes = await client(draftMode).query({ query: FOOTER_QUERY(draftMode) })
+
   return client(draftMode)
     .query({
       query: CAREERS_PAGE_QUERY(draftMode),
@@ -94,7 +96,7 @@ export async function getServerSideProps({ draftMode = false }) {
 
           return {
             props: {
-              footerTheme: 'light',
+              footer: { ...footerRes.data.footer, theme: 'light' },
               ...CMSData.careersPage,
               numOfOpenings: openings.length ?? 0,
               openings:

@@ -100,7 +100,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
         }}
       />
       <ApolloProvider client={apolloClient}>
-        <Layout hideFooter={pageProps.hideFooter} footerTheme={pageProps.footerTheme}>
+        <Layout {...pageProps}>
           <Component {...pageProps} />
         </Layout>
       </ApolloProvider>

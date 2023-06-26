@@ -3,7 +3,7 @@ import React from 'react'
 import { PageHero } from '@components/page-hero'
 import { List } from '@components/list'
 import { StickyListItem } from '@components/sticky-list-item'
-import { ABOUT_PAGE_QUERY } from '@graphql/queries'
+import { ABOUT_PAGE_QUERY, FOOTER_QUERY } from '@graphql/queries'
 import client from '@graphql/client'
 import { bemify } from '@utils/bemify'
 import { InfiniteGrid } from '@components/infinite-grid'
@@ -39,14 +39,19 @@ const About = ({ hero, ...props }: AboutPagePayload) => {
 }
 
 export async function getStaticProps({ draftMode = false }) {
-  return client(draftMode)
-    .query({
-      query: ABOUT_PAGE_QUERY(draftMode),
-    })
-    .then((res: any) => res.data)
-    .then((data: any) => {
-      return { props: data.about }
-    })
+  try {
+    const res = await client(draftMode).query({ query: ABOUT_PAGE_QUERY(draftMode) })
+    const footerRes = await client(draftMode).query({ query: FOOTER_QUERY(draftMode) })
+
+    if (!res.data.about) {
+      return { notFound: true }
+    } else {
+      return { props: { ...res.data.about, footer: footerRes.data.footer } }
+    }
+  } catch (error) {
+    console.error(error)
+    return { notFound: true }
+  }
 }
 export default About
 

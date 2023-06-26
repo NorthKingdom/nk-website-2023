@@ -9,6 +9,7 @@ import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 import { useGlobalStateStore } from '@store/global-state-store'
 import { Header } from '@components/header'
 import styles from './Layout.module.scss'
+import type { FooterProps } from '@components/footer'
 
 const Footer = dynamic(() => import('@components/footer').then((Mod) => Mod.Footer), {
   ssr: false,
@@ -17,8 +18,8 @@ const Footer = dynamic(() => import('@components/footer').then((Mod) => Mod.Foot
 
 interface LayoutProps {
   children: React.ReactNode
-  footerTheme?: 'light' | 'dark'
   hideFooter?: boolean
+  footer: FooterProps
 }
 
 const variants = {
@@ -38,7 +39,7 @@ const variants = {
   },
 }
 
-export function Layout({ children, hideFooter = false, footerTheme }: LayoutProps) {
+export function Layout({ children, hideFooter = false, footer }: LayoutProps) {
   const router = useRouter()
   const rafId = useRef<number>()
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -134,7 +135,7 @@ export function Layout({ children, hideFooter = false, footerTheme }: LayoutProp
               transition={{ duration: 0.1 }}
             >
               <div className={styles.content}>{children}</div>
-              {!hideFooter && <Footer theme={footerTheme} />}
+              {!hideFooter && <Footer {...footer} />}
             </motion.main>
           </AnimatePresence>
         </div>

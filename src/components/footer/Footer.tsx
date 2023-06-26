@@ -1,36 +1,21 @@
-import { gql , useQuery } from '@apollo/client'
 import React, { useRef } from 'react'
 import Link from 'next/link'
 import { bemify } from '@utils/bemify'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
 import { useGlobalStateStore } from '@store'
 import styles from './Footer.module.scss'
+import type { FooterPayload } from '@customTypes/cms'
 
 const bem = bemify(styles, 'footer')
 
-interface FooterProps {
+export interface FooterProps extends FooterPayload {
   theme?: 'light' | 'dark'
 }
 
-const FOOTER_QUERY = gql`
-  query FooterQuery {
-    footer(id: "6sB0eIDYQXM5x0g8VE0JwE") {
-      statement
-      links: linksCollection(limit: 10) {
-        items {
-          copy
-          url
-        }
-      }
-    }
-  }
-`
-
-export const Footer = ({ theme = 'dark' }: FooterProps) => {
+export const Footer = ({ theme = 'dark', statement = '' }: FooterProps) => {
   const lenis = useGlobalStateStore((state) => state.lenis)
   const $footer = useRef<HTMLDivElement>(null)
   const bpFromTablet = useBreakpointFrom('tablet')
-  const { data } = useQuery(FOOTER_QUERY)
 
   const Wordmark = bpFromTablet ? WordmarkOneLine : WordmarkTwoLines
   const scrollToTopCopy = bpFromTablet ? '↑ Back to north' : '↑'
@@ -45,7 +30,7 @@ export const Footer = ({ theme = 'dark' }: FooterProps) => {
       <Wordmark>
         <div className={bem('content')}>
           <Link className={bem('noaCta')} href="https://www.thenorthalliance.com/">
-            {data?.footer?.statement}
+            {statement}
           </Link>
           <button className={bem('scrollTopCta')} onClick={onScrollToTop}>
             {scrollToTopCopy}
