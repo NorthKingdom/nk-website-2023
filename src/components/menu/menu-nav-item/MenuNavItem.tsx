@@ -1,9 +1,9 @@
-import React from 'react'
 import Link from 'next/link'
+import React from 'react'
 import { Arrow } from '@components/arrow'
-import styles from './MenuNavItem.module.scss'
 import { bemify } from '@utils/bemify'
 import { noop } from '@utils/noop'
+import styles from './MenuNavItem.module.scss'
 const bem = bemify(styles, 'menuNavItem')
 
 interface MenuNavItemProps {

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { ClipboardCopyItem } from './ClipboardCopyItem'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof ClipboardCopyItem> = {
   title: 'UI/ClipboardCopyItem',

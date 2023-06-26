@@ -1,8 +1,8 @@
-import styles from './DebugGrid.module.scss'
-import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 // @ts-ignore
 import mousetrap from 'mousetrap'
 import { useEffect, useState } from 'react'
+import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
+import styles from './DebugGrid.module.scss'
 
 export const DebugGrid = ({ showInstructions = false, ...props }) => {
   const [show, setShow] = useState(true)

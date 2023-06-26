@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { FullbleedMedia } from './FullbleedMedia'
 import { DUMMY_IMAGE } from '@stories/dummy-data'
+import { FullbleedMedia } from './FullbleedMedia'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof FullbleedMedia> = {
   title: 'UI/FullbleedMedia',

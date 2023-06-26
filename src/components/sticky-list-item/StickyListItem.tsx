@@ -1,33 +1,27 @@
 import React from 'react'
-import styles from './StickyListItem.module.scss'
+import Link from 'next/link'
 import { bemify } from '@utils/bemify'
 import { Slideshow } from '@components/slideshow'
 import { AwardItem } from '@components/award-item'
-import { Video, ResponsiveImage, AwardList, Link as LinkType } from '@customTypes/cms'
 import { List } from '@components/list'
 import { Media } from '@components/media'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
-import Link from 'next/link'
+import styles from './StickyListItem.module.scss'
+import type { StickyListItemPayload, AwardListPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'stickyListItem')
 
-interface StickyListItemProps {
-  header: string
-  description: string
-  mediaCollection: {
-    items: (Video | ResponsiveImage)[]
-  }
-  subList?: AwardList
+interface StickyListItemProps extends Omit<StickyListItemPayload, '__typename'> {
+  subList?: AwardListPayload
   automaticallyChange?: boolean
   showIndicators?: boolean
   showArrows?: boolean
-  link?: LinkType
 }
 
 export const StickyListItem = ({
   header,
   description,
   mediaCollection,
-  subList = { awards: [] },
+  subList = { __typename: 'AwardList', awards: [] },
   automaticallyChange = true,
   showIndicators = false,
   showArrows = false,
@@ -43,7 +37,7 @@ export const StickyListItem = ({
               automaticallyChange={automaticallyChange}
               showIndicators={showIndicators}
               showArrows={showArrows}
-              srcSet={mediaCollection.items as (ResponsiveImage | Video)[]}
+              srcSet={mediaCollection.items}
             />
           ) : (
             <AspectRatio ratio={333 / 188}>

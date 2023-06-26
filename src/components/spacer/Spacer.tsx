@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './Spacer.module.scss'
 import cx from 'clsx'
 import { isNumber } from '@utils/type-guards'
+import styles from './Spacer.module.scss'
 
 interface SpacerProps {
   className?: string

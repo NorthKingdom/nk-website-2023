@@ -1,6 +1,6 @@
-import { lerp } from './math'
 import mergeDeepRight from 'ramda/es/mergeDeepRight'
 import { v4 as uuidv4 } from 'uuid'
+import { lerp } from './math'
 
 type DeepPartial<T> = T extends object
   ? {

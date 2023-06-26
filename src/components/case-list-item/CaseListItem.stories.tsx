@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { CaseListItem } from './CaseListItem';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof CaseListItem> = {
   title: 'UI/CaseListItem',

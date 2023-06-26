@@ -1,10 +1,10 @@
 import React from 'react'
 import cx from 'clsx'
-import { noop } from '@utils/noop'
-import styles from './HeaderLogo.module.scss'
-import { bemify } from '@utils/bemify'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { bemify } from '@utils/bemify'
+import { noop } from '@utils/noop'
+import styles from './HeaderLogo.module.scss'
 
 const bem = bemify(styles, 'headerLogo')
 

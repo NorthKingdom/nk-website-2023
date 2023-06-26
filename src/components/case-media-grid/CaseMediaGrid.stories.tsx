@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { DUMMY_VIDEO, DUMMY_IMAGE } from '@stories/dummy-data'
 import { CaseMediaGrid } from './CaseMediaGrid'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof CaseMediaGrid> = {
   title: 'UI/CaseMediaGrid',
@@ -15,19 +15,23 @@ type Story = StoryObj<typeof CaseMediaGrid>
 export const Default: Story = {
   args: {
     slotOne: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '0%',
     },
 
     slotTwo: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '0%',
     },
     slotThree: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '0%',
     },
     slotFour: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '0%',
     },
@@ -37,14 +41,17 @@ export const Default: Story = {
 export const WithoutTwo: Story = {
   args: {
     slotOne: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: `0%`,
     },
     slotThree: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '0%',
     },
     slotFour: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '25%',
     },
@@ -54,11 +61,13 @@ export const WithoutTwo: Story = {
 export const WithOneVideo: Story = {
   args: {
     slotOne: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '0%',
     },
 
     slotThree: {
+      __typename: 'MediaGridItem',
       media: {
         ...DUMMY_VIDEO,
         autoPlay: false,
@@ -68,6 +77,7 @@ export const WithOneVideo: Story = {
       offset: '50%',
     },
     slotFour: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '0%',
     },

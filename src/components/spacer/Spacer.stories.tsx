@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { Spacer } from './Spacer'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Spacer> = {
   title: 'UI/Spacer',

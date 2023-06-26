@@ -1,7 +1,7 @@
-import { noop } from '@utils/noop'
 import cx from 'clsx'
-import styles from './Filters.module.scss'
 import { ForwardedRef, createContext, forwardRef, useContext, useState } from 'react'
+import { noop } from '@utils/noop'
+import styles from './Filters.module.scss'
 
 interface FilterRootProps {
   style?: React.CSSProperties

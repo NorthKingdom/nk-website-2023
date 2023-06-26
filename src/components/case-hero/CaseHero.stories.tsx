@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { DUMMY_VIDEO } from '@stories/dummy-data'
 import { CaseHero } from './CaseHero'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof CaseHero> = {
   title: 'UI/CaseHero',
@@ -18,6 +18,6 @@ export const Default: Story = {
   args: {
     client: 'Riot',
     caseName: 'RiotX Arcane',
-    src: DUMMY_VIDEO,
+    media: DUMMY_VIDEO,
   },
 }

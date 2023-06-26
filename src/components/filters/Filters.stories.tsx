@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import type { Meta, StoryObj } from '@storybook/react'
+import { useState, useEffect } from 'react'
 import * as Filters from './Filters'
 import styles from './Filters.stories.module.scss'
-import { useState, useEffect } from 'react'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Filters.Root> = {
   title: 'UI/Filters',

@@ -1,12 +1,12 @@
+import { useRouter } from 'next/router'
 import React from 'react'
-import styles from './Header.module.scss'
 import { bemify } from '@utils/bemify'
-import { HeaderLogo } from './header-logo'
 import { Nav } from '@components/nav'
 import { useGlobalStateStore } from '@store'
-import { useRouter } from 'next/router'
 import { useIsScrollingDown } from '@hooks/use-is-scrolling-down'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
+import { HeaderLogo } from './header-logo'
+import styles from './Header.module.scss'
 
 const bem = bemify(styles, 'header')
 

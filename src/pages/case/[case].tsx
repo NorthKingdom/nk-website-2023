@@ -1,19 +1,19 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { useQuery } from '@apollo/client'
+import Lenis from '@studio-freight/lenis'
 import Head from 'next/head'
-import client from '@graphql/client'
-import { CaseHero as CaseHeroType, Case as CasePageProps } from '@customTypes/cms'
-import { CASE_PAGE_QUERY, WORK_PAGE_QUERY, NEXT_CASES_QUERY } from '../../graphql/queries'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { CaseHero } from '@components/case-hero'
 import { ComponentResolver } from '@components/component-resolver'
 import { useGlobalStateStore } from '@store/global-state-store'
-import styles from './Case.module.scss'
+import client from '@graphql/client'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
-import Lenis from '@studio-freight/lenis'
-import { useQuery } from '@apollo/client'
 import { NextCasePreview } from '@components/next-case-preview'
-import { useRouter } from 'next/router'
+import { CASE_PAGE_QUERY, NEXT_CASES_QUERY } from '../../graphql/queries'
+import styles from './Case.module.scss'
+import type { CaseHeroPayload, CasePayload } from '@customTypes/cms'
 
-const Case = (props: CasePageProps) => {
+const Case = (props: CasePayload) => {
   const router = useRouter()
   const lenis = useGlobalStateStore((state) => state.lenis) as Lenis
   const featuredCases = useGlobalStateStore((state) => state.featuredCases)
@@ -117,7 +117,7 @@ const Case = (props: CasePageProps) => {
           <CaseHero
             client={props.client}
             caseName={props.title}
-            src={(props.componentsCollection?.items[0] as CaseHeroType).heroMedia}
+            media={(props.componentsCollection?.items[0] as CaseHeroPayload).heroMedia}
           />
           <ContentWrapper>
             <ComponentResolver components={props.componentsCollection?.items || []} />

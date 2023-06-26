@@ -1,7 +1,7 @@
-import { noop } from '@utils/noop'
-import { useWebglSceneStore } from './WebglScene.store'
 import { animate } from 'framer-motion'
 import { useEffect, useRef } from 'react'
+import { noop } from '@utils/noop'
+import { useWebglSceneStore } from './WebglScene.store'
 import type { Color } from 'three'
 
 export function useOnSceneLightColorChange(callback: (color: Color) => void = noop, options = {}) {

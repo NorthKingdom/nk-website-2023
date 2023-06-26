@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import type { Meta, StoryObj } from '@storybook/react'
-import { Modal } from './Modal'
 import React, { useEffect } from 'react'
+import { Modal } from './Modal'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Modal> = {
   title: 'UI/Modal',

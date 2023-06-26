@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
+/* eslint-disable import/namespace */
 import * as Select from './Select'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<(typeof Select)['Root']> = {
   title: 'UI/Select',

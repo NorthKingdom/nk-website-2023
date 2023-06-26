@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
-import { useWindowSize } from './use-window-size'
 import { noop } from '@utils/noop'
+import { useWindowSize } from './use-window-size'
 
 type PointerEvent = TouchEvent | MouseEvent
 

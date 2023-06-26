@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from './JobListItem.module.scss'
 import { bemify } from '@utils/bemify'
+import styles from './JobListItem.module.scss'
 const bem = bemify(styles, 'jobListItem')
 
 interface JobListItemProps {
