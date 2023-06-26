@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { TextBlock } from './TextBlock'
 import { DUMMY_LINK } from '@stories/dummy-data'
+import { TextBlock } from './TextBlock'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof TextBlock> = {
   title: 'UI/TextBlock',

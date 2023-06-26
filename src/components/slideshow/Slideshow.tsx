@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
-import styles from './Slideshow.module.scss'
-import { bemify } from '@utils/bemify'
 import { AnimatePresence, motion } from 'framer-motion'
+import React, { useEffect, useRef, useState } from 'react'
+import { bemify } from '@utils/bemify'
 import { Arrow } from '@components/arrow'
-import { ResponsiveImage, Video } from '@customTypes/cms'
 import { Media } from '@components/media'
+import styles from './Slideshow.module.scss'
+import type { ResponsiveImagePayload, VideoPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'slideshow')
 
 interface SlideshowProps {
   automaticallyChange: boolean
   showIndicators: boolean
   showArrows: boolean
-  srcSet: (ResponsiveImage | Video)[]
+  srcSet: (ResponsiveImagePayload | VideoPayload)[]
   showCaption?: boolean
   caption?: string
 }

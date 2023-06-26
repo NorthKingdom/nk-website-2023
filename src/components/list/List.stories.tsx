@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { List } from './List'
 import { StickyListItem } from '@components/sticky-list-item'
 import { JobListItem } from '@components/job-list-item'
-import type { ResponsiveImage, Video } from '@customTypes/cms'
 import { AwardItem } from '@components/award-item'
 import { DUMMY_IMAGE, DUMMY_VIDEO, DUMMY_LINK } from '@stories/dummy-data'
+import { List } from './List'
+import type { AwardListPayload, VideoPayload } from '@customTypes/cms'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof List> = {
   title: 'UI/List',
@@ -104,7 +104,7 @@ mobile web, mobile apps and native solutions.`,
           loop: false,
           muted: true,
         },
-      ] as Video[],
+      ] as VideoPayload[],
     },
   },
   {
@@ -177,7 +177,12 @@ const renderStickyItemsWithInternalList = ({
   mediaCollection,
   subList,
 }: (typeof stickyItemsWithListInLastOne)[0]) => (
-  <StickyListItem header={header} description={description} mediaCollection={mediaCollection} subList={subList} />
+  <StickyListItem
+    header={header}
+    description={description}
+    mediaCollection={mediaCollection}
+    subList={subList as AwardListPayload}
+  />
 )
 
 export const StickyItemsWithListInside: Story = {

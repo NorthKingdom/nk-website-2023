@@ -1,10 +1,10 @@
 import React from 'react'
-import styles from './FullbleedMedia.module.scss'
 import { Media } from '@components/media'
-import type { ImageMediaProps, VideoMediaProps } from '@components/media'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
+import styles from './FullbleedMedia.module.scss'
+import type { ImageMediaProps, VideoMediaProps } from '@components/media'
 
 function getMediaAspect(media: ImageMediaProps | VideoMediaProps, isDesktopBp: boolean) {
   if (!media) return 0

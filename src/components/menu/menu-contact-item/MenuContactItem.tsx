@@ -1,9 +1,8 @@
-import React from 'react'
-import styles from './MenuContactItem.module.scss'
+import React, { useState, useRef } from 'react'
 import { bemify } from '@utils/bemify'
-import type { MenuContactItem as MenuContactItemData } from '../Menu.types'
-import { useState, useRef } from 'react'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
+import styles from './MenuContactItem.module.scss'
+import type { MenuContactItem as MenuContactItemData } from '../Menu.types'
 
 const bem = bemify(styles, 'menuContactItem')
 

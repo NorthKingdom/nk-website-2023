@@ -1,8 +1,9 @@
 import { useEffect, useId, useRef } from 'react'
-import styles from './ThemeChangeTrigger.module.scss'
 import { useInViewEffect } from 'react-hook-inview'
-import { useGlobalStateStore } from '@store'
 import cx from 'clsx'
+import { useGlobalStateStore } from '@store'
+import styles from './ThemeChangeTrigger.module.scss'
+
 interface ThemeChangeTriggerProps {
   id?: string
   theme: 'light' | 'dark'

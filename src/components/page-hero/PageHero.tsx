@@ -1,21 +1,18 @@
 import React from 'react'
-import styles from './PageHero.module.scss'
+import Link from 'next/link'
 import { bemify } from '@utils/bemify'
-import { Link as LinkType, ResponsiveImage } from '@customTypes/cms'
 import { Media } from '@components/media'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
-import Link from 'next/link'
+import styles from './PageHero.module.scss'
+import type { PageHeroPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'pageHero')
 
-interface PageHeroProps {
-  title: string
-  srcSet: ResponsiveImage
-  link?: LinkType
+interface PageHeroProps extends Omit<PageHeroPayload, '__typename'> {
   notch?: boolean
   className?: string
 }
 
-export const PageHero = ({ title, srcSet, className, link, notch = false }: PageHeroProps) => {
+export const PageHero = ({ title, image, className, link, notch = false }: PageHeroProps) => {
   return (
     <ContentWrapper fullscreen theme="dark" className={`${styles['pageHero']} ${className}`} notch={notch}>
       <ContentWrapper className={bem('titleContainer')} theme="dark">
@@ -26,9 +23,9 @@ export const PageHero = ({ title, srcSet, className, link, notch = false }: Page
           </Link>
         )}
       </ContentWrapper>
-      {srcSet && (
+      {image && (
         <div className={bem('imageContainer')}>
-          <Media {...srcSet} className={bem('image')} />
+          <Media {...image} className={bem('image')} />
         </div>
       )}
     </ContentWrapper>

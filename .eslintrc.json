@@ -1,6 +1,25 @@
 {
+  "plugins": ["eslint-plugin-import"],
   "extends": [
     "next/core-web-vitals",
-    "plugin:storybook/recommended"
-  ]
+    "plugin:storybook/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": ["index", "external", "internal", "parent", "sibling", "builtin", "object", "type"]
+      }
+    ]
+  }
 }

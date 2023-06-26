@@ -1,9 +1,8 @@
-import styles from './Select.module.scss'
-import { noop } from '@utils/noop'
 import cx from 'clsx'
 import { ForwardedRef, createContext, forwardRef, useContext, useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import { noop } from '@utils/noop'
+import styles from './Select.module.scss'
 
 interface SelectRootProps {
   style?: React.CSSProperties

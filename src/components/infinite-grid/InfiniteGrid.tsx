@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import cx from 'clsx'
 import { motion, useMotionValue } from 'framer-motion'
-import styles from './InfiniteGrid.module.scss'
-import { bemify } from '@utils/bemify'
-import type { ResponsiveImage } from '@customTypes/cms'
 import Image from 'next/image'
-import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
+import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
+import { bemify } from '@utils/bemify'
+import styles from './InfiniteGrid.module.scss'
+import type { ResponsiveImagePayload } from '@customTypes/cms'
 const bem = bemify(styles, 'infiniteGrid')
 
 interface InfiniteGridProps {
-  images: ResponsiveImage[]
+  images: ResponsiveImagePayload[]
 }
 
 const num_cols = 9
@@ -38,7 +38,7 @@ const Square = ({
   col: number
   debug: boolean
   onClick: any
-  image: ResponsiveImage
+  image: ResponsiveImagePayload
 }) => {
   const x = (i % num_cols) * col_size
   const y = Math.floor(i / num_rows) * row_size

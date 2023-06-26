@@ -1,15 +1,15 @@
-import React from 'react'
 import Head from 'next/head'
+import React from 'react'
 import client from '@graphql/client'
 import { CONTACT_PAGE_QUERY } from '@graphql/queries'
 import { PageHero } from '@components/page-hero'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import { List } from '@components/list'
-import styles from './Contact.module.scss'
 import { bemify } from '@utils/bemify'
 import { ContactListItem } from '@components/contact-list-item'
 import { OfficeListItem } from '@components/office-list-item'
+import styles from './Contact.module.scss'
 const bem = bemify(styles, 'contact')
 
 const Contact = ({ hero, contactSectionCollection, officeSectionCollection }: any) => {
@@ -26,7 +26,7 @@ const Contact = ({ hero, contactSectionCollection, officeSectionCollection }: an
         <link rel="canonical" href="https://www.northkingdom.com/contact" />
       </Head>
       <main className={styles['contact']}>
-        <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
+        <PageHero className={bem('pageHeroTitle')} {...hero} />
         <ContentWrapper theme="dark" notch style={{ paddingTop: `45px` }}>
           <ThemeChangeTrigger theme="dark" />
           <List

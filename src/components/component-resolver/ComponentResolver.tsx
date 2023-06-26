@@ -4,17 +4,24 @@ import { VideoPlayer } from '@components/video-player'
 import { TwoImageLayout } from '@components/two-image-layout'
 import { CaseMediaGrid } from '@components/case-media-grid'
 import { Media } from '@components/media'
-import {
-  CaseHero,
-  TextBlock as TextBlockType,
-  ResponsiveImage,
-  Video,
-  TwoImageComponent,
-  CaseMediaGrid as CaseMediaGridType,
+import type {
+  CaseHeroPayload,
+  TextBlockPayload,
+  ResponsiveImagePayload,
+  VideoPayload,
+  TwoImageComponentPayload,
+  CaseMediaGridPayload,
 } from '@customTypes/cms'
 
 interface ComponentResolverProps {
-  components: (CaseHero | TextBlockType | ResponsiveImage | Video | TwoImageComponent | CaseMediaGridType)[]
+  components: (
+    | CaseHeroPayload
+    | TextBlockPayload
+    | ResponsiveImagePayload
+    | VideoPayload
+    | TwoImageComponentPayload
+    | CaseMediaGridPayload
+  )[]
 }
 
 export const ComponentResolver = ({ components }: ComponentResolverProps) => {

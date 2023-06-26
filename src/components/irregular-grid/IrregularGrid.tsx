@@ -1,18 +1,13 @@
 import React from 'react'
-import styles from './IrregularGrid.module.scss'
 import { bemify } from '@utils/bemify'
-import { ResponsiveImage, Video } from '@customTypes/cms'
 import { Media } from '@components/media'
 import { AspectRatio } from '@components/aspect-ratio/AspectRatio'
 import { useBreakpointUntil } from '@hooks/use-breakpoint'
+import styles from './IrregularGrid.module.scss'
+import type { IrregularGridPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'irregularGrid')
 
-interface IrregularGridProps {
-  items: {
-    caption?: string
-    media: ResponsiveImage | Video
-  }[]
-}
+type IrregularGridProps = IrregularGridPayload['itemsCollection']
 
 const MEDIA_ASPECT = {
   mobile: [165 / 220, 165 / 220, 165 / 220, 165 / 220],

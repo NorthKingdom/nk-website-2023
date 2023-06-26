@@ -1,23 +1,24 @@
-import Head from 'next/head'
 import dynamic from 'next/dynamic'
+import Head from 'next/head'
 import { HOME_PAGE_QUERY } from '@graphql/queries'
 import client from '@graphql/client'
-import { HomePage, FeaturedCases } from '@customTypes/cms'
 import { HomeHero } from '@components/home-hero'
 import { CaseList } from '@components/case-list'
-import type {
-  ImageMarquee as ImageMarqueeData,
-  TextBlock as TextBlockData,
-  FeaturedVideo as FeaturedVideoData,
-} from '@customTypes/cms'
 import { ImageMarquee } from '@components/image-marquee'
 import { FeaturedVideo } from '@components/featured-video'
+import type {
+  HomePagePayload,
+  FeaturedCasesPayload,
+  ImageMarqueePayload,
+  TextBlockPayload,
+  FeaturedVideoPayload,
+} from '@customTypes/cms'
 
 const TextBlock = dynamic(() => import('@/components/text-block/TextBlock').then((Mod) => Mod.TextBlock), {
   ssr: false,
 })
 
-const Home = (props: HomePage) => {
+const Home = (props: HomePagePayload) => {
   return (
     <>
       <Head>
@@ -58,16 +59,16 @@ const HomePageSectionResolver = ({ __typename, ...props }: { __typename: string;
       return (
         <CaseList
           key={props.sys.id}
-          {...(props as Pick<FeaturedCases, 'initial' | 'batchSize' | 'enableBatching'>)}
+          {...(props as Pick<FeaturedCasesPayload, 'initial' | 'batchSize' | 'enableBatching'>)}
           cases={props.cases.items}
         />
       )
     case 'DescriptionComponent':
-      return <TextBlock key={props.sys.id} {...(props as TextBlockData)} notch />
+      return <TextBlock key={props.sys.id} {...(props as TextBlockPayload)} notch />
     case 'FeaturedVideo':
-      return <FeaturedVideo key={props.sys.id} {...(props as FeaturedVideoData)} />
+      return <FeaturedVideo key={props.sys.id} {...(props as FeaturedVideoPayload)} />
     case 'ImageMarquee':
-      return <ImageMarquee key={props.sys.id} {...(props as ImageMarqueeData)} />
+      return <ImageMarquee key={props.sys.id} {...(props as ImageMarqueePayload)} />
     default:
       return <></>
   }

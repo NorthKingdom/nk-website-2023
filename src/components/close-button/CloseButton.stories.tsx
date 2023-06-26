@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { CloseButton } from './CloseButton';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof CloseButton> = {
   title: 'UI/CloseButton',

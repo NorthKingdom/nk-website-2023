@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './Loader.module.scss'
-import { bemify } from '@utils/bemify'
 import cx from 'clsx'
+import { bemify } from '@utils/bemify'
+import styles from './Loader.module.scss'
 const bem = bemify(styles, 'loader')
 
 interface LoaderProps {

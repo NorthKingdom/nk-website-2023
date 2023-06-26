@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { MediaGridItem } from './MediaGridItem'
 import { DUMMY_IMAGE, DUMMY_VIDEO } from '@stories/dummy-data'
+import { MediaGridItem } from './MediaGridItem'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof MediaGridItem> = {
   title: 'UI/MediaGridItem',
@@ -15,6 +15,7 @@ type Story = StoryObj<typeof MediaGridItem>
 export const Video: Story = {
   args: {
     item: {
+      __typename: 'MediaGridItem',
       media: {
         ...DUMMY_VIDEO,
         autoPlay: false,
@@ -29,6 +30,7 @@ export const Video: Story = {
 export const Image: Story = {
   args: {
     item: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '0%',
     },
@@ -38,6 +40,7 @@ export const Image: Story = {
 export const LandscapeImage: Story = {
   args: {
     item: {
+      __typename: 'MediaGridItem',
       media: DUMMY_IMAGE,
       offset: '0%',
     },

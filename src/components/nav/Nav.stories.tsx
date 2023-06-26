@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { Nav } from './Nav'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Nav> = {
   title: 'UI/Nav',

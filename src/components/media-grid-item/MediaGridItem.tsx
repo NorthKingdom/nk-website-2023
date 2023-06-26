@@ -1,12 +1,12 @@
 import React from 'react'
-import styles from './MediaGridItem.module.scss'
 import { bemify } from '@utils/bemify'
-import { MediaGridItem as MediaGridItemType } from '@customTypes/cms'
 import { Media } from '@components/media/Media'
+import styles from './MediaGridItem.module.scss'
+import type { MediaGridItemPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'mediaGridItem')
 
 interface MediaGridItemProps {
-  item: MediaGridItemType | undefined
+  item: MediaGridItemPayload | undefined
   maxHeight: number
 }
 

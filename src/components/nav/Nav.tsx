@@ -1,17 +1,17 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import cx from 'clsx'
 import { bemify } from '@utils/bemify'
-import styles from './Nav.module.scss'
 import { MenuHamburgerButton } from '@components/menu/menu-hamburger-button'
 import { Menu } from '@components/menu'
 import { useGlobalStateStore } from '@store'
 import { NAV_ITEMS } from '@constants'
 import { isRouteActive } from '@utils/is-route-active'
-import { useRouter } from 'next/router'
-import type { NavItemData } from './Nav.types'
 import { useIsTouchDevice } from '@hooks/use-is-touch-device'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
-import Link from 'next/link'
 import { Modal } from '@components/modal'
+import styles from './Nav.module.scss'
+import type { NavItemData } from './Nav.types'
 
 const bem = bemify(styles, 'nav')
 

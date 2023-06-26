@@ -1,25 +1,20 @@
-import React from 'react'
 import Head from 'next/head'
-import client from '@graphql/client'
-import { ABOUT_PAGE_QUERY } from '@graphql/queries'
-import type {
-  About as AboutPageProps,
-  InfiniteGrid as InfiniteGridProps,
-  IrregularGrid as IrregularGridProps,
-  TextBlock as TextBlockProps,
-} from '@customTypes/cms'
+import React from 'react'
 import { PageHero } from '@components/page-hero'
 import { List } from '@components/list'
 import { StickyListItem } from '@components/sticky-list-item'
-import styles from './About.module.scss'
+import { ABOUT_PAGE_QUERY } from '@graphql/queries'
+import client from '@graphql/client'
 import { bemify } from '@utils/bemify'
 import { InfiniteGrid } from '@components/infinite-grid'
 import { TextBlock } from '@components/text-block'
 import { IrregularGrid } from '@components/irregular-grid'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
+import styles from './About.module.scss'
+import type { AboutPagePayload, InfiniteGridPayload, IrregularGridPayload, TextBlockPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'about')
 
-const About = ({ hero, ...props }: AboutPageProps) => {
+const About = ({ hero, ...props }: AboutPagePayload) => {
   return (
     <>
       <Head>
@@ -34,7 +29,7 @@ const About = ({ hero, ...props }: AboutPageProps) => {
         <link rel="canonical" href="https://www.northkingdom.com/about" />
       </Head>
       <main className={styles['about']}>
-        <PageHero className={bem('pageHeroTitle')} title={hero.title} srcSet={hero.image} />
+        <PageHero className={bem('pageHeroTitle')} {...hero} />
         {(props.sections.items ?? []).map((section) => (
           <AboutPageSectionResolver key={section.sys.id} {...section} />
         ))}
@@ -64,11 +59,11 @@ const AboutPageSectionResolver = ({ __typename, ...props }: { __typename: string
         </ContentWrapper>
       )
     case 'DescriptionComponent':
-      return <TextBlock key={props.sys.id} {...(props as TextBlockProps)} notch />
+      return <TextBlock key={props.sys.id} {...(props as TextBlockPayload)} notch />
     case 'InfiniteGrid':
-      return <InfiniteGrid key={props.sys.id} images={(props as InfiniteGridProps).itemsCollection.items} />
+      return <InfiniteGrid key={props.sys.id} images={(props as InfiniteGridPayload).itemsCollection.items} />
     case 'IrregularGrid':
-      return <IrregularGrid key={props.sys.id} items={(props as IrregularGridProps).itemsCollection.items} />
+      return <IrregularGrid key={props.sys.id} items={(props as IrregularGridPayload).itemsCollection.items} />
     default:
       return <></>
   }

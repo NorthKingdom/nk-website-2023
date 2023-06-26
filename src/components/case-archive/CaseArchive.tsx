@@ -1,11 +1,10 @@
+import { AnimatePresence, useInView, motion } from 'framer-motion'
+import Image from 'next/image'
+import { useQuery } from '@apollo/client'
 import React, { useEffect, useReducer, useRef, useState } from 'react'
-import styles from './CaseArchive.module.scss'
 import { bemify } from '@utils/bemify'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
-import { useQuery } from '@apollo/client'
 import { CASE_ARCHIVE_QUERY } from '@graphql/queries'
-import type { CaseArchiveItem as CaseArchiveItemData } from '@customTypes/cms'
-import Image from 'next/image'
 import { noop } from '@utils/noop'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
 import * as Filters from '@components/filters'
@@ -16,12 +15,12 @@ import { useCustomCursor } from '@hooks/use-custom-cursor'
 import { useBreakpointUntil } from '@hooks/use-breakpoint'
 import { useOnScroll } from '@hooks/use-on-scroll'
 import * as Select from '@components/select'
-import { AnimatePresence, useInView } from 'framer-motion'
-import { motion } from 'framer-motion'
 import { useGlobalStateStore } from '@store'
 import { LoadMore } from '@components/load-more'
+import { rubberbandIfOutOfBounds } from '@utils/math'
 import { useCaseArchiveListAnimation } from './CaseArchive.hooks'
-import { clamp, rubberbandIfOutOfBounds } from '@utils/math'
+import styles from './CaseArchive.module.scss'
+import type { CaseArchiveItemPayload } from '@customTypes/cms'
 
 const bem = bemify(styles, 'caseArchive')
 const bemItem = bemify(styles, 'caseArchiveItem')
@@ -58,7 +57,7 @@ const CustomCursorImageContext = React.createContext<{
  * Case archive item component.
  */
 
-interface CaseArchiveItemProps extends CaseArchiveItemData {
+interface CaseArchiveItemProps extends CaseArchiveItemPayload {
   index: number
   mobile: boolean
 }

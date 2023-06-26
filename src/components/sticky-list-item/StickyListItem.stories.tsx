@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { StickyListItem } from './StickyListItem'
 import { DUMMY_IMAGE, DUMMY_LINK, DUMMY_VIDEO } from '@stories/dummy-data'
+import { StickyListItem } from './StickyListItem'
+import type { Meta, StoryObj } from '@storybook/react'
+import type { AwardListPayload } from '@customTypes/cms'
 
 const meta: Meta<typeof StickyListItem> = {
   title: 'UI/StickyListItem',
@@ -137,7 +138,8 @@ mobile web, mobile apps and native solutions.`,
       items: [DUMMY_IMAGE, DUMMY_IMAGE, DUMMY_IMAGE],
     },
     subList: {
+      __typename: 'AwardList',
       awards: awardItems,
-    },
+    } as AwardListPayload,
   },
 }

@@ -1,20 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react'
-import styles from './NextCasePreview.module.scss'
-import { bemify } from '@utils/bemify'
-import { Video, ResponsiveImage } from '@customTypes/cms'
-import { Media } from '@components/media'
+import React, { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
-const bem = bemify(styles, 'nextCasePreview')
-import { useBreakpointUntil } from '@hooks/use-breakpoint'
-import { useOnScroll } from '@hooks/use-on-scroll'
-import { useGlobalStateStore } from '@store/global-state-store'
 import { motion, useInView, useMotionValue, useTransform } from 'framer-motion'
 import Lenis from '@studio-freight/lenis'
 import Head from 'next/head'
+import { useGlobalStateStore } from '@store/global-state-store'
+import { useOnScroll } from '@hooks/use-on-scroll'
+import { useBreakpointUntil } from '@hooks/use-breakpoint'
+import { Media } from '@components/media'
+import { bemify } from '@utils/bemify'
+import styles from './NextCasePreview.module.scss'
+import type { VideoPayload, ResponsiveImagePayload } from '@customTypes/cms'
+const bem = bemify(styles, 'nextCasePreview')
 
 interface CaseHeroProps {
   caseName: string
-  src: Video | ResponsiveImage
+  src: VideoPayload | ResponsiveImagePayload
   caseCheck?: any
   nextSlug: string
 }
@@ -50,7 +50,7 @@ export const NextCasePreview = ({ caseName, src, caseCheck, nextSlug }: CaseHero
   // }, [leaving])
 
   // useEffect(() => {
-  //   // preload_image((src as ResponsiveImage).desktopImage?.url || (src as Video).posterImage?.url)
+  //   // preload_image((src as ResponsiveImagePayload).desktopImage?.url || (src as VideoPayload).posterImage?.url)
   //   // return () => {
   //   //   if (lenis) {
   //   //     console.log(`destroy !!`)

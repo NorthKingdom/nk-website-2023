@@ -1,13 +1,13 @@
-import React, { useEffect, useId, type ComponentPropsWithoutRef, useMemo, useRef } from 'react'
-import styles from './VideoPlayer.module.scss'
-import { Video } from '@customTypes/cms'
+import React, { useEffect, useId, useMemo } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
 import { noop } from '@utils/noop'
-import 'plyr/dist/plyr.css'
-import { AnimatePresence, motion } from 'framer-motion'
 import { PlayButton } from '@components/play-button'
-import { set } from 'lodash'
 import { CloseButton } from '@components/close-button'
+import styles from './VideoPlayer.module.scss'
+import type { ComponentPropsWithoutRef } from 'react'
+import type { VideoPayload } from '@customTypes/cms'
+import 'plyr/dist/plyr.css'
 
 const _plyrControls = `
 <div class="plyr__controls">
@@ -40,7 +40,7 @@ const _plyrControls = `
 `
 
 interface VideoPlayerProps extends Omit<ComponentPropsWithoutRef<'video'>, 'src'> {
-  src: Video
+  src: VideoPayload
   className?: string
   poster?: string
   playsInline?: boolean

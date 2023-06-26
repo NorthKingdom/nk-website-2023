@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { WebglScene } from './WebglScene'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof WebglScene> = {
   title: 'UI/WebglScene',

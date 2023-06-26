@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import styles from './Modal.module.scss'
-import { noop } from '@utils/noop'
 import { AnimatePresence, HTMLMotionProps, motion } from 'framer-motion'
-import { useIsSSR } from '@hooks/use-is-ssr'
 import cx from 'clsx'
+import { useIsSSR } from '@hooks/use-is-ssr'
+import { noop } from '@utils/noop'
+import styles from './Modal.module.scss'
 
 interface ModalProps extends HTMLMotionProps<'div'> {
   visible: boolean

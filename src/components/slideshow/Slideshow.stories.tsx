@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { Slideshow } from './Slideshow'
 import { DUMMY_IMAGE, DUMMY_IMAGE_ALT_1, DUMMY_IMAGE_ALT_2 } from '@stories/dummy-data'
+import { Slideshow } from './Slideshow'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Slideshow> = {
   title: 'UI/Slideshow',

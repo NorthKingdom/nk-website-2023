@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './ContentWrapper.module.scss'
 import cx from 'clsx'
 import { bemify } from '@/utils/bemify'
+import styles from './ContentWrapper.module.scss'
 const bem = bemify(styles, 'contentWrapper')
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {

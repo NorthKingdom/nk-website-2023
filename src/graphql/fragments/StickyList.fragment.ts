@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
-import { VIDEO } from '../fragments/Video.fragment'
 import { RESPONSIVE_IMAGE } from '@graphql/fragments/ResponsiveImage.fragment'
+import { VIDEO } from '../fragments/Video.fragment'
 
 export const STICKY_LIST = gql`
   ${VIDEO}

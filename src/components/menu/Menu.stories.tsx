@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { Menu } from './Menu'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Menu> = {
   title: 'UI/Menu',

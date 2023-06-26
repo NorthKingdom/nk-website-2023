@@ -1,6 +1,6 @@
-import type { Video, ResponsiveImage, Asset } from '@customTypes/cms'
-import { useBreakpointUntil } from './use-breakpoint'
 import { getMimeTypeFromFilename } from '@utils/media-mime-types'
+import { useBreakpointUntil } from './use-breakpoint'
+import type { VideoPayload, ResponsiveImagePayload, AssetPayload } from '@customTypes/cms'
 
 type Srcset = {
   url: string
@@ -19,13 +19,13 @@ interface ContentfulMediaSrcVideoOptions {}
 interface ContentfulMediaSrcOptions extends ContentfulMediaSrcImageOptions, ContentfulMediaSrcVideoOptions {}
 
 /**
- * This hook is used to get the src and srcset for a media object (Video | ResponsiveImage) from Contentful based on the current breakpoint
- * @param {Video | ResponsiveImage} media Video or ResponsiveImage object from Contentful
+ * This hook is used to get the src and srcset for a media object (VideoPayload | ResponsiveImage) from Contentful based on the current breakpoint
+ * @param {VideoPayload | ResponsiveImagePayload} media VideoPayload or ResponsiveImagePayload object from Contentful
  * @returns {Object} The location of the event
  */
 
 export const useContentfulMediaSrc = (
-  media: Video | ResponsiveImage | Asset,
+  media: VideoPayload | ResponsiveImagePayload | AssetPayload,
   options: ContentfulMediaSrcOptions = {}
 ): {
   src: string
@@ -45,7 +45,7 @@ export const useContentfulMediaSrc = (
   const isAsset = media.__typename === 'Asset'
 
   if (isVideo) {
-    const video = media as Video
+    const video = media as VideoPayload
     const { items: sources } = isMobileBreakpoint ? video.mobileVideoCollection : video.desktopVideoCollection
 
     return {
@@ -53,7 +53,9 @@ export const useContentfulMediaSrc = (
       srcset: sources.map(({ url }) => ({ url, type: getMimeTypeFromFilename(url) ?? '' })),
     }
   } else if (isImage || isAsset) {
-    const image = isAsset ? { mobileImage: { ...media }, desktopImage: { ...media } } : (media as ResponsiveImage)
+    const image = isAsset
+      ? { mobileImage: { ...media }, desktopImage: { ...media } }
+      : (media as ResponsiveImagePayload)
     const src = isMobileBreakpoint ? image.mobileImage.url : image.desktopImage.url
 
     const imageParams: { [key: string]: any } = {

@@ -1,15 +1,9 @@
 import React from 'react'
 import styles from './AwardItem.module.scss'
-import { bemify } from '@utils/bemify'
-const bem = bemify(styles, 'awardItem')
-
-interface AwardItemProps {
-  awardName: string
-  count: number
-}
+import type { AwardPayload } from '@customTypes/cms'
 
 // For the rendering of Awards List
-export const AwardItem = ({ awardName, count }: AwardItemProps) => {
+export const AwardItem = ({ awardName, count }: AwardPayload) => {
   return (
     <div className={styles['awardItem']}>
       <p>{awardName}</p>

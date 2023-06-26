@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { AwardItem } from './AwardItem'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof AwardItem> = {
   title: 'UI/AwardItem',

@@ -4,11 +4,11 @@ import { gql } from '@apollo/client'
 import client from '@graphql/client'
 import { RESPONSIVE_IMAGE } from '@graphql/fragments/ResponsiveImage.fragment'
 import { PageHero } from '@components/page-hero'
-import { ResponsiveImage } from '@customTypes/cms'
+import type { ResponsiveImagePayload } from '@customTypes/cms'
 
 interface FourOhFourProps {
   title: string
-  image: ResponsiveImage
+  image: ResponsiveImagePayload
 }
 
 const ERROR_PAGE_QUERY = (draftMode: boolean) => gql`
@@ -32,7 +32,7 @@ const Custom404 = ({ title, image }: FourOhFourProps) => {
       </Head>
       <PageHero
         title={title}
-        srcSet={image}
+        image={image}
         notch
         link={{
           __typename: 'Link',

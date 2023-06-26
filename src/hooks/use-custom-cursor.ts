@@ -1,5 +1,5 @@
-import Cursor, { type CursorChild } from '@utils/cursor'
 import { useState, useEffect, type RefObject } from 'react'
+import Cursor, { type CursorChild } from '@utils/cursor'
 
 interface UseCustomCursorProps {
   cursorRef: RefObject<HTMLDivElement>

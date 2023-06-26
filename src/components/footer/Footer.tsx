@@ -1,11 +1,10 @@
+import { gql , useQuery } from '@apollo/client'
 import React, { useRef } from 'react'
-import styles from './Footer.module.scss'
+import Link from 'next/link'
 import { bemify } from '@utils/bemify'
 import { useBreakpointFrom } from '@hooks/use-breakpoint'
-import { gql } from '@apollo/client'
-import { useQuery } from '@apollo/client'
 import { useGlobalStateStore } from '@store'
-import Link from 'next/link'
+import styles from './Footer.module.scss'
 
 const bem = bemify(styles, 'footer')
 

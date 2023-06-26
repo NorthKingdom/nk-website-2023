@@ -1,6 +1,6 @@
-import type { MotionValue } from 'framer-motion'
 import { create } from 'zustand'
 import { Color } from 'three'
+import type { MotionValue } from 'framer-motion'
 
 interface ShieldStateEvent {
   type:

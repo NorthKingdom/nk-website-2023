@@ -1,17 +1,17 @@
-import { useRef, useState, useMemo, useEffect } from 'react'
-import styles from './ImageMarquee.module.scss'
-import { bemify } from '@utils/bemify'
-import cx from 'clsx'
+import { useRef, useState, useMemo } from 'react'
+import Image from 'next/image'
 import { useInView, useMotionValue, useMotionValueEvent } from 'framer-motion'
+import cx from 'clsx'
 import { useOnScroll } from '@hooks/use-on-scroll'
 import { clamp, map } from '@utils/math'
-import type { ImageMarquee as ImageMarqueeData, ImageMarqueeItem as ImageMarqueeItemData } from '@customTypes/cms'
 import { useBreakpointUntil } from '@hooks/use-breakpoint'
-const bem = bemify(styles, 'imageMarquee')
-import Image from 'next/image'
 import { useContentfulMediaSrc } from '@hooks/use-contentful-media-src'
+import { bemify } from '@utils/bemify'
+import styles from './ImageMarquee.module.scss'
+import type { ImageMarqueePayload, ImageMarqueeItemPayload } from '@customTypes/cms'
+const bem = bemify(styles, 'imageMarquee')
 
-interface ImageMarqueeProps extends ImageMarqueeData {
+interface ImageMarqueeProps extends ImageMarqueePayload {
   height?: number
   className?: string
   style?: React.CSSProperties
@@ -55,7 +55,7 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
       finalItems = finalItems.slice(0, NUM_OF_ITEMS)
     }
 
-    const rows: ImageMarqueeData['images']['items'][] = []
+    const rows: ImageMarqueePayload['images']['items'][] = []
 
     for (let i = 0; i < finalItems.length; i += NUM_OF_ITEMS_PER_ROW) {
       rows.push(finalItems.slice(i, i + NUM_OF_ITEMS_PER_ROW))
@@ -117,7 +117,7 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
   )
 }
 
-interface ImageMarqueeItemProps extends ImageMarqueeItemData {
+interface ImageMarqueeItemProps extends ImageMarqueeItemPayload {
   revealThreshold: number
   revealed?: boolean
   debug?: boolean

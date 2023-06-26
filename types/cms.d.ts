@@ -1,43 +1,53 @@
-import { idText } from 'typescript'
+/**
+ * GUIDELINES
+ * 1. All types should be PascalCase
+ * 2. All CMS types should have a '__typename' property
+ * 3. All types should be prefixed with the name of the content type they are used for
+ * 4. All types should be suffixed with the word 'Payload' to avoid naming conflicts with corresponding components (e.g. 'CasePayload' type vs 'Case' component)
+ */
 
-export interface Asset {
+export interface AssetPayload {
   __typename: 'Asset'
   url: string
 }
 
-export interface PageHero {
+export interface PageHeroPayload {
+  __typename: 'PageHero'
   title: string
-  image: ResponsiveImage
+  image?: ResponsiveImagePayload
+  link?: LinkPayload
 }
 
-export interface TextBlock {
+export interface TextBlockPayload {
   __typename: 'DescriptionComponent'
   sys: { id: string }
   heading?: string
   copyLeft?: string
   copyRight?: string
-  link?: Link
+  link?: LinkPayload
 }
 
-export interface MediaGridItem {
-  media: ResponsiveImage | Video
+export interface MediaGridItemPayload {
+  __typename: 'MediaGridItem'
+  media: MediaPayload
   offset: '0%' | '25%' | '50%'
 }
 
-export interface About {
-  hero: PageHero
+export interface AboutPagePayload {
+  __typename: 'About'
+  hero: PageHeroPayload
   sections: {
-    items: (TextBlock | InfiniteGrid | IrregularGrid | StickyList)[]
+    items: (TextBlockPayload | InfiniteGridPayload | IrregularGridPayload | StickyListPayload)[]
   }
 }
 
-export interface Link {
+export interface LinkPayload {
   __typename: 'Link'
   copy: string
   url: string
 }
 
-export interface ClipboardCopyItem {
+export interface ClipboardCopyItemPayload {
   __typename: 'ClipboardCopyItem'
   label: string
   content: string
@@ -45,7 +55,8 @@ export interface ClipboardCopyItem {
   confirmationLabel?: string
 }
 
-export interface Video {
+export interface VideoPayload {
+  __typename: 'Video'
   muted: boolean
   autoPlay: boolean
   loop: boolean
@@ -68,10 +79,10 @@ export interface Video {
       height: number
     }[]
   }
-  __typename: 'Video'
 }
 
-export interface ResponsiveImage {
+export interface ResponsiveImagePayload {
+  __typename: 'ResponsiveImage'
   desktopImage: {
     url: string
     width: number
@@ -83,114 +94,112 @@ export interface ResponsiveImage {
     height: number
   }
   altText: string
-  __typename: 'ResponsiveImage'
 }
 
-export type Media = ResponsiveImage | Video
+export type MediaPayload = ResponsiveImagePayload | VideoPayload
 
-export interface StickyList {
+export interface StickyListPayload {
   __typename: 'StickyList'
   sys: { id: string }
   itemsCollection: {
-    items: {
-      header: string
-      description: string
-      mediaCollection: {
-        items: (ResponsiveImage | Video)[]
-      }
-      link: Link
-    }[]
+    items: StickyListItemPayload[]
   }
 }
 
-export interface Award {
+export interface StickyListItemPayload {
+  __typename: 'StickyListItem'
+  header: string
+  description: string
+  mediaCollection: {
+    items: MediaPayload[]
+  }
+  link?: LinkPayload
+}
+
+export interface AwardListPayload {
+  __typename: 'AwardList'
+  awards: AwardPayload[]
+}
+
+export interface AwardPayload {
+  __typename: 'Award'
   awardName: string
   count: number
 }
 
-export interface AwardList {
-  awards: Award[]
-}
-
-export interface CaseHero {
-  heroMedia: ResponsiveImage | Video
+export interface CaseHeroPayload {
   __typename: 'CaseHero'
+  heroMedia: MediaPayload
 }
 
-export interface TwoImageComponent {
-  imageOne: ResponsiveImage
-  imageOneCaption?: string
-  imageTwo: ResponsiveImage
-  imageTwoCaption?: string
+export interface TwoImageComponentPayload {
   __typename: 'TwoImageComponent'
+  imageOne: ResponsiveImagePayload
+  imageOneCaption?: string
+  imageTwo: ResponsiveImagePayload
+  imageTwoCaption?: string
 }
 
-export interface CaseMediaGrid {
-  slotOne?: MediaGridItem
-  slotTwo?: MediaGridItem
-  slotThree?: MediaGridItem
-  slotFour?: MediaGridItem
+export interface CaseMediaGridPayload {
   __typename: 'CaseMediaGrid'
+  slotOne?: MediaGridItemPayload
+  slotTwo?: MediaGridItemPayload
+  slotThree?: MediaGridItemPayload
+  slotFour?: MediaGridItemPayload
 }
 
-export interface Case {
+export interface CasePayload {
+  __typename: 'Case'
   title: string
-  slides: Slides[]
+  slides: SlidesPayload[]
   date: any
   vertical: string
   client: string
   capability: string
-  tags: Tags[]
+  tags: TagsPayload[]
   slug: string
-  thumbnail: Video | ResponsiveImage
-  thumbnailMobile: Video | ResponsiveImage
+  thumbnail: VideoPayload | ResponsiveImagePayload
+  thumbnailMobile: VideoPayload | ResponsiveImagePayload
   projectLink: string
   readMoreLink: string
   public: boolean
   image?: string
   componentsCollection: {
-    items: (CaseHero | DescriptionComponent | ResponsiveImage | Video | TwoImageComponent | CaseMediaGrid)[]
+    items: (
+      | CaseHeroPayload
+      | TextBlockPayload
+      | ResponsiveImagePayload
+      | VideoPayload
+      | TwoImageComponentPayload
+      | CaseMediaGridPayload
+    )[]
   }
   backgroundColor?: {
     value: string
   }
 }
 
-export interface CaseArchiveItem extends Pick<Case, 'title' | 'date' | 'client' | 'projectLink' | 'vertical'> {
+export interface CaseArchiveItemPayload extends Pick<Case, 'title' | 'date' | 'client' | 'projectLink' | 'vertical'> {
   sys: { id: string }
 }
 
-export interface CaseArchive {
+export interface CaseArchivePayload {
   total: number
-  items: CaseArchiveItem[]
+  items: CaseArchiveItemPayload[]
 }
-
-export interface Collection {
-  cases: Case[]
-  name: string
-  description: string
-  public: boolean
-  slug: string
-}
-
-export interface CollectionsPage {
-  collections: Collection[]
-  name: string
-}
-
-export interface HomeHero {
+export interface HomeHeroPayload {
   __typename: 'HomeHeroComponent'
   sys: { id: string }
   statement: string
-  shieldVideo: Video
-  showreelVideo: Video
+  shieldVideo: VideoPayload
+  showreelVideo: VideoPayload
   shieldLightLeakColorVtt: {
     url: string
     contentType: string
   }
 }
 
-export interface FeaturedCases {
+export interface FeaturedCasesPayload {
   __typename: 'FeaturedCasesComponent'
   sys: { id: string }
   initial: number
@@ -199,182 +208,84 @@ export interface FeaturedCases {
   cases: { items: Case[] }
 }
 
-export interface FeaturedVideo {
+export interface FeaturedVideoPayload {
   __typename: 'FeaturedVideo'
   sys: { id: string }
   title: string
   description?: string
-  video: Video
+  video: VideoPayload
 }
 
-export interface ImageMarqueeItem {
+export interface ImageMarqueeItemPayload {
+  __typename: 'ImageMarqueeItem'
   clientName: string
   clientLogo: Asset
-  relatedImage: Asset
+  relatedImage: AssetPayload
 }
 
-export interface ImageMarquee {
+export interface ImageMarqueePayload {
   __typename: 'ImageMarquee'
   sys: { id: string }
   images: {
-    items: ImageMarqueeItem[]
+    items: ImageMarqueeItemPayload[]
   }
 }
 
-export type HomePageSection = FeaturedCases | FeaturedVideo | ImageMarquee | Description
+export type HomePageSectionPayload =
+  | FeaturedCasesPayload
+  | FeaturedVideoPayload
+  | ImageMarqueePayload
+  | DescriptionPayload
 
-export interface HomePage {
-  hero: HomeHero
-  sections: { items: HomePageSection[] }
+export interface HomePagePayload {
+  __typename: 'HomePage'
+  hero: HomeHeroPayload
+  sections: { items: HomePageSectionPayload[] }
 }
 
-export interface WorkPage {
-  featuredCases: FeaturedCases
-  caseArchive: CaseArchive
+export interface WorkPagePayload {
+  __typename: 'WorkPage'
+  featuredCases: FeaturedCasesPayload
+  caseArchive: CaseArchivePayload
 }
 
-export interface CareersPage {
-  hero: PageHero
+export interface CareersPagePayload {
+  __typename: 'CareersPage'
+  hero: PageHeroPayload
   sections: {
-    items: (TextBlock | IrregularGrid | StickyList)[]
+    items: (TextBlockPayload | IrregularGridPayload | StickyListPayload)[]
   }
 }
 
-export interface FooterData {
-  footerHeroText: string
-  changingFooterWords: string[]
-  skeOfficeName: string
-  skeOfficeAddressLineOne: string
-  skeOfficeAddressLineTwo: string
-  skeOfficeImageGallery: string
-  sthlmOfficeName: string
-  sthlmOfficeAddressLineOne: string
-  sthlmOfficeAddressLineTwo: string
-  sthlmOfficeImageGallery: string
-  barcelonaOfficeName: string
-  barcelonaOfficeAddressLineOne: string
-  barcelonaOfficeAddressLineTwo: string
-  barcelonaOfficeImageGallery: string
-  careersEmail: string
-  internEmail: string
-  pressEmail: string
-  infoPhoneNumber: string
-  infoEmail: string
-  linkedInLink: string
-  twitterLink: string
-  instagramLink: string
-  facebookLink: string
-  noaText: string
-}
-
-export interface InfiniteGrid {
+export interface InfiniteGridPayload {
   __typename: 'InfiniteGrid'
   sys: { id: string }
   itemsCollection: {
-    items: ResponsiveImage[]
+    items: ResponsiveImagePayload[]
   }
 }
 
-export interface IrregularGridItem {
-  media: Media
-  caption: any
+export interface IrregularGridItemPayload {
+  __typename: 'IrregularGridItem'
+  media: MediaPayload
+  caption?: string
 }
 
-export interface IrregularGrid {
+export interface IrregularGridPayload {
   __typename: 'IrregularGrid'
   sys: { id: string }
   itemsCollection: {
-    items: [IrregularGridItem, IrregularGridItem, IrregularGridItem, IrregularGridItem]
+    items: [IrregularGridItemPayload, IrregularGridItemPayload, IrregularGridItemPayload, IrregularGridItemPayload]
   }
 }
-
-// export interface JobPage {
-//   header: string
-//   generalApplicationCopy: string
-//   generalApplicationCta: string
-//   otherOpportunitiesHeader: string
-//   otherOpportunitiesCopy: string
-// }
-
-export interface JournalEntry {
-  author: string
-  authorRoleAtNk: string
-  bodyCopy: string
-  media: image[]
-  thumbnail: image
-  readMoreLink: string
-}
-
-export interface JournalPage {
-  heading: string
-}
-
-export interface SlideBriefSolutionImpact {
-  brief: string
-  solution: string
-  impact: string
-}
-
-export interface SlideFullBleed {
-  image: image
-  shortText: string
-}
-
-export interface SlideLegacyDescription {
-  header: string
-  copy: string
-}
-
-export interface SlideQuote {
-  quote: string
-  author: string
-}
-
-export interface SlideSingleImage {
-  media: image
-  copy: string
-}
-
-export interface SlideThreeImages {
-  copy: string
-  imageOne: image
-  imageTwo: image
-  imageThree: image
-}
-
-export interface SlideThreeStats {
-  statOne: string
-  statOneDescription: string
-  statTwo: string
-  statTwoDescription: string
-  statThree: string
-  statThreeDescription: string
-}
-
-export interface SlideTitle {
-  image: image
-  imageMobile: image
-  client: string
-  title: string
-  description: string
-  loopVideo: boolean
-  fullScreen: boolean
-}
-
-export type Slide = SlideBriefSolutionImpact &
-  SlideFullBleed &
-  SlideLegacyDescription &
-  SlideQuote &
-  SlideSingleImage &
-  SlideThreeImages &
-  SlideThreeStats &
-  SlideTitle
-
-export interface Tag {
+export interface TagPayload {
+  __typename: 'Tag'
   name: string
 }
 
-export interface TeamTailorJob {
+// TODO: review if this is needed?
+
+export interface TeamTailorJobPayload {
   'end-date'?: string
   'start-date'?: string
   'min-salary'?: string
