@@ -32,6 +32,7 @@
     "glsl-film-grain": "^1.0.4",
     "glslify": "^7.1.1",
     "graphql": "^16.6.0",
+    "maath": "^0.7.0",
     "mousetrap": "^1.6.5",
     "next": "13.4.1",
     "plyr": "^3.7.8",
