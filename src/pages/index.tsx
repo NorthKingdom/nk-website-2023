@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import { HOME_PAGE_QUERY } from '@graphql/queries'
+import { FOOTER_QUERY, HOME_PAGE_QUERY } from '@graphql/queries'
 import client from '@graphql/client'
 import { HomeHero } from '@components/home-hero'
 import { CaseList } from '@components/case-list'
@@ -36,14 +36,13 @@ const Home = (props: HomePagePayload) => {
 
 export async function getStaticProps({ draftMode = false }) {
   try {
-    const res = await client(draftMode).query({
-      query: HOME_PAGE_QUERY(draftMode),
-    })
+    const res = await client(draftMode).query({ query: HOME_PAGE_QUERY(draftMode) })
+    const footerRes = await client(draftMode).query({ query: FOOTER_QUERY(draftMode) })
 
     if (!res.data.home) {
       return { notFound: true }
     } else {
-      return { props: res.data.home }
+      return { props: { ...res.data.home, footer: footerRes.data.footer } }
     }
   } catch (error) {
     console.error(error)

@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 import client from '@graphql/client'
-import { CONTACT_PAGE_QUERY } from '@graphql/queries'
+import { CONTACT_PAGE_QUERY, FOOTER_QUERY } from '@graphql/queries'
 import { PageHero } from '@components/page-hero'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
 import { ThemeChangeTrigger } from '@components/theme-change-trigger'
@@ -49,14 +49,19 @@ const Contact = ({ hero, contactSectionCollection, officeSectionCollection }: an
 }
 
 export async function getStaticProps({ draftMode = false }) {
-  return client(draftMode)
-    .query({
-      query: CONTACT_PAGE_QUERY(draftMode),
-    })
-    .then((res: any) => res.data)
-    .then((data: any) => {
-      return { props: data.contactPage }
-    })
+  try {
+    const res = await client(draftMode).query({ query: CONTACT_PAGE_QUERY(draftMode) })
+    const footerRes = await client(draftMode).query({ query: FOOTER_QUERY(draftMode) })
+
+    if (!res.data.contactPage) {
+      return { notFound: true }
+    } else {
+      return { props: { ...res.data.contactPage, footer: footerRes.data.footer } }
+    }
+  } catch (error) {
+    console.error(error)
+    return { notFound: true }
+  }
 }
 
 export default Contact

@@ -13,6 +13,7 @@ type Story = StoryObj<typeof Footer>
 export const LightMode: Story = {
   args: {
     theme: 'light',
+    statement: 'Proud member of NOA',
   },
 }
 
@@ -20,5 +21,6 @@ export const DarkMode: Story = {
   parameters: { theme: 'dark' },
   args: {
     theme: 'dark',
+    statement: 'Proud member of NOA',
   },
 }

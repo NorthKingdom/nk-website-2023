@@ -13,7 +13,12 @@ type Story = StoryObj<typeof Layout>
 export const LightMode: Story = {
   args: {},
   render: () => (
-    <Layout>
+    <Layout
+      footer={{
+        __typename: 'Footer',
+        statement: 'This is a statement',
+      }}
+    >
       <div
         style={{
           backgroundColor: 'var(--color-bg)',
@@ -32,7 +37,12 @@ export const DarkMode: Story = {
   parameters: { theme: 'dark' },
   args: {},
   render: () => (
-    <Layout>
+    <Layout
+      footer={{
+        __typename: 'Footer',
+        statement: 'This is a statement',
+      }}
+    >
       <div
         style={{
           backgroundColor: 'var(--color-bg)',

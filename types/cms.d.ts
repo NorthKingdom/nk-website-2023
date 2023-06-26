@@ -278,6 +278,12 @@ export interface IrregularGridPayload {
     items: [IrregularGridItemPayload, IrregularGridItemPayload, IrregularGridItemPayload, IrregularGridItemPayload]
   }
 }
+
+export interface FooterPayload {
+  __typename: 'Footer'
+  statement: string
+}
+
 export interface TagPayload {
   __typename: 'Tag'
   name: string
