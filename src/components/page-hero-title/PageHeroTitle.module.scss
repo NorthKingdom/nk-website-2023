@@ -1,0 +1,18 @@
+.line {
+  display: inline-block;
+  overflow: hidden;
+  word-break: keep-all;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.line__inner {
+  display: inline-block;
+  transform-origin: 0% 50%;
+  will-change: transform;
+}
+
+.whitespace {
+  //   display: inline-block;
+}
