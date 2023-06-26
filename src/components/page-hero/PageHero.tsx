@@ -4,6 +4,7 @@ import cx from 'clsx'
 import { bemify } from '@utils/bemify'
 import { Media } from '@components/media'
 import { ContentWrapper } from '@components/content-wrapper/ContentWrapper'
+import { PageHeroTitle } from '@components/page-hero-title'
 import styles from './PageHero.module.scss'
 import type { PageHeroPayload } from '@customTypes/cms'
 const bem = bemify(styles, 'pageHero')
@@ -15,14 +16,14 @@ interface PageHeroProps extends Omit<PageHeroPayload, '__typename'> {
 }
 
 export const PageHero = ({ title, image, className, link, notch = false }: PageHeroProps) => {
-  const [showHeroImage, toggle] = useReducer(() => true, false)
+  const [shouldShowHero, revealHero] = useReducer(() => true, false)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(toggle, [])
+  useEffect(revealHero, [])
 
   return (
     <ContentWrapper fullscreen theme="dark" className={`${styles['pageHero']} ${className}`} notch={notch}>
       <ContentWrapper className={bem('titleContainer')} theme="dark">
-        <h1 className={bem('title')}>{title}</h1>
+        <PageHeroTitle show={shouldShowHero}>{title}</PageHeroTitle>
         {!!link && (
           <Link href={link.url} className={bem('cta')}>
             {link.copy}
@@ -30,7 +31,7 @@ export const PageHero = ({ title, image, className, link, notch = false }: PageH
         )}
       </ContentWrapper>
       {image && (
-        <div className={cx(bem('imageContainer'), pageHeroImageBem())} data-show={showHeroImage}>
+        <div className={cx(bem('imageContainer'), pageHeroImageBem())} data-show={shouldShowHero}>
           <div className={pageHeroImageBem('inner')}>
             <div className={pageHeroImageBem('scale')}>
               <Media {...image} className={bem('image')} />
