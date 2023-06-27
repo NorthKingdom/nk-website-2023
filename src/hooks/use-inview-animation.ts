@@ -6,13 +6,11 @@ import { useInViewEffect } from 'react-hook-inview'
  */
 export function useInViewAnimation(
   className = 'animate-fade-up',
-  transitionSelf = false,
-  { threshold = 0.25, interval = 175 } = {}
+  { threshold = 0.25, stagger = false, staggerDelay = 0.175, initialDelay = 0 } = {}
 ) {
   const observe = useInViewEffect(
     ([entry], observer) => {
       if (entry?.isIntersecting) {
-        // setInView(true);
         entry.target.classList.add(className)
         observer.disconnect()
       }
@@ -24,8 +22,9 @@ export function useInViewAnimation(
     (node: HTMLElement | null) => {
       if (node) {
         observe(node)
-        if (transitionSelf) {
+        if (!stagger) {
           node.style.opacity = '0'
+          node.style.animationDelay = `${initialDelay}s`
         } else {
           const children = node.children as HTMLCollectionOf<HTMLElement>
           node.classList.add('stagger')
@@ -33,12 +32,12 @@ export function useInViewAnimation(
           for (let i = 0; i < children.length; i += 1) {
             const child = children[i]
             child.style.opacity = '0'
-            child.style.animationDelay = `${interval * i}ms`
+            child.style.animationDelay = `${initialDelay + staggerDelay * i}s`
           }
         }
       }
     },
-    [observe, interval, transitionSelf]
+    [observe, staggerDelay, stagger, initialDelay]
   )
 
   return setChildren

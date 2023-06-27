@@ -22,7 +22,6 @@ function Work(props: WorkPagePayload) {
       <main style={{ paddingTop: '80px' }}>
         <CaseList
           {...(props.featuredCases as Pick<FeaturedCasesPayload, 'initial' | 'batchSize' | 'enableBatching'>)}
-          cases={props.featuredCases.cases.items}
         />
         <CaseArchive />
       </main>

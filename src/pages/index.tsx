@@ -58,8 +58,7 @@ const HomePageSectionResolver = ({ __typename, ...props }: { __typename: string;
       return (
         <CaseList
           key={props.sys.id}
-          {...(props as Pick<FeaturedCasesPayload, 'initial' | 'batchSize' | 'enableBatching'>)}
-          cases={props.cases.items}
+          {...(props as Pick<FeaturedCasesPayload, 'cases' | 'initial' | 'batchSize' | 'enableBatching'>)}
         />
       )
     case 'DescriptionComponent':
