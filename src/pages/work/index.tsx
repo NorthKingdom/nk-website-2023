@@ -4,7 +4,7 @@ import client from '@graphql/client'
 import { FOOTER_QUERY, WORK_PAGE_QUERY } from '@graphql/queries'
 import { CaseList } from '@components/case-list'
 import { CaseArchive } from '@components/case-archive'
-import type { WorkPagePayload, FeaturedCasesPayload } from '@customTypes/cms'
+import type { WorkPagePayload } from '@customTypes/cms'
 
 function Work(props: WorkPagePayload) {
   return (
@@ -20,10 +20,7 @@ function Work(props: WorkPagePayload) {
         <link rel="canonical" href="https://www.northkingdom.com/work" />
       </Head>
       <main style={{ paddingTop: '80px' }}>
-        <CaseList
-          {...(props.featuredCases as Pick<FeaturedCasesPayload, 'initial' | 'batchSize' | 'enableBatching'>)}
-          cases={props.featuredCases.cases.items}
-        />
+        <CaseList {...props.featuredCases} />
         <CaseArchive />
       </main>
     </>

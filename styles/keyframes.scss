@@ -1,13 +1,33 @@
-.animate-fade-up > * {
+.animate-fade-up:not(.stagger) {
   animation: fade-up 750ms var(--ease) forwards;
 }
 
-.animate-image-fade-up > * {
+.animate-fade-up.stagger > * {
+  animation: fade-up 750ms var(--ease) forwards;
+}
+
+.animate-image-fade-up:not(.stagger) {
   animation: image-fade-up 500ms ease-out forwards;
 }
 
-.animate-list-item-fade-up {
+.animate-image-fade-up.stagger > * {
+  animation: image-fade-up 500ms ease-out forwards;
+}
+
+.animate-list-item-fade-up:not(.stagger) {
   animation: fade-up 500ms ease-out forwards;
+}
+
+.animate-list-item-fade-up.stagger > * {
+  animation: fade-up 500ms ease-out forwards;
+}
+
+.animate-featured-case-fade-up:not(.stagger) {
+  animation: featured-case-fade-up var(--transition-duration-extra-long) var(--ease-standard-decelerate) forwards;
+}
+
+.animate-featured-case-fade-up.stagger > * {
+  animation: featured-case-fade-up var(--transition-duration-extra-long) var(--ease-standard-decelerate) forwards;
 }
 
 @keyframes fade-up {
@@ -37,6 +57,18 @@
     opacity: 0;
   }
   to {
+    opacity: 1;
+  }
+}
+
+@keyframes featured-case-fade-up {
+  from {
+    transform: translateY(300px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
     opacity: 1;
   }
 }
