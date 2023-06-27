@@ -65,6 +65,8 @@ export function Layout({ children, hideFooter = false, footer }: LayoutProps) {
       content: contentRef.current,
       smoothTouch: !isTouchDevice,
       smoothWheel: !isTouchDevice,
+      wheelMultiplier: 0.4,
+      touchMultiplier: 1,
     })
 
     setLenis(lenis)
