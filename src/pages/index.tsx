@@ -55,12 +55,7 @@ export default Home
 const HomePageSectionResolver = ({ __typename, ...props }: { __typename: string; [key: string]: any }) => {
   switch (__typename) {
     case 'FeaturedCasesComponent':
-      return (
-        <CaseList
-          key={props.sys.id}
-          {...(props as Pick<FeaturedCasesPayload, 'cases' | 'initial' | 'batchSize' | 'enableBatching'>)}
-        />
-      )
+      return <CaseList key={props.sys.id} {...(props as FeaturedCasesPayload)} />
     case 'DescriptionComponent':
       return <TextBlock key={props.sys.id} {...(props as TextBlockPayload)} notch />
     case 'FeaturedVideo':
