@@ -9,10 +9,18 @@ import { List } from '@components/list'
 import { bemify } from '@utils/bemify'
 import { ContactListItem } from '@components/contact-list-item'
 import { OfficeListItem } from '@components/office-list-item'
+import { useInViewAnimation } from '@hooks/use-inview-animation'
 import styles from './Contact.module.scss'
 const bem = bemify(styles, 'contact')
 
 const Contact = ({ hero, contactSectionCollection, officeSectionCollection }: any) => {
+  const revealEffectRef = useInViewAnimation('animate-featured-case-fade-up', {
+    stagger: true,
+    staggerDelay: 0.08,
+    initialDelay: 0.1,
+    threshold: 0,
+  })
+
   return (
     <>
       <Head>
@@ -30,6 +38,7 @@ const Contact = ({ hero, contactSectionCollection, officeSectionCollection }: an
         <ContentWrapper theme="dark" notch style={{ paddingTop: `45px` }}>
           <ThemeChangeTrigger theme="dark" />
           <List
+            ref={revealEffectRef}
             hideAllBars
             style={{
               '--list-color': 'white',
