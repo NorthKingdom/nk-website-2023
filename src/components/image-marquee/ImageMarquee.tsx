@@ -66,12 +66,6 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
 
   const [revealed, setRevealed] = useState(false)
 
-  const isInView = useInView(ref)
-
-  // useEffect(() => {
-  //   if (!isInView && revealed) setRevealed(false)
-  // }, [isInView, revealed])
-
   useMotionValueEvent(progressMotionValue, 'change', (latest) => {
     if (latest > 0.4) {
       if (!revealed) setRevealed(true)
@@ -83,21 +77,8 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
       <div className={bem('stickyContainer')}>
         {rows.map((row, i) => (
           <div key={i} className={bem('row')}>
-            {row.map((item, j) => {
-              const itemIndex = i * row.length + j
-              const revealIndex = (itemIndex % row.length) + i + 1
-              const revealThreshold = (revealIndex / (row.length + 2)) * 0.5 + i * 0.03
-              return (
-                <ImageMarqueeItem
-                  key={j}
-                  {...item}
-                  revealed={revealed}
-                  // scrollProgress={progressMotionValue}
-                  revealThreshold={revealThreshold}
-                  // debug
-                />
-              )
-            })}
+            <ImageMarqueeRow index={i} items={row} revealed={revealed} />
+            <ImageMarqueeRow index={i} items={row} revealed={revealed} aria-hidden={true} />
           </div>
         ))}
 
@@ -113,6 +94,36 @@ export const ImageMarquee = ({ className = '', style = {}, images = { items: [] 
           }}
         ></motion.div> */}
       </div>
+    </div>
+  )
+}
+
+const ImageMarqueeRow = ({
+  index: rowIndex,
+  items: row,
+  revealed = false,
+  ...props
+}: {
+  index: number
+  revealed?: boolean
+  items: ImageMarqueePayload['images']['items']
+}) => {
+  return (
+    <div className={bem('rowMarqueeContent')} {...props}>
+      {row.map((item, j) => {
+        const itemIndex = rowIndex * row.length + j
+        const revealIndex = (itemIndex % row.length) + rowIndex + 1
+        const revealThreshold = (revealIndex / (row.length + 2)) * 0.5 + rowIndex * 0.03
+        return (
+          <ImageMarqueeItem
+            key={j}
+            {...item}
+            revealed={revealed}
+            revealThreshold={revealThreshold}
+            // debug
+          />
+        )
+      })}
     </div>
   )
 }

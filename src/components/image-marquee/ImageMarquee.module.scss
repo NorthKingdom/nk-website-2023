@@ -1,3 +1,15 @@
+// https://codepen.io/hexagoncircle/pen/wvmjomb
+// https://codesandbox.io/s/x3r465?file=/src/App.js
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100%));
+  }
+}
+
 .imageMarquee {
   width: 100%;
   position: relative;
@@ -8,6 +20,8 @@
   @include mq($from: tablet) {
     padding: 80px 0;
   }
+
+  --speed: 30s;
 
   &__stickyContainer {
     position: sticky;
@@ -24,15 +38,29 @@
     position: relative;
     transform: translateX(-50%);
     left: 50%;
-    width: fit-content;
+    overflow: hidden;
 
     &:nth-child(1) {
-      margin-top: 0;
+      --speed: 80s;
     }
 
     &:nth-child(2) {
-      transform: translateX(calc(-50% + (-1 * 50px)));
+      --speed: 60s;
+      & > div {
+        animation-direction: reverse;
+      }
     }
+
+    &:nth-child(3) {
+      --speed: 40s;
+    }
+  }
+
+  &__rowMarqueeContent {
+    flex-shrink: 0;
+    display: flex;
+    min-width: 100%;
+    animation: scroll var(--speed) linear infinite;
   }
 
   &__item {
