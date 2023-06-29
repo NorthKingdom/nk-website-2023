@@ -139,7 +139,7 @@ export const ShieldVideo = forwardRef(
     /*
      * Set/animate video scale based on shield state
      */
-    const scaleMotionValue = useMotionValue(scale)
+    const scaleMotionValue = useMotionValue(0)
     useEffect(() => set({ shieldScaleMotionValue: scaleMotionValue }), [scaleMotionValue])
 
     useEffect(() => {
