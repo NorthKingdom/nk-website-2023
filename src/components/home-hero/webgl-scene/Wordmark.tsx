@@ -56,12 +56,6 @@ export const Wordmark = () => {
   const offsetAbsMotionValue = useMotionValue(-width * 0.25)
 
   useEffect(() => {
-    if (!leftWordRef.current || !rightWordRef.current) return
-    leftWordRef.current.position.x = -offsetAbsMotionValue.get()
-    rightWordRef.current.position.x = offsetAbsMotionValue.get()
-  }, [])
-
-  useEffect(() => {
     /*
      * Set video scale based on shield state
      */
@@ -73,6 +67,7 @@ export const Wordmark = () => {
     switch (shieldState) {
       case 'loading':
         offsetAbs = -width * 0.5
+        break
       case 'idle':
         offsetAbs = 0
         break
@@ -92,6 +87,7 @@ export const Wordmark = () => {
       case 'collapsing':
         offsetAbs = 0
         motionData = MOTION_CONFIG.COLLAPSE
+        break
       default:
         offsetAbs = 0
     }
@@ -119,7 +115,7 @@ export const Wordmark = () => {
       animationControls?.stop()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shieldState])
+  }, [shieldState, isDesktopBp])
 
   const stencilPropsWordLeft = useMask(WORD_MASK_ID.LEFT, true)
   const stencilPropsWordRight = useMask(WORD_MASK_ID.RIGHT, true)
